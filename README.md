@@ -8,7 +8,7 @@ This will be a great game, where hopefully you might even be able to play it!
 | ---------------- | ------------ | --------- |
 | Winston Zhao | @winstonzhao | wzha539 |
 | Simon Su | @sloushsu | zsu801 |
-| Tina Chen | @twchen97 | twchen97 |
+| Tina Chen | @twchen97 | XXXXX |
 | Rebekah Berriman | @rmberriman | XXXXX |
 | Carl Tang | @Carl-Tang | XXXXX |
 | Reuben Rakete | @rocketbang | XXXXX |
