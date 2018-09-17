@@ -11,7 +11,7 @@ This will be a great game, where hopefully you might even be able to play it!
 | Tina Chen | @twchen97 | tche278 |
 | Rebekah Berriman | @rmberriman | rber798 |
 | Carl Tang | @Carl-Tang | ytan415 |
-| Reuben Rakete | @rocketbang | XXXXX |
+| Reuben Rakete | @rocketbang | rrak789 |
 | Franklin Wang | @Gnawf | fwan182 |
 | Sean Oldfield | @SheepySean | sold940 |
 
