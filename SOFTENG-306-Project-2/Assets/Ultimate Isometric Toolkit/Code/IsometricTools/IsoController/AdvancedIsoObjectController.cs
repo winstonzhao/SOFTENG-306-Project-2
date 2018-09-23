@@ -6,35 +6,42 @@ using System.Collections;
 /// </summary>
 /// 
 [RequireComponent(typeof(IsoCollider))]
-public class AdvancedIsoObjectController : MonoBehaviour {
-
+public class AdvancedIsoObjectController : MonoBehaviour
+{
     public float speed = 5;
+
     Animator animator;
+
     public float jumpspeed = .1f;
 
     private Transform ghostObject;
 
-    void Start() {
+    void Start()
+    {
         ghostObject = gameObject.GetComponent<IsoCollider>().ghost.transform;
         animator = GetComponent<Animator>();
     }
-    void Update() {
-        ghostObject.Translate(new Vector3(Input.GetAxis("Vertical"),0, Input.GetAxis("Horizontal") * -1) * speed * Time.deltaTime);
-        animator.SetFloat("hSpeed", Input.GetAxis("Horizontal") * -1);
-        animator.SetFloat("vSpeed", Input.GetAxis("Vertical"));
 
-        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0) {
-            animator.SetBool("walking", false);
-        } else {
-            animator.SetBool("walking", true);
-        }
-    
-        if (Input.GetKeyDown(KeyCode.Space)) {
+    void Update()
+    {
+        var horizontal = Input.GetAxis("Horizontal");
+        var vertical = Input.GetAxis("Vertical");
+
+        ghostObject.Translate(new Vector3(vertical, 0, horizontal * -1) * speed * Time.deltaTime);
+        animator.SetFloat("hSpeed", horizontal * -1);
+        animator.SetFloat("vSpeed", vertical);
+
+        var hIdle = horizontal == 0f;
+        var vIdle = vertical == 0f;
+
+        animator.SetBool("hIdle", hIdle);
+        animator.SetBool("vIdle", vIdle);
+
+        animator.SetBool("walking", !hIdle || !vIdle);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             ghostObject.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpspeed, ForceMode.Impulse);
-        } else {
-
         }
     }
-
-	
 }
