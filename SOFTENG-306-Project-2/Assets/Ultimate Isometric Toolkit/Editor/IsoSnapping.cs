@@ -1,67 +1,96 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
 using System.Linq;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
 
-public class IsoSnapping : EditorWindow
+namespace Ultimate_Isometric_Toolkit
 {
-    //Snap isoObject to multiple of this vector 
-    public static Vector3 snappingVector = Vector3.one;
-
-    //enable - disable
-    public static bool doSnap;
-
-    [MenuItem("IsoTools/IsometricSnapping %_l")]
-    static void Init()
+    public class IsoSnapping : EditorWindow
     {
-        var window = (IsoSnapping) EditorWindow.GetWindow(typeof(IsoSnapping));
-        window.maxSize = new Vector2(400, 200);
-    }
+        //Snap IsoTransform to multiple of this vector 
+        public static Vector3 SnappingVector = Vector3.one;
 
-    public void OnGUI()
-    {
-        doSnap = EditorGUILayout.Toggle(
-            new GUIContent("Auto Snap", ((doSnap) ? "Disable" : "Enable") + " automatic snapping for IsoObjects"),
-            doSnap);
-        snappingVector = EditorGUILayout.Vector3Field(
-            new GUIContent("Snap Value", "Selection will snap to a closest multilpe in each direction"),
-            snappingVector);
-        if (snappingVector.x == 0 || snappingVector.y == 0 || snappingVector.z == 0)
+        //enable - disable
+        public static bool DoSnap;
+
+        [MenuItem("Tools/UIT/IsometricSnapping %_l")]
+        static void Init()
         {
-            doSnap = false;
-            EditorGUILayout.HelpBox("Snapping to a multiple of zero not allowed", MessageType.Warning);
+            var window = (IsoSnapping) GetWindow(typeof(IsoSnapping));
+            window.maxSize = new Vector2(400, 200);
         }
 
-        if (GUILayout.Button(new GUIContent("Snap selection",
-            "Snap the current selection in Scene view to the  \n closest multiple of the snapping Vector")))
+        void OnEnable()
         {
-            foreach (GameObject obj in Selection.gameObjects.Where(c => c.GetComponent<IsoObject>() != null).ToList())
+            var values = EditorPrefs.GetString("snappingVector").Split(';');
+            SnappingVector.x = float.Parse(values[0]);
+            SnappingVector.y = float.Parse(values[1]);
+            SnappingVector.z = float.Parse(values[2]);
+
+            DoSnap = EditorPrefs.GetBool("doSnap");
+        }
+
+        void OnDisable()
+        {
+            EditorPrefs.SetString("snappingVector",
+                SnappingVector.x + ";" + SnappingVector.y + ";" + SnappingVector.z + ";");
+            EditorPrefs.SetBool("doSnap", DoSnap);
+        }
+
+        public void OnGUI()
+        {
+            DoSnap = EditorGUILayout.Toggle(
+                new GUIContent("Auto Snap", (DoSnap ? "Disable" : "Enable") + " automatic snapping for IsoTransforms"),
+                DoSnap);
+            EditorUtility.SetDirty(this);
+            SnappingVector = EditorGUILayout.Vector3Field(
+                new GUIContent("Snap Value", "Selection will snap to a closest multilpe in each direction"),
+                SnappingVector);
+            if (SnappingVector.x == 0 || SnappingVector.y == 0 || SnappingVector.z == 0)
             {
-                var isoObj = obj.GetComponent<IsoObject>();
-                isoObj.Position = Round(isoObj.Position);
+                DoSnap = false;
+                EditorGUILayout.HelpBox("Snapping to a multiple of zero not allowed", MessageType.Warning);
             }
+
+            if (GUILayout.Button(new GUIContent("Snap selection",
+                "Snap the current selection in Scene view to the  \n closest multiple of the snapping Vector")))
+            {
+                foreach (var isoObj in Selection.gameObjects.Where(c => c.GetComponent<IsoTransform>() != null).ToList()
+                    .Select(obj => obj.GetComponent<IsoTransform>()))
+                {
+                    isoObj.Position = Round(isoObj.Position);
+                }
+            }
+
+            GUILayout.Space(10);
         }
 
-        GUILayout.Space(10);
-    }
+        /// <summary>
+        /// Ceils input vector to next multiple of SnappingVector
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static Vector3 Ceil(Vector3 input)
+        {
+            var x = SnappingVector.x * Mathf.Ceil((input.x / SnappingVector.x));
+            var y = SnappingVector.y * Mathf.Ceil((input.y / SnappingVector.y));
+            var z = SnappingVector.z * Mathf.Ceil((input.z / SnappingVector.z));
 
-    //Ceils to next multiple of (a must at (0,0,0) (0,y,z) etc.)
-    public static Vector3 Ceil(Vector3 input)
-    {
-        var x = snappingVector.x * Mathf.Ceil((input.x / snappingVector.x));
-        var y = snappingVector.y * Mathf.Ceil((input.y / snappingVector.y));
-        var z = snappingVector.z * Mathf.Ceil((input.z / snappingVector.z));
+            return new Vector3(x, y, z);
+        }
 
-        return new Vector3(x, y, z);
-    }
+        /// <summary>
+        /// Rounds input vector to the next multiple SnappingVector 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static Vector3 Round(Vector3 input)
+        {
+            var x = SnappingVector.x * Mathf.Round((input.x / SnappingVector.x));
+            var y = SnappingVector.y * Mathf.Round((input.y / SnappingVector.y));
+            var z = SnappingVector.z * Mathf.Round((input.z / SnappingVector.z));
 
-    //Rounds to the next multiple
-    public static Vector3 Round(Vector3 input)
-    {
-        var x = snappingVector.x * Mathf.Round((input.x / snappingVector.x));
-        var y = snappingVector.y * Mathf.Round((input.y / snappingVector.y));
-        var z = snappingVector.z * Mathf.Round((input.z / snappingVector.z));
-
-        return new Vector3(x, y, z);
+            return new Vector3(x, y, z);
+        }
     }
 }
