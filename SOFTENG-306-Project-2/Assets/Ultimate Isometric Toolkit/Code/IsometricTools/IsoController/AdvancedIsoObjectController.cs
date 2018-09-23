@@ -9,18 +9,30 @@ using System.Collections;
 public class AdvancedIsoObjectController : MonoBehaviour {
 
     public float speed = 5;
+    Animator animator;
     public float jumpspeed = .1f;
 
     private Transform ghostObject;
 
     void Start() {
         ghostObject = gameObject.GetComponent<IsoCollider>().ghost.transform;
+        animator = GetComponent<Animator>();
     }
     void Update() {
         ghostObject.Translate(new Vector3(Input.GetAxis("Vertical"),0, Input.GetAxis("Horizontal") * -1) * speed * Time.deltaTime);
+        animator.SetFloat("hSpeed", Input.GetAxis("Horizontal") * -1);
+        animator.SetFloat("vSpeed", Input.GetAxis("Vertical"));
 
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0) {
+            animator.SetBool("walking", false);
+        } else {
+            animator.SetBool("walking", true);
+        }
+    
         if (Input.GetKeyDown(KeyCode.Space)) {
             ghostObject.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpspeed, ForceMode.Impulse);
+        } else {
+
         }
     }
 
