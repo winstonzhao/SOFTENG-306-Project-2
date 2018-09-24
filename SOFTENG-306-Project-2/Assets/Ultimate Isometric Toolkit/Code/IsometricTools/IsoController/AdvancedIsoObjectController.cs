@@ -14,12 +14,19 @@ public class AdvancedIsoObjectController : MonoBehaviour {
 
     private Transform ghostObject;
 
-    void Start() {
+    void Start() 
+    {
         ghostObject = gameObject.GetComponent<IsoCollider>().ghost.transform;
         animator = GetComponent<Animator>();
     }
-    void Update() {
+
+    void FixedUpdate() 
+    {
         ghostObject.Translate(new Vector3(Input.GetAxis("Vertical"),0, Input.GetAxis("Horizontal") * -1) * speed * Time.deltaTime);
+    }
+
+    void Update() 
+    {
         animator.SetFloat("hSpeed", Input.GetAxis("Horizontal") * -1);
         animator.SetFloat("vSpeed", Input.GetAxis("Vertical"));
 
@@ -34,6 +41,7 @@ public class AdvancedIsoObjectController : MonoBehaviour {
         } else {
 
         }
+
     }
 
 	
