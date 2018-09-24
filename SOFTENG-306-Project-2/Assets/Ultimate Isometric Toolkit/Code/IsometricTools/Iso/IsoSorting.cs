@@ -28,28 +28,33 @@ public class IsoSorting : Singleton<IsoSorting> {
 //	}
 	
 	public void calcDependencies(List<IsoObject> isoObjs) {
+
 		foreach(IsoObject a in isoObjs) {
-			
-			a.BehindObjects = new List<IsoObject>();
-			foreach(IsoObject b in isoObjs) {
-				if(a == b)
-					continue;
-				if(a.CompareTo(b) >= 1) {
-					a.BehindObjects.Add(b);
-				}
-			}
-			a.Visited = false;
+            if (a.Ground == null)  {
+                a.Ground = a;
+            }
+			a.Depth = -(int)(a.isoProjection(a.Ground.Position).y * 100) + a.TargetOffset;
+			// a.BehindObjects = new List<IsoObject>();
+			// foreach(IsoObject b in isoObjs) {
+			// 	if(a == b)
+			// 		continue;
+			// 	if(a.CompareTo(b) >= 1) {
+			// 		a.BehindObjects.Add(b);
+			// 	}
+			// }
+			// a.Visited = false;
 		}
 	}
 
 	//topoligical sort - most recent code
 	public void topoSort() {
 		List<IsoObject> objs = FindObjectsOfType<IsoObject>().ToList();
+
 		calcDependencies(objs);
 		maxDepth = 0;
-		foreach(IsoObject obj in objs) {
-			visitNode(obj);
-		}
+		// foreach(IsoObject obj in objs) {
+		// 	visitNode(obj);
+		// }
 	}
 	
 	private void visitNode(IsoObject node) {

@@ -25,6 +25,12 @@ public class IsoObject : MonoBehaviour, IComparable<IsoObject> {
 	
 	private List<IsoObject> behindObjects = new List<IsoObject>();
 
+    [Tooltip("Will use this object to compute z-order")]
+    public IsoObject Ground;
+
+    [Tooltip("Use this to offset the object slightly in front or behind the Target object")]
+    public int TargetOffset = 0;
+
 	public List<IsoObject> BehindObjects {
 		get {
 			return behindObjects;
@@ -124,7 +130,7 @@ public class IsoObject : MonoBehaviour, IComparable<IsoObject> {
 	/// </summary>
 	/// <param name="pt"></param> The Object in virtual 3d space
 	/// <returns></returns>
-	private Vector2 isoProjection(Vector3 pt) {
+	public Vector2 isoProjection(Vector3 pt) {
 		Vector2 vec = new Vector2(0, 0);
 		vec.x = (pt.x - pt.y);
 		vec.y = (pt.x + pt.y) / 2;
