@@ -6,10 +6,12 @@ using System.Collections;
 /// </summary>
 /// 
 [RequireComponent(typeof(IsoCollider))]
-public class AdvancedIsoObjectController : MonoBehaviour {
-
+public class AdvancedIsoObjectController : MonoBehaviour
+{
     public float speed = 5;
+
     Animator animator;
+
     public float jumpspeed = .1f;
 
     private Transform ghostObject;
@@ -38,11 +40,6 @@ public class AdvancedIsoObjectController : MonoBehaviour {
     
         if (Input.GetKeyDown(KeyCode.Space)) {
             ghostObject.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpspeed, ForceMode.Impulse);
-        } else {
-
-        }
-
+        } 
     }
-
-	
 }
