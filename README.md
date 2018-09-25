@@ -1,4 +1,8 @@
-# Great Game Name!
+<p align="center"> 
+<img src="https://github.com/winstonzhao/SOFTENG-306-Project-2/blob/master/logo-full-text.png" width="500">
+</p>
+
+# ONE DAY or DAY ONE !
 
 ## Overview
 This will be a great game, where hopefully you might even be able to play it!
