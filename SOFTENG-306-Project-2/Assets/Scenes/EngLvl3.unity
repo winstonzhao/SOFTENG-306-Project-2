@@ -393,15 +393,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11405744, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
       propertyPath: size.z
-      value: 1.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11405744, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
       propertyPath: size.x
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11405744, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
       propertyPath: size.y
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11405744, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
       propertyPath: position.y
@@ -409,7 +409,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
       propertyPath: m_SortingOrder
-      value: -400
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
       propertyPath: m_Sprite
@@ -436,6 +436,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11405744, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
+      propertyPath: Ground
+      value: 
+      objectReference: {fileID: 214933072}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a7b151a1bf446741af83006b8cb6559, type: 2}
   m_IsPrefabAsset: 0
@@ -1134,6 +1138,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghost: {fileID: 0}
+--- !u!114 &214933072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11405744, guid: 2a7b151a1bf446741af83006b8cb6559,
+    type: 2}
+  m_PrefabInternal: {fileID: 64407598}
+  m_Script: {fileID: 11500000, guid: 6aff52b17c13c5d43a7489b808817cdc, type: 3}
 --- !u!4 &214933074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2a7b151a1bf446741af83006b8cb6559,
@@ -1709,7 +1719,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -505
+      value: -355
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -1903,7 +1913,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -665
+      value: -515
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -2839,7 +2849,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -428
+      value: -278
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -3468,7 +3478,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 658684070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.37, y: -2.0900002, z: 10}
+  m_LocalPosition: {x: 1.4699999, y: -2.54, z: 10}
   m_LocalScale: {x: 2, y: 1.5, z: 2}
   m_Children: []
   m_Father: {fileID: 1290445339}
@@ -3485,11 +3495,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aff52b17c13c5d43a7489b808817cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 5.2, y: -1.3, z: 1}
+  position: {x: 3.3, y: 0.7, z: 0.5}
   size: {x: 1, y: 1, z: 1}
   displayBounds: 1
   Ground: {fileID: 1786333636}
-  TargetOffset: 0
+  TargetOffset: 1
 --- !u!212 &658684073
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3524,7 +3534,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -250
+  m_SortingOrder: -149
   m_Sprite: {fileID: 21300000, guid: be19111eecdb74874813881cdebac348, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3968,7 +3978,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -347
+      value: -197
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -4339,7 +4349,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -433
+      value: -283
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -5534,7 +5544,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -388
+      value: -238
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -6033,7 +6043,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -659
+      value: -509
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -6645,7 +6655,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1725876310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.27, y: -2.4399998, z: 10}
+  m_LocalPosition: {x: 2.17, y: -2.8899999, z: 10}
   m_LocalScale: {x: 2, y: 1.5, z: 2}
   m_Children: []
   m_Father: {fileID: 1290445339}
@@ -6662,11 +6672,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aff52b17c13c5d43a7489b808817cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 5.3, y: -2.1, z: 1}
+  position: {x: 3.3, y: 0, z: 0.5}
   size: {x: 1, y: 1, z: 1}
   displayBounds: 1
   Ground: {fileID: 1786333636}
-  TargetOffset: 0
+  TargetOffset: 1
 --- !u!212 &1725876313
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6701,7 +6711,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -250
+  m_SortingOrder: -149
   m_Sprite: {fileID: 21300000, guid: 740cd4366805d458c8418d2dceddb47e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7059,7 +7069,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1786333633}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.87, y: -2.54, z: 10}
+  m_LocalPosition: {x: 1.87, y: -3.04, z: 10}
   m_LocalScale: {x: 2, y: 1.5, z: 2}
   m_Children: []
   m_Father: {fileID: 1290445339}
@@ -7089,8 +7099,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aff52b17c13c5d43a7489b808817cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 5, y: -2, z: 1}
-  size: {x: 1, y: 1, z: 1}
+  position: {x: 3, y: 0, z: 0.5}
+  size: {x: 0.7, y: 1.2, z: 0.5}
   displayBounds: 1
   Ground: {fileID: 1786333636}
   TargetOffset: 0
@@ -7128,7 +7138,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -250
+  m_SortingOrder: -150
   m_Sprite: {fileID: 21300000, guid: a0727522dce5b4263ad03cec0dcfe8ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7210,7 +7220,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -509
+      value: -359
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
@@ -7699,7 +7709,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: m_SortingOrder
-      value: -582
+      value: -432
       objectReference: {fileID: 0}
     - target: {fileID: 11446754, guid: 34da5a352af3a104493b3dd0556ca732, type: 2}
       propertyPath: size.y
