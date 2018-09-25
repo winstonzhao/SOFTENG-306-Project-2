@@ -40,7 +40,7 @@ public class DraggableItem : Draggable
 
     }
 
-    public override void SetDropZone(IDropZone list)
+    public void SetDropZone(IDropZone list)
     {
         this.dropZone = list;
     }
