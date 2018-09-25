@@ -24,7 +24,8 @@ public class AdvancedIsoObjectController : MonoBehaviour
 
     void FixedUpdate()
     {
-        ghostObject.Translate(new Vector3(Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal") * -1) * speed * Time.deltaTime);
+        ghostObject.Translate(new Vector3(Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal") * -1) * speed *
+                              Time.deltaTime);
     }
 
     void Update()

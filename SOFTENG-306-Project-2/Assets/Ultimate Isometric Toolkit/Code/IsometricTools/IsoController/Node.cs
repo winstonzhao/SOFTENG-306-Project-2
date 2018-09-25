@@ -3,21 +3,23 @@ using System.Collections;
 
 [RequireComponent(typeof(IsoObject))]
 [ExecuteInEditMode]
-public class Node : MonoBehaviour {
+public class Node : MonoBehaviour
+{
+    [SerializeField] private IsoObject obj;
 
-    [SerializeField]
-    private IsoObject obj;
-
-    public Vector3 Position {
+    public Vector3 Position
+    {
         get { return obj.Position; }
         private set { obj.Position = value; }
     }
 
-    void Start() {
+    void Start()
+    {
         obj = GetComponent<IsoObject>();
     }
 
-    void OnDrawGizmos() {
+    void OnDrawGizmos()
+    {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(Isometric.isoProjection(obj.Position), .3f);
     }

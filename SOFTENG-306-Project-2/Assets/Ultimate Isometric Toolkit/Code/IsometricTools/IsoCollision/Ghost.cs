@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Ghost : MonoBehaviour {
+public class Ghost : MonoBehaviour
+{
+    // Use this for initialization
+    void Start()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    void Update()
+    {
+    }
 }
