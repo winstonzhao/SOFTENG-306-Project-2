@@ -8,8 +8,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 442854}
-  - component: {fileID: 21260678}
   - component: {fileID: 11493642}
+  - component: {fileID: 21260678}
   m_Layer: 0
   m_Name: g6702
   m_TagString: Untagged
@@ -19,7 +19,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &442854
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196190}
@@ -44,6 +44,7 @@ MonoBehaviour:
   ShowBounds: 1
   _position: {x: 11, y: 1.2562344, z: 9.9839735}
   _size: {x: 0.6, y: 2, z: 0.6}
+  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!212 &21260678
 SpriteRenderer:
