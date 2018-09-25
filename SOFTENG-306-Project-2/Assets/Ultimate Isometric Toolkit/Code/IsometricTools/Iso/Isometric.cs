@@ -4,10 +4,12 @@ using System.Collections;
 /// <summary>
 /// Helper class for isometric projections in common directions
 /// </summary>
-public class Isometric {
-
-    public static Vector3 vectorToIsoDirection(IsoDirection dir) {
-        switch (dir) {
+public class Isometric
+{
+    public static Vector3 vectorToIsoDirection(IsoDirection dir)
+    {
+        switch (dir)
+        {
             case IsoDirection.North:
                 return Vector3.right;
             case IsoDirection.East:
@@ -23,15 +25,14 @@ public class Isometric {
             default:
                 return Vector2.zero;
         }
-
     }
 
-    public static Vector2 isoProjection(Vector3 pt) {
+    public static Vector2 isoProjection(Vector3 pt)
+    {
         Vector2 vec = new Vector2(0, 0);
         vec.x = (pt.x - pt.y);
         vec.y = (pt.x + pt.y) / 2;
         vec.y += pt.z;
         return vec;
     }
-
 }

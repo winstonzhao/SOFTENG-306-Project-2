@@ -22,12 +22,17 @@ public class AdvancedIsoObjectController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void FixedUpdate()
+    {
+        ghostObject.Translate(new Vector3(Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal") * -1) * speed *
+                              Time.deltaTime);
+    }
+
     void Update()
     {
         var horizontal = Input.GetAxis("Horizontal");
         var vertical = Input.GetAxis("Vertical");
 
-        ghostObject.Translate(new Vector3(vertical, 0, horizontal * -1) * speed * Time.deltaTime);
         animator.SetFloat("hSpeed", horizontal * -1);
         animator.SetFloat("vSpeed", vertical);
 
@@ -36,7 +41,6 @@ public class AdvancedIsoObjectController : MonoBehaviour
 
         animator.SetBool("hIdle", hIdle);
         animator.SetBool("vIdle", vIdle);
-
         animator.SetBool("walking", !hIdle || !vIdle);
 
         if (Input.GetKeyDown(KeyCode.Space))
