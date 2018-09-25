@@ -7,9 +7,9 @@ using UnityEngine;
 public class SquareResizer : MonoBehaviour
 {
 
-    public float Width;
-    private BoxCollider2D collider;
-    private MeshRenderer meshRenderer;
+    [SerializeField]
+    private float width;
+    public float Width { get { return width; } }
 
     // Use this for initialization
     void Start()
@@ -25,20 +25,13 @@ public class SquareResizer : MonoBehaviour
 
     public void UpdateSize()
     {
-        if (collider == null) collider = GetComponent<BoxCollider2D>();
-        
-        if (meshRenderer == null)
-        {
-            var text = transform.GetChild(1);
-            meshRenderer = text.GetComponent<MeshRenderer>();
-        }
-
+        var text = transform.GetChild(1);
         var square = transform.GetChild(0);
 
-        Width = meshRenderer.bounds.size.x;
-        square.transform.localScale = new Vector3(Width, 1, 1);
+        width = text.GetComponent<MeshRenderer>().bounds.size.x;
+        square.transform.localScale = new Vector3(width, 1, 1);
 
-        collider.size = new Vector3(Width, 1, 1);
-        collider.isTrigger = true;
+        GetComponent<BoxCollider2D>().size = new Vector3(width, 1, 1);
+        GetComponent<BoxCollider2D>().isTrigger = true;
     }
 }

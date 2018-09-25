@@ -6,11 +6,8 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 {
     private Draggable currentItem;
 
-    private SpriteRenderer spriteRenderer;
-
     public void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         var rigidbody = GetComponent<Rigidbody2D>();
         if (rigidbody == null)
         {
@@ -21,12 +18,12 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void OnDragEnter(Draggable item)
     {
-        spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
+        GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
     }
 
     public void OnDragExit(Draggable item)
     {
-        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
+        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
     }
 
     public void OnDragFinish(Draggable item)
@@ -46,7 +43,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     {
         currentItem = item;
         currentItem.HomePos = transform.position;
-        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
+        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
     }
 
     public void OnItemDrag(Draggable item)

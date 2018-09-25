@@ -15,7 +15,8 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
-    public bool CopyOnDrag = true;
+    [SerializeField]
+    private bool copyOnDrag = true;
 
     [SerializeField]
     private bool rearrangeable = true;
@@ -145,7 +146,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public bool AddToList(Draggable item, int index)
     {
-        if (!Rearrangeable)
+        if (!rearrangeable)
         {
             Destroy(item.gameObject);
             return false;
@@ -164,7 +165,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void AddDummyToList(int index)
     {
-        if (!Rearrangeable) return;
+        if (!rearrangeable) return;
         listItems.Insert(index, null);
         layout();
     }
@@ -211,7 +212,7 @@ public class DraggableList : MonoBehaviour, IDropZone
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
             layout();
-            itemClone.SetDropZone(this);
+            itemClone.GetComponent<DraggableItem>().SetDropZone(this);
         }
     }
 
@@ -223,7 +224,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void OnDragFinish(Draggable item)
     {
-        if (CopyOnDrag)
+        if (copyOnDrag)
         {
             Destroy(item.gameObject);
         }
