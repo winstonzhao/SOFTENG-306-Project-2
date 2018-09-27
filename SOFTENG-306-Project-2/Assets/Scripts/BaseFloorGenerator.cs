@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEditor;
 using UnityEngine;
@@ -8,108 +7,96 @@ using Object = UnityEngine.Object;
 [ExecuteInEditMode]
 public class BaseFloorGenerator : MonoBehaviour
 {
-    public String prefix = "Floor Tile";
+    public String Prefix = "Floor Tile";
 
-    public Object prefab;
+    public Object Prefab;
 
-    public float sizeX = 16;
+    public int SizeX = 16;
 
-    public float sizeY = 16;
+    public int SizeZ = 16;
 
-    public bool barriers;
+    public float Y = 0f;
 
-    private List<GameObject> tiles;
+    public bool Barriers = true;
 
     private void Awake()
     {
         this.GetOrAddComponent<IsoTransform>();
-        tiles = new List<GameObject>();
-        barriers = true;
     }
 
     public void RePaint()
     {
-        foreach (GameObject obj in tiles)
+        // Delete this shit 100 times cuz I swear it doesn't delete them all sometimes
+        for (var i = 0; i < 100; i++)
         {
-            DestroyImmediate(obj);
+            foreach (Transform child in transform)
+            {
+                DestroyImmediate(child.gameObject);
+            }
         }
 
-        tiles.Clear();
         GenerateFloor();
-
     }
 
     private void GenerateFloor()
     {
-        float posX = this.GetComponent<IsoTransform>().Position.x;
-        float posY = this.GetComponent<IsoTransform>().Position.y;
-        float posZ = this.GetComponent<IsoTransform>().Position.z;
-
-        if (!prefab)
+        if (!Prefab)
         {
             Debug.Log("Select a prefab");
             return;
         }
-        var i = 0;
 
-        for (var x = 0; x < sizeX; x++)
+        var isoTransform = GetComponent<IsoTransform>();
+        var parentX = isoTransform.Position.x;
+        var parentY = isoTransform.Position.y;
+        var parentZ = isoTransform.Position.z;
+
+        var collider = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/invis_collider.prefab", typeof(GameObject));
+
+        var height = 1.0f;
+
+        for (var dx = 0; dx <= SizeX; dx++)
         {
-            for (var y = 0; y < sizeY; y++)
+            for (var dz = 0; dz <= SizeZ; dz++)
             {
-                GameObject tile = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-                tile.transform.parent = this.transform;
-                tiles.Add(tile.gameObject);
-                tile.name = prefix + " (" + i + ")";
-                tile.GetComponent<IsoTransform>().Position = new Vector3(posX + x, posZ, posY + y);
-                tile.GetComponent<IsoTransform>().ShowBounds = true;
-                i++;
+                var x = parentX + dx;
+                var z = parentZ + dz;
+                var inserted = Insert(Prefab, Prefix + " (" + x + ", " + z + ")", x, Y, z);
+                height = inserted.GetComponent<IsoTransform>().Size.y;
             }
         }
 
-        if (barriers)
+        if (Barriers)
         {
-            var j = 0;
-            Object collider = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/invis_collider.prefab", typeof(GameObject));
+            var fromX = parentX;
+            var toX = parentX + SizeX;
+            var fromZ = parentZ;
+            var toZ = parentZ + SizeZ;
 
-            for (var x = -1; x <= sizeX; x++)
-            {
-                GameObject bottomRight = PrefabUtility.InstantiatePrefab(collider) as GameObject;
-                bottomRight.transform.parent = this.transform;
-                tiles.Add(bottomRight);
-                bottomRight.name = "(I)" + " (" + j + ")";
-                bottomRight.GetComponent<IsoTransform>().Position = new Vector3(posX + x, posZ + 0.6f, posY - 1);
-                bottomRight.GetComponent<IsoTransform>().ShowBounds = true;
-                j++;
+            Insert(collider, "Collider Top Left", fromX + SizeX / 2.0f, height, toZ + 1)
+                .GetComponent<IsoTransform>().Size = new Vector3(SizeX + 1.0f, 1.0f, 1.0f);
 
+            Insert(collider, "Collider Bottom Right", fromX + SizeX / 2.0f, height, fromZ - 1)
+                .GetComponent<IsoTransform>().Size = new Vector3(SizeX + 1.0f, 1.0f, 1.0f);
 
-                GameObject topLeft = PrefabUtility.InstantiatePrefab(collider) as GameObject;
-                topLeft.transform.parent = this.transform;
-                tiles.Add(topLeft);
-                topLeft.name = "(I)" + " (" + j + ")";
-                topLeft.GetComponent<IsoTransform>().Position = new Vector3(posX + x, posZ + 0.6f, posY + sizeY);
-                topLeft.GetComponent<IsoTransform>().ShowBounds = true;
-                j++;
-            }
+            Insert(collider, "Collider Bottom Left", fromX - 1.0f, height, fromZ + SizeZ / 2.0f)
+                .GetComponent<IsoTransform>().Size = new Vector3(1.0f, 1.0f, SizeZ + 1.0f);
 
-            for (var y = -1; y <= sizeY; y++)
-            {
-                GameObject bottomLeft = PrefabUtility.InstantiatePrefab(collider) as GameObject;
-                bottomLeft.transform.parent = this.transform;
-                tiles.Add(bottomLeft);
-                bottomLeft.name = "(I)" + " (" + j + ")";
-                bottomLeft.GetComponent<IsoTransform>().Position = new Vector3(posX - 1, posZ + 0.6f, posY + y);
-                bottomLeft.GetComponent<IsoTransform>().ShowBounds = true;
-                j++;
-
-                GameObject topRight = PrefabUtility.InstantiatePrefab(collider) as GameObject;
-                topRight.transform.parent = this.transform;
-                tiles.Add(topRight);
-                topRight.name = "(I)" + " (" + j + ")";
-                topRight.GetComponent<IsoTransform>().Position = new Vector3(posX + sizeX, posZ + 0.6f, posY + y);
-                topRight.GetComponent<IsoTransform>().ShowBounds = true;
-                j++;
-            }
-
+            Insert(collider, "Collider Top Right", toX + 1.0f, height, fromZ + SizeZ / 2.0f)
+                .GetComponent<IsoTransform>().Size = new Vector3(1.0f, 1.0f, SizeZ + 1.0f);
         }
+    }
+
+    private GameObject Insert(Object prefab, String name, float x, float y, float z)
+    {
+        GameObject gameObject = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        gameObject.transform.parent = transform;
+        gameObject.name = name;
+
+        var isoTransform = gameObject.GetComponent<IsoTransform>();
+        isoTransform.Position = new Vector3(x, y, z);
+        isoTransform.ShowBounds = name.StartsWith("Collider");
+
+        return gameObject;
     }
 }
