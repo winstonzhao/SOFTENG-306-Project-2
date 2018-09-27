@@ -16,6 +16,8 @@ public class BaseFloorGenerator : MonoBehaviour
 
     public int sizeY = 16;
 
+    public bool barriers;
+
     private List<GameObject> tiles;
 
     private void Awake()
@@ -23,21 +25,17 @@ public class BaseFloorGenerator : MonoBehaviour
         tiles = new List<GameObject>();
         this.GetOrAddComponent<IsoTransform>();
         GenerateFloor();
+        barriers = true;
     }
 
     public void RePaint() 
     {
-        Debug.Log("DESTORYING" + gameObject.transform.childCount);
-
         foreach (GameObject obj in tiles) {
             DestroyImmediate(obj);
         }
 
         tiles = new List<GameObject>();
         GenerateFloor();
-
-        //SpriteRenderer r = go.AddComponent<SpriteRenderer>();
-        //check = go.GetComponent<SpriteRenderer>().sprite = check;
 
     }
 
@@ -49,9 +47,9 @@ public class BaseFloorGenerator : MonoBehaviour
         }
         var i = 0;
 
-        for (var x = 0; x < this.GetComponent<BaseFloorGenerator>().sizeX; x++)
+        for (var x = 0; x < sizeX; x++)
         {
-            for (var y = 0; y < this.GetComponent<BaseFloorGenerator>().sizeY; y++)
+            for (var y = 0; y < sizeY; y++)
             {
                 GameObject tile = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                 tile.transform.parent = this.transform;
@@ -60,8 +58,52 @@ public class BaseFloorGenerator : MonoBehaviour
                 tile.GetComponent<IsoTransform>().Position = new Vector3(x, 0, y);
                 tile.GetComponent<IsoTransform>().ShowBounds = true;
                 i++;
-                Debug.Log(i + ":" + x + ":" + y);
             }
+        }
+
+        if (barriers) {
+            var j = 0;
+            Object collider = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/invis_collider.prefab", typeof(GameObject));
+
+            for (var x = -1; x <= sizeX; x++)
+            {
+                GameObject bottomRight = PrefabUtility.InstantiatePrefab(collider) as GameObject;
+                bottomRight.transform.parent = this.transform;
+                tiles.Add(bottomRight.gameObject);
+                bottomRight.name = "(I)" + " (" + j + ")";
+                bottomRight.GetComponent<IsoTransform>().Position = new Vector3(x, 0.6f, -1);
+                bottomRight.GetComponent<IsoTransform>().ShowBounds = true;
+                j++;
+
+
+                GameObject topLeft = PrefabUtility.InstantiatePrefab(collider) as GameObject;
+                topLeft.transform.parent = this.transform;
+                tiles.Add(topLeft.gameObject);
+                topLeft.name = "(I)" + " (" + j + ")";
+                topLeft.GetComponent<IsoTransform>().Position = new Vector3(x, 0.6f, sizeX);
+                topLeft.GetComponent<IsoTransform>().ShowBounds = true;
+                j++;
+            }
+
+            for (var y = -1; y <= sizeY; y++)
+            {
+                GameObject bottomLeft = PrefabUtility.InstantiatePrefab(collider) as GameObject;
+                bottomLeft.transform.parent = this.transform;
+                tiles.Add(bottomLeft.gameObject);
+                bottomLeft.name = "(I)" + " (" + j + ")";
+                bottomLeft.GetComponent<IsoTransform>().Position = new Vector3(-1, 0.6f, y);
+                bottomLeft.GetComponent<IsoTransform>().ShowBounds = true;
+                j++;
+
+                GameObject topRight = PrefabUtility.InstantiatePrefab(collider) as GameObject;
+                topRight.transform.parent = this.transform;
+                tiles.Add(topRight.gameObject);
+                topRight.name = "(I)" + " (" + j + ")";
+                topRight.GetComponent<IsoTransform>().Position = new Vector3(sizeY, 0.6f, y);
+                topRight.GetComponent<IsoTransform>().ShowBounds = true;
+                j++;
+            }
+
         }
     }
 }
