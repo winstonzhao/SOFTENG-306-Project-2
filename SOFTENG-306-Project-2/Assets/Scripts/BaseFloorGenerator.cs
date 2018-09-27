@@ -12,9 +12,9 @@ public class BaseFloorGenerator : MonoBehaviour
 
     public Object prefab;
 
-    public int sizeX = 16;
+    public float sizeX = 16;
 
-    public int sizeY = 16;
+    public float sizeY = 16;
 
     public bool barriers;
 
@@ -22,26 +22,31 @@ public class BaseFloorGenerator : MonoBehaviour
 
     private void Awake()
     {
-        tiles = new List<GameObject>();
         this.GetOrAddComponent<IsoTransform>();
-        GenerateFloor();
+        tiles = new List<GameObject>();
         barriers = true;
     }
 
-    public void RePaint() 
+    public void RePaint()
     {
-        foreach (GameObject obj in tiles) {
+        foreach (GameObject obj in tiles)
+        {
             DestroyImmediate(obj);
         }
 
-        tiles = new List<GameObject>();
+        tiles.Clear();
         GenerateFloor();
 
     }
 
-    private void GenerateFloor() 
+    private void GenerateFloor()
     {
-        if (!prefab) { 
+        float posX = this.GetComponent<IsoTransform>().Position.x;
+        float posY = this.GetComponent<IsoTransform>().Position.y;
+        float posZ = this.GetComponent<IsoTransform>().Position.z;
+
+        if (!prefab)
+        {
             Debug.Log("Select a prefab");
             return;
         }
@@ -55,13 +60,14 @@ public class BaseFloorGenerator : MonoBehaviour
                 tile.transform.parent = this.transform;
                 tiles.Add(tile.gameObject);
                 tile.name = prefix + " (" + i + ")";
-                tile.GetComponent<IsoTransform>().Position = new Vector3(x, 0, y);
+                tile.GetComponent<IsoTransform>().Position = new Vector3(posX + x, posZ, posY + y);
                 tile.GetComponent<IsoTransform>().ShowBounds = true;
                 i++;
             }
         }
 
-        if (barriers) {
+        if (barriers)
+        {
             var j = 0;
             Object collider = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/invis_collider.prefab", typeof(GameObject));
 
@@ -69,18 +75,18 @@ public class BaseFloorGenerator : MonoBehaviour
             {
                 GameObject bottomRight = PrefabUtility.InstantiatePrefab(collider) as GameObject;
                 bottomRight.transform.parent = this.transform;
-                tiles.Add(bottomRight.gameObject);
+                tiles.Add(bottomRight);
                 bottomRight.name = "(I)" + " (" + j + ")";
-                bottomRight.GetComponent<IsoTransform>().Position = new Vector3(x, 0.6f, -1);
+                bottomRight.GetComponent<IsoTransform>().Position = new Vector3(posX + x, posZ + 0.6f, posY - 1);
                 bottomRight.GetComponent<IsoTransform>().ShowBounds = true;
                 j++;
 
 
                 GameObject topLeft = PrefabUtility.InstantiatePrefab(collider) as GameObject;
                 topLeft.transform.parent = this.transform;
-                tiles.Add(topLeft.gameObject);
+                tiles.Add(topLeft);
                 topLeft.name = "(I)" + " (" + j + ")";
-                topLeft.GetComponent<IsoTransform>().Position = new Vector3(x, 0.6f, sizeX);
+                topLeft.GetComponent<IsoTransform>().Position = new Vector3(posX + x, posZ + 0.6f, posY + sizeY);
                 topLeft.GetComponent<IsoTransform>().ShowBounds = true;
                 j++;
             }
@@ -89,17 +95,17 @@ public class BaseFloorGenerator : MonoBehaviour
             {
                 GameObject bottomLeft = PrefabUtility.InstantiatePrefab(collider) as GameObject;
                 bottomLeft.transform.parent = this.transform;
-                tiles.Add(bottomLeft.gameObject);
+                tiles.Add(bottomLeft);
                 bottomLeft.name = "(I)" + " (" + j + ")";
-                bottomLeft.GetComponent<IsoTransform>().Position = new Vector3(-1, 0.6f, y);
+                bottomLeft.GetComponent<IsoTransform>().Position = new Vector3(posX - 1, posZ + 0.6f, posY + y);
                 bottomLeft.GetComponent<IsoTransform>().ShowBounds = true;
                 j++;
 
                 GameObject topRight = PrefabUtility.InstantiatePrefab(collider) as GameObject;
                 topRight.transform.parent = this.transform;
-                tiles.Add(topRight.gameObject);
+                tiles.Add(topRight);
                 topRight.name = "(I)" + " (" + j + ")";
-                topRight.GetComponent<IsoTransform>().Position = new Vector3(sizeY, 0.6f, y);
+                topRight.GetComponent<IsoTransform>().Position = new Vector3(posX + sizeX, posZ + 0.6f, posY + y);
                 topRight.GetComponent<IsoTransform>().ShowBounds = true;
                 j++;
             }
