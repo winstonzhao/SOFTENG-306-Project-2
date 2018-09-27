@@ -14,8 +14,13 @@ public class InstructionExecutor : MonoBehaviour
 
     void Start()
     {
-        var moveInstruction = new MoveInstruction(new Vector3(10, 10, 0), 2);
+        var moveInstruction = new MoveInstruction(new Vector3(1, 1, 0), 2, MoveType.Relative);
+        var jumpTarget = new JumpTargetInstruciton();
+        var jump = new JumpInstruction(jumpTarget);
+
+        instructions.Add(jumpTarget);
         instructions.Add(moveInstruction);
+        instructions.Add(jump);
 
         Play();
     }
@@ -43,7 +48,6 @@ public class InstructionExecutor : MonoBehaviour
     public void FailExecution(string message)
     {
         Debug.Log("Instruction Exception: " + message);
-
     }
 
     void Update()
