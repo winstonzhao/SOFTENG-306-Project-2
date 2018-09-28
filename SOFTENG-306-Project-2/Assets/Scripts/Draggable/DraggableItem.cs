@@ -59,8 +59,8 @@ public class DraggableItem : Draggable
 
             Vector3 diff = mousePosWorld - prevMousePos;
             //transform.Translate(diff);
-            Debug.Log("mouse at (iso): ");
-            Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
+            //Debug.Log("mouse at (iso): ");
+            //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
             GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.Translate(diff);
 
             if (dropZone != null) 
@@ -140,6 +140,7 @@ public class DraggableItem : Draggable
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("trigger enter");
         if (!dragging) return;
         
         var possibleDropZone = col.GetComponent<IDropZone>();
