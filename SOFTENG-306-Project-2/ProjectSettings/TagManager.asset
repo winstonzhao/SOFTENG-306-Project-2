@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Block1
+  - Block2
+  - LeftTile
+  - RightTile
+  - Tile
   layers:
   - Default
   - TransparentFX
@@ -43,6 +48,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 1238455367
+    locked: 0
+  - name: Gate
+    uniqueID: 2413584727
     locked: 0
   - name: Default
     uniqueID: 0
