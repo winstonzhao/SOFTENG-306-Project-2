@@ -17,23 +17,33 @@ public class SingleDropZone : MonoBehaviour, IDropZone
         }
         
     }
+    void OnMouseEnter()
+    {
+        Debug.Log("drop zone mouse entered");
+    }
 
     public void OnDragEnter(Draggable item)
     {
+        SetDropZoneActive(false);
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
     }
 
     public void OnDragExit(Draggable item)
     {
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        SetDropZoneActive(true);
     }
 
     public void OnDragFinish(Draggable item)
     {
         if (!item.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
         {
-            item.GetComponent<DraggableItem>().SetDropZone(null);
+            // disable if we need the snapback effect
+            //item.GetComponent<DraggableItem>().SetDropZone(null);
         }
+        SetDropZoneActive(false);
+
+        GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
     }
 
     public void OnDragStart(Draggable item)
@@ -62,5 +72,12 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     public bool CanDrop(Draggable item)
     {
         return true;
+    }
+    /*
+     * Enable or disable the drop zone by changing whether or not it can be hit by a ray cast
+     */
+    private void SetDropZoneActive(bool enable)
+    {
+        gameObject.layer = enable ? 1 : 2;
     }
 }
