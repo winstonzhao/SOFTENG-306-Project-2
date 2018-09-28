@@ -635,12 +635,12 @@ Prefab:
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: 2084044953
+      value: -1881382569
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayer
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
@@ -12272,7 +12272,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1238455367
-  m_SortingLayer: -3
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -14343,6 +14343,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fec9e3f5d44517a824b545d29a770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  block1: {fileID: 0}
+  block2: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
+  tile: {fileID: 0}
 --- !u!212 &1103041645
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14376,7 +14381,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2084044953
-  m_SortingLayer: -2
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300114, guid: 2426d9cb96de36d44bf4bbf8946e5620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -16846,12 +16851,12 @@ Prefab:
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: 2084044953
+      value: -1881382569
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayer
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
@@ -18368,12 +18373,12 @@ Prefab:
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: 2084044953
+      value: -1881382569
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayer
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
@@ -22662,6 +22667,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fec9e3f5d44517a824b545d29a770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  block1: {fileID: 0}
+  block2: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
+  tile: {fileID: 0}
 --- !u!61 &1637218459
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22720,7 +22730,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2084044953
-  m_SortingLayer: -2
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ba4ff427897294e41816e13bb0c704ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -23894,7 +23904,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1238455367
-  m_SortingLayer: -3
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbeb63a563edc483890ac6643a7543c0, type: 3}
   m_Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0}
@@ -26670,12 +26680,12 @@ Prefab:
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: 2084044953
+      value: -1881382569
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_SortingLayer
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
@@ -28838,7 +28848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowBounds: 1
-  _position: {x: 9, y: 0, z: 3}
+  _position: {x: 6.9117427, y: 0.47155285, z: 3}
   _size: {x: 1, y: 1, z: 1}
   _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
@@ -28849,7 +28859,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2031688761}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.24264, y: 4.2426405, z: 7.3484693}
+  m_LocalPosition: {x: 2.7660193, y: 3.9127069, z: 5.8339014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
