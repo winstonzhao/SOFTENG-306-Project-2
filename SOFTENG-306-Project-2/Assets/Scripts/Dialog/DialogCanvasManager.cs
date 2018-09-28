@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogCanvasManager : MonoBehaviour
 {
-    public Text DialogText;
-    public Text CharacterNameText;
-    public Image Avatar;
-    public GameObject TextPanel;
+    
     public Sprite LHSSprite;
     public Sprite RHSSprite;
 
+    private Image _avatar;
+    private Text _dialogText;
+    private Text _characterNameText;
+    private GameObject _textPanel;
     private Queue<DialogFrame> _dispatchQueue = new Queue<DialogFrame>();
     private bool _typingText = false;
     private DialogFrame _curShowingFrame;
@@ -38,13 +40,34 @@ public class DialogCanvasManager : MonoBehaviour
 
         Dialog dialog = new Dialog(frames);
 
-        _dialog = dialog;
-
-        ShowDialog(_dialog);
+        ShowDialog(dialog);
     }
 
     void ShowDialog(Dialog dialog)
     {
+        _dialog = dialog;
+
+        var textBoxPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Dialog/Text Panel.prefab");
+        var imagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Dialog/Image.prefab");
+    
+
+        GameObject textBox = Instantiate(textBoxPrefab, gameObject.transform);
+        _dialogText = textBox.transform.Find("Dialogue Text").gameObject.GetComponent<Text>();
+        _characterNameText = textBox.transform.Find("Character Name Text").gameObject.GetComponent<Text>();
+        _textPanel = textBox;
+
+        GameObject image = Instantiate(imagePrefab, gameObject.transform);
+        _avatar = image.gameObject.GetComponent<Image>();
+
+        if (dialog.DirMap[dialog.DialogFrames[0].Name] == "RHS")
+        {
+            SetupRHS();
+        } else
+        {
+            SetupLHS();
+        }
+
+
         foreach (var dialogFrame in dialog.DialogFrames)
         {
             this._dispatchQueue.Enqueue(dialogFrame);
@@ -53,14 +76,38 @@ public class DialogCanvasManager : MonoBehaviour
         NextSentence();
     }
 
+    private void SetupLHS()
+    {
+        _avatar.sprite = LHSSprite;
+        Vector3 position = _avatar.GetComponent<RectTransform>().position;
+        position[0] = -6;
+        _avatar.GetComponent<RectTransform>().position = position;
+
+        position = _textPanel.GetComponent<RectTransform>().position;
+        position[0] = -6;
+        _textPanel.GetComponent<RectTransform>().position = position;
+    }
+
+    private void SetupRHS()
+    {
+        _avatar.sprite = RHSSprite;
+        Vector3 position = _avatar.GetComponent<RectTransform>().position;
+        position[0] = 6;
+        _avatar.GetComponent<RectTransform>().position = position;
+
+        position = _textPanel.GetComponent<RectTransform>().position;
+        position[0] = -10;
+        _textPanel.GetComponent<RectTransform>().position = position;
+    }
+
     private IEnumerator RenderFrame(DialogFrame frame)
     {
         _typingText = true;
         _curShowingFrame = frame;
-        DialogText.text = "";
+        _dialogText.text = "";
         foreach (var c in frame.Text)
         {
-            DialogText.text += c;
+            _dialogText.text += c;
             yield return null;
         }
 
@@ -79,7 +126,7 @@ public class DialogCanvasManager : MonoBehaviour
         if (_typingText == true)
         {
             _typingText = false;
-            DialogText.text = _curShowingFrame.Text;
+            _dialogText.text = _curShowingFrame.Text;
             return;
         }
         
@@ -90,7 +137,7 @@ public class DialogCanvasManager : MonoBehaviour
 
             CheckChangeSides(currentFrame);
 
-            CharacterNameText.text = _dialog.NameMap[currentFrame.Name];
+            _characterNameText.text = _dialog.NameMap[currentFrame.Name];
             StartCoroutine(RenderFrame(currentFrame));
         }
         else
@@ -101,19 +148,15 @@ public class DialogCanvasManager : MonoBehaviour
 
     void CheckChangeSides(DialogFrame frame)
     {
-        Vector3 curPos = Avatar.GetComponent<RectTransform>().position;
+        Vector3 curPos = _avatar.GetComponent<RectTransform>().position;
         
         if (_dialog.DirMap[frame.Name] == "RHS" && curPos.x < 0)
         {
-            Avatar.sprite = RHSSprite;
-            Avatar.GetComponent<RectTransform>().position += Vector3.right * 10;
-            TextPanel.GetComponent<RectTransform>().position += Vector3.left * 4;
+            SetupRHS();
         }
         if (_dialog.DirMap[frame.Name] == "LHS" && curPos.x > 0)
         {
-            Avatar.sprite = LHSSprite;
-            Avatar.GetComponent<RectTransform>().position -= Vector3.right * 10;
-            TextPanel.GetComponent<RectTransform>().position -= Vector3.left * 4;
+            SetupLHS();
         }
     }
 
@@ -122,7 +165,7 @@ public class DialogCanvasManager : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            Debug.Log(Avatar.GetComponent<RectTransform>().position);
+            Debug.Log(_avatar.GetComponent<RectTransform>().position);
             NextSentence();
         }
     }
