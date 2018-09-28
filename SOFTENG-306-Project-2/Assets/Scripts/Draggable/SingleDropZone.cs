@@ -1,19 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
+//[RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZone : MonoBehaviour, IDropZone
 {
     private Draggable currentItem;
 
     public void Start()
     {
+        
         var rigidbody = GetComponent<Rigidbody2D>();
         if (rigidbody == null)
         {
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }
+        
     }
 
     public void OnDragEnter(Draggable item)
@@ -36,7 +38,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-
+        GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
     }
 
     public void OnDrop(Draggable item)
@@ -44,6 +46,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
         currentItem = item;
         currentItem.HomePos = transform.position;
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
     }
 
     public void OnItemDrag(Draggable item)

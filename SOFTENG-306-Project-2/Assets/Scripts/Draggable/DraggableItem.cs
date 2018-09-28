@@ -69,13 +69,20 @@ public class DraggableItem : Draggable
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        //Debug.Log("mouse at (iso): ");
+        //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition));
+
         if (dragging)
         {
             Vector3 localMousePos = Input.mousePosition;
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
 
             Vector3 diff = mousePosWorld - prevMousePos;
-            transform.Translate(diff);
+            //transform.Translate(diff);
+            Debug.Log("mouse at (iso): ");
+            Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
+            GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.Translate(diff);
 
             if (dropZone != null) 
             {
@@ -85,10 +92,12 @@ public class DraggableItem : Draggable
             prevMousePos = mousePosWorld;
         }
 
+
         if (moving)
         {
             transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-
+            //GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
+            
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
                 moving = false;
@@ -98,11 +107,13 @@ public class DraggableItem : Draggable
 
     void OnMouseEnter()
     {
+        Debug.Log("mouse enter");
         mouseInside = true;
     }
 
     void OnMouseLeave()
     {
+        Debug.Log("mouse leave");
         mouseInside = false;
     }
 
@@ -111,9 +122,12 @@ public class DraggableItem : Draggable
         if (!mouseInside) return;
         dragging = true;
         moving = false;
+        GetComponent<SpriteRenderer>().sortingOrder = 1;
         Vector3 mousePos = Input.mousePosition;
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
         prevMousePos = mousePosWorld;
+
+        Debug.Log("mouse clicked");
 
         if (dropZone != null)
         {
@@ -207,5 +221,6 @@ public class DraggableItem : Draggable
 
         moving = true;
         target = newPos;
+        GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
 }
