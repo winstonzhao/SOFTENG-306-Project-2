@@ -20,4 +20,5 @@ public interface IDropZone
 
     // An item has been allocated to another drop zone
     void OnItemRemove(Draggable item);
+
 }
