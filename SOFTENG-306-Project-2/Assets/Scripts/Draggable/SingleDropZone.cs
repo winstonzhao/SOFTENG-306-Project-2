@@ -1,9 +1,16 @@
 using UnityEngine;
+using UnityEditor;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
 
 [RequireComponent(typeof(Collider2D))]
 //[RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZone : MonoBehaviour, IDropZone
 {
+
+    private  GameObject child;
+
+    public string prefebName;
+
     private Draggable currentItem;
 
     public void Start()
@@ -15,11 +22,31 @@ public class SingleDropZone : MonoBehaviour, IDropZone
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }
-        
+
+        createPrefeb();
     }
+
+    void createPrefeb()
+    {
+        if (prefebName != "")
+        {
+            // instantiate
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/civil_road_tile.prefab", typeof(GameObject));
+            child = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            child.GetComponent<DraggableItem>().SetDropZone(this);
+            child.GetComponent<DraggableItem>().homePos = transform.position;
+            Debug.Log(child.GetComponent<DraggableItem>().homePos);
+            if (child)
+            {
+                Debug.Log("new prefeb created");
+            }
+            
+        }
+    }
+
     void OnMouseEnter()
     {
-        Debug.Log("drop zone mouse entered");
+        //Debug.Log("drop zone mouse entered");
     }
 
     public void OnDragEnter(Draggable item)
@@ -32,6 +59,9 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     {
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
         SetDropZoneActive(true);
+        Debug.Log("Dragged away");
+        createPrefeb();
+
     }
 
     public void OnDragFinish(Draggable item)

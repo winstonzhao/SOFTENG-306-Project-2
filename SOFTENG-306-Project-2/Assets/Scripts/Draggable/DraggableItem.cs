@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
 
 public class DraggableItem : Draggable
 {
@@ -82,7 +83,7 @@ public class DraggableItem : Draggable
             //transform.Translate(diff);
             //Debug.Log("mouse at (iso): ");
             //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
-            GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.Translate(diff);
+            GetComponent<IsoTransform>().transform.Translate(diff);
 
             if (dropZone != null) 
             {
@@ -107,13 +108,13 @@ public class DraggableItem : Draggable
 
     void OnMouseEnter()
     {
-        Debug.Log("mouse enter");
+        //Debug.Log("mouse enter");
         mouseInside = true;
     }
 
     void OnMouseLeave()
     {
-        Debug.Log("mouse leave");
+        //Debug.Log("mouse leave");
         mouseInside = false;
     }
 
@@ -127,7 +128,7 @@ public class DraggableItem : Draggable
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
         prevMousePos = mousePosWorld;
 
-        Debug.Log("mouse clicked");
+        //Debug.Log("mouse clicked");
 
         if (dropZone != null)
         {
@@ -175,7 +176,7 @@ public class DraggableItem : Draggable
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("trigger enter");
+        //Debug.Log("trigger enter");
         if (!dragging) return;
     
         var possibleDropZone = col.GetComponent<IDropZone>();
@@ -216,7 +217,7 @@ public class DraggableItem : Draggable
     }
 
 
-    void MoveTo(Vector3 newPos)
+   public void MoveTo(Vector3 newPos)
     {
         if (dropZone == null) return;
 
