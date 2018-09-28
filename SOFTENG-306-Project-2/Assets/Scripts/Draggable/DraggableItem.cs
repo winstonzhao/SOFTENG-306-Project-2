@@ -34,6 +34,8 @@ public class DraggableItem : Draggable
         }
     }
 
+    public override float Width { get; set; }
+
     // Use this for initialization
     void Start()
     {
@@ -129,7 +131,7 @@ public class DraggableItem : Draggable
         if (!dragging) return;
         
         var possibleDropZone = col.GetComponent<IDropZone>();
-        if (possibleDropZone == null) return;
+        if (possibleDropZone == null || !possibleDropZone.CanDrop(this)) return;
         
         foreach(var dropZone in newDropZones)
         {

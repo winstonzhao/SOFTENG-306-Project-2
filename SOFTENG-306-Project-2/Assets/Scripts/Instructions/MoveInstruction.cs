@@ -5,7 +5,7 @@ public enum MoveType
     Absolute, Relative
 }
 
-public class MoveInstruction : IInstruction
+public class MoveInstruction : Instruction
 {
     private InstructionExecutor instructionExecutor;
     private Instructable target;
@@ -15,26 +15,27 @@ public class MoveInstruction : IInstruction
     private Vector3 start;
     private Vector3 end;
 
-    private Vector3 moveTarget;
+    public Vector3 moveTarget;
 
-    private float time;
+    public float seconds;
 
     private bool moving;
 
-    private MoveType moveType;
+    public MoveType moveType;
 
-    public MoveInstruction(Vector3 point, float seconds, MoveType moveType = MoveType.Absolute)
+    public override string Name
     {
-        moveTarget = point;
-        time = seconds;
-        this.moveType = moveType;
+        get
+        {
+            return "Move " + moveTarget.x + ", " + moveTarget.y;
+        }
     }
 
-    public void Update()
+    public override void UpdateInstruction()
     {
         if (moving) 
         {
-            t += Time.deltaTime/time;
+            t += Time.deltaTime/seconds;
 
             target.transform.position = Vector3.Lerp(start, end, t);
 
@@ -46,7 +47,7 @@ public class MoveInstruction : IInstruction
         }
     }
 
-    public void Execute(Instructable target, InstructionExecutor executor)
+    public override void Execute(Instructable target, InstructionExecutor executor)
     {
         instructionExecutor = executor;
         this.target = target;

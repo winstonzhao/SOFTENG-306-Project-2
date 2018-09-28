@@ -1,24 +1,27 @@
 using UnityEngine;
 
-public class JumpInstruction : IInstruction
+public class JumpInstruction : Instruction
 {
     private InstructionExecutor instructionExecutor;
     private Instructable target;
 
-    private JumpTargetInstruciton jumpTarget;
+    public JumpTargetInstruction jumpTarget;
 
-    public JumpInstruction(JumpTargetInstruciton jumpTarget)
+    public override string Name
     {
-        this.jumpTarget = jumpTarget;
+        get
+        {
+            return "Jump";
+        }
     }
 
-    public void Execute(Instructable target, InstructionExecutor executor)
+    public override void Execute(Instructable target, InstructionExecutor executor)
     {
         instructionExecutor = executor;
         this.target = target;
     }
 
-    public void Update()
+    public override void UpdateInstruction()
     {
         instructionExecutor.JumpToInstruction(jumpTarget);
         instructionExecutor.ExecuteNextInstruction();

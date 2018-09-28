@@ -20,4 +20,7 @@ public interface IDropZone
 
     // An item has been allocated to another drop zone
     void OnItemRemove(Draggable item);
+
+    // Returns true if the given item can be dropped on this drop zone, false otherwise
+    bool CanDrop(Draggable item);
 }
