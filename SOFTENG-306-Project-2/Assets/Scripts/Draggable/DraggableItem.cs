@@ -53,7 +53,11 @@ public class DraggableItem : Draggable
         dropZone = newDropZone;
     }
 
+<<<<<<< HEAD
     public void AddConnectedItem(DraggableItem item)
+=======
+    public override void SetDropZone(IDropZone list)
+>>>>>>> 055025d... Changed calls to GetComponent to execute once only
     {
         connectedItems.Add(item);
     }

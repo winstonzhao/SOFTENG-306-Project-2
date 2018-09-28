@@ -15,10 +15,6 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
-    public SquareResizer mainObject;
-
-    public List<string> strings;
-
     public bool CopyOnDrag = true;
 
     [SerializeField]
