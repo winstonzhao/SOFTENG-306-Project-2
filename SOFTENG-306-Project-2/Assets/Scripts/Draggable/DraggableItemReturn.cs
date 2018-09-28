@@ -19,6 +19,12 @@ public class DraggableItemReturn : Draggable
     private float moveSeconds = 5;
     private float moveTimer = 0;
 
+    public GameObject block1;
+    public GameObject block2;
+    public GameObject left;
+    public GameObject right;
+    public GameObject tile;
+
     Vector3 prevMousePos;
 
     private Vector3 homePos;
@@ -42,6 +48,13 @@ public class DraggableItemReturn : Draggable
     void Start()
     {
         startPosition = transform.position;
+
+
+        block1 = GameObject.Find("Block1");
+        block2 = GameObject.Find("Block2");
+        left = GameObject.Find("LeftTile");
+        right = GameObject.Find("RightTile");
+        tile = GameObject.Find("Tile");
     }
 
     public void SetDropZone(IDropZone list)
