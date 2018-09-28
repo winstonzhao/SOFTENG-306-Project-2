@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(IsoCollider))]
 //[RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZone : MonoBehaviour, IDropZone
 {
@@ -31,7 +31,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
         if (prefebName != "")
         {
             // instantiate
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/civil_road_tile.prefab", typeof(GameObject));
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/" + prefebName + ".prefab", typeof(GameObject));
             child = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
             child.GetComponent<DraggableItem>().SetDropZone(this);
             child.GetComponent<DraggableItem>().homePos = transform.position;
@@ -60,17 +60,17 @@ public class SingleDropZone : MonoBehaviour, IDropZone
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
         SetDropZoneActive(true);
         Debug.Log("Dragged away");
-        createPrefeb();
+        
 
     }
 
     public void OnDragFinish(Draggable item)
     {
-        if (!item.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
-        {
-            // disable if we need the snapback effect
-            //item.GetComponent<DraggableItem>().SetDropZone(null);
-        }
+        //if (!item.GetComponent<IsoCollider>().GetComponent<Collider>().IsTouching(GetComponent<IsoCollider>()))
+        //{
+        //    // disable if we need the snapback effect
+        //    //item.GetComponent<DraggableItem>().SetDropZone(null);
+        //}
         SetDropZoneActive(false);
 
         GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
@@ -97,6 +97,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     public void OnItemRemove(Draggable item)
     {
         currentItem = null;
+        createPrefeb();
     }
 
     /*
