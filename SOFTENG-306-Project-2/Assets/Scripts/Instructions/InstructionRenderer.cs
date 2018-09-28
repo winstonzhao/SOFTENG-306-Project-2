@@ -13,7 +13,10 @@ public class InstructionRenderer : MonoBehaviour
     void OnEnable()
     {
         if (instruction == null)
+        {
             instruction = FindObjectOfType<Instruction>();
+        }
+        
         UpdateSize();
     }
 

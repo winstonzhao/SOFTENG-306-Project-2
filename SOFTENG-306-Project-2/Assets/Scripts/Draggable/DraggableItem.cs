@@ -17,6 +17,8 @@ public class DraggableItem : Draggable
 
     Vector3 prevMousePos;
 
+    private List<DraggableItem> connectedItems = new List<DraggableItem>();
+
     private Vector3 homePos;
     public override Vector3 HomePos
     {
@@ -45,6 +47,11 @@ public class DraggableItem : Draggable
     public override void SetDropZone(IDropZone list)
     {
         this.dropZone = list;
+    }
+
+    public void AddConnectedItem(DraggableItem item)
+    {
+        connectedItems.Add(item);
     }
 
     // Update is called once per frame
@@ -112,8 +119,7 @@ public class DraggableItem : Draggable
                 dropZone.OnItemRemove(this);
             }
             
-            newDropZones[0].OnDrop(this);
-            dropZone = newDropZones[0];
+            OnDrop(newDropZones[0]);
             newDropZones.Clear();
         }
         else
@@ -124,6 +130,18 @@ public class DraggableItem : Draggable
             }
         }
         MoveTo(homePos);
+    }
+
+    private void OnDrop(IDropZone newDropZone)
+    {
+        newDropZone.OnDrop(this);
+        dropZone = newDropZone;
+        foreach (var item in connectedItems)
+        {
+            newDropZone.OnDrop(item);
+            item.dropZone = newDropZone;
+            item.MoveTo(item.HomePos);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
