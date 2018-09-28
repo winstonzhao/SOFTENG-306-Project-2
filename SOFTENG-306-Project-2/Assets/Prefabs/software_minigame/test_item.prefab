@@ -10,8 +10,9 @@ GameObject:
   - component: {fileID: 435170}
   - component: {fileID: 11499940}
   - component: {fileID: 21282912}
+  - component: {fileID: 114722483926570720}
   m_Layer: 0
-  m_Name: platformerTile_36
+  m_Name: test_item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 122930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.04, y: 0.9, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,7 +45,7 @@ MonoBehaviour:
   ShowBounds: 0
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
+  _scale: {x: 1.04, y: 0.9, z: 1}
   _parent: {fileID: 0}
 --- !u!212 &21282912
 SpriteRenderer:
@@ -103,3 +104,15 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 122930}
   m_IsPrefabAsset: 1
+--- !u!114 &114722483926570720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}

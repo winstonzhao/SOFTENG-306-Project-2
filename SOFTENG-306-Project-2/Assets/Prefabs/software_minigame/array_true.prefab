@@ -10,6 +10,7 @@ GameObject:
   - component: {fileID: 495968}
   - component: {fileID: 11406238}
   - component: {fileID: 21270502}
+  - component: {fileID: 114592077474012444}
   m_Layer: 0
   m_Name: array_true
   m_TagString: Untagged
@@ -103,3 +104,15 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 187908}
   m_IsPrefabAsset: 1
+--- !u!114 &114592077474012444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
