@@ -9,7 +9,7 @@ public class BaseFloorGenerator : MonoBehaviour
 {
     public String Prefix = "Floor Tile";
 
-    public Object Prefab;
+    public GameObject Prefab;
 
     public int SizeX = 16;
 
@@ -26,15 +26,12 @@ public class BaseFloorGenerator : MonoBehaviour
 
     public void RePaint()
     {
-        // Delete this shit 100 times cuz I swear it doesn't delete them all sometimes
-        for (var i = 0; i < 100; i++)
-        {
+        while (transform.childCount != 0) {
             foreach (Transform child in transform)
             {
                 DestroyImmediate(child.gameObject);
             }
         }
-
         GenerateFloor();
     }
 
@@ -61,7 +58,7 @@ public class BaseFloorGenerator : MonoBehaviour
             {
                 var x = parentX + dx;
                 var z = parentZ + dz;
-                var inserted = Insert(Prefab, Prefix + " (" + x + ", " + z + ")", x, Y, z);
+                var inserted = Insert(Prefab, Prefix + " (" + x + ", " + z + ")", x, Y + parentY, z);
                 height = inserted.GetComponent<IsoTransform>().Size.y;
             }
         }
@@ -73,16 +70,16 @@ public class BaseFloorGenerator : MonoBehaviour
             var fromZ = parentZ;
             var toZ = parentZ + SizeZ;
 
-            Insert(collider, "Collider Top Left", fromX + SizeX / 2.0f, height, toZ + 1)
+            Insert(collider, "Collider Top Left", fromX + SizeX / 2.0f, height + parentY, toZ + 1)
                 .GetComponent<IsoTransform>().Size = new Vector3(SizeX + 1.0f, 1.0f, 1.0f);
 
-            Insert(collider, "Collider Bottom Right", fromX + SizeX / 2.0f, height, fromZ - 1)
+            Insert(collider, "Collider Bottom Right", fromX + SizeX / 2.0f, height + parentY, fromZ - 1)
                 .GetComponent<IsoTransform>().Size = new Vector3(SizeX + 1.0f, 1.0f, 1.0f);
 
-            Insert(collider, "Collider Bottom Left", fromX - 1.0f, height, fromZ + SizeZ / 2.0f)
+            Insert(collider, "Collider Bottom Left", fromX - 1.0f, height + parentY, fromZ + SizeZ / 2.0f)
                 .GetComponent<IsoTransform>().Size = new Vector3(1.0f, 1.0f, SizeZ + 1.0f);
 
-            Insert(collider, "Collider Top Right", toX + 1.0f, height, fromZ + SizeZ / 2.0f)
+            Insert(collider, "Collider Top Right", toX + 1.0f, height + parentY, fromZ + SizeZ / 2.0f)
                 .GetComponent<IsoTransform>().Size = new Vector3(1.0f, 1.0f, SizeZ + 1.0f);
         }
     }
