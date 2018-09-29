@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZoneReturn : MonoBehaviour, IDropZone
 {
+    public Sprite newSprite;
     private Draggable currentItem;
 
     public void Start()
@@ -44,6 +45,14 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
         currentItem = item;
         currentItem.HomePos = transform.position;
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
+
+        GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
+
+        foreach (GameObject circ in circuitPieces) {
+            circ.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+
     }
 
     public void OnItemDrag(Draggable item)

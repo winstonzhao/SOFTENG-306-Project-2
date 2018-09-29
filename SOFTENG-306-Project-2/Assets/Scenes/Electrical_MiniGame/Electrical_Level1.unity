@@ -279,6 +279,10 @@ Prefab:
       propertyPath: m_Name
       value: circuit (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
+      propertyPath: m_TagString
+      value: Circuit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -1129,14 +1133,14 @@ GameObject:
   - component: {fileID: 65161751}
   m_Layer: 0
   m_Name: lightbulb_1
-  m_TagString: Untagged
+  m_TagString: Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &65161750
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 65161749}
@@ -1209,114 +1213,6 @@ MonoBehaviour:
   _size: {x: 1, y: 1, z: 1}
   _scale: {x: 1.5, y: 1.5, z: 1.5}
   _parent: {fileID: 0}
---- !u!1001 &70569083
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 182346021}
-    m_Modifications:
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2.676749
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -1.2122483
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -28.646605
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.5943396
-      objectReference: {fileID: 0}
-    - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.17101279
-      objectReference: {fileID: 0}
-    - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.17101279
-      objectReference: {fileID: 0}
-    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: _position.x
-      value: 7.4975986
-      objectReference: {fileID: 0}
-    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: _position.y
-      value: 0.64733267
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: _scale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: _scale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: _scale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
-        type: 2}
-      propertyPath: _position.z
-      value: 1.8093717
-      objectReference: {fileID: 0}
-    - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-      propertyPath: m_Name
-      value: circuit (3)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
-  m_IsPrefabAsset: 0
---- !u!4 &70569084 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
-    type: 2}
-  m_PrefabInternal: {fileID: 70569083}
 --- !u!1001 &79231542
 Prefab:
   m_ObjectHideFlags: 0
@@ -2553,7 +2449,6 @@ Transform:
   - {fileID: 2028013624}
   - {fileID: 3958422}
   - {fileID: 660499677}
-  - {fileID: 70569084}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7627,17 +7522,17 @@ Prefab:
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.5943396
+      value: 0.36862746
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.17101279
+      value: 0.050980397
       objectReference: {fileID: 0}
     - target: {fileID: 212875623961403778, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.17101279
+      value: 0.08627451
       objectReference: {fileID: 0}
     - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
         type: 2}
@@ -7684,6 +7579,10 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: circuit (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
+      propertyPath: m_TagString
+      value: Circuit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -16183,7 +16082,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1328941210
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1328941205}
@@ -16325,7 +16224,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!4 &1349845559
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1349845557}
@@ -19082,7 +18981,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1547901312
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1547901311}
@@ -21184,6 +21083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651f83cba0c41479eab347d18772797d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newSprite: {fileID: 21300000, guid: 924e19c3808c23246b0082351663f40f, type: 3}
 --- !u!61 &1697961530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21293,7 +21193,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1697961534
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1697961528}
@@ -21396,7 +21296,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1711452043
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1711452039}
@@ -22810,7 +22710,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!4 &1821804503
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1821804501}
@@ -24230,7 +24130,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1954344599
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1954344596}
@@ -25345,6 +25245,10 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: circuit
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
+      propertyPath: m_TagString
+      value: Circuit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
