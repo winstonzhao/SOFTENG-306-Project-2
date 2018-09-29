@@ -19,6 +19,10 @@ public class DraggableItem : Draggable
 
     private List<DraggableItem> connectedItems = new List<DraggableItem>();
 
+    public delegate void OnDropZoneChangedDelegate(IDropZone dropZone);
+
+    public OnDropZoneChangedDelegate OnDropZoneChanged;
+
     private Vector3 homePos;
     public override Vector3 HomePos
     {
@@ -46,7 +50,7 @@ public class DraggableItem : Draggable
 
     public override void SetDropZone(IDropZone list)
     {
-        this.dropZone = list;
+        OnDrop(list);
     }
 
     public void AddConnectedItem(DraggableItem item)
@@ -112,11 +116,12 @@ public class DraggableItem : Draggable
     void OnMouseUp()
     {
         dragging = false;
-        if (newDropZones.Count > 0)
+        if (newDropZones.Count > 0 && newDropZones[0] != dropZone)
         {
             if (dropZone != null) 
             {
                 dropZone.OnItemRemove(this);
+                connectedItems.ForEach(i => dropZone.OnItemRemove(i));
             }
             
             OnDrop(newDropZones[0]);
@@ -135,13 +140,15 @@ public class DraggableItem : Draggable
     private void OnDrop(IDropZone newDropZone)
     {
         newDropZone.OnDrop(this);
-        dropZone = newDropZone;
+        if (OnDropZoneChanged != null) OnDropZoneChanged(newDropZone);
+
         foreach (var item in connectedItems)
         {
             newDropZone.OnDrop(item);
             item.dropZone = newDropZone;
             item.MoveTo(item.HomePos);
         }
+        dropZone = newDropZone;
     }
 
     void OnTriggerEnter2D(Collider2D col)

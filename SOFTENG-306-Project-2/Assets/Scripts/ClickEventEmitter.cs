@@ -1,14 +1,9 @@
 public class ClickEventEmitter : EventEmitter
 {
-    private EventHandler eventHandler;
-
-    public override void SetEventHandler(EventHandler handler)
-    {
-        eventHandler = handler;
-    }
+    public EventHandlerDelegate EventHandler;
 
     public void OnMouseDown()
     {
-        eventHandler();
+        EventHandler();
     }
 }

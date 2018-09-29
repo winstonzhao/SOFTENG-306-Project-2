@@ -4,8 +4,6 @@ using UnityEngine;
 public class JumpInstruction : Instruction
 {
     private InstructionExecutor instructionExecutor;
-    private Instructable target;
-
     private JumpTargetInstruction jumpTarget;
 
     public override string Name
@@ -20,14 +18,23 @@ public class JumpInstruction : Instruction
     {
         var prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/JumpTarget.prefab", typeof(GameObject));
         var gameObj = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+
         jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
-        GetComponent<DraggableItem>().AddConnectedItem(gameObj.GetComponent<DraggableItem>());
+        jumpTarget.transform.position = transform.position;
+
+        var targetDraggable = gameObj.GetComponent<DraggableItem>();
+
+        var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
+        targetRenderer.IsEnabled = false;
+
+        var draggableItem = GetComponent<DraggableItem>();
+        draggableItem.AddConnectedItem(targetDraggable);
+        draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
     }
 
     public override void Execute(Instructable target, InstructionExecutor executor)
     {
         instructionExecutor = executor;
-        this.target = target;
     }
 
     public override void UpdateInstruction()

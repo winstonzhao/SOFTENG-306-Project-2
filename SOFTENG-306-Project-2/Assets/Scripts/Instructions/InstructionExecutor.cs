@@ -28,7 +28,7 @@ public class InstructionExecutor : MonoBehaviour
         draggableList.Rearrangeable = true;
         draggableList.CopyOnDrag = false;
 
-        playButton.SetEventHandler(Play);
+        playButton.EventHandler += Play;
 
         // var moveInstruction = new MoveInstruction(new Vector3(1, 1, 0), 2, MoveType.Relative);
         // var jumpTarget = new JumpTargetInstruciton();
