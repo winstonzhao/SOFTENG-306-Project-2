@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -6,6 +7,7 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
 {
     public Sprite newSprite;
     private Draggable currentItem;
+    public Canvas endOfLevelCanvas;
 
     public void Start()
     {
@@ -53,6 +55,20 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
             circ.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
+        
+
+        StartCoroutine(endOfLevel((myReturnValue) => {
+            if (myReturnValue) { endOfLevelCanvas.enabled = true; }
+        }));
+
+    }
+
+    private IEnumerator endOfLevel(System.Action<bool> callback)
+    {
+        yield return new WaitForSeconds(2);
+        callback(true);
+       
+ 
     }
 
     public void OnItemDrag(Draggable item)
