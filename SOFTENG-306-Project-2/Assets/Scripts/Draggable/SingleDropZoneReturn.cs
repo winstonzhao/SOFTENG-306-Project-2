@@ -50,7 +50,7 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
         GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
 
         foreach (GameObject circ in circuitPieces) {
-            circ.GetComponent<SpriteRenderer>().color = Color.green;
+            circ.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
     }
