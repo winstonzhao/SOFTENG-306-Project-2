@@ -4,13 +4,13 @@ using System.Collections.Generic;
 public class Dialog
 {
     
-    private DialogFrame[] _dialogFrames;
+    private DialogFrame _startFrame;
     private Dictionary<int, string> _nameMap;
     private Dictionary<int, string> _dirMap;
 
-    public Dialog(DialogFrame[] dialogFrames)
+    public Dialog(DialogFrame startFrame)
     {
-        _dialogFrames = dialogFrames;
+        _startFrame = startFrame;
         _nameMap = new Dictionary<int, string>();
         _dirMap = new Dictionary<int, string>();
         _nameMap[0] = "Mince Casserole";
@@ -19,9 +19,9 @@ public class Dialog
         _dirMap[1] = "RHS";
     }
 
-    public DialogFrame[] DialogFrames
+    public DialogFrame StartFrame
     {
-        get { return _dialogFrames; }
+        get { return _startFrame; }
     }
 
     public Dictionary<int, string> NameMap
