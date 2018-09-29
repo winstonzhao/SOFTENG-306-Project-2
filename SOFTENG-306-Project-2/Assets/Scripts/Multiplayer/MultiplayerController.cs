@@ -9,6 +9,9 @@ namespace Multiplayer
     {
         public bool Enabled;
 
+        /// <summary>
+        /// The time in seconds to wait before syncing local player data to the server 
+        /// </summary>
         public float SyncPeriod = 0.3f;
 
         private bool Connected;
