@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-using Ultimate_Isometric_Toolkit.Scripts.Core;
+using UltimateIsometricToolkit.physics;
 
 [RequireComponent(typeof(IsoCollider))]
 //[RequireComponent(typeof(Rigidbody2D))]
