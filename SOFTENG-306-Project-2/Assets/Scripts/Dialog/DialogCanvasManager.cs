@@ -213,8 +213,16 @@ public class DialogCanvasManager : MonoBehaviour
     {
         if (Input.GetKeyDown("space") && _showing)
         {
-            Debug.Log(_avatar.GetComponent<RectTransform>().position);
             NextSentence();
+        }
+
+        for (int i = 1; i <= 4; i++)
+        {
+            if (Input.GetKeyDown(i.ToString()) && _currentFrame.ButtonFrame)
+            {
+                Button button = _textPanel.transform.Find("Button " + i).gameObject.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
         }
     }
 
