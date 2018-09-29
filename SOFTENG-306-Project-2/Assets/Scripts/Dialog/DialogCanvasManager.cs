@@ -45,35 +45,38 @@ public class DialogCanvasManager : MonoBehaviour
 
     private void SetupLHS()
     {
-        float offset = Math.Abs(Screen.width - 703);
+        float multiplier = GetComponent<RectTransform>().localScale.x;
+        float avatarWidth = _avatar.GetComponent<RectTransform>().rect.width;
+        Debug.Log(multiplier);
+        Debug.Log(avatarWidth);
         _avatar.sprite = _lhsSprite;
         Vector3 position = _avatar.GetComponent<RectTransform>().position;
-        position[0] = 150;
-        position[1] = 50;
+        position[0] = 100 * multiplier;
+        position[1] = 75 * multiplier;
         position[2] = 0;
         _avatar.GetComponent<RectTransform>().position = position;
 
         position = _textPanel.GetComponent<RectTransform>().position;
-        position[0] = 150;
-        position[1] = 50;
+        position[0] = 100 * multiplier;
+        position[1] = 75 * multiplier;
         position[2] = 0;
         _textPanel.GetComponent<RectTransform>().position = position;
     }
 
     private void SetupRHS()
     {
-        float offset = Math.Abs(Screen.width - 703);
-        float multiplier = Screen.width / 703;
+        float multiplier = GetComponent<RectTransform>().localScale.x;
+        float avatarWidth = _avatar.GetComponent<RectTransform>().rect.width;
         _avatar.sprite = _rhsSprite;
         Vector3 position = _avatar.GetComponent<RectTransform>().position;
-        position[0] = 550 + offset;
-        position[1] = 50;
+        position[0] = 700 * multiplier;
+        position[1] = 75 * multiplier;
         position[2] = 0;
         _avatar.GetComponent<RectTransform>().position = position;
 
         position = _textPanel.GetComponent<RectTransform>().position;
-        position[0] = 0;
-        position[1] = 50;
+        position[0] = 50 * multiplier;
+        position[1] = 75 * multiplier;
         position[2] = 0;
         _textPanel.GetComponent<RectTransform>().position = position;
     }
