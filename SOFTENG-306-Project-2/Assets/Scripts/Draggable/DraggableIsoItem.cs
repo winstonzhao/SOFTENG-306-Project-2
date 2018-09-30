@@ -77,9 +77,9 @@ public class DraggableIsoItem : Draggable
 
         if (moving)
         {
-            transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            //GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-
+            //transform.position = Vector3.Lerp(transform.position, target, 0.1f);
+            //GetComponent<IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
+            GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
                 moving = false;
