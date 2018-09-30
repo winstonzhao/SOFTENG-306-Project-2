@@ -15,6 +15,11 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core {
 	/// </summary>
 	[ExecuteInEditMode, DisallowMultipleComponent,AddComponentMenu("UIT/IsoTransform")]
 	public class IsoTransform : MonoBehaviour {
+		
+		public bool freezeX = false;
+		public bool freezeY = false;
+		public bool freezeZ = false;
+		
 		/// <summary>
 		/// Flag to toggle isometric bounds gizmos in scene gui
 		/// </summary>
@@ -38,7 +43,19 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core {
 			set {
 			
 				var delta = value - _position;
-				_position = value;
+				if (!freezeX)
+				{
+					_position.x = value.x;
+				}
+				if (!freezeY)
+				{
+					_position.y = value.y;
+				}				
+				if (!freezeZ)
+				{
+					_position.z = value.z;
+				}
+
 				isoSorting.Resolve(this);
 //#if UNITY_EDITOR
 //				EditorUtility.SetDirty(this);
