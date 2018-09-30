@@ -9110,7 +9110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 0
-  Speed: 0.5
+  Speed: 2
   Graph: {fileID: 1356280429}
   heuristic: 0
   Type: red
@@ -9159,7 +9159,7 @@ Animator:
   m_GameObject: {fileID: 515415457}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 47ec81d7450acfc40b630a57272b14ff, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2a9221274c116ee40849bfe341b42eff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -9229,7 +9229,7 @@ MonoBehaviour:
   freezeY: 1
   freezeZ: 0
   ShowBounds: 1
-  _position: {x: 11, y: 0.4, z: 0}
+  _position: {x: -1, y: 0.4, z: 7}
   _size: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &515415465
@@ -9239,7 +9239,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 515415457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.778174, y: 4.235498, z: 6.536097}
+  m_LocalPosition: {x: -5.656854, y: 2.46773, z: 3.4742343}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13741,7 +13741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &726673380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13896,7 +13896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 0
-  Speed: 0.5
+  Speed: 2
   Graph: {fileID: 1356280429}
   heuristic: 3
   Type: red
@@ -15946,15 +15946,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.0710673
+      value: 8.485281
       objectReference: {fileID: 0}
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.4142131
+      value: 3.5355341
       objectReference: {fileID: 0}
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2.4494894
+      value: 6.1237245
       objectReference: {fileID: 0}
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalRotation.x
@@ -15994,7 +15994,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: _position.x
-      value: -3
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 21245996, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_Sprite
@@ -16023,15 +16023,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: _position.z
-      value: 7
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: _position.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
+      propertyPath: freezeZ
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
@@ -17345,7 +17349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 0
-  Speed: 5
+  Speed: 2
   Graph: {fileID: 1356280429}
   heuristic: 0
   Type: blue
@@ -22029,7 +22033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 0
-  Speed: 5
+  Speed: 2
   Graph: {fileID: 1356280429}
   heuristic: 0
   Type: blue
@@ -33825,7 +33829,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1763338278
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1763338277}
