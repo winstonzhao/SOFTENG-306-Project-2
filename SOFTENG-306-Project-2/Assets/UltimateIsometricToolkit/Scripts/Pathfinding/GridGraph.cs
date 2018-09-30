@@ -29,9 +29,11 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 		public float MaxScanHeight = 20;
 		public bool ShowGraph = false;
 		private Dictionary<Vector2, List<Gap>> _gridGraph = new Dictionary<Vector2, List<Gap>>(); 
-		public List<IsoTransform> Ignorables = new List<IsoTransform>(); 
-		#region Unity Callbacks 
-		void Start() {
+		public List<IsoTransform> Ignorables = new List<IsoTransform>();
+        public List<string> TraversableTiles = new List<string>();
+        public bool UseTraversableTile = false;
+        #region Unity Callbacks 
+        void Start() {
 			UpdateGraph();
 		}
 
@@ -91,8 +93,17 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 		}
 
 		public void UpdateGraph() {
-			_gridGraph = UpdateGraphInternal(FindObjectsOfType<IsoTransform>().Where(isoT => !Ignorables.Contains(isoT)));
-		}
+            if (UseTraversableTile)
+            {
+                _gridGraph = UpdateGraphInternal(FindObjectsOfType<IsoTransform>().Where(isoT => isoT.GetComponent<DraggableIsoItem>() != null && TraversableTiles.Contains(isoT.GetComponent<DraggableIsoItem>().name)));
+
+            }
+            else
+            {
+                _gridGraph = UpdateGraphInternal(FindObjectsOfType<IsoTransform>().Where(isoT => !Ignorables.Contains(isoT)));
+            }
+        }
+
 		private Dictionary<Vector2, List<Gap>> UpdateGraphInternal(IEnumerable<IsoTransform> worldObjects, float minAgentHeight = 0.5f) {
 			var raster = Rasterize(worldObjects);
 			var grid = new Dictionary<Vector2, List<Gap>>();

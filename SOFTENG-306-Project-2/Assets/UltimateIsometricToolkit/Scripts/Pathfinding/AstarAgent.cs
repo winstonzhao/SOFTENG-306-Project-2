@@ -14,12 +14,13 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 		public float Speed = 2; //units per second
 		public GridGraph Graph;
 		public Heuristic heuristic;
+        public string Type;
 
-		/// <summary>
-		/// Finds a path to given destination under a heuristic if such path exists
-		/// </summary>
-		/// <param name="destination"></param>
-		public void MoveTo(Vector3 destination) {
+        /// <summary>
+        /// Finds a path to given destination under a heuristic if such path exists
+        /// </summary>
+        /// <param name="destination"></param>
+        public void MoveTo(Vector3 destination) {
 			var astar = new Astar(GetFromEnum(heuristic));
 			
 			var startNode = Graph.ClosestNode(GetComponent<IsoTransform>().Position);
