@@ -10,49 +10,20 @@ public class RobotController : MonoBehaviour
 {
 
     private IsoTransform isoTransform;
-
-    private int[,] layoutMap;
-    private GameObject[,] objectMap;
-
-    private static int EMPTY = 0;
-    private static int ELEMENT = 1;
-    private static int PADDING = -1;
+    private SoftwareLevelGenerator generator;
 
     private int X = 1;
     private int Z = 1;
-    private int numElements = 6;
     private bool hasElement = false;
 
     private static string NO_ELEMENT = "Assets/Sprites/software_minigame/alienBeige 1.png";
     private static string HAS_ELEMENT = "Assets/Sprites/software_minigame/alienBeige 2.png";
-    private static string ELEMENT_PREFAB = "Assets/Prefabs/software_minigame/test_item.prefab";
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         isoTransform = this.GetComponent<IsoTransform>();
-
-        layoutMap = new int[11, 9]
-        {   {PADDING, PADDING, PADDING, PADDING, PADDING, PADDING, PADDING, PADDING, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PADDING},
-            {PADDING, PADDING, PADDING, PADDING, PADDING, PADDING, PADDING, PADDING, PADDING},
-        };
-        objectMap = new GameObject[11, 9];
-
-        Object prefab = AssetDatabase.LoadAssetAtPath(ELEMENT_PREFAB, typeof(GameObject));
-        GameObject obj = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-        obj.GetComponent<IsoTransform>().Position = new Vector3(0, 0.8f, 6);
-        obj.AddComponent<ArrayElement>();
-        layoutMap[1, 7] = ELEMENT;
-        objectMap[1, 7] = obj;
+        generator = gameObject.GetComponentInParent(typeof(SoftwareLevelGenerator)) as SoftwareLevelGenerator;
     }
 
     // Update is called once per frame
@@ -121,7 +92,7 @@ public class RobotController : MonoBehaviour
         isoTransform.Translate(new Vector3(-1, 0, 0));
         X--;
 
-        if (layoutMap[X, Z] != EMPTY)
+        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
         {
             Debug.Log("COLLIDE");
             isoTransform.Translate(new Vector3(1, 0, 0));
@@ -133,12 +104,12 @@ public class RobotController : MonoBehaviour
         return true;
     }
 
-
     public bool MoveTL()
     {
         isoTransform.Translate(new Vector3(0, 0, 1));
         Z++;
-        if (layoutMap[X, Z] != EMPTY)
+
+        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
         {
             Debug.Log("COLLIDE");
             isoTransform.Translate(new Vector3(0, 0, -1));
@@ -155,7 +126,7 @@ public class RobotController : MonoBehaviour
         isoTransform.Translate(new Vector3(0, 0, -1));
         Z--;
 
-        if (layoutMap[X, Z] != EMPTY)
+        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
         {
             Debug.Log("COLLIDE");
             isoTransform.Translate(new Vector3(0, 0, 1));
@@ -173,7 +144,7 @@ public class RobotController : MonoBehaviour
         isoTransform.Translate(new Vector3(1, 0, 0));
         X++;
 
-        if (layoutMap[X, Z] != EMPTY)
+        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
         {
             Debug.Log("COLLIDE");
             isoTransform.Translate(new Vector3(-1, 0, 0));
@@ -197,39 +168,35 @@ public class RobotController : MonoBehaviour
             switch (direction)
             {
                 case Direction.TopRight:
-                    if (layoutMap[X + 1, Z] == ELEMENT) {
-                        DestroyImmediate(objectMap[X, Z + 1]);
-                        layoutMap[X + 1, Z] = EMPTY;
+                    if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT) {
+                        generator.SetMapLayout(X + 1, Z, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
                         return true;
                     }
                     break;
                 case Direction.BottomRight:
-                    if (layoutMap[X, Z - 1] == ELEMENT)
+                    if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.ELEMENT)
                     {
-                        DestroyImmediate(objectMap[X, Z - 1]);
-                        layoutMap[X, Z - 1] = EMPTY;
+                        generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
                         return true;
                     }
                     break;
                 case Direction.BottomLeft:
-                    if (layoutMap[X - 1, Z] == ELEMENT)
+                    if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT)
                     {
-                        DestroyImmediate(objectMap[X - 1, Z]);
-                        layoutMap[X - 1, Z] = EMPTY;
+                        generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
                         return true;
                     }
                     break;
                 case Direction.TopLeft:
-                    if (layoutMap[X, Z + 1] == ELEMENT)
+                    if (generator.GetMapLayout(X, Z + 1) == SoftwareLevelGenerator.Layout.ELEMENT)
                     {
-                        DestroyImmediate(objectMap[X, Z + 1]);
-                        layoutMap[X, Z + 1] = EMPTY;
+                        generator.SetMapLayout(X, Z + 1, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
                         return true;
