@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4152675991301618}
   - component: {fileID: 114878648993955440}
   - component: {fileID: 212206635373008384}
-  - component: {fileID: 114256848344051922}
   - component: {fileID: 60783998246796608}
+  - component: {fileID: 114763986917299192}
   m_Layer: 0
   m_Name: civil_bridge_tile
   m_TagString: Untagged
@@ -75,7 +75,7 @@ PolygonCollider2D:
       - {x: 0.65999997, y: -0.175}
       - {x: 0.65999997, y: 0.225}
       - {x: 0.24, y: 0.49499997}
---- !u!114 &114256848344051922
+--- !u!114 &114763986917299192
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,9 +83,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1218692152933346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a0563fa537ab442ad981b53090b0b6, type: 3}
+  m_Script: {fileID: 11500000, guid: d37f5f02e6a51c249a01106b2f68991c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: bridge
   homePos: {x: 0, y: 0, z: 0}
 --- !u!114 &114878648993955440
 MonoBehaviour:
@@ -101,7 +102,6 @@ MonoBehaviour:
   ShowBounds: 0
   _position: {x: -3, y: 6, z: 13}
   _size: {x: 1, y: 0.4, z: 1}
-  _scale: {x: 1.1, y: 1.1, z: 1}
   _parent: {fileID: 0}
 --- !u!212 &212206635373008384
 SpriteRenderer:
