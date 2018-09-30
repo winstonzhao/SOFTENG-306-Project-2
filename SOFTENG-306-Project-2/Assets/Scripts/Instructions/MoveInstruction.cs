@@ -24,6 +24,25 @@ public class MoveInstruction : Instruction
 
     public MoveType moveType;
 
+    private bool trackMouse = false;
+
+    private bool mouseDebounce = false;
+
+    private InstructionRenderer instructionRenderer;
+
+    public void Start()
+    {
+        Editable = true;
+        instructionRenderer = GetComponent<InstructionRenderer>();
+    }
+
+    private void onClicked()
+    {
+        if (!Editable || trackMouse) return;
+        trackMouse = true;
+        mouseDebounce = true;
+    }
+
     public override List<InstructionComponent> InstructionComponents
     {
         get
@@ -31,11 +50,47 @@ public class MoveInstruction : Instruction
             return new List<InstructionComponent> 
             {
                 new InstructionComponent("Move"),
-                new InstructionComponent(moveTarget.x.ToString()),
-                new InstructionComponent(moveTarget.y.ToString())
+                new InstructionComponent(Mathf.Round(moveTarget.x).ToString())
+                {
+                    OnComponentClicked = onClicked
+                },
+                new InstructionComponent(Mathf.Round(moveTarget.y).ToString())
+                {
+                    OnComponentClicked = onClicked
+                }
             };
         }
     }
+
+    public override bool Editable { get; set; }
+
+    public void Update()
+    {
+        if (trackMouse)
+        {
+            moveTarget.x += Input.GetAxis("Mouse X");
+            moveTarget.y += Input.GetAxis("Mouse Y");
+            if (instructionRenderer != null)
+            {
+                instructionRenderer.BackgroundColor = new Color(0, 0, 1);
+                instructionRenderer.Render();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
+        {
+            trackMouse = false;
+            moveTarget.x = Mathf.Round(moveTarget.x);
+            moveTarget.y = Mathf.Round(moveTarget.y);
+
+            if (instructionRenderer != null)
+            {
+                instructionRenderer.BackgroundColor = new Color(1, 1, 1);
+            }
+        }
+        mouseDebounce = false;
+    }
+
 
     public override void UpdateInstruction()
     {

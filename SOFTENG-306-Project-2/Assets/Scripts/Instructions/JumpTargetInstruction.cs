@@ -5,6 +5,8 @@ public class JumpTargetInstruction : Instruction
 {
     private InstructionExecutor instructionExecutor;
 
+    public override bool Editable { get; set; }
+
     public override List<InstructionComponent> InstructionComponents
     {
         get

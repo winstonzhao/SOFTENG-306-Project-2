@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
-class TextObject
+class InstructionText
 {
     public MeshRenderer Renderer { get; set; }
     public TextMesh TextMesh { get; set; }
     public GameObject GameObject { get; set; }
 
+    public BoxCollider2D Collider { get; set; }
 
 }
 
@@ -19,7 +22,7 @@ public class InstructionRenderer : MonoBehaviour
     {
         get
         {
-            return texts[0].Renderer.enabled;
+            return spriteRenderer.enabled;
         }
         set
         {
@@ -33,14 +36,44 @@ public class InstructionRenderer : MonoBehaviour
         }
     }
 
-    private List<TextObject> texts = new List<TextObject>();
+    private List<InstructionText> texts = new List<InstructionText>();
     private BoxCollider2D boxCollider;
     private Draggable draggable;
     private SpriteRenderer spriteRenderer;
 
+    private Color textColor = new Color(1, 1, 1);
+    public Color TextColor
+    {
+        get
+        {
+            return textColor;
+        }
+        set
+        {
+            textColor = value;
+            Render();
+        }
+    }
+
+    public float Spacing = 0.4f;
+
+    private Color backgroundColor = new Color(79f/255, 20f/255, 20f/255);
+    public Color BackgroundColor
+    {
+        get
+        {
+            return backgroundColor;
+        }
+        set
+        {
+            backgroundColor = value;
+            Render();
+        }
+    }
+
     void Start()
     {
-        UpdateSize();
+        SetFields();
     }
 
     void OnEnable()
@@ -50,18 +83,52 @@ public class InstructionRenderer : MonoBehaviour
             instruction = GetComponent<Instruction>();
         }
         
-        UpdateSize();
+        SetFields();
     }
 
-    private void SetFields(int size)
+    private InstructionText CreateTextObject(InstructionComponent component, string name = "text")
     {
+        var prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/InstructionText.prefab", typeof(GameObject));
+        var go = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        go.name = name;
+
+        var meshRender = go.GetComponent<MeshRenderer>();
+        var textMesh = go.GetComponent<TextMesh>();
+        var collider = go.GetComponent<BoxCollider2D>();
+
+        textColor = textMesh.color;
+        textMesh.text = component.Text;
+        collider.enabled = component.OnComponentClicked != null;
+
+        collider.size = meshRender.bounds.size;
+        collider.offset = new Vector2(meshRender.bounds.size.x / 2, 0);
+        var eventHandler = go.GetComponent<ClickEventEmitter>();
+        eventHandler.EventHandler += () => component.OnComponentClicked();
+
+        return new InstructionText
+        {
+            GameObject = go,
+            Renderer = meshRender,
+            TextMesh = textMesh,
+            Collider = collider
+        };
+
+    }
+
+    private void SetFields()
+    {
+        var size = instruction.InstructionComponents.Count;
+
         if (boxCollider == null) 
         {
             boxCollider = GetComponent<BoxCollider2D>();
             boxCollider.isTrigger = true;
             var square = transform.GetChild(0);
             spriteRenderer = square.GetComponent<SpriteRenderer>();
+            backgroundColor = spriteRenderer.color;
         }
+
+        if (draggable == null) draggable = GetComponent<Draggable>();
 
         if (texts.Count != size)
         {
@@ -71,65 +138,73 @@ public class InstructionRenderer : MonoBehaviour
                 foreach (Transform child in textParent)
                 {
                     #if UNITY_EDITOR
-                    DestroyImmediate(child.gameObject);
+                        DestroyImmediate(child.gameObject);
                     #else
-                    Destroy(child.gameObject);
+                        Destroy(child.gameObject);
                     #endif
                 }
             }
+            
+            var components = instruction.InstructionComponents;
 
             for (int i = 0; i < size; i++)
             {
-                var go = new GameObject("text " + i);
-                var meshRender = go.AddComponent<MeshRenderer>();
-                var textMesh = go.AddComponent<TextMesh>();
-                textMesh.characterSize = 0.1f;
-                textMesh.fontSize = 96;
-                textMesh.color = new Color(79f/255, 20f/255, 20f/255);
-                textMesh.alignment = TextAlignment.Center;
-                textMesh.anchor = TextAnchor.MiddleLeft;
+                var textObj = CreateTextObject(components[i], "text " + i);
+                texts.Add(textObj);
 
-                texts.Add(new TextObject
-                {
-                    GameObject = go,
-                    Renderer = meshRender,
-                    TextMesh = textMesh
-                });
-                go.transform.position = transform.position;
-                // go.transform.position += new Vector3(meshRender.bounds.size.x, 0, 0);
-                go.transform.parent = textParent.transform;
+                // Move forward so it will be clicked before its parent
+                textObj.GameObject.transform.position = transform.position + new Vector3(0, 0, -0.1f);
+                textObj.GameObject.transform.parent = textParent.transform;
             }
+
+            UpdateSize();
+
         }
 
-        if (draggable == null) draggable = GetComponent<Draggable>();
+        Render();
     }
 
-    public void UpdateSize()
+    public float UpdateSize()
     {
-        SetFields(instruction.InstructionComponents.Count);
-
         var square = transform.GetChild(0);
-        var components = instruction.InstructionComponents;
-        var fullWidth = 0f;
-
-        for (int i = 0; i < components.Count; i++)
-        {
-            texts[i].TextMesh.text = components[i].Text;
-            fullWidth += texts[i].Renderer.bounds.size.x;
-        }
+        var fullWidth = texts.Sum(t => t.Renderer.bounds.size.x) + (Spacing * texts.Count) - Spacing;
 
         draggable.Width = fullWidth;
-        var start = -fullWidth / 4;
+        var start = -fullWidth / 2;
 
         for (int i = 0; i < texts.Count; i++)
         {
+            texts[i].GameObject.transform.position = transform.position + new Vector3(0, 0, -0.1f);
+            texts[i].TextMesh.color = TextColor;
             texts[i].GameObject.transform.position += new Vector3(start, 0, 0);
-            start += texts[i].Renderer.bounds.size.x / 2;
+            start += texts[i].Renderer.bounds.size.x + Spacing;
+        }
+        square.transform.localScale = new Vector3(fullWidth, 1, 1);
+        boxCollider.size = new Vector3(fullWidth, 1, 1);
+
+        return fullWidth;
+    }
+
+    public void Render()
+    {
+        var square = transform.GetChild(0);
+
+        var components = instruction.InstructionComponents;
+        var dirtyText = false;
+
+        for (int i = 0; i < components.Count; i++)
+        {
+            if (texts[i].TextMesh.text != components[i].Text) dirtyText = true;
+            texts[i].TextMesh.text = components[i].Text;
         }
 
-        square.transform.localScale = new Vector3(fullWidth, 1, 1);
+        if (dirtyText)
+        {
+            UpdateSize();
+        }
 
-        boxCollider.size = new Vector3(fullWidth, 1, 1);
+        square.GetComponent<SpriteRenderer>().color = backgroundColor;
+
     }
 
 }

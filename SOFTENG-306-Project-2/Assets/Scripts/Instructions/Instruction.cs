@@ -26,4 +26,6 @@ public abstract class Instruction : MonoBehaviour
 
     public abstract List<InstructionComponent> InstructionComponents { get; }
 
+    public abstract bool Editable { get; set; }
+
 }

@@ -7,6 +7,8 @@ public class JumpInstruction : Instruction
     private InstructionExecutor instructionExecutor;
     private JumpTargetInstruction jumpTarget;
 
+    public override bool Editable { get; set; }
+
     public override List<InstructionComponent> InstructionComponents
     {
         get
