@@ -17,7 +17,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private GameObject[,] objectMap;
     private static string ELEMENT_PREFAB = "Assets/Prefabs/software_minigame/test_item.prefab";
     private static string FINISH_INPUTS = "Assets/Sprites/software_minigame/abstractTile_33.png";
-
+    private static string CORRECT_OUTPUT = "Assets/Sprites/software_minigame/abstractTile_34.png";
 
     public enum Layout
     {
@@ -67,7 +67,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
         }
     }
 
-    public void NextInputElement() {
+    public void NextInputElement() 
+    {
         if (numElements != 0) {
             Object prefab = AssetDatabase.LoadAssetAtPath(ELEMENT_PREFAB, typeof(GameObject));
             GameObject obj = UnityEditor.PrefabUtility.InstantiatePrefab(prefab) as GameObject;
@@ -95,6 +96,30 @@ public class SoftwareLevelGenerator : MonoBehaviour
         switch (currentLevel)
         {
             case 1:
+                int max = 0;
+                for (int x = 3; x < 9; x++)
+                {
+                    if (objectMap[x, 6] != null)
+                    {
+                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
+                        if (value >= max)
+                        {
+                            max = value;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
+                SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+                Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(CORRECT_OUTPUT, typeof(Sprite));
+                renderer.sprite = sprite;
                 return true;
         }
 
@@ -125,6 +150,16 @@ public class SoftwareLevelGenerator : MonoBehaviour
         }
     }
 
+    public Layout GetMapLayout(int x, int z)
+    {
+        return layoutMap[x, z];
+    }
+
+    public GameObject GetObject(int x, int z)
+    {
+        return objectMap[x, z];
+    }
+
     public void PrintMap()
     {
         for (int i = 0; i < 11; i++)
@@ -136,15 +171,5 @@ public class SoftwareLevelGenerator : MonoBehaviour
             }
             Debug.Log(map);
         }
-    }
-
-    public Layout GetMapLayout(int x, int z)
-    {
-        return layoutMap[x, z];
-    }
-
-    public GameObject GetObject(int x, int z)
-    {
-        return objectMap[x, z];
     }
 }

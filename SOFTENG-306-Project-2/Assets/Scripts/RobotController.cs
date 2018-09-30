@@ -31,7 +31,7 @@ public class RobotController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        isoTransform = this.GetComponent<IsoTransform>();
+        isoTransform = this.GetOrAddComponent<IsoTransform>();
         generator = gameObject.GetComponentInParent(typeof(SoftwareLevelGenerator)) as SoftwareLevelGenerator;
     }
 

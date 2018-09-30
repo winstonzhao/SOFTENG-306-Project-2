@@ -68,7 +68,7 @@ public class TestRobotEditor : Editor
             myScript.DropItem(RobotController.Direction.BottomRight);
         }
 
-        if (UnityEngine.GUILayout.Button("debug")) {
+        if (UnityEngine.GUILayout.Button("Debug")) {
             myScript.debug();
         }
 
