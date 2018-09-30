@@ -11,9 +11,9 @@ public class GreeterNPC : NPC {
         DialogFrame frame2 = new DialogFrame("The point of this game is to help you gain some valuable knowledge about engineering concepts," +
             " women in engineering and other important ideas!",
             1);
-        DialogFrame frame3 = new DialogFrame("Walk ahead to see the Tina, right next to the student services stall!",
+        DialogFrame frame3 = new DialogFrame("Go around talk to the students around the area, they'll teach you a lot!",
             1);
-        DialogFrame frame4 = new DialogFrame("She'll tell you alot more about the game!", 1);
+        DialogFrame frame4 = new DialogFrame("Afterwards you can go downstairs into the leech, where you can play some minigames and talk to the lecturers!", 1);
 
         Dictionary<int, string> nameMap = new Dictionary<int, string>();
 
