@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 16946588}
   - component: {fileID: 16946587}
   - component: {fileID: 16946586}
+  - component: {fileID: 16946589}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (9)
   m_TagString: Untagged
@@ -368,7 +369,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &16946588
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 16946585}
@@ -377,8 +378,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &16946589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 16946585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &22231355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -470,7 +483,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &41023871
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 41023868}
@@ -479,7 +492,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &45580780 stripped
 Transform:
@@ -566,6 +579,7 @@ GameObject:
   - component: {fileID: 60903041}
   - component: {fileID: 60903040}
   - component: {fileID: 60903045}
+  - component: {fileID: 60903046}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -645,7 +659,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &60903045
 MonoBehaviour:
@@ -677,6 +691,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &60903046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 60903039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3ebd2ce0e1494f981c7e099ae335ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1802210496714480, guid: f0045fdec0bf14c369fd82bfc06312bc,
+    type: 2}
 --- !u!1001 &60978304
 Prefab:
   m_ObjectHideFlags: 0
@@ -1014,7 +1041,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &97796561
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 97796560}
@@ -1308,6 +1335,7 @@ GameObject:
   - component: {fileID: 162840607}
   - component: {fileID: 162840606}
   - component: {fileID: 162840605}
+  - component: {fileID: 162840608}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (4)
   m_TagString: Untagged
@@ -1379,7 +1407,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &162840607
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 162840604}
@@ -1388,8 +1416,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162840608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 162840604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &165352486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -1533,7 +1573,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &189875806
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 189875803}
@@ -1542,7 +1582,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &189875807
 MonoBehaviour:
@@ -1648,7 +1688,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &213906260
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 213906257}
@@ -1657,7 +1697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &213906261
 MonoBehaviour:
@@ -2397,6 +2437,64 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
     type: 2}
   m_PrefabInternal: {fileID: 1272294678}
+--- !u!1001 &341653841
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.8790364
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.303912
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1.0736094
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440553985900116, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114721830453375074, guid: 975974b346b0a2c44a0753f4eba0c8a2,
+        type: 2}
+      propertyPath: _position.x
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114721830453375074, guid: 975974b346b0a2c44a0753f4eba0c8a2,
+        type: 2}
+      propertyPath: _position.z
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 212614868948120534, guid: 975974b346b0a2c44a0753f4eba0c8a2,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300014, guid: f6bd102e0c6b146df9fc4810dc230bdc,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 975974b346b0a2c44a0753f4eba0c8a2, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!4 &346870194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -2733,7 +2831,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &391708481
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 391708478}
@@ -2742,7 +2840,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &401663934
 GameObject:
@@ -2754,6 +2852,7 @@ GameObject:
   - component: {fileID: 401663937}
   - component: {fileID: 401663936}
   - component: {fileID: 401663935}
+  - component: {fileID: 401663938}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (11)
   m_TagString: Untagged
@@ -2825,7 +2924,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &401663937
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 401663934}
@@ -2834,8 +2933,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401663938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 401663934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!1 &401777413
 GameObject:
   m_ObjectHideFlags: 0
@@ -3036,7 +3147,7 @@ Transform:
   - {fileID: 1501708732}
   - {fileID: 1470675397}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &401777416
 MonoBehaviour:
@@ -3213,7 +3324,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &437256022
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 437256019}
@@ -3222,7 +3333,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &437256023
 MonoBehaviour:
@@ -3426,7 +3537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &466374431
 Prefab:
@@ -3704,6 +3815,7 @@ GameObject:
   - component: {fileID: 504362585}
   - component: {fileID: 504362584}
   - component: {fileID: 504362583}
+  - component: {fileID: 504362586}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (2)
   m_TagString: Untagged
@@ -3775,7 +3887,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &504362585
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 504362582}
@@ -3784,8 +3896,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &504362586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 504362582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &505584459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -3857,6 +3981,7 @@ GameObject:
   - component: {fileID: 520506645}
   - component: {fileID: 520506644}
   - component: {fileID: 520506643}
+  - component: {fileID: 520506646}
   m_Layer: 0
   m_Name: loungeSofaOttoman_NE
   m_TagString: Untagged
@@ -3928,7 +4053,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &520506645
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 520506642}
@@ -3937,8 +4062,20 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 41
+  m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &520506646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 520506642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!1001 &521572370
 Prefab:
   m_ObjectHideFlags: 0
@@ -4526,7 +4663,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &600397543
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 600397540}
@@ -4535,7 +4672,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &603532068
 Prefab:
@@ -5633,6 +5770,7 @@ GameObject:
   - component: {fileID: 766204166}
   - component: {fileID: 766204165}
   - component: {fileID: 766204164}
+  - component: {fileID: 766204167}
   m_Layer: 0
   m_Name: loungeSofaCorner_SE
   m_TagString: Untagged
@@ -5704,7 +5842,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &766204166
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 766204163}
@@ -5713,8 +5851,20 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 42
+  m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &766204167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 766204163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &770964446 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -5908,6 +6058,7 @@ GameObject:
   - component: {fileID: 792928147}
   - component: {fileID: 792928146}
   - component: {fileID: 792928145}
+  - component: {fileID: 792928148}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (7)
   m_TagString: Untagged
@@ -5979,7 +6130,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &792928147
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 792928144}
@@ -5988,8 +6139,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &792928148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 792928144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &793248133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -6204,7 +6367,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &845667063
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 845667060}
@@ -6213,7 +6376,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &845667064
 MonoBehaviour:
@@ -6775,7 +6938,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &930400936
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 930400932}
@@ -6784,7 +6947,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 37
+  m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &945992975
 Prefab:
@@ -6895,7 +7058,7 @@ Transform:
   m_Children:
   - {fileID: 1883148142}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &959037850
 Prefab:
@@ -7347,6 +7510,7 @@ GameObject:
   - component: {fileID: 1044177192}
   - component: {fileID: 1044177191}
   - component: {fileID: 1044177190}
+  - component: {fileID: 1044177193}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (3)
   m_TagString: Untagged
@@ -7418,7 +7582,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1044177192
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1044177189}
@@ -7427,8 +7591,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1044177193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1044177189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!1001 &1053487422
 Prefab:
   m_ObjectHideFlags: 0
@@ -7495,6 +7671,7 @@ GameObject:
   - component: {fileID: 1057830844}
   - component: {fileID: 1057830843}
   - component: {fileID: 1057830842}
+  - component: {fileID: 1057830845}
   m_Layer: 0
   m_Name: loungeSofaCorner_SE (1)
   m_TagString: Untagged
@@ -7566,7 +7743,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1057830844
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1057830841}
@@ -7575,8 +7752,20 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 43
+  m_RootOrder: 44
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1057830845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1057830841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!1001 &1057930660
 Prefab:
   m_ObjectHideFlags: 0
@@ -7711,6 +7900,7 @@ GameObject:
   - component: {fileID: 1058984669}
   - component: {fileID: 1058984668}
   - component: {fileID: 1058984667}
+  - component: {fileID: 1058984670}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (8)
   m_TagString: Untagged
@@ -7782,7 +7972,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1058984669
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1058984666}
@@ -7791,8 +7981,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1058984670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1058984666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!1001 &1064051548
 Prefab:
   m_ObjectHideFlags: 0
@@ -8039,7 +8241,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1073122267
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1073122264}
@@ -8048,7 +8250,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1073122268
 MonoBehaviour:
@@ -8077,6 +8279,7 @@ GameObject:
   - component: {fileID: 1081426637}
   - component: {fileID: 1081426636}
   - component: {fileID: 1081426635}
+  - component: {fileID: 1081426638}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (5)
   m_TagString: Untagged
@@ -8148,7 +8351,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1081426637
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1081426634}
@@ -8157,8 +8360,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1081426638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1081426634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &1086873138 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -8378,7 +8593,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1125089855
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1125089852}
@@ -8387,7 +8602,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1125089856
 MonoBehaviour:
@@ -9517,7 +9732,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1300757618 stripped
 Transform:
@@ -9797,7 +10012,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1332486357
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1332486353}
@@ -9806,7 +10021,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 38
+  m_RootOrder: 39
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1333698048 stripped
 Transform:
@@ -10101,7 +10316,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1380345052
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1380345048}
@@ -10110,7 +10325,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 44
+  m_RootOrder: 45
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1381661681 stripped
 Transform:
@@ -10254,6 +10469,7 @@ GameObject:
   - component: {fileID: 1439611834}
   - component: {fileID: 1439611833}
   - component: {fileID: 1439611832}
+  - component: {fileID: 1439611835}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (6)
   m_TagString: Untagged
@@ -10325,7 +10541,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1439611834
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1439611831}
@@ -10334,8 +10550,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1439611835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1439611831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &1449380898 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -10706,7 +10934,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1496228741
 MonoBehaviour:
@@ -10719,7 +10947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dff78fa11444055a21322a2ac8e30d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enabled: 0
+  Enabled: 1
   SyncPeriod: 0.3
   PlayerPrefab: {fileID: 0}
 --- !u!1001 &1501017889
@@ -10864,6 +11092,7 @@ GameObject:
   - component: {fileID: 1537019622}
   - component: {fileID: 1537019621}
   - component: {fileID: 1537019620}
+  - component: {fileID: 1537019623}
   m_Layer: 0
   m_Name: stoolBarSquare_SW
   m_TagString: Untagged
@@ -10935,7 +11164,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1537019622
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1537019619}
@@ -10944,8 +11173,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1537019623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537019619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &1538614978 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -11082,6 +11323,18 @@ MonoBehaviour:
   Username: meme-man
   Scene: meme-town
   Self: 1
+--- !u!114 &1576540992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1576540984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fe63910e7c05543bdcbf13560233e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: 21300008, guid: f87ec44f323644a3396ab3356c77cf7f, type: 3}
 --- !u!1001 &1577568066
 Prefab:
   m_ObjectHideFlags: 0
@@ -11183,7 +11436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1578794274
 MonoBehaviour:
@@ -11289,7 +11542,7 @@ Prefab:
     - target: {fileID: 224094032318731158, guid: fc17c3321409ab5408f862b6e7db572d,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224094032318731158, guid: fc17c3321409ab5408f862b6e7db572d,
         type: 2}
@@ -11329,7 +11582,7 @@ Prefab:
     - target: {fileID: 224094032318731158, guid: fc17c3321409ab5408f862b6e7db572d,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224094032318731158, guid: fc17c3321409ab5408f862b6e7db572d,
         type: 2}
@@ -11773,7 +12026,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1654646440
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1654646437}
@@ -11782,7 +12035,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1655620249
 Prefab:
@@ -11994,7 +12247,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1672286757
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1672286754}
@@ -12003,7 +12256,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1680269090
 GameObject:
@@ -12015,6 +12268,7 @@ GameObject:
   - component: {fileID: 1680269093}
   - component: {fileID: 1680269092}
   - component: {fileID: 1680269091}
+  - component: {fileID: 1680269094}
   m_Layer: 0
   m_Name: loungeSofa_NE
   m_TagString: Untagged
@@ -12086,7 +12340,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1680269093
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1680269090}
@@ -12095,8 +12349,20 @@ Transform:
   m_LocalScale: {x: 2.25, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 40
+  m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1680269094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1680269090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!1001 &1688252858
 Prefab:
   m_ObjectHideFlags: 0
@@ -12241,6 +12507,7 @@ GameObject:
   - component: {fileID: 1711513244}
   - component: {fileID: 1711513243}
   - component: {fileID: 1711513242}
+  - component: {fileID: 1711513245}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (10)
   m_TagString: Untagged
@@ -12312,7 +12579,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1711513244
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1711513241}
@@ -12321,8 +12588,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1711513245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1711513241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &1713353358 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -12557,6 +12836,7 @@ GameObject:
   - component: {fileID: 1762274370}
   - component: {fileID: 1762274369}
   - component: {fileID: 1762274368}
+  - component: {fileID: 1762274371}
   m_Layer: 0
   m_Name: Elevator
   m_TagString: Untagged
@@ -12638,8 +12918,21 @@ Transform:
   m_Children:
   - {fileID: 97796561}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1762274371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1762274367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdba5027225b7574aab044f47602cbb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RHSSprite: {fileID: 0}
+  Level: Engineering Leech
 --- !u!4 &1765642168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -12921,7 +13214,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1838548645
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1838548642}
@@ -12930,7 +13223,7 @@ Transform:
   m_LocalScale: {x: 4, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1838548646
 MonoBehaviour:
@@ -13811,6 +14104,7 @@ GameObject:
   - component: {fileID: 1954972754}
   - component: {fileID: 1954972753}
   - component: {fileID: 1954972752}
+  - component: {fileID: 1954972755}
   m_Layer: 0
   m_Name: stoolBarSquare_SW (1)
   m_TagString: Untagged
@@ -13882,7 +14176,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1954972754
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1954972751}
@@ -13891,8 +14185,20 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1954972755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1954972751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!4 &1960844018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4258007948875264, guid: 96662b7a1a37846c9bde5ad55dede327,
@@ -14006,7 +14312,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4613413705396184, guid: 9e68a301c3bb5444bba45340cb2c4d68, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114906917346233954, guid: 9e68a301c3bb5444bba45340cb2c4d68,
         type: 2}
@@ -14511,7 +14817,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &2056670512
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2056670508}
@@ -14520,7 +14826,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 36
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2058794006
 Prefab:
@@ -14788,7 +15094,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &2083332137
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2083332134}
@@ -14797,7 +15103,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2083332138
 MonoBehaviour:
@@ -15090,7 +15396,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &2108110152
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2108110148}
@@ -15099,7 +15405,7 @@ Transform:
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 39
+  m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2108748606 stripped
 Transform:
