@@ -1,34 +1,41 @@
 ﻿using Ultimate_Isometric_Toolkit.Scripts.Core;
-using Ultimate_Isometric_Toolkit.Scripts.Utils;
+using UltimateIsometricToolkit.physics;
 using UnityEngine;
 
-[ExecuteInEditMode]
+[RequireComponent(typeof(IsoTransform))]
+[RequireComponent(typeof(IsoBoxCollider))]
+[RequireComponent(typeof(IsoRigidbody))]
 public class RobotController : MonoBehaviour {
 
-    public int Speed = 5;
-
     private IsoTransform isoTransform;
+    
+    private int[,] layoutMap;
 
-    private Ghost ghost;
+
+    private static int EMPTY = 0;
+    private static int ELEMENT = 1;
+
+    private int X = 0;
+    private int Z = 0;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         isoTransform = this.GetComponent<IsoTransform>();
 
-        // Setting up ghost object for collision detection
-        var gameObj = new GameObject
-        {
-            name = "Ghost_" + transform.name
+        layoutMap = new int[9, 7]
+        {   {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ELEMENT},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY}
         };
-        ghost = gameObj.AddComponent<Ghost>();
-        var ghostTransform = ghost.GetOrAddComponent<IsoTransform>();
-        var collider = gameObj.AddComponent<BoxCollider>();
-        gameObj.AddComponent<IsoCollider>();
-        collider.size = new Vector3(isoTransform.Size.x, isoTransform.Size.y, isoTransform.Size.z);
 
-        ghostTransform.Position = new Vector3(isoTransform.Position.x, isoTransform.Position.y, isoTransform.Position.z);
-    }
+}
 
     // Update is called once per frame
     void Update () {
@@ -83,66 +90,68 @@ public class RobotController : MonoBehaviour {
     }
 
     public bool MoveBL() {
-        ghost.transform.Translate(new Vector3(-1, 0, 0));
+        isoTransform.Translate(new Vector3(-1, 0, 0));
+        X--;
 
-        if (ghost.GetComponent<BoxCollider>().isTrigger) {
-            Debug.Log("ghost collide");
-            ghost.transform.Translate(new Vector3(1, 0, 0));
-            return false;
-        } 
-        else 
+        if (layoutMap[X, Z] != EMPTY)  
         {
-            isoTransform.Translate(new Vector3(-1, 0, 0));
-            return true;
+            Debug.Log("COLLIDE");
+            isoTransform.Translate(new Vector3(1, 0, 0));
+            X++;
+            Debug.Log("To: x: " + X + " z: " + Z);
+            return false;
         }
+        Debug.Log("To: x: " + X + " z: " + Z);
+        return true;
     }
 
 
     public bool MoveTL() {
-        ghost.transform.Translate(new Vector3(0, 0, 1));
-
-        if (ghost.GetComponent<BoxCollider>().isTrigger)
+        isoTransform.Translate(new Vector3(0, 0, 1));
+        Z++;
+        if (layoutMap[X, Z] != EMPTY)
         {
-            Debug.Log("ghost collide");
-            ghost.transform.Translate(new Vector3(0, 0, -1));
+            Debug.Log("COLLIDE");
+            isoTransform.Translate(new Vector3(0, 0, -1));
+            Z--;
+            Debug.Log("To: x: " + X + " z: " + Z);
             return false;
         }
-        else
-        {
-            isoTransform.Translate(new Vector3(0, 0, 1));
-            return true;
-        }
+        Debug.Log("To: x: " + X + " z: " + Z);
+        return true;
     }
 
     public bool MoveBR() {
-        ghost.transform.Translate(new Vector3(0, 0, -1));
+        isoTransform.Translate(new Vector3(0, 0, -1));
+        Z--;
 
-        if (ghost.GetComponent<BoxCollider>().isTrigger)
+        if (layoutMap[X, Z] != EMPTY)
         {
-            ghost.transform.Translate(new Vector3(0, 0, 1));
-            Debug.Log("ghost collide");
+            Debug.Log("COLLIDE");
+            isoTransform.Translate(new Vector3(0, 0, 1));
+            Z++;
+            Debug.Log("To: x: " + X + " z: " + Z);
             return false;
         }
-        else
-        {
-            isoTransform.Translate(new Vector3(0, 0, -1));
-            return true;
-        }
+
+        Debug.Log("To: x: " + X + " z: " + Z);
+        return true;
     }
 
     public bool MoveTR() {
-        ghost.transform.Translate(new Vector3(1, 0, 0));
+        isoTransform.Translate(new Vector3(1, 0, 0));
+        X++;
 
-        if (ghost.GetComponent<BoxCollider>().isTrigger)
+        if (layoutMap[X, Z] != EMPTY)
         {
-            Debug.Log("ghost collide");
-            ghost.transform.Translate(new Vector3(-1, 0, 0));
+            Debug.Log("COLLIDE");
+            isoTransform.Translate(new Vector3(-1, 0, 0));
+            X--;
+            Debug.Log("To: x: " + X + " z: " + Z);
             return false;
         }
-        else
-        {
-            isoTransform.Translate(new Vector3(1, 0, 0));
-            return true;
-        }
+
+        Debug.Log("To: x: " + X + " z: " + Z);
+        return true;
     }
 }

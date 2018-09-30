@@ -1,5 +1,6 @@
 using System;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
+using UltimateIsometricToolkit.physics;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -90,6 +91,7 @@ public class BaseFloorGenerator : MonoBehaviour
         gameObject.transform.parent = transform;
         gameObject.name = name;
 
+        gameObject.AddComponent<IsoBoxCollider>();
         var isoTransform = gameObject.GetComponent<IsoTransform>();
         isoTransform.Position = new Vector3(x, y, z);
         isoTransform.ShowBounds = name.StartsWith("Collider");

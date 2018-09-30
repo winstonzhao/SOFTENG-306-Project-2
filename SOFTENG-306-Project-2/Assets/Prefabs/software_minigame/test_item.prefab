@@ -10,7 +10,7 @@ GameObject:
   - component: {fileID: 435170}
   - component: {fileID: 11499940}
   - component: {fileID: 21282912}
-  - component: {fileID: 114722483926570720}
+  - component: {fileID: 114728565026389080}
   m_Layer: 0
   m_Name: test_item
   m_TagString: Untagged
@@ -45,7 +45,6 @@ MonoBehaviour:
   ShowBounds: 0
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.04, y: 0.9, z: 1}
   _parent: {fileID: 0}
 --- !u!212 &21282912
 SpriteRenderer:
@@ -104,7 +103,7 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 122930}
   m_IsPrefabAsset: 1
---- !u!114 &114722483926570720
+--- !u!114 &114728565026389080
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +111,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 122930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  _isoTransform: {fileID: 0}
+  _isTrigger: 0
+  _material: {fileID: 0}
+  _size: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}

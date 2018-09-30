@@ -21,7 +21,7 @@ namespace UltimateIsometricToolkit.controller {
 
 		}
 
-		void Update() {
+		void FixedUpdate() {
 			//translate on isotransform
 			_isoTransform.Translate(new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal")) * Time.deltaTime * Speed);
 		}
