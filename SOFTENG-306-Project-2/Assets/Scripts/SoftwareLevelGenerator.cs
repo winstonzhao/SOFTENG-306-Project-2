@@ -16,6 +16,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
     private static string ELEMENT_PREFAB = "Assets/Prefabs/software_minigame/test_item.prefab";
+    private static string FINISH_INPUTS = "Assets/Sprites/software_minigame/abstractTile_33.png";
+
 
     public enum Layout
     {
@@ -75,6 +77,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
             objectMap[inputX, inputZ] = obj;
             obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
             numElements--;
+        } else {
+            GameObject obj = this.transform.Find("Input").Find("Input").gameObject;
+            SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+            Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(FINISH_INPUTS, typeof(Sprite));
+            renderer.sprite = sprite;
         }
     }
 
@@ -122,12 +129,12 @@ public class SoftwareLevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < 11; i++)
         {
-            string hehe = "";
+            string map = "";
             for (int j = 0; j < 9; j++)
             {
-                hehe = hehe + layoutMap[i, j] + ": ";
+                map = map + layoutMap[i, j] + ": ";
             }
-            Debug.Log(hehe);
+            Debug.Log(map);
         }
     }
 
