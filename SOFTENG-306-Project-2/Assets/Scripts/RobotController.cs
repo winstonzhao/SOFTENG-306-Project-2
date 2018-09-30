@@ -243,7 +243,6 @@ public class RobotController : MonoBehaviour
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
                         renderer.sprite = sprite;
-                        renderer.sortingOrder = 2;
                         return true;
                     }
                     break;
@@ -251,12 +250,11 @@ public class RobotController : MonoBehaviour
                     if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.EMPTY)
                     {
                         generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 3;
                         carrying = null;
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
                         renderer.sprite = sprite;
-                        renderer.sortingOrder = 1;
                         return true;
                     }
                     break;
@@ -264,12 +262,11 @@ public class RobotController : MonoBehaviour
                     if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
                     {
                         generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 3;
                         carrying = null;
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
                         renderer.sprite = sprite;
-                        renderer.sortingOrder = 1;
                         return true;
                     }
                     break;
@@ -282,7 +279,6 @@ public class RobotController : MonoBehaviour
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
                         renderer.sprite = sprite;
-                        renderer.sortingOrder = 2;
                         return true;
                     }
                     break;

@@ -8,6 +8,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public int currentLevel;
     public int numElements;
 
+    private int inputX;
+    private int inputZ;
+    private int outputX;
+    private int outputZ;
+
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
     private static string ELEMENT_PREFAB = "Assets/Prefabs/software_minigame/test_item.prefab";
@@ -50,15 +55,26 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
                     {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
                 };
+                inputX = 1;
+                inputZ = 7;
+                outputX = 1;
+                outputZ = 1;
                 objectMap = new GameObject[11, 9];
-
-                Object prefab = AssetDatabase.LoadAssetAtPath(ELEMENT_PREFAB, typeof(GameObject));
-                GameObject obj = UnityEditor.PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-                obj.GetComponent<IsoTransform>().Position = new Vector3(0, 0.8f, 6);
-                obj.AddComponent<ArrayElement>();
-                layoutMap[1, 7] = Layout.ELEMENT;
-                objectMap[1, 7] = obj;
+                NextInputElement();
                 break;
+        }
+    }
+
+    public void NextInputElement() {
+        if (numElements != 0) {
+            Object prefab = AssetDatabase.LoadAssetAtPath(ELEMENT_PREFAB, typeof(GameObject));
+            GameObject obj = UnityEditor.PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
+            obj.AddComponent<ArrayElement>();
+            layoutMap[inputX, inputZ] = Layout.ELEMENT;
+            objectMap[inputX, inputZ] = obj;
+            obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            numElements--;
         }
     }
 
@@ -96,6 +112,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
             obj.GetComponent<IsoTransform>().Position = new Vector3(x, 0, z);
             objectMap[x, z] = obj;
             objectMap[x, z].SetActive(true);
+            if ((x != inputX) || (z != inputZ)) {
+                NextInputElement();
+            }
         }
     }
 
