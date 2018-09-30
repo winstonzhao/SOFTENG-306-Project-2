@@ -13,17 +13,19 @@ namespace UltimateIsometricToolkit.controller {
 		public float Speed = 10;
 		
 		private IsoTransform _isoTransform;
+
 		
 		void Awake() {
 			_isoTransform = this.GetOrAddComponent<IsoTransform>(); //avoids polling the IsoTransform component per frame
 			gameObject.AddComponent<IsoBoxCollider>();
-			
-
 		}
 
 		void Update() {
 			//translate on isotransform
 			_isoTransform.Translate(new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal")) * Time.deltaTime * Speed);
 		}
+	
+	
+	
 	}
 }

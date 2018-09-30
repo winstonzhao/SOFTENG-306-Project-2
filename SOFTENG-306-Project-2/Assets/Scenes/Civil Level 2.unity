@@ -213,6 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 11, y: 0, z: 10}
   _size: {x: 1, y: 1, z: 1}
@@ -1625,7 +1628,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -2876,6 +2879,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 13, y: 0.8, z: 13}
   _size: {x: 1, y: 1, z: 1}
@@ -3315,6 +3321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 0}
   _size: {x: 1, y: 0.4, z: 1}
@@ -5154,6 +5163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 5}
   _size: {x: 1, y: 0.4, z: 1}
@@ -5406,6 +5418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 6}
   _size: {x: 1, y: 0.4, z: 1}
@@ -6153,6 +6168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 14, y: 0, z: 12}
   _size: {x: 1, y: 0.4, z: 1}
@@ -8903,6 +8921,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 9, y: 0, z: 8}
   _size: {x: 1, y: 0.4, z: 1}
@@ -9065,7 +9086,6 @@ GameObject:
   - component: {fileID: 515415465}
   - component: {fileID: 515415464}
   - component: {fileID: 515415463}
-  - component: {fileID: 515415462}
   - component: {fileID: 515415461}
   - component: {fileID: 515415460}
   - component: {fileID: 515415459}
@@ -9090,7 +9110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 0
-  Speed: 5
+  Speed: 0.5
   Graph: {fileID: 1356280429}
   heuristic: 0
   Type: red
@@ -9125,7 +9145,7 @@ MonoBehaviour:
   _drag: 0
   _useGravity: 0
   _isKinematric: 0
-  _collisionDetectionMode: 1
+  _collisionDetectionMode: 2
   _centerOfMass: {x: 0, y: 0, z: 0}
   _rigidbodyInterpolation: 1
   _maxDepenetrationVelocity: 0
@@ -9148,18 +9168,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &515415462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 515415457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d5a9e93ecf484489f74ecc15c6971b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 5
 --- !u!212 &515415463
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9217,18 +9225,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 1
+  freezeZ: 0
   ShowBounds: 1
-  _position: {x: -1, y: 0.4, z: 7}
+  _position: {x: 11, y: 0.4, z: 0}
   _size: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &515415465
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 515415457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.656854, y: 2.46773, z: 3.4742343}
+  m_LocalPosition: {x: 7.778174, y: 4.235498, z: 6.536097}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9245,11 +9256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab04b9cd245907429eb6521d121b2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpHeight: 0
-  Speed: 5
-  Graph: {fileID: 0}
-  heuristic: 0
-  Type: red
 --- !u!1001 &526408361
 Prefab:
   m_ObjectHideFlags: 0
@@ -9926,6 +9932,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 4}
   _size: {x: 1, y: 0.4, z: 1}
@@ -10271,6 +10280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 15, y: 0, z: 12}
   _size: {x: 1, y: 0.4, z: 1}
@@ -10688,6 +10700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -5, y: 6, z: 13}
   _size: {x: 1, y: 1, z: 1}
@@ -11582,6 +11597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 10, y: 0.8, z: 10}
   _size: {x: 1, y: 1, z: 1}
@@ -13454,6 +13472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 1}
   _size: {x: 1, y: 0.4, z: 1}
@@ -13709,7 +13730,6 @@ GameObject:
   - component: {fileID: 726673387}
   - component: {fileID: 726673386}
   - component: {fileID: 726673385}
-  - component: {fileID: 726673384}
   - component: {fileID: 726673383}
   - component: {fileID: 726673382}
   - component: {fileID: 726673381}
@@ -13721,7 +13741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &726673380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13733,11 +13753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab04b9cd245907429eb6521d121b2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpHeight: 0
-  Speed: 5
-  Graph: {fileID: 0}
-  heuristic: 0
-  Type: red
 --- !u!114 &726673381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13750,7 +13765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isoTransform: {fileID: 726673386}
-  _isTrigger: 0
+  _isTrigger: 1
   _material: {fileID: 0}
   _size: {x: 1, y: 0.4, z: 0.4}
   _center: {x: 0, y: 0, z: 0}
@@ -13769,7 +13784,7 @@ MonoBehaviour:
   _drag: 0
   _useGravity: 0
   _isKinematric: 0
-  _collisionDetectionMode: 1
+  _collisionDetectionMode: 2
   _centerOfMass: {x: 0, y: 0, z: 0}
   _rigidbodyInterpolation: 1
   _maxDepenetrationVelocity: 0
@@ -13783,7 +13798,7 @@ Animator:
   m_GameObject: {fileID: 726673379}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 47ec81d7450acfc40b630a57272b14ff, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2a9221274c116ee40849bfe341b42eff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -13792,18 +13807,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &726673384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 726673379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d5a9e93ecf484489f74ecc15c6971b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 5
 --- !u!212 &726673385
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13861,13 +13864,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 1
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -2, y: 0.4, z: 2}
   _size: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &726673387
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 726673379}
@@ -13890,9 +13896,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 0
-  Speed: 5
+  Speed: 0.5
   Graph: {fileID: 1356280429}
-  heuristic: 0
+  heuristic: 3
   Type: red
 --- !u!1001 &729307259
 Prefab:
@@ -14654,6 +14660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 13, y: 0, z: 12}
   _size: {x: 1, y: 0.4, z: 1}
@@ -14906,6 +14915,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 10, y: 0, z: 8}
   _size: {x: 1, y: 0.4, z: 1}
@@ -15934,15 +15946,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.485281
+      value: -7.0710673
       objectReference: {fileID: 0}
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.5355341
+      value: 1.4142131
       objectReference: {fileID: 0}
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 6.1237245
+      value: 2.4494894
       objectReference: {fileID: 0}
     - target: {fileID: 461688, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_LocalRotation.x
@@ -15982,7 +15994,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: _position.x
-      value: 11
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 21245996, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_Sprite
@@ -16015,7 +16027,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: _position.z
-      value: -1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: _position.y
@@ -17178,7 +17190,6 @@ GameObject:
   - component: {fileID: 1009234859}
   - component: {fileID: 1009234858}
   - component: {fileID: 1009234857}
-  - component: {fileID: 1009234860}
   - component: {fileID: 1009234861}
   - component: {fileID: 1009234855}
   - component: {fileID: 1009234856}
@@ -17206,7 +17217,7 @@ MonoBehaviour:
   _drag: 0
   _useGravity: 0
   _isKinematric: 0
-  _collisionDetectionMode: 1
+  _collisionDetectionMode: 2
   _centerOfMass: {x: 0, y: 0, z: 0}
   _rigidbodyInterpolation: 1
   _maxDepenetrationVelocity: 0
@@ -17284,8 +17295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 1
+  freezeZ: 0
   ShowBounds: 1
-  _position: {x: -2, y: 0.4, z: 7}
+  _position: {x: -2.0056555, y: 0.4, z: 7}
   _size: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &1009234859
@@ -17295,24 +17309,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1009234854}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.3639607, y: 2.1141765, z: 2.861862}
+  m_LocalPosition: {x: -6.36796, y: 2.1121771, z: 2.8583987}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1009234860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1009234854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d5a9e93ecf484489f74ecc15c6971b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 5
 --- !u!95 &1009234861
 Animator:
   serializedVersion: 3
@@ -17358,11 +17360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab04b9cd245907429eb6521d121b2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpHeight: 0
-  Speed: 5
-  Graph: {fileID: 0}
-  heuristic: 0
-  Type: blue
 --- !u!1001 &1015102442
 Prefab:
   m_ObjectHideFlags: 0
@@ -20092,6 +20089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 11, y: 0, z: 11}
   _size: {x: 1, y: 0.4, z: 1}
@@ -20263,6 +20263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 7}
   _size: {x: 1, y: 0.4, z: 1}
@@ -21562,6 +21565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 11, y: 0, z: 8}
   _size: {x: 1, y: 0.4, z: 1}
@@ -21860,6 +21866,7 @@ GameObject:
   - component: {fileID: 1190493249}
   - component: {fileID: 1190493248}
   - component: {fileID: 1190493255}
+  - component: {fileID: 1190493247}
   m_Layer: 0
   m_Name: blue_car (1)
   m_TagString: Untagged
@@ -21867,6 +21874,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1190493247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1190493246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d5a9e93ecf484489f74ecc15c6971b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 10
 --- !u!114 &1190493248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21879,7 +21898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isoTransform: {fileID: 1190493253}
-  _isTrigger: 0
+  _isTrigger: 1
   _material: {fileID: 0}
   _size: {x: 1, y: 0.4, z: 0.4}
   _center: {x: 0, y: 0, z: 0}
@@ -21898,7 +21917,7 @@ MonoBehaviour:
   _drag: 0
   _useGravity: 0
   _isKinematric: 0
-  _collisionDetectionMode: 1
+  _collisionDetectionMode: 2
   _centerOfMass: {x: 0, y: 0, z: 0}
   _rigidbodyInterpolation: 1
   _maxDepenetrationVelocity: 0
@@ -21978,6 +21997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 1
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -1, y: 0.4, z: 2}
   _size: {x: 1, y: 1, z: 1}
@@ -23685,6 +23707,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 8}
   _size: {x: 1, y: 0.4, z: 1}
@@ -25512,7 +25537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fdd94faf1fee64d86297b97dc83912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxScanHeight: 20
+  MaxScanHeight: 1
   ShowGraph: 1
   Ignorables: []
   TraversableTiles:
@@ -28191,6 +28216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 12, y: 0, z: 12}
   _size: {x: 1, y: 0.4, z: 1}
@@ -28564,6 +28592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 2}
   _size: {x: 1, y: 0.4, z: 1}
@@ -29295,6 +29326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -3, y: 6, z: 13}
   _size: {x: 1, y: 1, z: 1}
@@ -29346,7 +29380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 383, y: 170}
+  m_AnchoredPosition: {x: 318, y: 105}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1559259990
@@ -29522,6 +29556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 5, y: 0.4, z: 10}
   _size: {x: 1, y: 0.5, z: 1}
@@ -29551,9 +29588,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isoTransform: {fileID: 1582695306}
-  _isTrigger: 0
+  _isTrigger: 1
   _material: {fileID: 0}
-  _size: {x: 1, y: 0.5, z: 1}
+  _size: {x: 10, y: 10, z: 10}
   _center: {x: 0, y: 0, z: 0}
 --- !u!114 &1582695309
 MonoBehaviour:
@@ -29566,7 +29603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6af08a00509294583c55ed5e2890bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mass: 1000000
+  _mass: 1
   _drag: 0
   _useGravity: 0
   _isKinematric: 0
@@ -33300,6 +33337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 0.4, z: 1}
@@ -33864,6 +33904,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 11, y: 0, z: 12}
   _size: {x: 1, y: 0.4, z: 1}
@@ -35580,6 +35623,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 5, y: 1.2, z: 10}
   _size: {x: 1, y: 0.8, z: 1}
@@ -36214,6 +36260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 8, y: 0, z: 3}
   _size: {x: 1, y: 0.4, z: 1}
@@ -37527,6 +37576,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 11, y: 0, z: 9}
   _size: {x: 1, y: 0.4, z: 1}
@@ -40080,6 +40132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 1, z: 1}

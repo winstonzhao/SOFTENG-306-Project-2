@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UltimateIsometricToolkit.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
 
@@ -15,8 +16,14 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 		public GridGraph Graph;
 		public Heuristic heuristic;
         public string Type;
+		private Animator animator;
 
-        /// <summary>
+		void Awake()
+		{
+			animator = GetComponent<Animator>();
+		}
+
+		/// <summary>
         /// Finds a path to given destination under a heuristic if such path exists
         /// </summary>
         /// <param name="destination"></param>
@@ -47,6 +54,12 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 			var timePassed = 0f;
 			var isoTransform = GetComponent<IsoTransform>();
 			var maxTimePassed = Vector3.Distance(from, to) / speed;
+			var transition = to - from;
+			
+			animator.SetBool("NE", transition.x == 1);
+			animator.SetBool("NW", transition.z == 1);
+			animator.SetBool("SE", transition.z == -1);
+			animator.SetBool("SW", transition.x == -1);
 			
 			while (timePassed + Time.deltaTime < maxTimePassed) {
 				timePassed += Time.deltaTime;
