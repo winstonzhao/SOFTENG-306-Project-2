@@ -169,7 +169,7 @@ public class InstructionRenderer : MonoBehaviour
         var square = transform.GetChild(0);
         var fullWidth = texts.Sum(t => t.Renderer.bounds.size.x) + (Spacing * texts.Count) - Spacing;
 
-        draggable.Width = fullWidth;
+        draggable.Size = new Vector2(fullWidth, texts[0].Renderer.bounds.size.y);
         var start = -fullWidth / 2;
 
         for (int i = 0; i < texts.Count; i++)

@@ -40,19 +40,15 @@ public class DraggableItem : Draggable
         }
     }
 
-    public override float Width { get; set; }
+    public override Vector2 Size { get; set; }
 
     // Use this for initialization
     void Start()
     {
-
+        // Size = transform.localScale;
     }
 
-<<<<<<< HEAD
-    public override void SetDropZone(IDropZone list)
-=======
     public override void SetDropZone(IDropZone newDropZone)
->>>>>>> c14aa44... Updated Instruction example scene
     {
         dropZone = newDropZone;
     }

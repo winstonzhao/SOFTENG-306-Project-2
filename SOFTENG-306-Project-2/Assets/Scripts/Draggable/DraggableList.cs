@@ -95,6 +95,8 @@ public class DraggableList : MonoBehaviour, IDropZone
         float i = -layoutSpacing;
         float maxWidth = 0;
 
+        var itemHeight = 0.0f;
+
         foreach (var draggable in listItems)
         {
             i += layoutSpacing;
@@ -104,15 +106,16 @@ public class DraggableList : MonoBehaviour, IDropZone
             // Offset by .1f in the z so the child objects will handle mouse clicks before the list
             draggable.HomePos = new Vector3(transform.position.x, transform.position.y + i, transform.position.z - .1f);
 
-            maxWidth = Mathf.Max(draggable.Width, maxWidth);
+            maxWidth = Mathf.Max(draggable.Size.x, maxWidth);
+            itemHeight = draggable.Size.y;
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i + 1);
+        var height = Mathf.Max(MinSize.y, i + itemHeight);
         var colliderSize = new Vector2(width, height);
 
         boxCollider.size = colliderSize;
-        boxCollider.offset = new Vector2(0, (height - 1) / 2);
+        boxCollider.offset = new Vector2(0, (height - itemHeight) / 2);
     }
 
     public void UpdateObject(Draggable item)
@@ -183,6 +186,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void OnDragEnter(Draggable item)
     {
+        Debug.Log("Entered");
         if (listItems.Contains(item)) return;
         
         AddDummyToList(0);
