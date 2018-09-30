@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 public class DraggableList : MonoBehaviour, IDropZone
 {
 
-    private List<Draggable> listItems = new List<Draggable>();
+    public List<Draggable> listItems = new List<Draggable>();
 
     public IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
@@ -61,7 +61,7 @@ public class DraggableList : MonoBehaviour, IDropZone
         }
     }
 
-    public int layoutSpacing = 2;
+    public float layoutSpacing = 2;
 
     public Vector2 MinSize = new Vector2(1, 1);
 
@@ -75,20 +75,13 @@ public class DraggableList : MonoBehaviour, IDropZone
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
         boxCollider.isTrigger = true;
 
-        foreach (var text in strings)
-        {
-            var newSprite = Instantiate(mainObject);
-            var draggable = newSprite.gameObject.AddComponent<DraggableItem>();
-            listItems.Add(newSprite.GetComponent<Draggable>());
-
-            newSprite.GetComponentInChildren<TextMesh>().text = text;
-            newSprite.UpdateSize();
-
-            draggable.SetDropZone(this);
-        }
         layout();
 
-        foreach(var draggable in listItems) draggable.transform.position = draggable.HomePos;
+        foreach(var draggable in listItems) 
+        {
+            draggable.transform.position = draggable.HomePos;
+            draggable.SetDropZone(this);
+        }
     }
 
     // Update is called once per frame
@@ -99,7 +92,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     void layout()
     {
-        int i = -layoutSpacing;
+        float i = -layoutSpacing;
         float maxWidth = 0;
 
         foreach (var draggable in listItems)
@@ -119,7 +112,7 @@ public class DraggableList : MonoBehaviour, IDropZone
         var colliderSize = new Vector2(width, height);
 
         boxCollider.size = colliderSize;
-        boxCollider.offset = new Vector2(0, (height - layoutSpacing / 2) / 2);
+        boxCollider.offset = new Vector2(0, (height - 1) / 2);
     }
 
     public void UpdateObject(Draggable item)

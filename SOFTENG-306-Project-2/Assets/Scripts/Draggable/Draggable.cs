@@ -6,4 +6,7 @@ public abstract class Draggable : MonoBehaviour
 
     public abstract void SetDropZone(IDropZone dropZone);
     public abstract float Width { get; set; }
+
+    public abstract void SetDropZone(IDropZone newDropZone);
+
 }

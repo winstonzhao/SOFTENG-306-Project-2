@@ -48,9 +48,13 @@ public class DraggableItem : Draggable
 
     }
 
+<<<<<<< HEAD
     public override void SetDropZone(IDropZone list)
+=======
+    public override void SetDropZone(IDropZone newDropZone)
+>>>>>>> c14aa44... Updated Instruction example scene
     {
-        OnDrop(list);
+        dropZone = newDropZone;
     }
 
     public void AddConnectedItem(DraggableItem item)

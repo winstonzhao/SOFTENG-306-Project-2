@@ -13,6 +13,7 @@ public class InstructionExecutor : MonoBehaviour
     }
 
     public ClickEventEmitter playButton;
+    public ClickEventEmitter stopButton;
 
     public Instructable target;
 
@@ -42,6 +43,7 @@ public class InstructionExecutor : MonoBehaviour
         draggableList.CopyOnDrag = false;
 
         playButton.EventHandler += Play;
+        stopButton.EventHandler += Stop;
     }
 
     public void JumpToInstruction(Instruction instruction)
