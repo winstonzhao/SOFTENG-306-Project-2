@@ -32,29 +32,34 @@ public class CivilVehicleController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    //public void Update()
+    //{
 
-        //raycast when mouse clicked
-        if (Input.GetMouseButtonDown(0))
+    //    //raycast when mouse clicked
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        run();
+
+    //        //         var isoRay = Isometric.MouseToIsoRay();
+    //        //IsoRaycastHit isoRaycastHit;
+    //        //if (IsoPhysics.Raycast(isoRay, out isoRaycastHit)) {
+    //        //	Debug.Log("Moving to " + isoRaycastHit.Point);
+    //        //             AstarAgent.MoveTo(isoRaycastHit.Point);
+    //        //         }
+    //    }
+    //}
+
+    public void run()
+    {
+        foreach (GoalAgent goal in Goals)
         {
-            foreach (GoalAgent goal in Goals)
+            foreach (AstarAgent agent in AstarAgents)
             {
-                foreach (AstarAgent agent in AstarAgents)
+                if (agent.Type == goal.GoalType)
                 {
-                    if (agent.Type == goal.GoalType)
-                    {
-                        agent.MoveTo(goal.GetComponentInParent<IsoTransform>().Position);
-                    }
+                    agent.MoveTo(goal.GetComponentInParent<IsoTransform>().Position);
                 }
             }
-
-            //         var isoRay = Isometric.MouseToIsoRay();
-            //IsoRaycastHit isoRaycastHit;
-            //if (IsoPhysics.Raycast(isoRay, out isoRaycastHit)) {
-            //	Debug.Log("Moving to " + isoRaycastHit.Point);
-            //             AstarAgent.MoveTo(isoRaycastHit.Point);
-            //         }
         }
     }
 
