@@ -186,7 +186,6 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void OnDragEnter(Draggable item)
     {
-        Debug.Log("Entered");
         if (listItems.Contains(item)) return;
         
         AddDummyToList(0);

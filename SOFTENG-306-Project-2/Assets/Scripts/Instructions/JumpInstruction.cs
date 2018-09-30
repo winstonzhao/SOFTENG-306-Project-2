@@ -23,8 +23,10 @@ public class JumpInstruction : Instruction
     void Start()
     {
         
-        var prefab = Resources.Load<GameObject>("Prefabs/JumpTarget");
+        var prefab = Resources.Load<GameObject>("Prefabs/JumpTargetUI");
         var gameObj = Instantiate<GameObject>(prefab);
+
+        gameObj.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform, false);
 
         jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
         jumpTarget.transform.position = transform.position;
