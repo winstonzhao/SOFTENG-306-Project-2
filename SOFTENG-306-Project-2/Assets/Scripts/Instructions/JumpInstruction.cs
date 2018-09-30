@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,11 +7,14 @@ public class JumpInstruction : Instruction
     private InstructionExecutor instructionExecutor;
     private JumpTargetInstruction jumpTarget;
 
-    public override string Name
+    public override List<InstructionComponent> InstructionComponents
     {
         get
         {
-            return "Jump";
+            return new List<InstructionComponent> 
+            {
+                new InstructionComponent("Jump")
+            };
         }
     }
 

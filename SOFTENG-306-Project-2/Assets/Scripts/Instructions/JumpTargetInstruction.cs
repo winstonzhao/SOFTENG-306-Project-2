@@ -1,14 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpTargetInstruction : Instruction
 {
     private InstructionExecutor instructionExecutor;
 
-    public override string Name
+    public override List<InstructionComponent> InstructionComponents
     {
         get
         {
-            return "END JUMP";
+            return new List<InstructionComponent> 
+            {
+                new InstructionComponent("END JUMP")
+            };
         }
     }
 

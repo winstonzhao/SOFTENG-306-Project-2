@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum MoveType
@@ -23,11 +24,16 @@ public class MoveInstruction : Instruction
 
     public MoveType moveType;
 
-    public override string Name
+    public override List<InstructionComponent> InstructionComponents
     {
         get
         {
-            return "Move " + moveTarget.x + ", " + moveTarget.y;
+            return new List<InstructionComponent> 
+            {
+                new InstructionComponent("Move"),
+                new InstructionComponent(moveTarget.x.ToString()),
+                new InstructionComponent(moveTarget.y.ToString())
+            };
         }
     }
 
