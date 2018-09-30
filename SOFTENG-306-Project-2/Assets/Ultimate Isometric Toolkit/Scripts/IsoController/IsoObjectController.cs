@@ -2,6 +2,8 @@
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
+using UserInterface;
 
 namespace Ultimate_Isometric_Toolkit.Scripts.IsoController
 {
@@ -23,6 +25,16 @@ namespace Ultimate_Isometric_Toolkit.Scripts.IsoController
             animator = GetComponent<Animator>();
         }
 
+        private float InputGetAxis(string name)
+        {
+            if (Toolbox.Instance.FocusManager.Focus != null)
+            {
+                return 0.0f;
+            }
+
+            return Input.GetAxis(name);
+        }
+
         private void FixedUpdate()
         {
             if (ghost == null)
@@ -31,16 +43,16 @@ namespace Ultimate_Isometric_Toolkit.Scripts.IsoController
                 Assert.IsTrue(ghost != null);
             }
 
-            var vertical = Input.GetAxis("Vertical");
-            var horizontal = -Input.GetAxis("Horizontal");
+            var vertical = InputGetAxis("Vertical");
+            var horizontal = -InputGetAxis("Horizontal");
             var movement = new Vector3(vertical, 0, horizontal);
             ghost.transform.Translate(movement * Time.deltaTime * Speed);
         }
 
         private void Update()
         {
-            var vertical = Input.GetAxis("Vertical");
-            var horizontal = -Input.GetAxis("Horizontal");
+            var vertical = InputGetAxis("Vertical");
+            var horizontal = -InputGetAxis("Horizontal");
 
             animator.SetFloat("hSpeed", horizontal);
             animator.SetFloat("vSpeed", vertical);

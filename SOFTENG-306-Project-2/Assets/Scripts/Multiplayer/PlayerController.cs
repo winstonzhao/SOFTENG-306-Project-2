@@ -25,6 +25,14 @@ namespace Multiplayer
 
         private Animator MovementAnimator;
 
+        private SpeechBubble SpeechBubble;
+
+        private ChatController ChatController;
+
+        private ChatMessage ActiveChatMessage;
+
+        private int LastMessageIdSeen = -1;
+
         private void Awake()
         {
             if (Self)
@@ -38,6 +46,11 @@ namespace Multiplayer
             Transform = GetComponent<IsoTransform>();
 
             MovementAnimator = GetComponent<Animator>();
+
+            var sb = transform.Find("Speech Bubble");
+            SpeechBubble = sb == null ? null : sb.GetComponent<SpeechBubble>();
+
+            ChatController = FindObjectOfType<ChatController>();
         }
 
         private void Start()
@@ -55,7 +68,7 @@ namespace Multiplayer
             MovementAnimator.SetFloat("vSpeed", 0.0f);
             MovementAnimator.SetBool("vIdle", true);
             MovementAnimator.SetBool("hIdle", true);
-            MovementAnimator.SetBool("walking", true);
+            MovementAnimator.SetBool("walking", false);
         }
 
         private void Update()
@@ -65,6 +78,46 @@ namespace Multiplayer
                 return;
             }
 
+            UpdateChat();
+            UpdatePosition();
+        }
+
+        private void UpdateChat()
+        {
+            if (ChatController == null || SpeechBubble == null)
+            {
+                return;
+            }
+
+            // Try getting a newer message 
+            var lastChatMessageId = ChatController.LastChatMessageId;
+            var message = ChatController.GetLastMessageBy(Player.username, LastMessageIdSeen);
+            LastMessageIdSeen = lastChatMessageId;
+
+            if (message != null)
+            {
+                ActiveChatMessage = message;
+            }
+
+            var active = ActiveChatMessage;
+
+            if (active != null)
+            {
+                SpeechBubble.Message = active.message;
+
+                // Get rid of the message if it's been shown for longer than the active duration
+                if (DateTime.Now - active.sentAtDateTime > ChatController.ActiveDuration)
+                {
+                    active = null;
+                    ActiveChatMessage = null;
+                }
+            }
+
+            SpeechBubble.gameObject.SetActive(active != null);
+        }
+
+        private void UpdatePosition()
+        {
             if (Self)
             {
                 Player.x = Transform.Position.x;

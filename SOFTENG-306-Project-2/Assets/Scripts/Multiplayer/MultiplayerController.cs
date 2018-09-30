@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -9,10 +10,14 @@ namespace Multiplayer
     {
         public bool Enabled;
 
+        public string Host = "wss://ododo.herokuapp.com";
+
         /// <summary>
         /// The time in seconds to wait before syncing local player data to the server 
         /// </summary>
         public float SyncPeriod = 0.3f;
+
+        private ChatController ChatController;
 
         private bool Connected;
 
@@ -41,9 +46,36 @@ namespace Multiplayer
             MyPlayer = player;
         }
 
+        public void SendAsync(string payload, Action<bool> completed)
+        {
+            // This is due to Unity hot reload
+            if (Connected && WebSocket == null)
+            {
+                if (Debug.isDebugBuild)
+                {
+                    Debug.LogWarning("Reconnecting; this is most likely due to Unity hot reload");
+                    Connect(false);
+                }
+                else
+                {
+                    Debug.LogError("Web socket is null but connection should be open");
+                    return;
+                }
+            }
+
+            if (!Connected || WebSocket == null)
+            {
+                return;
+            }
+
+            WebSocket.SendAsync(payload, completed);
+        }
+
         private void Awake()
         {
             PlayerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Multiplayer.prefab");
+
+            ChatController = FindObjectOfType<ChatController>();
         }
 
         private void Start()
@@ -55,31 +87,7 @@ namespace Multiplayer
 
             if (!Connected)
             {
-                Connected = true;
-
-                WebSocket = new WebSocket("wss://ododo.herokuapp.com/play");
-
-                WebSocket.OnMessage += (sender, evt) =>
-                {
-                    var data = evt.Data;
-                    if (data.StartsWith("sync\n"))
-                    {
-                        var response = data.Substring("sync\n".Length);
-                        var sync = JsonUtility.FromJson<GameSync>(response);
-                        if (sync != null)
-                        {
-                            Sync(sync);
-                        }
-                    }
-                };
-
-                WebSocket.OnError += (sender, e) =>
-                {
-                    Debug.LogError(e);
-                    Debug.LogError(e.Exception.StackTrace);
-                };
-
-                WebSocket.Connect();
+                Connect();
             }
         }
 
@@ -91,6 +99,83 @@ namespace Multiplayer
             }
 
             Connected = false;
+        }
+
+        private void Connect(bool async = true)
+        {
+            // Don't reconnect for no reason
+            if (WebSocket != null && WebSocket.IsAlive)
+            {
+                return;
+            }
+
+            WebSocket = new WebSocket(Host + "/play");
+            WebSocket.OnOpen += OnSocketOpen;
+            WebSocket.OnMessage += OnGameSync;
+            WebSocket.OnError += OnSocketError;
+
+            if (ChatController != null)
+            {
+                WebSocket.OnMessage += OnChatMessages;
+            }
+
+            if (async)
+            {
+                WebSocket.ConnectAsync();
+            }
+            else
+            {
+                WebSocket.Connect();
+            }
+        }
+
+        private void OnSocketOpen(object sender, object arg)
+        {
+            Connected = true;
+        }
+
+        private void OnGameSync(object sender, MessageEventArgs evt)
+        {
+            const string prefix = "sync\n";
+
+            var data = evt.Data;
+
+            if (!data.StartsWith(prefix))
+            {
+                return;
+            }
+
+            var json = data.Substring(prefix.Length);
+            var response = JsonUtility.FromJson<GameSync>(json);
+            if (response != null)
+            {
+                Sync(response);
+            }
+        }
+
+        private void OnChatMessages(object sender, MessageEventArgs evt)
+        {
+            const string prefix = "get-messages\n";
+
+            var data = evt.Data;
+
+            if (!data.StartsWith(prefix))
+            {
+                return;
+            }
+
+            var json = data.Substring(prefix.Length);
+            var response = JsonUtility.FromJson<GetMessages>(json);
+            if (response != null)
+            {
+                ChatController.Sync(response.messages);
+            }
+        }
+
+        private void OnSocketError(object sender, ErrorEventArgs evt)
+        {
+            Debug.LogError(evt);
+            Debug.LogError(evt.Exception.StackTrace);
         }
 
         private void Sync(GameSync sync)
@@ -106,11 +191,16 @@ namespace Multiplayer
             PlayerCountChange = players.Count - prevCount;
             Players = players;
             IsPlayersDirty = true;
+
+            if (ChatController != null)
+            {
+                ChatController.Sync(sync.lastChatMessageId);
+            }
         }
 
         private void Update()
         {
-            if (MyPlayer == null || WebSocket == null)
+            if (MyPlayer == null || !Connected)
             {
                 return;
             }
@@ -124,7 +214,7 @@ namespace Multiplayer
                 LastSyncAt = now;
 
                 var json = JsonUtility.ToJson(MyPlayer);
-                WebSocket.SendAsync("player-sync\n" + json, (success) => { });
+                SendAsync("player-sync\n" + json, (success) => { });
             }
         }
 
