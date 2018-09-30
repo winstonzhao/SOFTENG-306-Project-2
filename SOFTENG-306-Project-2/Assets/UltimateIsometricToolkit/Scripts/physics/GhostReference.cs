@@ -6,7 +6,7 @@ using UnityEngine;
 /// Class that holds a reference to the GhostObject for IsoColliders and IsoRigidbody
 /// </summary>
 [DisallowMultipleComponent]
-public class GhostReference : MonoBehaviour {
+public class    GhostReference : MonoBehaviour {
 
 	public GameObject GhostObject { get; private set; }
 

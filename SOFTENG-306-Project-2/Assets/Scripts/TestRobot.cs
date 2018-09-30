@@ -27,5 +27,16 @@ public class TestRobotEditor : Editor
         {
             myScript.MoveBR();
         }
+
+        if (UnityEngine.GUILayout.Button("PickUp TL")) 
+        {
+            myScript.PickUp(RobotController.Direction.TopLeft);
+        }
+
+        if (UnityEngine.GUILayout.Button("PickUp BL"))
+        {
+            myScript.PickUp(RobotController.Direction.BottomLeft);
+        }
+
     }
 }
