@@ -17,8 +17,8 @@ public class RobotController : MonoBehaviour
     private bool hasElement = false;
     private GameObject carrying;
 
-    private static string NO_ELEMENT = "Assets/Sprites/software_minigame/alienBeige 1.png";
-    private static string HAS_ELEMENT = "Assets/Sprites/software_minigame/alienBeige 2.png";
+    private static string NO_ELEMENT = "software_minigame/Sprites/alienBeige 1";
+    private static string HAS_ELEMENT = "software_minigame/Sprites/alienBeige 2";
 
     public enum Direction
     {
@@ -174,7 +174,7 @@ public class RobotController : MonoBehaviour
         }
         else
         {
-            Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(HAS_ELEMENT, typeof(Sprite));
+            var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
             switch (direction)
             {
                 case Direction.TopRight:
@@ -231,7 +231,7 @@ public class RobotController : MonoBehaviour
         }
         else
         {
-            Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(NO_ELEMENT, typeof(Sprite));
+            var sprite = Resources.Load<Sprite>(NO_ELEMENT);
             switch (direction)
             {
                 case Direction.TopRight:

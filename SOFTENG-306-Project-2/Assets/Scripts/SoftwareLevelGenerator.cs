@@ -15,9 +15,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
 
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
-    private static string ELEMENT_PREFAB = "Assets/Prefabs/software_minigame/test_item.prefab";
-    private static string FINISH_INPUTS = "Assets/Sprites/software_minigame/abstractTile_33.png";
-    private static string CORRECT_OUTPUT = "Assets/Sprites/software_minigame/abstractTile_34.png";
+    private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
+    private static string FINISH_INPUTS = "software_minigame/Sprites/key";
+    private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock";
 
     public enum Layout
     {
@@ -70,8 +70,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public void NextInputElement() 
     {
         if (numElements != 0) {
-            Object prefab = AssetDatabase.LoadAssetAtPath(ELEMENT_PREFAB, typeof(GameObject));
-            GameObject obj = UnityEditor.PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
+            GameObject obj = Instantiate<GameObject>(prefab);
             obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
             obj.AddComponent<ArrayElement>();
             layoutMap[inputX, inputZ] = Layout.ELEMENT;
@@ -81,7 +81,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         } else {
             GameObject obj = this.transform.Find("Input").Find("Input").gameObject;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-            Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(FINISH_INPUTS, typeof(Sprite));
+            Sprite sprite = Resources.Load<Sprite>(FINISH_INPUTS);
             renderer.sprite = sprite;
         }
     }
@@ -118,7 +118,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
                 SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-                Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(CORRECT_OUTPUT, typeof(Sprite));
+                Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
                 renderer.sprite = sprite;
                 return true;
         }
