@@ -15,9 +15,18 @@ public class RobotController : MonoBehaviour
     private int X = 1;
     private int Z = 1;
     private bool hasElement = false;
+    private GameObject carrying;
 
     private static string NO_ELEMENT = "Assets/Sprites/software_minigame/alienBeige 1.png";
     private static string HAS_ELEMENT = "Assets/Sprites/software_minigame/alienBeige 2.png";
+
+    public enum Direction
+    {
+        TopRight = 0,
+        BottomRight = 1,
+        BottomLeft = 2,
+        TopLeft = 3
+    }
 
     // Use this for initialization
     void Start()
@@ -157,9 +166,10 @@ public class RobotController : MonoBehaviour
         return true;
     }
 
-    public bool PickUp(Direction direction)
+    public bool PickUpItem(Direction direction)
     {
-        if (hasElement) {
+        if ((hasElement) || (carrying != null))
+        {
             return false;
         }
         else
@@ -168,7 +178,9 @@ public class RobotController : MonoBehaviour
             switch (direction)
             {
                 case Direction.TopRight:
-                    if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT) {
+                    if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT)
+                    {
+                        carrying = generator.GetObject(X + 1, Z);
                         generator.SetMapLayout(X + 1, Z, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
@@ -178,6 +190,7 @@ public class RobotController : MonoBehaviour
                 case Direction.BottomRight:
                     if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.ELEMENT)
                     {
+                        carrying = generator.GetObject(X, Z - 1);
                         generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
@@ -187,6 +200,7 @@ public class RobotController : MonoBehaviour
                 case Direction.BottomLeft:
                     if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT)
                     {
+                        carrying = generator.GetObject(X - 1, Z);
                         generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
@@ -196,6 +210,7 @@ public class RobotController : MonoBehaviour
                 case Direction.TopLeft:
                     if (generator.GetMapLayout(X, Z + 1) == SoftwareLevelGenerator.Layout.ELEMENT)
                     {
+                        carrying = generator.GetObject(X, Z + 1);
                         generator.SetMapLayout(X, Z + 1, SoftwareLevelGenerator.Layout.EMPTY, null);
                         hasElement = true;
                         this.GetComponent<SpriteRenderer>().sprite = sprite;
@@ -208,11 +223,77 @@ public class RobotController : MonoBehaviour
         return false;
     }
 
-    public enum Direction
+    public bool DropItem(Direction direction)
     {
-        TopRight = 0,
-        BottomRight = 1,
-        BottomLeft = 2,
-        TopLeft = 3
+        if ((!hasElement) || (carrying == null))
+        {
+            return false;
+        }
+        else
+        {
+            Sprite sprite = (UnityEngine.Sprite)AssetDatabase.LoadAssetAtPath(NO_ELEMENT, typeof(Sprite));
+            switch (direction)
+            {
+                case Direction.TopRight:
+                    if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
+                    {
+                        generator.SetMapLayout(X + 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
+                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        carrying = null;
+                        hasElement = false;
+                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+                        renderer.sprite = sprite;
+                        renderer.sortingOrder = 2;
+                        return true;
+                    }
+                    break;
+                case Direction.BottomRight:
+                    if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.EMPTY)
+                    {
+                        generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
+                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        carrying = null;
+                        hasElement = false;
+                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+                        renderer.sprite = sprite;
+                        renderer.sortingOrder = 1;
+                        return true;
+                    }
+                    break;
+                case Direction.BottomLeft:
+                    if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
+                    {
+                        generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
+                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        carrying = null;
+                        hasElement = false;
+                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+                        renderer.sprite = sprite;
+                        renderer.sortingOrder = 1;
+                        return true;
+                    }
+                    break;
+                case Direction.TopLeft:
+                    if (generator.GetMapLayout(X, Z + 1) == SoftwareLevelGenerator.Layout.EMPTY)
+                    {
+                        generator.SetMapLayout(X, Z + 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
+                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        carrying = null;
+                        hasElement = false;
+                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+                        renderer.sprite = sprite;
+                        renderer.sortingOrder = 2;
+                        return true;
+                    }
+                    break;
+            }
+        }
+        return false;
+    }
+
+
+    public void debug()
+    {
+        generator.PrintMap();
     }
 }

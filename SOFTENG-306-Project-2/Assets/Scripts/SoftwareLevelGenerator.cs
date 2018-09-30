@@ -12,6 +12,12 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private GameObject[,] objectMap;
     private static string ELEMENT_PREFAB = "Assets/Prefabs/software_minigame/test_item.prefab";
 
+    public enum Layout
+    {
+        EMPTY = 0,
+        ELEMENT = 1,
+        PADDING = -1
+    }
 
     // Use this for initialization
     void Start()
@@ -23,7 +29,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
     void Update()
     {
     }
-
 
     public void GeneratedLevel(int level)
     {
@@ -57,24 +62,63 @@ public class SoftwareLevelGenerator : MonoBehaviour
         }
     }
 
-    public void SetMapLayout(int x, int z, Layout layout, GameObject obj) {
-        if (layout == Layout.EMPTY) {
+    public bool CheckAnswer()
+    {
+        if (numElements != 0)
+        {
+            return false;
+        }
+
+        switch (currentLevel)
+        {
+            case 1:
+                return true;
+        }
+
+        return false;
+    }
+
+    public void SetMapLayout(int x, int z, Layout layout, GameObject obj)
+    {
+        if (layout == Layout.EMPTY)
+        {
+            Debug.Log("Pick x: " + x + " z: " + z);
             layoutMap[x, z] = layout;
-            DestroyImmediate(objectMap[x, z]);
-        } else if (layout == Layout.ELEMENT) {
+            objectMap[x, z].SetActive(false);
+            objectMap[x, z] = null;
+        }
+        else if (layout == Layout.ELEMENT)
+        {
+            Debug.Log("Drop x: " + x + " z: " + z);
+            var oldPos = obj.GetComponent<IsoTransform>().Position;
+            objectMap[(int)oldPos.x, (int)oldPos.z] = null;
             layoutMap[x, z] = layout;
+            obj.GetComponent<IsoTransform>().Position = new Vector3(x, 0, z);
             objectMap[x, z] = obj;
+            objectMap[x, z].SetActive(true);
         }
     }
 
-    public Layout GetMapLayout(int x, int z) {
+    public void PrintMap()
+    {
+        for (int i = 0; i < 11; i++)
+        {
+            string hehe = "";
+            for (int j = 0; j < 9; j++)
+            {
+                hehe = hehe + layoutMap[i, j] + ": ";
+            }
+            Debug.Log(hehe);
+        }
+    }
+
+    public Layout GetMapLayout(int x, int z)
+    {
         return layoutMap[x, z];
     }
 
-    public enum Layout
+    public GameObject GetObject(int x, int z)
     {
-        EMPTY = 0,
-        ELEMENT = 1,
-        PADDING = -1
+        return objectMap[x, z];
     }
 }
