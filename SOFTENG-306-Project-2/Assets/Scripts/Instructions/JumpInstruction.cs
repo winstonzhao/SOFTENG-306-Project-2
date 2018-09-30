@@ -22,8 +22,9 @@ public class JumpInstruction : Instruction
 
     void Start()
     {
-        var prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/JumpTarget.prefab", typeof(GameObject));
-        var gameObj = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        
+        var prefab = Resources.Load<GameObject>("Prefabs/JumpTarget");
+        var gameObj = Instantiate<GameObject>(prefab);
 
         jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
         jumpTarget.transform.position = transform.position;

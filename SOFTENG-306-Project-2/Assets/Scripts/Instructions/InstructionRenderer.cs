@@ -88,8 +88,8 @@ public class InstructionRenderer : MonoBehaviour
 
     private InstructionText CreateTextObject(InstructionComponent component, string name = "text")
     {
-        var prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/InstructionText.prefab", typeof(GameObject));
-        var go = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        var prefab = Resources.Load<GameObject>("Prefabs/InstructionText");
+        var go = Instantiate<GameObject>(prefab);
         go.name = name;
 
         var meshRender = go.GetComponent<MeshRenderer>();
