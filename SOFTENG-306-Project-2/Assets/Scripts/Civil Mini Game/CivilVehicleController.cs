@@ -4,12 +4,17 @@ using UltimateIsometricToolkit.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using Ultimate_Isometric_Toolkit.Scripts.Pathfinding;
 using UnityEngine;
+using System;
+using System.Diagnostics;
+using TMPro;
+using Debug = UnityEngine.Debug;
 
 public class CivilVehicleController : MonoBehaviour {
 
     public static CivilVehicleController instance;
     public List<AstarAgent> AstarAgents = new List<AstarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
+    public Canvas Dialog;
 
     private void Awake()
 
@@ -32,29 +37,11 @@ public class CivilVehicleController : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    //public void Update()
-    //{
-
-    //    //raycast when mouse clicked
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        run();
-
-    //        //         var isoRay = Isometric.MouseToIsoRay();
-    //        //IsoRaycastHit isoRaycastHit;
-    //        //if (IsoPhysics.Raycast(isoRay, out isoRaycastHit)) {
-    //        //	Debug.Log("Moving to " + isoRaycastHit.Point);
-    //        //             AstarAgent.MoveTo(isoRaycastHit.Point);
-    //        //         }
-    //    }
-    //}
-
     public void run()
     {
-        foreach (GoalAgent goal in Goals)
+        foreach (GoalAgent goal in instance.Goals)
         {
-            foreach (AstarAgent agent in AstarAgents)
+            foreach (AstarAgent agent in instance.AstarAgents)
             {
                 if (agent.Type == goal.GoalType)
                 {
@@ -62,6 +49,84 @@ public class CivilVehicleController : MonoBehaviour {
                 }
             }
         }
+
+        StartCoroutine(WaitCarsStop());
     }
 
+    IEnumerator WaitCarsStop()
+    {
+        yield return new WaitUntil(() => !AreCarsMoving());
+
+        // set parameters in the result info
+        SetPlayerName("Sean");
+        SetTimeAndAmount(3, 300);
+
+        if (AllCarsReachedGoal()) // Win
+        {
+            Debug.Log("Win!!!!!!");
+            ToggleCanvasGroup("Bad", false);
+            ToggleCanvasGroup("Good", true);
+        }
+        else // Lose
+        {
+            Debug.Log("Lose:(");
+            ToggleCanvasGroup("Good", false);
+            ToggleCanvasGroup("Bad", true);
+        }
+
+        instance.Dialog.enabled = !instance.Dialog.enabled;
+    }
+
+    private bool AreCarsMoving()
+    {
+     
+        foreach (AstarAgent agent in instance.AstarAgents)
+        {
+            if (!agent.hasReachedGoal && !agent.noPathFound)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool AllCarsReachedGoal()
+    {
+        foreach (AstarAgent agent in instance.AstarAgents)
+        {
+            if (!agent.hasReachedGoal)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void ToggleCanvasGroup(string tagName, bool show)
+    {
+        CanvasGroup group = GameObject.FindGameObjectWithTag(tagName).GetComponent<CanvasGroup>();
+        group.alpha = show ? 1 : 0;
+        group.interactable = show;
+
+    }
+
+    private void SetTimeAndAmount(int timeInSeconds, int amount)
+    {
+        TextMeshProUGUI resultInfoArea = GameObject.FindGameObjectWithTag("ResultInfo").GetComponent<TextMeshProUGUI>();
+
+        string text = resultInfoArea.text;
+
+        text = text.Replace("<time>", timeInSeconds.ToString() + (timeInSeconds > 1 ? " seconds" : " second"));
+        text = text.Replace("<amount>", amount.ToString());
+
+        resultInfoArea.SetText(text);
+    }
+
+    private void SetPlayerName(string name)
+    {
+        TextMeshProUGUI nameArea = GameObject.FindGameObjectWithTag("PlayerName").GetComponent<TextMeshProUGUI>();
+        nameArea.SetText(name);
+    }
 }

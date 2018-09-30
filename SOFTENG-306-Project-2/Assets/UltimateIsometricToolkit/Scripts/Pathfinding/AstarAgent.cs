@@ -17,11 +17,17 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 		public Heuristic heuristic;
         public string Type;
 		private Animator animator;
+        [HideInInspector]
+        public volatile bool hasReachedGoal = false;
+        [HideInInspector]
+        public volatile bool noPathFound = false;
 
-		void Awake()
+        void Awake()
 		{
 			animator = GetComponent<Animator>();
-		}
+            hasReachedGoal = false;
+            noPathFound = false;
+        }
 
 		/// <summary>
         /// Finds a path to given destination under a heuristic if such path exists
@@ -47,6 +53,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 			}, () =>
 			{
 				Debug.Log("No path found");
+                noPathFound = true;
 			});
 		}
 
@@ -72,6 +79,8 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding {
 			foreach (var pos in path) {
 				yield return StepTo(GetComponent<IsoTransform>().Position, pos + new Vector3(0, GetComponent<IsoTransform>().Size.y / 2, 0), Speed);
 			}
+            Debug.Log("reached the goal");
+            hasReachedGoal = true;
 		}
 
 		private Astar.Heuristic GetFromEnum(Heuristic heuristic) {
