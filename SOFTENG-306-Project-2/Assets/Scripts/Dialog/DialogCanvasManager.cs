@@ -98,13 +98,25 @@ public class DialogCanvasManager : MonoBehaviour
     void CloseDialog()
     {
         DestroyStuff();
+        StartCoroutine(WaitForMS());
+    }
+
+    /**
+     * Wait for 1 second so that we don't keep talking.
+     */ 
+    IEnumerator WaitForMS()
+    {
+        yield return new WaitForSeconds(1);
         _showing = false;
     }
 
     void DestroyStuff()
     {
         Destroy(_textPanel);
-        Destroy(_avatar.gameObject);
+        if (_avatar != null)
+        {
+            Destroy(_avatar.gameObject);
+        }
     }
 
     void RenderTextboxes()
@@ -167,6 +179,7 @@ public class DialogCanvasManager : MonoBehaviour
         if (_currentFrame.TransitionFrame == true)
         {
             GameManager.instance.ChangeScene(_currentFrame.LevelName);
+            return;
         }
 
         if (_typingText == true)
@@ -190,6 +203,7 @@ public class DialogCanvasManager : MonoBehaviour
 
             _characterNameText.text = _dialog.NameMap[currentFrame.Name];
             StartCoroutine(RenderFrame(currentFrame));
+            return;
         }
         else
         {

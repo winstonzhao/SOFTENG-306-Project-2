@@ -13,7 +13,7 @@ public class Dialog
         _startFrame = startFrame;
         _nameMap = new Dictionary<int, string>();
         _dirMap = new Dictionary<int, string>();
-        _nameMap[0] = "Mince Casserole";
+        _nameMap[0] = GameManager.instance.Player.Username;
         _nameMap[1] = "Kerry Juniper";
         _dirMap[0] = "LHS";
         _dirMap[1] = "RHS";
@@ -27,10 +27,12 @@ public class Dialog
     public Dictionary<int, string> NameMap
     {
         get { return _nameMap; }
+        set { _nameMap = value; }
     }
 
     public Dictionary<int, string> DirMap
     {
         get { return _dirMap; }
+        set { _dirMap = value;  }
     }
 }

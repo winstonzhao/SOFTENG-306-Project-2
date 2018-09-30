@@ -15,7 +15,7 @@ public abstract class NPC : MonoBehaviour {
 	void Start () {
         _playerPos = GameObject.Find("Player").GetComponent<IsoTransform>();
         _npcPos = GetComponent<IsoTransform>();
-        _canvas = GameObject.Find("Canvas").GetComponent<DialogCanvasManager>();
+        _canvas = GameObject.Find("DialogCanvas").GetComponent<DialogCanvasManager>();
         _playerSprite = GameObject.Find("Player").GetComponent<SaveSprite>().Sprite;
     }
 
