@@ -59,8 +59,8 @@ namespace Multiplayer
                     LastChatMessageId = message.id;
                     Messages.Add(message);
 
-                    var sentAt = DateTime.Parse(message.sentAt);
-                    message.sentAtDateTime = sentAt;
+                    // Parse the ISO-8601 date into a workable format
+                    message.sentAtDateTime = DateTime.Parse(message.sentAt) + MultiplayerController.TimeDrift;
                 }
             }
         }

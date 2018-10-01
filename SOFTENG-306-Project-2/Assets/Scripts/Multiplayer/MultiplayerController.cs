@@ -21,9 +21,12 @@ namespace Multiplayer
             }
         }
 
+        public TimeSpan TimeDrift { get; private set; }
+
         /// <summary>
-        /// The time in seconds to wait before syncing local player data to the server 
+        /// The time in seconds to wait before syncing local player data to the server
         /// </summary>
+        [NonSerialized]
         public float SyncPeriod = 0.3f;
 
         private ChatController ChatController;
@@ -88,6 +91,8 @@ namespace Multiplayer
 
         private void Awake()
         {
+            TimeDrift = TimeSpan.Zero;
+
             PlayerPrefab = Resources.Load<GameObject>("Prefabs/Multiplayer");
 
             ChatController = FindObjectOfType<ChatController>();
@@ -126,6 +131,7 @@ namespace Multiplayer
 
             WebSocket = new WebSocket(Host + "/play");
             WebSocket.OnOpen += OnSocketOpen;
+            WebSocket.OnMessage += OnGameInit;
             WebSocket.OnMessage += OnGameSync;
             WebSocket.OnError += OnSocketError;
 
@@ -147,6 +153,28 @@ namespace Multiplayer
         private void OnSocketOpen(object sender, object arg)
         {
             Connected = true;
+        }
+
+        private void OnGameInit(object sender, MessageEventArgs evt)
+        {
+            const string prefix = "init\n";
+
+            var data = evt.Data;
+
+            if (!data.StartsWith(prefix))
+            {
+                return;
+            }
+
+            var now = DateTime.Now;
+
+            var json = data.Substring(prefix.Length);
+            var response = JsonUtility.FromJson<GameInitialization>(json);
+            if (response != null)
+            {
+                SyncPeriod = response.tickPeriod / 1000.0f;
+                TimeDrift = now - DateTime.Parse(response.currentDateTime);
+            }
         }
 
         private void OnGameSync(object sender, MessageEventArgs evt)
