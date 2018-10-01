@@ -239,6 +239,7 @@ public class DialogCanvasManager : MonoBehaviour
             {
                 Button button = _textPanel.transform.Find("Button " + i).gameObject.GetComponent<Button>();
                 button.onClick.Invoke();
+                NextSentence();
             }
         }
     }
