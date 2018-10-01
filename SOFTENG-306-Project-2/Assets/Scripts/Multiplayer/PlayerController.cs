@@ -17,10 +17,13 @@ namespace Multiplayer
 
         private void Awake()
         {
-            Player = new Player
+            if (Self)
             {
-                username = Username, scene = Scene
-            };
+                var userId = Mathf.RoundToInt(Random.value * 10000);
+                Username += "-";
+                Username += userId;
+                Player = new Player { username = Username, scene = Scene };
+            }
 
             Transform = GetComponent<IsoTransform>();
 
