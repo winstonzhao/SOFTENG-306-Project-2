@@ -15,6 +15,10 @@ public class CivilVehicleController : MonoBehaviour {
     public List<AstarAgent> AstarAgents = new List<AstarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
     public Canvas Dialog;
+    public int TimeLimit = 10;
+
+    private TextMeshProUGUI timerArea;
+    private bool timerNotStopped = true;
 
     private void Awake()
 
@@ -35,6 +39,11 @@ public class CivilVehicleController : MonoBehaviour {
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
+
+        timerArea = GetTextArea("Timer");
+        string timerLabel = String.Format("{0:00}:00", (TimeLimit));
+        timerArea.SetText(timerLabel);
+
     }
 
     public void run()
@@ -49,7 +58,7 @@ public class CivilVehicleController : MonoBehaviour {
                 }
             }
         }
-
+        StartCoroutine(StartCountdown(TimeLimit));
         StartCoroutine(WaitCarsStop());
     }
 
@@ -73,7 +82,7 @@ public class CivilVehicleController : MonoBehaviour {
             ToggleCanvasGroup("Good", false);
             ToggleCanvasGroup("Bad", true);
         }
-
+        timerNotStopped = false;
         instance.Dialog.enabled = !instance.Dialog.enabled;
     }
 
@@ -114,7 +123,7 @@ public class CivilVehicleController : MonoBehaviour {
 
     private void SetTimeAndAmount(int timeInSeconds, int amount)
     {
-        TextMeshProUGUI resultInfoArea = GameObject.FindGameObjectWithTag("ResultInfo").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI resultInfoArea = GetTextArea("ResultInfo");
 
         string text = resultInfoArea.text;
 
@@ -126,7 +135,26 @@ public class CivilVehicleController : MonoBehaviour {
 
     private void SetPlayerName(string name)
     {
-        TextMeshProUGUI nameArea = GameObject.FindGameObjectWithTag("PlayerName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI nameArea = GetTextArea("PlayerName");
         nameArea.SetText(name);
+    }
+
+    float currCountdownValueTenthSeconds;
+    public IEnumerator StartCountdown(int timeLimit)
+    {
+        float countdownValue = (TimeLimit - 1) * 10;
+        currCountdownValueTenthSeconds = countdownValue;
+        while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
+        {
+            string timerLabel = String.Format("{0:00}:{1:00}", (currCountdownValueTenthSeconds) / 10, (currCountdownValueTenthSeconds % 10) * 10);
+            timerArea.SetText(timerLabel);
+            yield return new WaitForSeconds(0.1f);
+            currCountdownValueTenthSeconds--;
+        }
+    }
+
+    private TextMeshProUGUI GetTextArea(string tagName)
+    {
+        return GameObject.FindGameObjectWithTag(tagName).GetComponent<TextMeshProUGUI>();
     }
 }
