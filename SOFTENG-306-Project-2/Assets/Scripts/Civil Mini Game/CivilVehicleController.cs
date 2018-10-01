@@ -47,6 +47,7 @@ public class CivilVehicleController : MonoBehaviour {
         timerArea.SetText(timerLabel);
 
         budgetArea = GetTextArea("Budget");
+        budgetArea.SetText("$" + Budget);
     }
 
     public void run()
@@ -161,10 +162,33 @@ public class CivilVehicleController : MonoBehaviour {
         return GameObject.FindGameObjectWithTag(tagName).GetComponent<TextMeshProUGUI>();
     }
 
-    public void UpdateBudget(int amount)
+    public void UpdateBudget(int itemPrice)
     {
-        instance.Budget += amount;
+        instance.Budget += itemPrice;
         instance.budgetArea.SetText("$" + instance.Budget);
         Debug.Log("updated budget to " + instance.Budget);
+        UpdateBudgetAvailability();
+    }
+
+    private void UpdateBudgetAvailability()
+    {
+        GameObject[] tileFactories = GameObject.FindGameObjectsWithTag("TileFactory");
+        foreach (GameObject tileFactory in tileFactories)
+        {
+            IsoDropZone isoDropZone = tileFactory.GetComponent<IsoDropZone>();
+            if (!IsBudgetAvailable(isoDropZone.ItemPrice))
+            {
+                isoDropZone.setEnable(false);
+            }
+            else
+            {
+                isoDropZone.setEnable(true);
+            }
+        }
+    }
+
+    public bool IsBudgetAvailable(int itemPrice)
+    {
+        return itemPrice <= instance.Budget;
     }
 }

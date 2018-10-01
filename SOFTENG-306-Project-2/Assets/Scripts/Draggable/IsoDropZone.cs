@@ -2,6 +2,7 @@
 using UnityEditor;
 using UltimateIsometricToolkit.physics;
 using System.Collections.Generic;
+using System;
 
 //[RequireComponent(typeof(IsoCollider))]
 //[RequireComponent(typeof(Rigidbody2D))]
@@ -15,6 +16,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     public int ItemPrice = 0;
 
     private Draggable currentItem;
+
+    private bool isEnabled = true;
 
     public void Start()
     {
@@ -53,17 +56,32 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         //Debug.Log("drop zone mouse entered");
     }
 
+    void FixedUpdate()
+    {
+        if (prefebName != null && !CivilVehicleController.instance.IsBudgetAvailable(ItemPrice))
+        {
+
+            //Debug.Log("Budget not available for " + prefebName);
+        }
+    }
+
     public void OnDragEnter(Draggable item)
     {
-        SetDropZoneActive(false);
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
+        if(isEnabled)
+        {
+            SetDropZoneActive(false);
+            GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
+        }
+
     }
 
     public void OnDragExit(Draggable item)
     {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-        //SetDropZoneActive(true);
-        Debug.Log("Dragged away");
+        if(isEnabled) {
+            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+            //SetDropZoneActive(true);
+            Debug.Log("Dragged away");
+        }
 
 
     }
@@ -95,7 +113,9 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         // update budget if this drop zone is a factory
         if (prefebName != "")
         {
+
             CivilVehicleController.instance.UpdateBudget(ItemPrice);
+            item.gameObject.SetActive(false);
         }
 
     }
@@ -121,5 +141,23 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     private void SetDropZoneActive(bool enable)
     {
         gameObject.layer = enable ? 1 : 2;
+    }
+
+    public void setEnable(bool enable)
+    {
+        if (enable == isEnabled) return;
+        isEnabled = enable;
+
+        if (!enable)
+        {
+            child.SetActive(false);
+            GetComponent<SpriteRenderer>().color = new Color(0.49f, 0.49f, 0.49f);
+        }
+        else
+        {
+            child.SetActive(true);
+            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        }
+        Debug.Log(enable ? prefebName + " enabled" : prefebName + " disabled");
     }
 }
