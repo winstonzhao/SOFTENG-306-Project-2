@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
 	public void ChangeScene(string levelName)
 	{
-		SceneManager.LoadScene(levelName);
+        Initiate.Fade(levelName, new Color(0.968f, 0.835f, 0.403f), 1.0f);
 	}
 
 	public void QuitGame()
