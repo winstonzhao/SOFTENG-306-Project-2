@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Multiplayer
 {
-    public class ChatController : MonoBehaviour
+    public class ChatController : Singleton<ChatController>
     {
         [NonSerialized]
         public readonly TimeSpan ActiveDuration = TimeSpan.FromSeconds(4);
@@ -19,9 +19,9 @@ namespace Multiplayer
 
         private ChatMessage OptimisticMessage;
 
-        private void Start()
+        private void Awake()
         {
-            MultiplayerController = FindObjectOfType<MultiplayerController>();
+            MultiplayerController = Toolbox.Instance.MultiplayerController;
         }
 
         public void Sync(int lastChatMessageId)

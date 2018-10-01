@@ -51,12 +51,12 @@ namespace Multiplayer
             var sb = transform.Find("Speech Bubble");
             SpeechBubble = sb == null ? null : sb.GetComponent<SpeechBubble>();
 
-            ChatController = FindObjectOfType<ChatController>();
+            ChatController = Toolbox.Instance.ChatController;
         }
 
         private void Start()
         {
-            var multiplayer = FindObjectOfType<MultiplayerController>();
+            var multiplayer = Toolbox.Instance.MultiplayerController;
 
             if (Self)
             {

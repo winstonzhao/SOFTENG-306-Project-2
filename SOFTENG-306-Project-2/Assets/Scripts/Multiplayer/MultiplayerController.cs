@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using WebSocketSharp;
 
 namespace Multiplayer
 {
-    public class MultiplayerController : MonoBehaviour
+    public class MultiplayerController : Singleton<MultiplayerController>
     {
-        public bool Enabled;
-
         public string Host = "wss://ododo.herokuapp.com";
 
         public string MyUsername
@@ -105,11 +102,6 @@ namespace Multiplayer
 
         private void Start()
         {
-            if (!Enabled)
-            {
-                return;
-            }
-
             if (!Connected)
             {
                 Connect();
@@ -259,7 +251,7 @@ namespace Multiplayer
             // Delete all the players if we switch scenes
             if (SentScene != MyPlayer.scene)
             {
-                Players.Clear();
+                Players = null;
             }
 
             UpdatePlayers();
