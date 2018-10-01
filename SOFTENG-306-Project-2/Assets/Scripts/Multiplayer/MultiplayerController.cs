@@ -73,7 +73,7 @@ namespace Multiplayer
 
         private void Awake()
         {
-            PlayerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Multiplayer.prefab");
+            PlayerPrefab = Resources.Load<GameObject>("Prefabs/Multiplayer");
 
             ChatController = FindObjectOfType<ChatController>();
         }
@@ -252,7 +252,7 @@ namespace Multiplayer
 
                 if (playerObject == null)
                 {
-                    playerObject = PrefabUtility.InstantiatePrefab(PlayerPrefab) as GameObject;
+                    playerObject = Instantiate(PlayerPrefab);
                     playerObject.name = objectName;
                     playerObject.transform.parent = transform;
                     hasNewPlayer = true;
