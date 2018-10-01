@@ -16,8 +16,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
-    private static string FINISH_INPUTS = "software_minigame/Sprites/key";
-    private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock";
+    private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
+    private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
 
     public enum Layout
     {
@@ -74,11 +74,13 @@ public class SoftwareLevelGenerator : MonoBehaviour
             GameObject obj = Instantiate<GameObject>(prefab);
             obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
             obj.AddComponent<ArrayElement>();
+            obj.transform.parent = this.transform;
             layoutMap[inputX, inputZ] = Layout.ELEMENT;
             objectMap[inputX, inputZ] = obj;
-            obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            //obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
             numElements--;
         } else {
+            layoutMap[inputX, inputZ] = Layout.EMPTY;
             GameObject obj = this.transform.Find("Input").Find("Input").gameObject;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
             Sprite sprite = Resources.Load<Sprite>(FINISH_INPUTS);
@@ -141,12 +143,13 @@ public class SoftwareLevelGenerator : MonoBehaviour
             var oldPos = obj.GetComponent<IsoTransform>().Position;
             objectMap[(int)oldPos.x, (int)oldPos.z] = null;
             layoutMap[x, z] = layout;
-            obj.GetComponent<IsoTransform>().Position = new Vector3(x, 0, z);
+            obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, z - 1);
             objectMap[x, z] = obj;
             objectMap[x, z].SetActive(true);
-            if ((x != inputX) || (z != inputZ)) {
+            if (((x != inputX) || (z != inputZ)) && (objectMap[inputX, inputZ] == null)) {
                 NextInputElement();
             }
+            CheckAnswer();
         }
     }
 

@@ -17,8 +17,8 @@ public class RobotController : MonoBehaviour
     private bool hasElement = false;
     private GameObject carrying;
 
-    private static string NO_ELEMENT = "software_minigame/Sprites/alienBeige 1";
-    private static string HAS_ELEMENT = "software_minigame/Sprites/alienBeige 2";
+    private static string NO_ELEMENT = "software_minigame/Sprites/robot1";
+    private static string HAS_ELEMENT = "software_minigame/Sprites/robot2";
 
     public enum Direction
     {
@@ -238,7 +238,6 @@ public class RobotController : MonoBehaviour
                     if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
                     {
                         generator.SetMapLayout(X + 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 1;
                         carrying = null;
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
@@ -250,7 +249,6 @@ public class RobotController : MonoBehaviour
                     if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.EMPTY)
                     {
                         generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 3;
                         carrying = null;
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
@@ -262,7 +260,6 @@ public class RobotController : MonoBehaviour
                     if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
                     {
                         generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 3;
                         carrying = null;
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
@@ -274,7 +271,6 @@ public class RobotController : MonoBehaviour
                     if (generator.GetMapLayout(X, Z + 1) == SoftwareLevelGenerator.Layout.EMPTY)
                     {
                         generator.SetMapLayout(X, Z + 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying.GetComponent<SpriteRenderer>().sortingOrder = 1;
                         carrying = null;
                         hasElement = false;
                         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
