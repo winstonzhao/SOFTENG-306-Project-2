@@ -1,54 +1,56 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
-public class JumpInstruction : Instruction
+namespace Instructions
 {
-    private InstructionExecutor instructionExecutor;
-    private JumpTargetInstruction jumpTarget;
-
-    public override bool Editable { get; set; }
-
-    public override List<InstructionComponent> InstructionComponents
+    public class JumpInstruction : Instruction
     {
-        get
+        private InstructionExecutor instructionExecutor;
+        private JumpTargetInstruction jumpTarget;
+
+        public override bool Editable { get; set; }
+
+        public override List<InstructionComponent> InstructionComponents
         {
-            return new List<InstructionComponent> 
+            get
+            {
+                return new List<InstructionComponent>
             {
                 new InstructionComponent("Jump")
             };
+            }
         }
-    }
 
-    void Start()
-    {
-        
-        var prefab = Resources.Load<GameObject>("Prefabs/JumpTargetUI");
-        var gameObj = Instantiate<GameObject>(prefab);
+        void Start()
+        {
 
-        gameObj.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform, false);
+            var prefab = Resources.Load<GameObject>("Prefabs/JumpTargetUI");
+            var gameObj = Instantiate<GameObject>(prefab);
 
-        jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
-        jumpTarget.transform.position = transform.position;
+            gameObj.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform, false);
 
-        var targetDraggable = gameObj.GetComponent<DraggableItem>();
+            jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
+            jumpTarget.transform.position = transform.position;
 
-        var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
-        targetRenderer.IsEnabled = false;
+            var targetDraggable = gameObj.GetComponent<DraggableItem>();
 
-        var draggableItem = GetComponent<DraggableItem>();
-        draggableItem.AddConnectedItem(targetDraggable);
-        draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
-    }
+            var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
+            targetRenderer.IsEnabled = false;
 
-    public override void Execute(Instructable target, InstructionExecutor executor)
-    {
-        instructionExecutor = executor;
-    }
+            var draggableItem = GetComponent<DraggableItem>();
+            draggableItem.AddConnectedItem(targetDraggable);
+            draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
+        }
 
-    public override void UpdateInstruction()
-    {
-        instructionExecutor.JumpToInstruction(jumpTarget);
-        instructionExecutor.ExecuteNextInstruction();
+        public override void Execute(Instructable target, InstructionExecutor executor)
+        {
+            instructionExecutor = executor;
+        }
+
+        public override void UpdateInstruction()
+        {
+            instructionExecutor.JumpToInstruction(jumpTarget);
+            instructionExecutor.ExecuteNextInstruction();
+        }
     }
 }

@@ -1,36 +1,39 @@
 using UnityEngine;
 
-public abstract class InstructionRenderer : MonoBehaviour
+namespace Instructions
 {
-    public abstract bool IsEnabled { get; set; }
-    protected Color textColor = new Color(79f/255, 20f/255, 20f/255);
-    public Color TextColor 
+    public abstract class InstructionRenderer : MonoBehaviour
     {
-        get
+        public abstract bool IsEnabled { get; set; }
+        protected Color textColor = new Color(79f / 255, 20f / 255, 20f / 255);
+        public Color TextColor
         {
-            return textColor;
+            get
+            {
+                return textColor;
+            }
+            set
+            {
+                textColor = value;
+                Render();
+            }
         }
-        set
+
+        protected Color backgroundColor = new Color(1, 1, 1);
+        public Color BackgroundColor
         {
-            textColor = value;
-            Render();
+            get
+            {
+                return backgroundColor;
+            }
+            set
+            {
+                backgroundColor = value;
+                Render();
+            }
         }
+
+        public abstract void Render();
+
     }
-
-    protected Color backgroundColor = new Color(1, 1, 1);
-    public Color BackgroundColor 
-    { 
-        get
-        {
-            return backgroundColor;
-        }
-        set
-        {
-            backgroundColor = value;
-            Render();
-        } 
-    }
-
-    public abstract void Render();
-
 }

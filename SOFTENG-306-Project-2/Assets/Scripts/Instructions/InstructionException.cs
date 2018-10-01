@@ -1,8 +1,11 @@
 using System;
 
-public class InstructionException : Exception
+namespace Instructions
 {
-    public InstructionException(string message) : base(message)
+    public class InstructionException : Exception
     {
+        public InstructionException(string message) : base(message)
+        {
+        }
     }
 }

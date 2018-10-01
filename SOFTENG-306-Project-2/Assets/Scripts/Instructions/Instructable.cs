@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Instructable : MonoBehaviour
+namespace Instructions
 {
+    public class Instructable : MonoBehaviour
+    {
 
+    }
 }

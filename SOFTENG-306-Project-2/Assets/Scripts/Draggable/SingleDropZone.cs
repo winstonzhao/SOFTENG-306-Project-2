@@ -12,7 +12,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         var rigidbody = GetComponent<Rigidbody2D>();
-        if (rigidbody == null) 
+        if (rigidbody == null)
         {
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
@@ -39,7 +39,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-        
+
     }
 
     public void OnDrop(Draggable item)
@@ -51,7 +51,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void OnItemDrag(Draggable item)
     {
-        
+
     }
 
     public void OnItemRemove(Draggable item)

@@ -1,31 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpTargetInstruction : Instruction
+namespace Instructions
 {
-    private InstructionExecutor instructionExecutor;
-
-    public override bool Editable { get; set; }
-
-    public override List<InstructionComponent> InstructionComponents
+    public class JumpTargetInstruction : Instruction
     {
-        get
+        private InstructionExecutor instructionExecutor;
+
+        public override bool Editable { get; set; }
+
+        public override List<InstructionComponent> InstructionComponents
         {
-            return new List<InstructionComponent> 
+            get
+            {
+                return new List<InstructionComponent>
             {
                 new InstructionComponent("END JUMP")
             };
+            }
         }
-    }
 
 
-    public override void Execute(Instructable target, InstructionExecutor executor)
-    {
-        instructionExecutor = executor;
-    }
+        public override void Execute(Instructable target, InstructionExecutor executor)
+        {
+            instructionExecutor = executor;
+        }
 
-    public override void UpdateInstruction()
-    {
-        instructionExecutor.ExecuteNextInstruction();
+        public override void UpdateInstruction()
+        {
+            instructionExecutor.ExecuteNextInstruction();
+        }
     }
 }

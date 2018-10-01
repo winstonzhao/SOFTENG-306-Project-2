@@ -1,53 +1,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MoveType
+namespace Instructions
 {
-    Absolute, Relative
-}
-
-public class MoveInstruction : Instruction
-{
-    private InstructionExecutor instructionExecutor;
-    private Instructable target;
-
-    float t;
-
-    private Vector3 start;
-    private Vector3 end;
-
-    public Vector3 moveTarget;
-
-    public float seconds;
-
-    private bool moving;
-
-    public MoveType moveType;
-
-    private bool trackMouse = false;
-
-    private bool mouseDebounce = false;
-
-    private InstructionRenderer instructionRenderer;
-
-    public void Start()
+    public enum MoveType
     {
-        Editable = true;
-        instructionRenderer = GetComponent<InstructionRenderer>();
+        Absolute, Relative
     }
 
-    private void onClicked(object obj)
+    public class MoveInstruction : Instruction
     {
-        if (!Editable || trackMouse) return;
-        trackMouse = true;
-        mouseDebounce = true;
-    }
+        private InstructionExecutor instructionExecutor;
+        private Instructable target;
 
-    public override List<InstructionComponent> InstructionComponents
-    {
-        get
+        float t;
+
+        private Vector3 start;
+        private Vector3 end;
+
+        public Vector3 moveTarget;
+
+        public float seconds;
+
+        private bool moving;
+
+        public MoveType moveType;
+
+        private bool trackMouse = false;
+
+        private bool mouseDebounce = false;
+
+        private InstructionRenderer instructionRenderer;
+
+        public void Start()
         {
-            return new List<InstructionComponent> 
+            Editable = true;
+            instructionRenderer = GetComponent<InstructionRenderer>();
+        }
+
+        private void onClicked(object obj)
+        {
+            if (!Editable || trackMouse) return;
+            trackMouse = true;
+            mouseDebounce = true;
+        }
+
+        public override List<InstructionComponent> InstructionComponents
+        {
+            get
+            {
+                return new List<InstructionComponent>
             {
                 new InstructionComponent("Move"),
                 new InstructionComponent(Mathf.Round(moveTarget.x).ToString())
@@ -59,70 +61,71 @@ public class MoveInstruction : Instruction
                     OnComponentClicked = onClicked
                 }
             };
-        }
-    }
-
-    public override bool Editable { get; set; }
-
-    public void Update()
-    {
-        if (trackMouse)
-        {
-            moveTarget.x += Input.GetAxis("Mouse X");
-            moveTarget.y += Input.GetAxis("Mouse Y");
-            if (instructionRenderer != null)
-            {
-                instructionRenderer.BackgroundColor = new Color(0, 0, 1);
-                instructionRenderer.Render();
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
-        {
-            trackMouse = false;
-            moveTarget.x = Mathf.Round(moveTarget.x);
-            moveTarget.y = Mathf.Round(moveTarget.y);
+        public override bool Editable { get; set; }
 
-            if (instructionRenderer != null)
+        public void Update()
+        {
+            if (trackMouse)
             {
-                instructionRenderer.BackgroundColor = new Color(1, 1, 1);
+                moveTarget.x += Input.GetAxis("Mouse X");
+                moveTarget.y += Input.GetAxis("Mouse Y");
+                if (instructionRenderer != null)
+                {
+                    instructionRenderer.BackgroundColor = new Color(0, 0, 1);
+                    instructionRenderer.Render();
+                }
+            }
+
+            if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
+            {
+                trackMouse = false;
+                moveTarget.x = Mathf.Round(moveTarget.x);
+                moveTarget.y = Mathf.Round(moveTarget.y);
+
+                if (instructionRenderer != null)
+                {
+                    instructionRenderer.BackgroundColor = new Color(1, 1, 1);
+                }
+            }
+            mouseDebounce = false;
+        }
+
+
+        public override void UpdateInstruction()
+        {
+            if (moving)
+            {
+                t += Time.deltaTime / seconds;
+
+                target.transform.position = Vector3.Lerp(start, end, t);
+
+                if (t >= 1)
+                {
+                    moving = false;
+                    instructionExecutor.ExecuteNextInstruction();
+                }
             }
         }
-        mouseDebounce = false;
-    }
 
-
-    public override void UpdateInstruction()
-    {
-        if (moving) 
+        public override void Execute(Instructable target, InstructionExecutor executor)
         {
-            t += Time.deltaTime/seconds;
+            instructionExecutor = executor;
+            this.target = target;
 
-            target.transform.position = Vector3.Lerp(start, end, t);
+            t = 0;
+            start = target.transform.position;
+            end = moveTarget;
 
-            if (t >= 1)
+            if (moveType == MoveType.Relative)
             {
-                moving = false;
-                instructionExecutor.ExecuteNextInstruction();
+                end += start;
             }
-        }
-    }
 
-    public override void Execute(Instructable target, InstructionExecutor executor)
-    {
-        instructionExecutor = executor;
-        this.target = target;
-
-        t = 0;
-        start = target.transform.position;
-        end = moveTarget;
-
-        if (moveType == MoveType.Relative)
-        {
-            end += start;
+            moving = true;
         }
 
-        moving = true;
     }
-
 }

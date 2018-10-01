@@ -123,7 +123,7 @@ public class DraggableItem : Draggable
                 dropZone.OnItemRemove(this);
                 connectedItems.ForEach(i => dropZone.OnItemRemove(i));
             }
-            
+        
             OnDrop(newDropZones[0]);
             newDropZones.Clear();
         }
@@ -154,7 +154,7 @@ public class DraggableItem : Draggable
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!dragging) return;
-        
+    
         var possibleDropZone = col.GetComponent<IDropZone>();
         if (possibleDropZone == null || !possibleDropZone.CanDrop(this)) return;
         
@@ -162,7 +162,7 @@ public class DraggableItem : Draggable
         {
             dropZone.OnDragExit(this);
         }
-        
+    
         newDropZones.Insert(0, possibleDropZone);
         newDropZones[0].OnDragEnter(this);
     }
@@ -173,7 +173,7 @@ public class DraggableItem : Draggable
 
         var possibleDropZone = col.GetComponent<IDropZone>();
         if (possibleDropZone == null) return;
-        
+    
         var prevIndex = newDropZones.IndexOf(possibleDropZone);
         if (prevIndex > -1)
         {

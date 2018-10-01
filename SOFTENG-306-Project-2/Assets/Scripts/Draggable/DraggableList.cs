@@ -27,7 +27,7 @@ public class DraggableList : MonoBehaviour, IDropZone
     private List<System.Type> allowedItems = new List<System.Type>();
     public List<System.Type> AllowedItems
     {
-        get 
+        get
         {
             return allowedItems;
         }
@@ -77,7 +77,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
         layout();
 
-        foreach(var draggable in listItems) 
+        foreach (var draggable in listItems)
         {
             draggable.transform.position = draggable.HomePos;
             draggable.SetDropZone(this);
@@ -111,7 +111,7 @@ public class DraggableList : MonoBehaviour, IDropZone
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i + 1.4f);
+        var height = Mathf.Max(MinSize.y, i + itemHeight);
         var colliderSize = new Vector2(width, height);
 
         boxCollider.size = colliderSize;
@@ -187,7 +187,7 @@ public class DraggableList : MonoBehaviour, IDropZone
     public void OnDragEnter(Draggable item)
     {
         if (listItems.Contains(item)) return;
-        
+
         AddDummyToList(0);
     }
 
@@ -240,7 +240,7 @@ public class DraggableList : MonoBehaviour, IDropZone
     public bool CanDrop(Draggable item)
     {
         if (allowedItems.Count == 0) return true;
-        
+
         foreach (var allowedItem in allowedItems)
         {
             if (item.GetComponent(allowedItem)) return true;
