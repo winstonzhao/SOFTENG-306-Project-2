@@ -72,10 +72,17 @@ public class DraggableItem : Draggable
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
 
             Vector3 diff = mousePosWorld - prevMousePos;
-            //transform.Translate(diff);
             //Debug.Log("mouse at (iso): ");
             //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
-            GetComponent<IsoTransform>().transform.Translate(diff);
+            var isoTransform = GetComponent<IsoTransform>();
+            if (isoTransform != null) 
+            {
+                isoTransform.transform.Translate(diff);
+            }
+            else
+            {
+                transform.Translate(diff);
+            }
 
             if (dropZone != null) 
             {
@@ -115,7 +122,10 @@ public class DraggableItem : Draggable
         if (!mouseInside) return;
         dragging = true;
         moving = false;
-        GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) spriteRenderer.sortingOrder = 1;
+
         Vector3 mousePos = Input.mousePosition;
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
         prevMousePos = mousePosWorld;
@@ -215,6 +225,7 @@ public class DraggableItem : Draggable
 
         moving = true;
         target = newPos;
-        GetComponent<SpriteRenderer>().sortingOrder = 0;
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) spriteRenderer.sortingOrder = 0;
     }
 }
