@@ -43,6 +43,11 @@ namespace Multiplayer
         /// </summary>
         private float SentX, SentY, SentZ;
 
+        /// <summary>
+        /// Similar to <see cref="SentX"/> etc, stores the previously sent player's scene
+        /// </summary>
+        private string SentScene;
+
         private GameObject PlayerPrefab;
 
         private float LastSyncAt;
@@ -227,7 +232,10 @@ namespace Multiplayer
 
             foreach (var player in sync.players)
             {
-                players[player.username] = player;
+                if (player.scene == MyPlayer.scene)
+                {
+                    players[player.username] = player;
+                }
             }
 
             var prevCount = Players == null ? 0 : Players.Count;
@@ -248,10 +256,16 @@ namespace Multiplayer
                 return;
             }
 
+            // Delete all the players if we switch scenes
+            if (SentScene != MyPlayer.scene)
+            {
+                Players.Clear();
+            }
+
             UpdatePlayers();
 
             // Only send player data to server if it changed
-            if (SentX != MyPlayer.x || SentY != MyPlayer.y || SentZ != MyPlayer.z)
+            if (SentScene != MyPlayer.scene || SentX != MyPlayer.x || SentY != MyPlayer.y || SentZ != MyPlayer.z)
             {
                 var now = Time.time;
 
@@ -262,6 +276,7 @@ namespace Multiplayer
                     SentX = MyPlayer.x;
                     SentY = MyPlayer.y;
                     SentZ = MyPlayer.z;
+                    SentScene = MyPlayer.scene;
 
                     var json = JsonUtility.ToJson(MyPlayer);
                     SendAsync("player-sync\n" + json, success => { });

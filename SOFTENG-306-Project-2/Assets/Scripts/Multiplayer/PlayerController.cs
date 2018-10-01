@@ -1,6 +1,7 @@
 using System;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Multiplayer
@@ -120,9 +121,11 @@ namespace Multiplayer
         {
             if (Self)
             {
+                var activeScene = SceneManager.GetActiveScene();
                 Player.x = Transform.Position.x;
                 Player.y = Transform.Position.y;
                 Player.z = Transform.Position.z;
+                Player.scene = activeScene.name;
             }
             else if (PrevPlayer != null)
             {
