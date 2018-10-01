@@ -2,17 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
+using System;
 
 public class DraggableIsoItem : Draggable
 {
+    public enum Direction
+    {
+        NE, SE, SW, NW
+    }
 
     public string name;
+    public Direction direction;
+    public Sprite NESprite;
+    public Sprite SESprite;
+    public Sprite SWSprite;
+    public Sprite NWSprite;
+    public IsoDropZone dropZone;
+
 
     private bool mouseInside = false;
     private bool dragging = false;
     private bool moving = false;
-
-    private IsoDropZone dropZone;
 
     private List<IsoDropZone> newDropZones = new List<IsoDropZone>();
 
@@ -40,7 +50,7 @@ public class DraggableIsoItem : Draggable
     // Use this for initialization
     void Start()
     {
-
+        SetDirection(this.direction);
     }
 
     public void SetDropZone(IsoDropZone list)
@@ -120,7 +130,8 @@ public class DraggableIsoItem : Draggable
     void OnMouseUp()
     {
         dragging = false;
-        if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name))
+        
+        if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name))   // dropped on a new available drop zone
         {
             Debug.Log("entered 1st if statement");
             if (dropZone != null)
@@ -132,7 +143,7 @@ public class DraggableIsoItem : Draggable
             dropZone = newDropZones[0];
             newDropZones.Clear();
         }
-        else if (newDropZones.Count > 0 && !newDropZones[0].droppableNames.Contains(this.name))
+        else if (newDropZones.Count > 0 && !newDropZones[0].droppableNames.Contains(this.name)) // dropped on a new unavailable drop zone
         {
             newDropZones[0].OnDragExit(this);
             Debug.Log("entered 2nd if statement");
@@ -141,7 +152,7 @@ public class DraggableIsoItem : Draggable
                 dropZone.OnDragFinish(this);
             }
         }
-        else
+        else    // did not drop on any new drop zone
         {
             Debug.Log("entered else statement");
             Debug.Log(dropZone);
@@ -204,5 +215,52 @@ public class DraggableIsoItem : Draggable
         moving = true;
         target = newPos;
         GetComponent<SpriteRenderer>().sortingOrder = 0;
+    }
+
+    public void SetDirection(Direction dir)
+    {
+        this.direction = dir;
+
+        switch (dir)
+        {
+            case Direction.NE:
+                SetSprite(NESprite);
+                break;
+            case Direction.SE:
+                SetSprite(SESprite);
+                break;
+            case Direction.SW:
+                SetSprite(SWSprite);
+                break;
+            case Direction.NW:
+                SetSprite(NWSprite);
+                break;
+
+        }
+    }
+
+    private void SetSprite(Sprite sprite)
+    {
+        GetComponentInParent<SpriteRenderer>().sprite = sprite;
+    }
+
+    public void Rotate()
+    {
+        switch (this.direction)
+        {
+            case Direction.NE:
+                SetDirection(Direction.SE);
+                break;
+            case Direction.SE:
+                SetDirection(Direction.SW);
+                break;
+            case Direction.SW:
+                SetDirection(Direction.NW);
+                break;
+            case Direction.NW:
+                SetDirection(Direction.NE);
+                break;
+
+        }
     }
 }

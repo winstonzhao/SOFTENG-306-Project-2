@@ -114,10 +114,14 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         // update budget if this drop zone is a factory
         if (prefebName != "")
         {
-
             //CivilVehicleController.instance.UpdateBudget(ItemPrice);
             GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().UpdateBudget(ItemPrice);
+            // delete the returned block to prevent duplicated building blocks been instantiated
             item.gameObject.SetActive(false);
+        }
+        else // otherwise diable the ground tile
+        {
+            gameObject.SetActive(false);
         }
 
     }
@@ -131,6 +135,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     {
         currentItem = null;
         createPrefeb();
+        gameObject.SetActive(true);
         SetDropZoneActive(true);
 
         // update budget

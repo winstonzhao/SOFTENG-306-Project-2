@@ -10,6 +10,7 @@ using TMPro;
 using Debug = UnityEngine.Debug;
 using UnityEngine.SceneManagement;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
+using Ultimate_Isometric_Toolkit.Scripts.physics;
 
 public class CivilVehicleController : MonoBehaviour {
 
@@ -30,30 +31,39 @@ public class CivilVehicleController : MonoBehaviour {
     private void Awake()
 
     {
-        //Debug.Log("CivilVehicleController Alive");
-
-        ////Check if instance already exists
-        //if (instance == null)
-
-        //    //if not, set instance to this
-        //    instance = this;
-
-        ////If instance already exists and it's not this:
-        //else if (instance != this)
-
-        //    //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-        //    Destroy(gameObject);
-
-        //Sets this to not be destroyed when reloading scene
-        //DontDestroyOnLoad(gameObject);
-        //DontDestroyOnLoad(GameObject.Find("EventProcessor"));
-
         timerArea = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
         timerArea.SetText(timerLabel);
 
         budgetArea = GameObject.Find("Budget").GetComponent<TextMeshProUGUI>();
         budgetArea.SetText("$" + Budget);
+    }
+
+    void Update()
+    {
+        CheckMouseClickForRotation();
+    }
+
+    private void CheckMouseClickForRotation()
+    {
+        //mouse ray in isometric coordinate system 
+        var isoRay = Isometric.MouseToIsoRay();
+
+        //do an isometric raycast on left mouse click 
+        if (Input.GetMouseButtonDown(0))
+        {
+            IsoRaycastHit isoRaycastHit;
+            if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
+            {
+                GameObject hitObject = isoRaycastHit.Collider.gameObject;
+                Debug.Log("we clicked on " + hitObject.name + " at " + isoRaycastHit.Point + " tagged as " + hitObject.tag);
+                if (hitObject.tag == "BuildingBlock")
+                {
+                    hitObject.GetComponent<DraggableIsoItem>().Rotate();
+                    Debug.Log(hitObject.name + " rotated to direction " + hitObject.GetComponent<DraggableIsoItem>().direction);
+                }
+            }
+        }
     }
 
     public void run()
