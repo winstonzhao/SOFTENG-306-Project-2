@@ -29,6 +29,8 @@ namespace Instructions
 
         public Instruction instruction;
 
+        public Vector2 padding = new Vector2(20, 10);
+
         public override bool IsEnabled
         {
             get
@@ -67,7 +69,7 @@ namespace Instructions
 
         private Text CreateTextObject(InstructionComponent component, string name = "text")
         {
-            var prefab = Resources.Load<GameObject>("Prefabs/InstructionTextUI");
+            var prefab = Resources.Load<GameObject>("Prefabs/Instructions/InstructionTextUI");
             var go = Instantiate<GameObject>(prefab);
             go.name = name;
             go.GetComponent<RectTransform>().SetParent(transform, false);
@@ -87,7 +89,7 @@ namespace Instructions
 
         private GameObject CreateDropdownObject(DropdownInstructionComponent component)
         {
-            var prefab = Resources.Load<GameObject>("Prefabs/InstructionDropdown");
+            var prefab = Resources.Load<GameObject>("Prefabs/Instructions/InstructionDropdown");
             var go = Instantiate<GameObject>(prefab);
             go.name = name;
             go.GetComponent<RectTransform>().SetParent(transform, false);
@@ -108,12 +110,13 @@ namespace Instructions
             float start = 0;
             foreach (var child in children)
             {
-                child.RectTransform.anchoredPosition = new Vector2(start + child.Size.x / 2, 0);
+                child.RectTransform.anchoredPosition = new Vector2(start + child.Size.x / 2 + padding.x, 0);
                 child.RectTransform.localPosition += new Vector3(0, 0, -0.1f);
                 start += spacing + child.Size.x;
                 height = Mathf.Max(child.Size.y, height);
             }
-
+            width = width + padding.x * 2;
+            height = height + padding.y * 2;
             boxCollider.size = new Vector2(width, height);
             rectTransform.sizeDelta = new Vector2(width, height);
             GetComponent<Draggable>().Size = new Vector2(width, height) * FindObjectOfType<Canvas>().GetComponent<RectTransform>().localScale.x;

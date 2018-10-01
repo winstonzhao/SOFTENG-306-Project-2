@@ -64,7 +64,7 @@ namespace Instructions
 
         private InstructionText CreateTextObject(InstructionComponent component, string name = "text")
         {
-            var prefab = Resources.Load<GameObject>("Prefabs/InstructionText");
+            var prefab = Resources.Load<GameObject>("Prefabs/Instructions/InstructionText");
             var go = Instantiate<GameObject>(prefab);
             go.name = name;
 

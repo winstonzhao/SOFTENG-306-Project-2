@@ -24,7 +24,7 @@ namespace Instructions
         void Start()
         {
 
-            var prefab = Resources.Load<GameObject>("Prefabs/JumpTargetUI");
+            var prefab = Resources.Load<GameObject>("Prefabs/Instructions/JumpTargetUI");
             var gameObj = Instantiate<GameObject>(prefab);
 
             gameObj.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform, false);
