@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 616844548}
   - component: {fileID: 616844547}
   m_Layer: 0
-  m_Name: On_Image
+  m_Name: Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -527,8 +527,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300224, guid: a5994f41d8a85744d869f00e6828bb76, type: 3}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 54516dbfa7ae3fb49a0ebd678373d46e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -719,8 +719,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86, y: -18}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 86, y: 0}
+  m_SizeDelta: {x: 300, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1350914467
 MonoBehaviour:
@@ -754,7 +754,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: When  the  circuit  is  yellow  that  means  that  section  of  the  circuit  is  on,  so  has  power  flowing
+  m_Text: "each  battery  in  the  circuit  can  supply  light  or  not  light. \n\nthe
+    \ output  of  the  battery  cannot  be  controlled,  but  the  gate(s)  can  change
+    \ that  or  use  what   the  gates  provide."
 --- !u!222 &1350914468
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1013,7 +1015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 95, y: 91}
+  m_AnchoredPosition: {x: 85, y: 91}
   m_SizeDelta: {x: 478, y: 86.84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673077353
@@ -1048,7 +1050,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CIRCUIT: ON'
+  m_Text: 'Circuit:  battery'
 --- !u!222 &1673077354
 CanvasRenderer:
   m_ObjectHideFlags: 0

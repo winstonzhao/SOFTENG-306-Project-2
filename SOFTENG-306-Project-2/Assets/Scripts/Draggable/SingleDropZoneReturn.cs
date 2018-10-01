@@ -7,6 +7,7 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
 {
     public Sprite newSprite;
     private Draggable currentItem;
+    public Draggable expectedGate;
     public Canvas endOfLevelCanvas;
 
     public void Start()
@@ -46,20 +47,26 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
     {
         currentItem = item;
         currentItem.HomePos = transform.position;
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-        GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
 
-        GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
+        if (currentItem == expectedGate)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+            GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
 
-        foreach (GameObject circ in circuitPieces) {
-            circ.GetComponent<SpriteRenderer>().color = Color.yellow;
+            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
+
+            foreach (GameObject circ in circuitPieces)
+            {
+                circ.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+
+
+
+            StartCoroutine(endOfLevel((delayTime) =>
+            {
+                if (delayTime) { endOfLevelCanvas.enabled = true; }
+            }));
         }
-
-        
-
-        StartCoroutine(endOfLevel((myReturnValue) => {
-            if (myReturnValue) { endOfLevelCanvas.enabled = true; }
-        }));
 
     }
 
