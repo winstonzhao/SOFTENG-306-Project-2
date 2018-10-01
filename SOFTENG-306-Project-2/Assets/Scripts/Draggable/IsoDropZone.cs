@@ -58,7 +58,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
 
     void FixedUpdate()
     {
-        if (prefebName != null && !CivilVehicleController.instance.IsBudgetAvailable(ItemPrice))
+        //if (prefebName != null && !CivilVehicleController.instance.IsBudgetAvailable(ItemPrice))
+        if (prefebName != null && !GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().IsBudgetAvailable(ItemPrice))
         {
 
             //Debug.Log("Budget not available for " + prefebName);
@@ -114,7 +115,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         if (prefebName != "")
         {
 
-            CivilVehicleController.instance.UpdateBudget(ItemPrice);
+            //CivilVehicleController.instance.UpdateBudget(ItemPrice);
+            GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().UpdateBudget(ItemPrice);
             item.gameObject.SetActive(false);
         }
 
@@ -132,7 +134,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         SetDropZoneActive(true);
 
         // update budget
-        CivilVehicleController.instance.UpdateBudget(-ItemPrice);
+        //CivilVehicleController.instance.UpdateBudget(-ItemPrice);
+        GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().UpdateBudget(-ItemPrice);
     }
 
     /*
