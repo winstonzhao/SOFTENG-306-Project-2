@@ -34,8 +34,8 @@ public class SingleDropZone : MonoBehaviour, IDropZone
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/" + prefebName + ".prefab", typeof(GameObject));
             child = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
             child.GetComponent<DraggableItem>().SetDropZone(this);
-            child.GetComponent<DraggableItem>().homePos = transform.position;
-            Debug.Log(child.GetComponent<DraggableItem>().homePos);
+            child.GetComponent<DraggableItem>().HomePos = transform.position;
+            Debug.Log(child.GetComponent<DraggableItem>().HomePos);
             if (child)
             {
                 Debug.Log("new prefeb created");
