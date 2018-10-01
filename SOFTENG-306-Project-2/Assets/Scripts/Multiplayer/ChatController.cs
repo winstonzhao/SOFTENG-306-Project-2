@@ -17,6 +17,8 @@ namespace Multiplayer
 
         private MultiplayerController MultiplayerController;
 
+        private ChatMessage OptimisticMessage;
+
         private void Start()
         {
             MultiplayerController = FindObjectOfType<MultiplayerController>();
@@ -48,6 +50,12 @@ namespace Multiplayer
                 // This assumes that the messages are received in ascending id order
                 if (message.id > LastChatMessageId)
                 {
+                    // Clear the optimistic message once we receive a message sent by our user
+                    if (message.owner == MultiplayerController.MyUsername)
+                    {
+                        OptimisticMessage = null;
+                    }
+
                     LastChatMessageId = message.id;
                     Messages.Add(message);
 
@@ -59,14 +67,27 @@ namespace Multiplayer
 
         public void Send(string message)
         {
-            var chatMessage = new ChatMessage { message = message };
+            var chatMessage = new ChatMessage { message = message, sentAtDateTime = DateTime.Now };
+
             var json = JsonUtility.ToJson(chatMessage);
             var payload = "send-chat-message\n" + json;
             MultiplayerController.SendAsync(payload, success => { });
+
+            OptimisticMessage = chatMessage;
         }
 
         public ChatMessage GetLastMessageBy(string username, int sinceMessageId = int.MinValue)
         {
+            // Show local/optimistic message if possible
+            if (username == MultiplayerController.MyUsername)
+            {
+                var om = OptimisticMessage;
+                if (om != null)
+                {
+                    return om;
+                }
+            }
+
             // No new messages since the user last checked
             if (sinceMessageId == LastChatMessageId)
             {

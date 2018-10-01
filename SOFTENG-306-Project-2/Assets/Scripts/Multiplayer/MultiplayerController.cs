@@ -12,6 +12,15 @@ namespace Multiplayer
 
         public string Host = "wss://ododo.herokuapp.com";
 
+        public string MyUsername
+        {
+            get
+            {
+                var mp = MyPlayer;
+                return mp == null ? null : mp.username;
+            }
+        }
+
         /// <summary>
         /// The time in seconds to wait before syncing local player data to the server 
         /// </summary>
