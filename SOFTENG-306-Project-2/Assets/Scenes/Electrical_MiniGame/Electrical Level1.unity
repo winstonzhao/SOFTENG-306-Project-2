@@ -3694,7 +3694,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Drag and drop the gate into the drop zone to light up the bulb!
+  m_Text: Drag  and  drop  the  gate  into  the  drop  zone  to  light  up  the  bulb!
 --- !u!222 &206250855
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6364,6 +6364,8 @@ GameObject:
   - component: {fileID: 378599351}
   - component: {fileID: 378599350}
   - component: {fileID: 378599353}
+  - component: {fileID: 378599355}
+  - component: {fileID: 378599354}
   m_Layer: 0
   m_Name: alienPink_stand
   m_TagString: Untagged
@@ -6465,10 +6467,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 378599348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5de5e6ac68182748b7e6d0e7f491694, type: 3}
+  m_Script: {fileID: 11500000, guid: 9888c308408ac0f44847e347e0e0efbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   helpCanvas: {fileID: 457816838}
+--- !u!114 &378599354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 378599348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9888c308408ac0f44847e347e0e0efbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpCanvas: {fileID: 457816838}
+--- !u!61 &378599355
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 378599348}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.68, y: 0.83}
+    newSize: {x: 0.9166667, y: 1.2777778}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.68, y: 0.83}
+  m_EdgeRadius: 0
 --- !u!1 &381648595
 GameObject:
   m_ObjectHideFlags: 0
@@ -17680,7 +17719,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &967330264
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967330263}
@@ -21292,7 +21331,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1171956977}
-  - component: {fileID: 1171956978}
   m_Layer: 0
   m_Name: AND Gate
   m_TagString: Untagged
@@ -21335,18 +21373,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1171956978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1171956976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5de5e6ac68182748b7e6d0e7f491694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  helpCanvas: {fileID: 488947873}
 --- !u!1001 &1173793259
 Prefab:
   m_ObjectHideFlags: 0
@@ -25215,7 +25241,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1328941210
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1328941205}
@@ -25232,7 +25258,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1328941205}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5de5e6ac68182748b7e6d0e7f491694, type: 3}
   m_Name: 
