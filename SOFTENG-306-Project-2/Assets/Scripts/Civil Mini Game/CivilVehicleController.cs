@@ -16,9 +16,11 @@ public class CivilVehicleController : MonoBehaviour {
     public List<GoalAgent> Goals = new List<GoalAgent>();
     public Canvas Dialog;
     public int TimeLimit = 10;
+    public int Budget = 1000;
 
     private TextMeshProUGUI timerArea;
     private bool timerNotStopped = true;
+    private TextMeshProUGUI budgetArea;
 
     private void Awake()
 
@@ -44,6 +46,7 @@ public class CivilVehicleController : MonoBehaviour {
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
         timerArea.SetText(timerLabel);
 
+        budgetArea = GetTextArea("Budget");
     }
 
     public void run()
@@ -156,5 +159,12 @@ public class CivilVehicleController : MonoBehaviour {
     private TextMeshProUGUI GetTextArea(string tagName)
     {
         return GameObject.FindGameObjectWithTag(tagName).GetComponent<TextMeshProUGUI>();
+    }
+
+    public void UpdateBudget(int amount)
+    {
+        instance.Budget += amount;
+        instance.budgetArea.SetText("$" + instance.Budget);
+        Debug.Log("updated budget to " + instance.Budget);
     }
 }

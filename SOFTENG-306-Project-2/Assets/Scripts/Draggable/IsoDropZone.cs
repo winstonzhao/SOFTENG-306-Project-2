@@ -12,6 +12,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
 
     public string prefebName;
     public List<string> droppableNames;
+    public int ItemPrice = 0;
 
     private Draggable currentItem;
 
@@ -33,8 +34,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         if (prefebName != "")
         {
             // instantiate
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/" + prefebName + ".prefab", typeof(GameObject));
-            child = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + prefebName);
+            child = Instantiate<GameObject>(prefab);
             child.GetComponent<DraggableIsoItem>().SetDropZone(this);
             child.GetComponent<DraggableIsoItem>().homePos = transform.position;
             Debug.Log(child.GetComponent<DraggableIsoItem>().homePos);
@@ -42,6 +43,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
             {
                 Debug.Log("new " + prefebName + " created");
             }
+
 
         }
     }
@@ -89,6 +91,13 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         currentItem.HomePos = transform.position;
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
         GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
+
+        // update budget if this drop zone is a factory
+        if (prefebName != "")
+        {
+            CivilVehicleController.instance.UpdateBudget(ItemPrice);
+        }
+
     }
 
     public void OnItemDrag(Draggable item)
@@ -101,6 +110,9 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         currentItem = null;
         createPrefeb();
         SetDropZoneActive(true);
+
+        // update budget
+        CivilVehicleController.instance.UpdateBudget(-ItemPrice);
     }
 
     /*
