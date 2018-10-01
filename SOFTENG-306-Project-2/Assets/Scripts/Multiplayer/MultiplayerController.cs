@@ -34,6 +34,12 @@ namespace Multiplayer
 
         private Player MyPlayer;
 
+        /// <summary>
+        /// Stores the previously sent player position sent to the server. 
+        /// Used to determine whether to send the user data in the next update
+        /// </summary>
+        private float SentX, SentY, SentZ;
+
         private GameObject PlayerPrefab;
 
         private float LastSyncAt;
@@ -216,14 +222,22 @@ namespace Multiplayer
 
             UpdatePlayers();
 
-            var now = Time.time;
-
-            if (now - LastSyncAt > SyncPeriod)
+            // Only send player data to server if it changed
+            if (SentX != MyPlayer.x || SentY != MyPlayer.y || SentZ != MyPlayer.z)
             {
-                LastSyncAt = now;
+                var now = Time.time;
 
-                var json = JsonUtility.ToJson(MyPlayer);
-                SendAsync("player-sync\n" + json, (success) => { });
+                if (now - LastSyncAt > SyncPeriod)
+                {
+                    LastSyncAt = now;
+
+                    SentX = MyPlayer.x;
+                    SentY = MyPlayer.y;
+                    SentZ = MyPlayer.z;
+
+                    var json = JsonUtility.ToJson(MyPlayer);
+                    SendAsync("player-sync\n" + json, success => { });
+                }
             }
         }
 
