@@ -1,12 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MoveType
-{
-    Absolute, Relative
-}
-
-public class MoveInstruction : Instruction
+public class MoveEnumInstruction : Instruction
 {
     private InstructionExecutor instructionExecutor;
     private Instructable target;
@@ -16,19 +11,13 @@ public class MoveInstruction : Instruction
     private Vector3 start;
     private Vector3 end;
 
-    public Vector3 moveTarget;
-
-    public float seconds;
+    public float seconds = 1;
 
     private bool moving;
 
-    public MoveType moveType;
-
-    private bool trackMouse = false;
-
-    private bool mouseDebounce = false;
-
     private InstructionRenderer instructionRenderer;
+
+    private Directions moveDirection = Directions.Up;
 
     public void Start()
     {
@@ -38,9 +27,7 @@ public class MoveInstruction : Instruction
 
     private void onClicked(object obj)
     {
-        if (!Editable || trackMouse) return;
-        trackMouse = true;
-        mouseDebounce = true;
+        moveDirection = (Directions) obj;
     }
 
     public override List<InstructionComponent> InstructionComponents
@@ -50,11 +37,7 @@ public class MoveInstruction : Instruction
             return new List<InstructionComponent> 
             {
                 new InstructionComponent("Move"),
-                new InstructionComponent(Mathf.Round(moveTarget.x).ToString())
-                {
-                    OnComponentClicked = onClicked
-                },
-                new InstructionComponent(Mathf.Round(moveTarget.y).ToString())
+                new DropdownInstructionComponent("up")
                 {
                     OnComponentClicked = onClicked
                 }
@@ -66,29 +49,7 @@ public class MoveInstruction : Instruction
 
     public void Update()
     {
-        if (trackMouse)
-        {
-            moveTarget.x += Input.GetAxis("Mouse X");
-            moveTarget.y += Input.GetAxis("Mouse Y");
-            if (instructionRenderer != null)
-            {
-                instructionRenderer.BackgroundColor = new Color(0, 0, 1);
-                instructionRenderer.Render();
-            }
-        }
 
-        if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
-        {
-            trackMouse = false;
-            moveTarget.x = Mathf.Round(moveTarget.x);
-            moveTarget.y = Mathf.Round(moveTarget.y);
-
-            if (instructionRenderer != null)
-            {
-                instructionRenderer.BackgroundColor = new Color(1, 1, 1);
-            }
-        }
-        mouseDebounce = false;
     }
 
 
@@ -115,11 +76,21 @@ public class MoveInstruction : Instruction
 
         t = 0;
         start = target.transform.position;
-        end = moveTarget;
-
-        if (moveType == MoveType.Relative)
+        end = start;
+        switch (moveDirection)
         {
-            end += start;
+            case Directions.Up:
+                end += new Vector3(0, 1, 0);
+                break;
+            case Directions.Down:
+                end += new Vector3(0, -1, 0);
+                break;
+            case Directions.Left:
+                end += new Vector3(-1, 0, 0);
+                break;
+            case Directions.Right:
+                end += new Vector3(1, 0, 0);
+                break;
         }
 
         moving = true;

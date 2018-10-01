@@ -111,11 +111,11 @@ public class DraggableList : MonoBehaviour, IDropZone
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i + itemHeight);
+        var height = Mathf.Max(MinSize.y, i + 1.4f);
         var colliderSize = new Vector2(width, height);
 
         boxCollider.size = colliderSize;
-        boxCollider.offset = new Vector2(0, (height - itemHeight) / 2);
+        boxCollider.offset = new Vector2(0, i / 2);
     }
 
     public void UpdateObject(Draggable item)

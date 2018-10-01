@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class InstructionComponent
 {
-    public delegate void ComponnentClicked();
+    public delegate void ComponnentClicked(object args);
     public ComponnentClicked OnComponentClicked { get; set; }
     public string Text { get; set; }
 
     public InstructionComponent(string text)
     {
         Text = text;
+    }
+}
+
+public enum Directions
+{
+    Up, Down, Left, Right
+}
+
+public class DropdownInstructionComponent : InstructionComponent
+{
+    public List<string> values = new List<string> { "up", "down", "left", "right" };
+
+    public DropdownInstructionComponent(string text) : base(text)
+    {
     }
 }
 

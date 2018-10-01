@@ -76,7 +76,7 @@ public class ObjectInstructionRenderer : InstructionRenderer
         collider.size = meshRender.bounds.size;
         collider.offset = new Vector2(meshRender.bounds.size.x / 2, 0);
         var eventHandler = go.GetComponent<ClickEventEmitter>();
-        eventHandler.EventHandler += () => component.OnComponentClicked();
+        eventHandler.EventHandler += () => component.OnComponentClicked(null);
 
         return new InstructionText
         {

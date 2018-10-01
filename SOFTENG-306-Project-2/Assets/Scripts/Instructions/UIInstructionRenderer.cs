@@ -5,12 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
-public class UIInstructionRenderer : InstructionRenderer {
+public class UIInstructionRenderer : InstructionRenderer 
+{
+
+    class ChildComp
+    {
+        public Vector2 Size { get; set; }
+        public RectTransform RectTransform { get; set; }
+        public Behaviour Behaviour {get; set; }
+    }
 
     public float spacing = 2;
 
     private Image image;
     private List<Text> texts = new List<Text>();
+    private List<ChildComp> children = new List<ChildComp>();
     private BoxCollider2D boxCollider;
     private RectTransform rectTransform;
 
@@ -27,7 +36,7 @@ public class UIInstructionRenderer : InstructionRenderer {
         {
             image.enabled = value;
             boxCollider.enabled = value;
-            texts.ForEach(t => t.enabled = value);
+            children.ForEach(c => c.RectTransform.gameObject.SetActive(value));
         }
     }
 
@@ -47,6 +56,8 @@ public class UIInstructionRenderer : InstructionRenderer {
 
     void Start()
     {
+        var canvas = FindObjectOfType<Canvas>();
+        GetComponent<RectTransform>().SetParent(canvas.transform, false);
         Render();
     }
 
@@ -65,36 +76,50 @@ public class UIInstructionRenderer : InstructionRenderer {
         collider.size = new Vector2(text.preferredWidth, text.preferredHeight);
         collider.enabled = component.OnComponentClicked != null;
         var eventHandler = go.GetComponent<ClickEventEmitter>();
-        eventHandler.EventHandler += () => component.OnComponentClicked();
+        eventHandler.EventHandler += () => component.OnComponentClicked(null);
 
         return text;
+    }
+
+    private GameObject CreateDropdownObject(DropdownInstructionComponent component)
+    {
+        var prefab = Resources.Load<GameObject>("Prefabs/InstructionDropdown");
+        var go = Instantiate<GameObject>(prefab);
+        go.name = name;
+        go.GetComponent<RectTransform>().SetParent(transform, false);
+        
+        var dropdown = go.GetComponent<Dropdown>();
+        dropdown.onValueChanged.AddListener((value) => component.OnComponentClicked(value));
+        dropdown.options = component.values.Select(v => new Dropdown.OptionData(v)).ToList();
+
+        return go;
     }
 
     private void UpdateSize()
     {
         float height = 0;            
-        float width = texts.Sum(t => t.preferredWidth);
+        float width = children.Sum(c => c.Size.x);
         width += spacing * instruction.InstructionComponents.Count - spacing;
 
         float start = 0;
-        foreach (var text in texts)
+        foreach (var child in children)
         {
-            text.GetComponent<RectTransform>().anchoredPosition = new Vector2(start + text.preferredWidth / 2, 0);
-            text.GetComponent<RectTransform>().localPosition += new Vector3(0, 0, -0.1f);
-            start += spacing + text.preferredWidth;
-            height = Mathf.Max(text.preferredHeight, height);
+            child.RectTransform.anchoredPosition = new Vector2(start + child.Size.x / 2, 0);
+            child.RectTransform.localPosition += new Vector3(0, 0, -0.1f);
+            start += spacing + child.Size.x;
+            height = Mathf.Max(child.Size.y, height);
         }
 
         boxCollider.size = new Vector2(width, height);
         rectTransform.sizeDelta = new Vector2(width, height);
-        GetComponent<Draggable>().Size = new Vector2(width, height);
+        GetComponent<Draggable>().Size = new Vector2(width, height) * FindObjectOfType<Canvas>().GetComponent<RectTransform>().localScale.x;
 
     }
     
     public override void Render()
     {
         var components = instruction.InstructionComponents;
-        if (texts.Count != components.Count)
+        if (children.Count != components.Count)
         {
             while (transform.childCount != 0) {
                 foreach (Transform child in transform)
@@ -107,27 +132,41 @@ public class UIInstructionRenderer : InstructionRenderer {
                 }
             }
             texts.Clear();
+            children.Clear();
 
             for (int i = 0; i < components.Count; i++)
             {
-                var text = CreateTextObject(components[i], "text " + i);
-                texts.Add(text);
+                ChildComp child = new ChildComp();
+                if (components[i].GetType() == typeof(DropdownInstructionComponent))
+                {
+                    var go = CreateDropdownObject(components[i] as DropdownInstructionComponent);
+                    child.RectTransform = go.GetComponent<RectTransform>();
+                    child.Size = child.RectTransform.sizeDelta;
+                }
+                else
+                {
+                    var text = CreateTextObject(components[i], "text " + i);
+                    child.Size = new Vector2(text.preferredWidth, text.preferredHeight);
+                    child.RectTransform = text.GetComponent<RectTransform>();
+                    texts.Add(text);
+                }
+                children.Add(child);
                 UpdateSize();
             }
         }
 
-        bool dirtyText = false;
+        // bool dirtyText = false;
 
-        for (int i = 0; i < texts.Count; i++)
-        {
-            if (texts[i].text != components[i].Text) dirtyText = true;
-            texts[i].text = components[i].Text;
-        }
+        // for (int i = 0; i < texts.Count; i++)
+        // {
+        //     if (texts[i].text != components[i].Text) dirtyText = true;
+        //     texts[i].text = components[i].Text;
+        // }
 
-        if (dirtyText)
-        {
-            UpdateSize();
-        }
+        // if (dirtyText)
+        // {
+        //     UpdateSize();
+        // }
 
         image.color = BackgroundColor;
 
