@@ -37,7 +37,7 @@ public class LocalityToggle : MonoBehaviour
         var dx = Mathf.Abs(x2 - x1);
         var dz = Mathf.Abs(z2 - z1);
 
-        var distance = Mathf.Sqrt(dx * dx + dz + dz);
+        var distance = Mathf.Sqrt(dx * dx + dz * dz);
 
         Toggle.SetActive(distance < Threshold);
     }
