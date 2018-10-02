@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4604701012124688}
   - component: {fileID: 114324804873280914}
   - component: {fileID: 212479963018447430}
-  - component: {fileID: 114038790251576004}
   - component: {fileID: 114616383594362788}
+  - component: {fileID: 114231043278497190}
   m_Layer: 0
   m_Name: Undergrad NPC 3
   m_TagString: Untagged
@@ -32,7 +32,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4604701012124688
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1923551741670568}
@@ -43,7 +43,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114038790251576004
+--- !u!114 &114231043278497190
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,10 +51,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1923551741670568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  _isoTransform: {fileID: 0}
+  _isTrigger: 0
+  _material: {fileID: 0}
+  _size: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}
 --- !u!114 &114324804873280914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,10 +70,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -4, y: 0.8, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 3, y: 3, z: 1}
   _parent: {fileID: 0}
 --- !u!114 &114616383594362788
 MonoBehaviour:

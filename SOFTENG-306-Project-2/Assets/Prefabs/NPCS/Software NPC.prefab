@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4302791932324892}
   - component: {fileID: 114088453403890258}
   - component: {fileID: 212293853174954454}
-  - component: {fileID: 114362535087167700}
+  - component: {fileID: 114569567283670988}
   m_Layer: 0
   m_Name: Software NPC
   m_TagString: Untagged
@@ -31,7 +31,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4302791932324892
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910951914258704}
@@ -53,12 +53,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 2.5, y: 0.8, z: -3.7}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 3, y: 3, z: 1}
   _parent: {fileID: 0}
---- !u!114 &114362535087167700
+--- !u!114 &114569567283670988
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,10 +68,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1910951914258704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  _isoTransform: {fileID: 0}
+  _isTrigger: 0
+  _material: {fileID: 0}
+  _size: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}
 --- !u!212 &212293853174954454
 SpriteRenderer:
   m_ObjectHideFlags: 1

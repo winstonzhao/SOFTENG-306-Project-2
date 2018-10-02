@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4514894376783136}
   - component: {fileID: 114698778266674274}
   - component: {fileID: 212752244548422304}
-  - component: {fileID: 114213005259239532}
+  - component: {fileID: 114543652676021752}
   m_Layer: 0
   m_Name: invis_collider
   m_TagString: Untagged
@@ -42,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114213005259239532
+--- !u!114 &114543652676021752
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,10 +50,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1665893672431116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  _isoTransform: {fileID: 0}
+  _isTrigger: 0
+  _material: {fileID: 0}
+  _size: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}
 --- !u!114 &114698778266674274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,10 +69,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 0.6, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!212 &212752244548422304
 SpriteRenderer:
@@ -103,7 +109,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1586300781
-  m_SortingLayer: -2
+  m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

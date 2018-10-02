@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 114144504491311012}
   - component: {fileID: 212957532747740504}
   - component: {fileID: 114656478404651044}
-  - component: {fileID: 114647439667028560}
   - component: {fileID: 114318955314406108}
+  - component: {fileID: 114255160230153056}
   m_Layer: 0
   m_Name: GreeterNPC
   m_TagString: Untagged
@@ -33,7 +33,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4613413705396184
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1422501108592762}
@@ -55,12 +55,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -3, y: 0.8, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 3, y: 3, z: 1}
   _parent: {fileID: 0}
---- !u!114 &114318955314406108
+--- !u!114 &114255160230153056
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,13 +70,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422501108592762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d9f8aed02c1485eac3b0d3adab34f9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Threshold: 4
-  Watch: {fileID: 0}
-  Toggle: {fileID: 0}
---- !u!114 &114647439667028560
+  _isoTransform: {fileID: 0}
+  _isTrigger: 0
+  _material: {fileID: 0}
+  _size: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}
+--- !u!114 &114318955314406108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

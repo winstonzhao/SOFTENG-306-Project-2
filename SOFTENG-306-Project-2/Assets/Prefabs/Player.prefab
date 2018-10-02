@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 114991530098933246}
   - component: {fileID: 212133477520621304}
   - component: {fileID: 95116773899715180}
-  - component: {fileID: 114730064505921970}
-  - component: {fileID: 114759866814968724}
   - component: {fileID: 114925755047819582}
+  - component: {fileID: 114463709043414128}
+  - component: {fileID: 114012826122800648}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -34,7 +34,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4193315857199816
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1074431827466208}
@@ -63,7 +63,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114730064505921970
+--- !u!114 &114012826122800648
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,11 +71,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1074431827466208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Script: {fileID: 11500000, guid: ec6af08a00509294583c55ed5e2890bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
---- !u!114 &114759866814968724
+  _mass: 1
+  _drag: 0
+  _useGravity: 1
+  _isKinematric: 0
+  _collisionDetectionMode: 0
+  _centerOfMass: {x: 0, y: 0, z: 0}
+  _rigidbodyInterpolation: 0
+  _maxDepenetrationVelocity: 0
+  _sleepThreshold: 0
+--- !u!114 &114463709043414128
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,10 +91,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1074431827466208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2dc4339388412fac030eb22a53a54b, type: 3}
+  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  _isoTransform: {fileID: 0}
+  _isTrigger: 0
+  _material: {fileID: 0}
+  _size: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}
 --- !u!114 &114925755047819582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,10 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 1, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!212 &212133477520621304
 SpriteRenderer:
