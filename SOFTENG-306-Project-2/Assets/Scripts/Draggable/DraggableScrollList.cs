@@ -46,8 +46,8 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     // Use this for initialization
     void Start()
     {
-        boxCollider = gameObject.GetComponentInChildren<BoxCollider2D>();
-        var rigidbody = gameObject.GetComponentInChildren<Rigidbody2D>();
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        var rigidbody = gameObject.GetComponent<Rigidbody2D>();
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
         boxCollider.isTrigger = true;
 
@@ -75,6 +75,8 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
 
     public void layout()
     {
+        if (boxCollider == null) return;
+
         float i = itemHeight/2;
         float maxWidth = 0;
 
@@ -206,7 +208,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-        if (copyOnDrag) 
+        if (copyOnDrag)
         {
             var itemClone = Instantiate(item);
             listItems.Insert(listItems.IndexOf(item), itemClone);

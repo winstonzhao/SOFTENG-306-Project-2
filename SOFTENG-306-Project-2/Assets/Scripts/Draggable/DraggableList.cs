@@ -96,7 +96,7 @@ public class DraggableList : GenericDraggableList, IDropZone
 
         foreach (var draggable in listItems)
         {
-            if (draggable == null) 
+            if (draggable == null)
             {
                 i += itemHeight + layoutSpacing;
                 continue;
@@ -215,7 +215,7 @@ public class DraggableList : GenericDraggableList, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-        if (CopyOnDrag) 
+        if (CopyOnDrag)
         {
             var itemClone = Instantiate(item);
             listItems.Insert(listItems.IndexOf(item), itemClone);

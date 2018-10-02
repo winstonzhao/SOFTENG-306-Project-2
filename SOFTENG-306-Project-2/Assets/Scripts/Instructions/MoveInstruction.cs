@@ -1,36 +1,58 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Instructions
 {
     public enum MoveType
     {
-        Absolute, Relative
+        Absolute,
+        Relative
     }
 
     public class MoveInstruction : Instruction
     {
-        private InstructionExecutor instructionExecutor;
-        private Instructable target;
-
-        float t;
-
-        private Vector3 start;
         private Vector3 end;
+        private InstructionExecutor instructionExecutor;
+
+        private InstructionRenderer instructionRenderer;
+        private bool mouseDebounce;
 
         public Vector3 moveTarget;
 
-        public float seconds;
+        public MoveType moveType;
 
         private bool moving;
 
-        public MoveType moveType;
+        public float seconds;
 
-        private bool trackMouse = false;
+        private Vector3 start;
 
-        private bool mouseDebounce = false;
+        private float t;
+        private Instructable target;
 
-        private InstructionRenderer instructionRenderer;
+        private bool trackMouse;
+
+        public override ReadOnlyCollection<InstructionComponent> InstructionComponents
+        {
+            get
+            {
+                return new List<InstructionComponent>
+                {
+                    new InstructionComponent("Move"),
+                    new InstructionComponent(Mathf.Round(moveTarget.x).ToString())
+                    {
+                        OnComponentClicked = onClicked
+                    },
+                    new InstructionComponent(Mathf.Round(moveTarget.y).ToString())
+                    {
+                        OnComponentClicked = onClicked
+                    }
+                }.AsReadOnly();
+            }
+        }
+
+        public override bool Editable { get; set; }
 
         public void Start()
         {
@@ -44,27 +66,6 @@ namespace Instructions
             trackMouse = true;
             mouseDebounce = true;
         }
-
-        public override List<InstructionComponent> InstructionComponents
-        {
-            get
-            {
-                return new List<InstructionComponent>
-            {
-                new InstructionComponent("Move"),
-                new InstructionComponent(Mathf.Round(moveTarget.x).ToString())
-                {
-                    OnComponentClicked = onClicked
-                },
-                new InstructionComponent(Mathf.Round(moveTarget.y).ToString())
-                {
-                    OnComponentClicked = onClicked
-                }
-            };
-            }
-        }
-
-        public override bool Editable { get; set; }
 
         public void Update()
         {
@@ -85,11 +86,9 @@ namespace Instructions
                 moveTarget.x = Mathf.Round(moveTarget.x);
                 moveTarget.y = Mathf.Round(moveTarget.y);
 
-                if (instructionRenderer != null)
-                {
-                    instructionRenderer.BackgroundColor = new Color(1, 1, 1);
-                }
+                if (instructionRenderer != null) instructionRenderer.BackgroundColor = new Color(1, 1, 1);
             }
+
             mouseDebounce = false;
         }
 
@@ -119,13 +118,9 @@ namespace Instructions
             start = target.transform.position;
             end = moveTarget;
 
-            if (moveType == MoveType.Relative)
-            {
-                end += start;
-            }
+            if (moveType == MoveType.Relative) end += start;
 
             moving = true;
         }
-
     }
 }

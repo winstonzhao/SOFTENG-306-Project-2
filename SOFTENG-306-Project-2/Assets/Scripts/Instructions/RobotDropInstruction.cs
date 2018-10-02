@@ -1,26 +1,16 @@
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.ObjectModel;
 
 namespace Instructions
 {
     public class RobotDropInstruction : Instruction
     {
         private InstructionExecutor instructionExecutor;
-        public RobotController robot;
 
         private Directions moveDirection = Directions.Up;
+        public RobotController robot;
 
-        public void Start()
-        {
-            Editable = true;
-        }
-
-        private void onClicked(object obj)
-        {
-            moveDirection = (Directions)obj;
-        }
-
-        public override List<InstructionComponent> InstructionComponents
+        public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
             {
@@ -31,15 +21,24 @@ namespace Instructions
                     {
                         OnComponentClicked = onClicked
                     }
-                };
+                }.AsReadOnly();
             }
         }
 
         public override bool Editable { get; set; }
 
+        public void Start()
+        {
+            Editable = true;
+        }
+
+        private void onClicked(object obj)
+        {
+            moveDirection = (Directions) obj;
+        }
+
         public void Update()
         {
-
         }
 
 
@@ -53,13 +52,9 @@ namespace Instructions
             instructionExecutor = executor;
             var didMove = false;
 
-            didMove = robot.DropItem((RobotController.Direction)moveDirection);
+            didMove = robot.DropItem((RobotController.Direction) moveDirection);
 
-            if (!didMove)
-            {
-                executor.Stop();
-            }
+            if (!didMove) executor.Stop();
         }
-
     }
 }

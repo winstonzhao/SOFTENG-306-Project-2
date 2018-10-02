@@ -4,6 +4,5 @@ namespace Instructions
 {
     public class Instructable : MonoBehaviour
     {
-
     }
 }

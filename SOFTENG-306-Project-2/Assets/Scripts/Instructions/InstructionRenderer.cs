@@ -4,14 +4,13 @@ namespace Instructions
 {
     public abstract class InstructionRenderer : MonoBehaviour
     {
-        public abstract bool IsEnabled { get; set; }
+        protected Color backgroundColor = new Color(1, 1, 1);
         protected Color textColor = new Color(79f / 255, 20f / 255, 20f / 255);
+        public abstract bool IsEnabled { get; set; }
+
         public Color TextColor
         {
-            get
-            {
-                return textColor;
-            }
+            get { return textColor; }
             set
             {
                 textColor = value;
@@ -19,13 +18,9 @@ namespace Instructions
             }
         }
 
-        protected Color backgroundColor = new Color(1, 1, 1);
         public Color BackgroundColor
         {
-            get
-            {
-                return backgroundColor;
-            }
+            get { return backgroundColor; }
             set
             {
                 backgroundColor = value;
@@ -34,6 +29,5 @@ namespace Instructions
         }
 
         public abstract void Render();
-
     }
 }

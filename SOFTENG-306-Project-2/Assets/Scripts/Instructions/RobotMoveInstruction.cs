@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.ObjectModel;
 
 namespace Instructions
 {
@@ -7,9 +7,26 @@ namespace Instructions
     {
         private InstructionExecutor instructionExecutor;
 
+        private Directions moveDirection = Directions.Up;
+
         public RobotController robot;
 
-        private Directions moveDirection = Directions.Up;
+        public override ReadOnlyCollection<InstructionComponent> InstructionComponents
+        {
+            get
+            {
+                return new List<InstructionComponent>
+                {
+                    new InstructionComponent("Move"),
+                    new DropdownInstructionComponent("up")
+                    {
+                        OnComponentClicked = onClicked
+                    }
+                }.AsReadOnly();
+            }
+        }
+
+        public override bool Editable { get; set; }
 
         public void Start()
         {
@@ -18,29 +35,11 @@ namespace Instructions
 
         private void onClicked(object obj)
         {
-            moveDirection = (Directions)obj;
+            moveDirection = (Directions) obj;
         }
-
-        public override List<InstructionComponent> InstructionComponents
-        {
-            get
-            {
-                return new List<InstructionComponent>
-            {
-                new InstructionComponent("Move"),
-                new DropdownInstructionComponent("up")
-                {
-                    OnComponentClicked = onClicked
-                }
-            };
-            }
-        }
-
-        public override bool Editable { get; set; }
 
         public void Update()
         {
-
         }
 
 
@@ -70,11 +69,7 @@ namespace Instructions
                     break;
             }
 
-            if (!didMove)
-            {
-                executor.Stop();
-            }
+            if (!didMove) executor.Stop();
         }
-
     }
 }

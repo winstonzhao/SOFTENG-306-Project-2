@@ -15,7 +15,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void Start()
     {
-        
+
         var rigidbody = GetComponent<Rigidbody2D>();
         if (rigidbody == null)
         {
@@ -40,7 +40,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
             {
                 Debug.Log("new prefeb created");
             }
-            
+
         }
     }
 
@@ -60,7 +60,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
         SetDropZoneActive(true);
         Debug.Log("Dragged away");
-        
+
 
     }
 

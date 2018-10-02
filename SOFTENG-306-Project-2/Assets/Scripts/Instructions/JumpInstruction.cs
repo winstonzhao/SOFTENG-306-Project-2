@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using UnityEditor;
+using System.Collections.ObjectModel;
 using UnityEngine;
+
 namespace Instructions
 {
     public class JumpInstruction : Instruction
@@ -10,22 +11,21 @@ namespace Instructions
 
         public override bool Editable { get; set; }
 
-        public override List<InstructionComponent> InstructionComponents
+        public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
             {
                 return new List<InstructionComponent>
-            {
-                new InstructionComponent("Jump")
-            };
+                {
+                    new InstructionComponent("Jump")
+                }.AsReadOnly();
             }
         }
 
-        void Start()
+        private void Start()
         {
-
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/JumpTargetUI");
-            var gameObj = Instantiate<GameObject>(prefab);
+            var gameObj = Instantiate(prefab);
 
             gameObj.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform, false);
 

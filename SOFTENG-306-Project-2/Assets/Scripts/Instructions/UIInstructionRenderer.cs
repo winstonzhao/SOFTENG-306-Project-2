@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,34 +8,23 @@ namespace Instructions
     [ExecuteInEditMode]
     public class UIInstructionRenderer : InstructionRenderer
     {
-
-        class ChildComp
-        {
-            public Vector2 Size { get; set; }
-            public RectTransform RectTransform { get; set; }
-            public Behaviour Behaviour { get; set; }
-        }
-
-        public float spacing = 2;
+        private BoxCollider2D boxCollider;
+        private readonly List<ChildComp> children = new List<ChildComp>();
 
         private Image image;
-        private List<Text> texts = new List<Text>();
-        private List<ChildComp> children = new List<ChildComp>();
-        private BoxCollider2D boxCollider;
-        private RectTransform rectTransform;
 
         private List<Image> images = new List<Image>();
 
         public Instruction instruction;
 
         public Vector2 padding = new Vector2(20, 10);
+        private RectTransform rectTransform;
+
+        public float spacing = 2;
 
         public override bool IsEnabled
         {
-            get
-            {
-                return image.enabled;
-            }
+            get { return image.enabled; }
 
             set
             {
@@ -46,12 +34,9 @@ namespace Instructions
             }
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
-            if (instruction == null)
-            {
-                instruction = GetComponent<Instruction>();
-            }
+            if (instruction == null) instruction = GetComponent<Instruction>();
 
             boxCollider = GetComponent<BoxCollider2D>();
             image = GetComponent<Image>();
@@ -60,7 +45,7 @@ namespace Instructions
             Render();
         }
 
-        void Start()
+        private void Start()
         {
             var canvas = FindObjectOfType<Canvas>();
             GetComponent<RectTransform>().SetParent(canvas.transform, false);
@@ -70,7 +55,7 @@ namespace Instructions
         private Text CreateTextObject(InstructionComponent component, string name = "text")
         {
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/InstructionTextUI");
-            var go = Instantiate<GameObject>(prefab);
+            var go = Instantiate(prefab);
             go.name = name;
             go.GetComponent<RectTransform>().SetParent(transform, false);
 
@@ -90,12 +75,12 @@ namespace Instructions
         private GameObject CreateDropdownObject(DropdownInstructionComponent component)
         {
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/InstructionDropdown");
-            var go = Instantiate<GameObject>(prefab);
+            var go = Instantiate(prefab);
             go.name = name;
             go.GetComponent<RectTransform>().SetParent(transform, false);
 
             var dropdown = go.GetComponent<Dropdown>();
-            dropdown.onValueChanged.AddListener((value) => component.OnComponentClicked(value));
+            dropdown.onValueChanged.AddListener(value => component.OnComponentClicked(value));
             dropdown.options = component.values.Select(v => new Dropdown.OptionData(v)).ToList();
 
             return go;
@@ -103,23 +88,51 @@ namespace Instructions
 
         private void UpdateSize()
         {
+            var components = instruction.InstructionComponents;
+
+            for (var i = 0; i < components.Count; i++)
+                if (children[i].InstructionComponent.GetType() != typeof(DropdownInstructionComponent))
+                {
+                    var text = children[i].RectTransform.GetComponent<Text>();
+                    text.text = components[i].Text;
+                    children[i].Size = new Vector2(text.preferredWidth, text.preferredHeight);
+                }
+
             float height = 0;
-            float width = children.Sum(c => c.Size.x);
-            width += spacing * instruction.InstructionComponents.Count - spacing;
+            var width = children.Sum(c => c.Size.x);
+            width += spacing * components.Count - spacing;
 
             float start = 0;
             foreach (var child in children)
             {
                 child.RectTransform.anchoredPosition = new Vector2(start + child.Size.x / 2 + padding.x, 0);
                 child.RectTransform.localPosition += new Vector3(0, 0, -0.1f);
+
                 start += spacing + child.Size.x;
                 height = Mathf.Max(child.Size.y, height);
             }
+
             width = width + padding.x * 2;
             height = height + padding.y * 2;
             boxCollider.size = new Vector2(width, height);
             rectTransform.sizeDelta = new Vector2(width, height);
-            GetComponent<Draggable>().Size = new Vector2(width, height) * FindObjectOfType<Canvas>().GetComponent<RectTransform>().localScale.x;
+            GetComponent<Draggable>().Size = new Vector2(width, height) *
+                                             FindObjectOfType<Canvas>().GetComponent<RectTransform>().localScale.x;
+        }
+
+        private void DestroyChildren()
+        {
+            while (transform.childCount != 0)
+                foreach (Transform child in transform)
+                {
+#if UNITY_EDITOR
+                    DestroyImmediate(child.gameObject);
+#else
+                    Destroy(child.gameObject);
+                #endif
+                }
+
+            children.Clear();
         }
 
         public override void Render()
@@ -127,23 +140,10 @@ namespace Instructions
             var components = instruction.InstructionComponents;
             if (children.Count != components.Count)
             {
-                while (transform.childCount != 0)
+                DestroyChildren();
+                for (var i = 0; i < components.Count; i++)
                 {
-                    foreach (Transform child in transform)
-                    {
-#if UNITY_EDITOR
-                        DestroyImmediate(child.gameObject);
-#else
-                        Destroy(child.gameObject);
-#endif
-                    }
-                }
-                texts.Clear();
-                children.Clear();
-
-                for (int i = 0; i < components.Count; i++)
-                {
-                    ChildComp child = new ChildComp();
+                    var child = new ChildComp();
                     if (components[i].GetType() == typeof(DropdownInstructionComponent))
                     {
                         var go = CreateDropdownObject(components[i] as DropdownInstructionComponent);
@@ -155,30 +155,36 @@ namespace Instructions
                         var text = CreateTextObject(components[i], "text " + i);
                         child.Size = new Vector2(text.preferredWidth, text.preferredHeight);
                         child.RectTransform = text.GetComponent<RectTransform>();
-                        texts.Add(text);
                     }
+
+                    child.InstructionComponent = components[i];
                     children.Add(child);
                 }
+
                 UpdateSize();
                 images = GetComponentsInChildren<Image>().ToList();
             }
 
-            // bool dirtyText = false;
+            var dirtyText = false;
 
-            // for (int i = 0; i < texts.Count; i++)
-            // {
-            //     if (texts[i].text != components[i].Text) dirtyText = true;
-            //     texts[i].text = components[i].Text;
-            // }
+            for (var i = 0; i < children.Count; i++)
+            {
+                if (children[i].InstructionComponent.Text != components[i].Text) dirtyText = true;
+                children[i].InstructionComponent.Text = components[i].Text;
+            }
 
-            // if (dirtyText)
-            // {
-            //     UpdateSize();
-            // }
+            if (dirtyText) UpdateSize();
 
             image.color = BackgroundColor;
             images.ForEach(i => i.color = BackgroundColor);
         }
 
+        private class ChildComp
+        {
+            public Vector2 Size { get; set; }
+            public RectTransform RectTransform { get; set; }
+            public Behaviour Behaviour { get; set; }
+            public InstructionComponent InstructionComponent { get; set; }
+        }
     }
 }

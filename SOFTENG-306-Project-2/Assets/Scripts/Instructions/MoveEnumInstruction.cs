@@ -1,29 +1,50 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Instructions
 {
     public enum Directions
     {
-        Up, Down, Left, Right
+        Up,
+        Down,
+        Left,
+        Right
     }
 
 
     public class MoveEnumInstruction : Instruction
     {
-        private InstructionExecutor instructionExecutor;
-        private Instructable target;
-
-        float t;
-
-        private Vector3 start;
         private Vector3 end;
+        private InstructionExecutor instructionExecutor;
 
-        public float seconds = 1;
+        private Directions moveDirection = Directions.Up;
 
         private bool moving;
 
-        private Directions moveDirection = Directions.Up;
+        public float seconds = 1;
+
+        private Vector3 start;
+
+        private float t;
+        private Instructable target;
+
+        public override ReadOnlyCollection<InstructionComponent> InstructionComponents
+        {
+            get
+            {
+                return new List<InstructionComponent>
+                {
+                    new InstructionComponent("Move"),
+                    new DropdownInstructionComponent("up")
+                    {
+                        OnComponentClicked = onClicked
+                    }
+                }.AsReadOnly();
+            }
+        }
+
+        public override bool Editable { get; set; }
 
         public void Start()
         {
@@ -32,29 +53,11 @@ namespace Instructions
 
         private void onClicked(object obj)
         {
-            moveDirection = (Directions)obj;
+            moveDirection = (Directions) obj;
         }
-
-        public override List<InstructionComponent> InstructionComponents
-        {
-            get
-            {
-                return new List<InstructionComponent>
-            {
-                new InstructionComponent("Move"),
-                new DropdownInstructionComponent("up")
-                {
-                    OnComponentClicked = onClicked
-                }
-            };
-            }
-        }
-
-        public override bool Editable { get; set; }
 
         public void Update()
         {
-
         }
 
 
@@ -100,6 +103,5 @@ namespace Instructions
 
             moving = true;
         }
-
     }
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.ObjectModel;
 
 namespace Instructions
 {
@@ -9,14 +9,14 @@ namespace Instructions
 
         public override bool Editable { get; set; }
 
-        public override List<InstructionComponent> InstructionComponents
+        public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
             {
                 return new List<InstructionComponent>
-            {
-                new InstructionComponent("END JUMP")
-            };
+                {
+                    new InstructionComponent("END JUMP")
+                }.AsReadOnly();
             }
         }
 

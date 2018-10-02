@@ -1,41 +1,34 @@
-﻿using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Instructions
 {
-
     // [RequireComponent(typeof(DraggableList))]
     public class InstructionExecutor : MonoBehaviour
     {
-        class InstructionObj
-        {
-            public Instruction Instruction { get; set; }
-            public InstructionRenderer Renderer { get; set; }
-        }
-
-        public ClickEventEmitter playButton;
-        public ClickEventEmitter stopButton;
-
-        public Instructable target;
-
-        private List<InstructionObj> instructions = new List<InstructionObj>();
-
-        private int instructionIndex;
         private InstructionObj currentInstruction;
 
         public GenericDraggableList draggableList;
 
-        private Color prevBackground;
-
-        public float MinExecutionSeconds = 0.4f;
+        private bool executeNext;
 
         private float executionStart = float.MinValue;
 
-        private bool executeNext = false;
+        private int instructionIndex;
 
-        void Start()
+        private List<InstructionObj> instructions = new List<InstructionObj>();
+
+        public float MinExecutionSeconds = 0.4f;
+
+        public ClickEventEmitter playButton;
+
+        private Color prevBackground;
+        public ClickEventEmitter stopButton;
+
+        public Instructable target;
+
+        private void Start()
         {
             draggableList = GetComponent<GenericDraggableList>();
             // draggableList.AllowedItems = new List<System.Type>
@@ -56,13 +49,10 @@ namespace Instructions
 
         public void Play()
         {
-            foreach (var instruction in instructions)
-            {
-                instruction.Instruction.Editable = false;
-            }
+            foreach (var instruction in instructions) instruction.Instruction.Editable = false;
 
             instructionIndex = 0;
-            instructions = draggableList.ListItems.Reverse().Select(l => new InstructionObj()
+            instructions = draggableList.ListItems.Reverse().Select(l => new InstructionObj
             {
                 Instruction = l.GetComponent<Instruction>(),
                 Renderer = l.GetComponent<InstructionRenderer>()
@@ -78,10 +68,7 @@ namespace Instructions
 
         private void DoExecute()
         {
-            if (currentInstruction != null)
-            {
-                currentInstruction.Renderer.BackgroundColor = prevBackground;
-            }
+            if (currentInstruction != null) currentInstruction.Renderer.BackgroundColor = prevBackground;
 
             if (instructionIndex > instructions.Count - 1)
             {
@@ -102,16 +89,10 @@ namespace Instructions
         public void Stop()
         {
             executeNext = false;
-            if (currentInstruction != null)
-            {
-                currentInstruction.Renderer.BackgroundColor = prevBackground;
-            }
+            if (currentInstruction != null) currentInstruction.Renderer.BackgroundColor = prevBackground;
 
             currentInstruction = null;
-            foreach (var instruction in instructions)
-            {
-                instruction.Instruction.Editable = true;
-            }
+            foreach (var instruction in instructions) instruction.Instruction.Editable = true;
         }
 
         public void FailExecution(string message)
@@ -119,18 +100,21 @@ namespace Instructions
             Debug.Log("Instruction Exception: " + message);
         }
 
-        void Update()
+        private void Update()
         {
-            if (currentInstruction != null && !executeNext)
-            {
-                currentInstruction.Instruction.UpdateInstruction();
-            }
+            if (currentInstruction != null && !executeNext) currentInstruction.Instruction.UpdateInstruction();
 
             if (executeNext && Time.time - executionStart > MinExecutionSeconds)
             {
                 executionStart = Time.time;
                 DoExecute();
             }
+        }
+
+        private class InstructionObj
+        {
+            public Instruction Instruction { get; set; }
+            public InstructionRenderer Renderer { get; set; }
         }
     }
 }
