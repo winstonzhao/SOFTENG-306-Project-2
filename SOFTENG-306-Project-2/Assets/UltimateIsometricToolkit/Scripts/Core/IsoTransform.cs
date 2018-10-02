@@ -39,6 +39,8 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
         [SerializeField, HideInInspector]
         private Vector3 _size = Vector3.one;
 
+        private GhostReference GhostReference;
+        
         /// <summary>
         /// Isometric position of this GameObject in worldspace
         /// </summary>
@@ -170,6 +172,8 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
 
         void Start()
         {
+            GhostReference = GetComponent<GhostReference>();
+            
             if (isoSorting != null)
                 isoSorting.Resolve(this);
             UpdateChildren();
@@ -208,6 +212,17 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
         {
             if (delta == Vector3.zero)
                 return;
+
+            if (GhostReference != null)
+            {
+                var ghostObject = GhostReference.GhostObject;
+                if (ghostObject != null)
+                {
+                    ghostObject.GetComponent<Ghost>().Move(delta);
+                    return;
+                }
+            }
+
             Position += delta;
         }
 

@@ -20,6 +20,9 @@ namespace UltimateIsometricToolkit.physics
         [SerializeField]
         public IsoTransform _isoTransform;
 
+        [NonSerialized]
+        public bool AutoUpdatePosition = true;
+
         public IsoTransform IsoTransform
         {
             get { return _isoTransform; }
@@ -51,22 +54,35 @@ namespace UltimateIsometricToolkit.physics
                 UpdateLayer();
             }
         }
+
+        public void Move(Vector3 movement)
+        {
+            if (gameObject.isStatic)
+            {
+                return;
+            }
+
+            transform.Translate(movement);
+        }
+
 #if UNITY_EDITOR
 #endif
-
         private void UpdatePosition()
         {
             if (_isoTransform != null)
             {
-                if (_lastPos != _isoTransform.Position)
+                // If the ghost position is not what we set it to, then it must have hit something
+                if (transform.position != _lastPos)
                 {
-                    _lastPos = _isoTransform.Position;
-                    transform.position = _isoTransform.Position;
-                }
-                else if (_lastPos != transform.position)
-                {
-                    _lastPos = transform.position;
+                    // Apply the collision detection to the iso transform
                     _isoTransform.Position = transform.position;
+                    _lastPos = transform.position;
+                }
+                else
+                {
+                    // Tell the ghost to try moving to the iso transform position; see if it hits anything
+                    transform.position = _isoTransform.Position;
+                    _lastPos = _isoTransform.Position;
                 }
             }
         }
@@ -81,19 +97,14 @@ namespace UltimateIsometricToolkit.physics
 
         #region  Unity Events
 
-        //disabled for performance reasons
-//		void FixedUpdate() {
-//			Profiler.BeginSample("fixedupdate");
-//			UpdateLayer();
-//			UpdatePosition();
-//			Profiler.EndSample();
-//		}
         void Update()
         {
             UpdateLayer();
             gameObject.isStatic = _isoTransform.gameObject.isStatic;
-            if (!gameObject.isStatic)
+            if (AutoUpdatePosition && !gameObject.isStatic)
+            {
                 UpdatePosition();
+            }
         }
 
         //forwards Triggers and Collision to the IsoCollider
