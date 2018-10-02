@@ -10,6 +10,11 @@ public class Player
 
     public Player()
     {
-        
+        _username = "Luna Lovegood";
+    }
+
+    public string Username
+    {
+        get { return _username; }
     }
 }
