@@ -24,6 +24,8 @@ public class CivilVehicleController : MonoBehaviour {
     public int TimeLimit = 10;
     public int Budget = 1000;
     public string NextLevelName;
+    public string CheatLevelName;
+    public string UndoCheatLevelName;
 
     private string PlayerName = "Anonymous";
     private TextMeshProUGUI timerArea;
@@ -251,6 +253,18 @@ public class CivilVehicleController : MonoBehaviour {
     {
         Debug.Log("Next level " + NextLevelName);
         SceneManager.LoadScene(NextLevelName);
+    }
+
+    public void Cheat()
+    {
+        Debug.Log("Cheat level " + CheatLevelName);
+        SceneManager.LoadScene(CheatLevelName);
+    }
+
+    public void UndoCheat()
+    {
+        Debug.Log("Undo cheat, level " + UndoCheatLevelName);
+        SceneManager.LoadScene(UndoCheatLevelName);
     }
 
     public void StartTutorial()
