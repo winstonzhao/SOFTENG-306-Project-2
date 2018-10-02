@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -128,7 +126,7 @@ public class DialogCanvasManager : MonoBehaviour
 
         if (_currentFrame.ButtonFrame == true)
         {
-            var buttonBoxPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Dialog/Button Panel.prefab");
+            var buttonBoxPrefab = Resources.Load<GameObject>("Prefabs/Dialog/Button Panel");
 
             GameObject textBox = Instantiate(buttonBoxPrefab, gameObject.transform);
             _dialogText = textBox.transform.Find("Dialogue Text").gameObject.GetComponent<Text>();
@@ -158,7 +156,7 @@ public class DialogCanvasManager : MonoBehaviour
         }
         else
         {
-            var textBoxPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Dialog/Text Panel.prefab");
+            var textBoxPrefab = Resources.Load<GameObject>("Prefabs/Dialog/Text Panel");
 
             GameObject textBox = Instantiate(textBoxPrefab, gameObject.transform);
             _dialogText = textBox.transform.Find("Dialogue Text").gameObject.GetComponent<Text>();
@@ -166,7 +164,7 @@ public class DialogCanvasManager : MonoBehaviour
             _textPanel = textBox;
         }
 
-        var imagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Dialog/Image.prefab");
+        var imagePrefab = Resources.Load<GameObject>("Prefabs/Dialog/Image");
 
         GameObject image = Instantiate(imagePrefab, gameObject.transform);
         _avatar = image.gameObject.GetComponent<Image>();
