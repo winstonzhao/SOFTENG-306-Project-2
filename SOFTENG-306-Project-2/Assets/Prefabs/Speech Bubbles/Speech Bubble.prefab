@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224862216448550842}
-  - component: {fileID: 114284528070136588}
+  - component: {fileID: 114359280248769220}
   - component: {fileID: 223250366723080578}
   - component: {fileID: 114850152887283524}
   m_Layer: 0
@@ -63,7 +63,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114284528070136588
+--- !u!114 &114359280248769220
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,9 +75,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowBounds: 1
-  _position: {x: -3, y: 2.05, z: 0}
+  _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
+  _scale: {x: 0.01, y: 0.01, z: 1}
   _parent: {fileID: 0}
 --- !u!114 &114710121405669868
 MonoBehaviour:
@@ -233,8 +233,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1225765946643752}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.20833334}
-  m_LocalScale: {x: 0.0033333334, y: 0.0033333334, z: 0.33333334}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_Children:
   - {fileID: 224664666646230882}
   - {fileID: 224191558548425054}
@@ -243,6 +243,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.3608439}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}

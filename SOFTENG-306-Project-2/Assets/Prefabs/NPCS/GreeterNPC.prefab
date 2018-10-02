@@ -19,10 +19,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4613413705396184}
-  - component: {fileID: 114906917346233954}
+  - component: {fileID: 114144504491311012}
   - component: {fileID: 212957532747740504}
-  - component: {fileID: 114480861794961734}
   - component: {fileID: 114656478404651044}
+  - component: {fileID: 114647439667028560}
+  - component: {fileID: 114318955314406108}
   m_Layer: 0
   m_Name: GreeterNPC
   m_TagString: Untagged
@@ -37,13 +38,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1422501108592762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5355334, y: 2.4605875, z: 2.6618624}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: -2.1213202, y: -0.36783987, z: -2.2371173}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114480861794961734
+--- !u!114 &114144504491311012
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,10 +52,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422501108592762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  ShowBounds: 1
+  _position: {x: -3, y: 0.8, z: 0}
+  _size: {x: 1, y: 1, z: 1}
+  _scale: {x: 3, y: 3, z: 1}
+  _parent: {fileID: 0}
+--- !u!114 &114318955314406108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1422501108592762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9f8aed02c1485eac3b0d3adab34f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threshold: 4
+  Watch: {fileID: 0}
+  Toggle: {fileID: 0}
+--- !u!114 &114647439667028560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1422501108592762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9f8aed02c1485eac3b0d3adab34f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threshold: 4
+  Watch: {fileID: 0}
+  Toggle: {fileID: 0}
 --- !u!114 &114656478404651044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -67,22 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RHSSprite: {fileID: 21300002, guid: 5bb497bb3a4374eefa158a9771854d55, type: 3}
---- !u!114 &114906917346233954
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1422501108592762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowBounds: 1
-  _position: {x: 5, y: 0.8, z: 0}
-  _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
-  _parent: {fileID: 0}
 --- !u!212 &212957532747740504
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -118,7 +135,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 5bb497bb3a4374eefa158a9771854d55, type: 3}
+  m_Sprite: {fileID: 21300008, guid: 5bb497bb3a4374eefa158a9771854d55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
