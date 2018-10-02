@@ -30,6 +30,9 @@ public class CivilVehicleController : MonoBehaviour {
     private bool timerNotStopped = true;
     private TextMeshProUGUI budgetArea;
     private float currCountdownValueTenthSeconds;
+    private float lastClickTime = 0;
+    private float catchTime = 0.2f;
+    
 
     private const int TUTORIAL_SLIDE_COUNT = 8; 
     private int tutorialSlideNumber;
@@ -55,8 +58,28 @@ public class CivilVehicleController : MonoBehaviour {
         //mouse ray in isometric coordinate system 
         var isoRay = Isometric.MouseToIsoRay();
 
-        //do an isometric raycast on left mouse click 
-        if (Input.GetMouseButtonDown(0))
+        //do an isometric raycast on double left mouse click 
+        if(Input.GetMouseButtonDown(0)){
+            if(Time.time-lastClickTime < catchTime){
+                //double click
+                Debug.Log("double click");
+                IsoRaycastHit isoRaycastHit;
+                if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
+                {
+                    GameObject hitObject = isoRaycastHit.Collider.gameObject;
+                    Debug.Log("we clicked on " + hitObject.name + " at " + isoRaycastHit.Point + " tagged as " + hitObject.tag);
+                    if (hitObject.tag == "BuildingBlock")
+                    {
+                        hitObject.GetComponent<DraggableIsoItem>().Rotate();
+                        Debug.Log(hitObject.name + " rotated to direction " + hitObject.GetComponent<DraggableIsoItem>().direction);
+                    }
+                }
+            }
+            lastClickTime=Time.time;
+        }
+        
+        
+/*        if (Input.GetMouseButtonDown(0))
         {
             IsoRaycastHit isoRaycastHit;
             if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
@@ -69,7 +92,7 @@ public class CivilVehicleController : MonoBehaviour {
                     Debug.Log(hitObject.name + " rotated to direction " + hitObject.GetComponent<DraggableIsoItem>().direction);
                 }
             }
-        }
+        }*/
     }
 
     public void run()
