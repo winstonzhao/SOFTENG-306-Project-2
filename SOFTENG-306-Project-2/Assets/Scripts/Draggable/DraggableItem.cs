@@ -178,7 +178,6 @@ public class DraggableItem : Draggable
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        //Debug.Log("trigger enter");
         if (!dragging) return;
     
         var possibleDropZone = col.GetComponent<IDropZone>();

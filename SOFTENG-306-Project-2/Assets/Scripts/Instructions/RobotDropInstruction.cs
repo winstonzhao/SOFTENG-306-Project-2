@@ -3,16 +3,10 @@ using UnityEngine;
 
 namespace Instructions
 {
-    public class MoveRobotInstruction : Instruction
+    public class RobotDropInstruction : Instruction
     {
         private InstructionExecutor instructionExecutor;
-        private Instructable target;
-
         public RobotController robot;
-
-        public float seconds = 1;
-
-        private bool moving;
 
         private Directions moveDirection = Directions.Up;
 
@@ -31,13 +25,13 @@ namespace Instructions
             get
             {
                 return new List<InstructionComponent>
-            {
-                new InstructionComponent("Move"),
-                new DropdownInstructionComponent("up")
                 {
-                    OnComponentClicked = onClicked
-                }
-            };
+                    new InstructionComponent("Drop"),
+                    new DropdownInstructionComponent("direction")
+                    {
+                        OnComponentClicked = onClicked
+                    }
+                };
             }
         }
 
@@ -57,22 +51,13 @@ namespace Instructions
         public override void Execute(Instructable target, InstructionExecutor executor)
         {
             instructionExecutor = executor;
-            this.target = target;
+            var didMove = false;
 
-            switch (moveDirection)
+            didMove = robot.DropItem((RobotController.Direction)moveDirection);
+
+            if (!didMove)
             {
-                case Directions.Up:
-                    robot.MoveTL();
-                    break;
-                case Directions.Down:
-                    robot.MoveBR();
-                    break;
-                case Directions.Left:
-                    robot.MoveBL();
-                    break;
-                case Directions.Right:
-                    robot.MoveBR();
-                    break;
+                executor.Stop();
             }
         }
 

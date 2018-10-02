@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Instructions
 {
 
-    [RequireComponent(typeof(DraggableList))]
+    // [RequireComponent(typeof(DraggableList))]
     public class InstructionExecutor : MonoBehaviour
     {
         class InstructionObj
@@ -38,12 +38,12 @@ namespace Instructions
         void Start()
         {
             draggableList = GetComponent<DraggableList>();
-            draggableList.AllowedItems = new List<System.Type>
-        {
-            typeof(Instruction)
-        };
-            draggableList.Rearrangeable = true;
-            draggableList.CopyOnDrag = false;
+            // draggableList.AllowedItems = new List<System.Type>
+            // {
+            //     typeof(Instruction)
+            // };
+            // draggableList.Rearrangeable = true;
+            // draggableList.CopyOnDrag = false;
 
             playButton.EventHandler += Play;
             stopButton.EventHandler += Stop;

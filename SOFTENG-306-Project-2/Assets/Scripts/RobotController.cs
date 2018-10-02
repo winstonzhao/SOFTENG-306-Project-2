@@ -22,10 +22,10 @@ public class RobotController : MonoBehaviour
 
     public enum Direction
     {
-        TopRight = 0,
+        TopRight = 3,
         BottomRight = 1,
         BottomLeft = 2,
-        TopLeft = 3
+        TopLeft = 0
     }
 
     // Use this for initialization
