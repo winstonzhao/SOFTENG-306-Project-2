@@ -4,21 +4,24 @@ using UnityEditor;
 
 public class SoftwareLevelGenerator : MonoBehaviour
 {
-
+    // Fields used to represent the current level and game
     public int currentLevel;
     public int numElements;
+    private Layout[,] layoutMap;
+    private GameObject[,] objectMap;
 
+    // Used to locate the input and output gameobject in the scene
     private int inputX;
     private int inputZ;
     private int outputX;
     private int outputZ;
 
-    private Layout[,] layoutMap;
-    private GameObject[,] objectMap;
+    // Prefabs and Sprites used for different states of the scene
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
 
+    // Enum used to map out the layout of the scene
     public enum Layout
     {
         EMPTY = 0,
@@ -26,7 +29,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         PADDING = -1
     }
 
-    // Use this for initialization
+    // Initialisation
     void Start()
     {
         GeneratedLevel(1);
@@ -37,13 +40,15 @@ public class SoftwareLevelGenerator : MonoBehaviour
     {
     }
 
+    // Used to initialised diferent levels
     public void GeneratedLevel(int level)
     {
         currentLevel = level;
-        numElements = 6;
+        // Switch statement for setting up different levels
         switch (currentLevel)
         {
             case 1:
+                numElements = 6;
                 layoutMap = new Layout[11, 9]
                 {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
@@ -67,9 +72,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
         }
     }
 
+    // Used for displaying the next element if the current element has been moved else where
     public void NextInputElement() 
     {
         if (numElements != 0) {
+            // Next input element will pop out at input
             GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
             GameObject obj = Instantiate<GameObject>(prefab);
             obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
@@ -77,9 +84,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
             obj.transform.parent = this.transform;
             layoutMap[inputX, inputZ] = Layout.ELEMENT;
             objectMap[inputX, inputZ] = obj;
-            //obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
             numElements--;
         } else {
+            // No elements left
             layoutMap[inputX, inputZ] = Layout.EMPTY;
             GameObject obj = this.transform.Find("Input").Find("Input").gameObject;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
@@ -88,8 +95,10 @@ public class SoftwareLevelGenerator : MonoBehaviour
         }
     }
 
+    // Used to check if the answer is correct
     public bool CheckAnswer()
     {
+        // There are stil elements left
         if (numElements != 0)
         {
             return false;
@@ -128,21 +137,22 @@ public class SoftwareLevelGenerator : MonoBehaviour
         return false;
     }
 
-    public void SetMapLayout(int x, int z, Layout layout, GameObject obj)
+    // Used for updating the layout of the scene when a command is valid
+    public void SetMapLayout(int x, int z, RobotController.Command command, GameObject obj)
     {
-        if (layout == Layout.EMPTY)
+        if (command == RobotController.Command.PICKUP)
         {
             Debug.Log("Pick x: " + x + " z: " + z);
-            layoutMap[x, z] = layout;
+            layoutMap[x, z] = Layout.EMPTY;
             objectMap[x, z].SetActive(false);
             objectMap[x, z] = null;
         }
-        else if (layout == Layout.ELEMENT)
+        else if (command == RobotController.Command.DROP)
         {
             Debug.Log("Drop x: " + x + " z: " + z);
             var oldPos = obj.GetComponent<IsoTransform>().Position;
             objectMap[(int)oldPos.x, (int)oldPos.z] = null;
-            layoutMap[x, z] = layout;
+            layoutMap[x, z] = Layout.ELEMENT;
             obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, z - 1);
             objectMap[x, z] = obj;
             objectMap[x, z].SetActive(true);
@@ -153,26 +163,29 @@ public class SoftwareLevelGenerator : MonoBehaviour
         }
     }
 
+    // Getter for checking if a specific index is empty or not
     public Layout GetMapLayout(int x, int z)
     {
         return layoutMap[x, z];
     }
 
+    // Getter for getting the object at the specific index
     public GameObject GetObject(int x, int z)
     {
         return objectMap[x, z];
     }
 
-    public void PrintMap()
-    {
-        for (int i = 0; i < 11; i++)
-        {
-            string map = "";
-            for (int j = 0; j < 9; j++)
-            {
-                map = map + layoutMap[i, j] + ": ";
-            }
-            Debug.Log(map);
-        }
-    }
+    // Used for debugging and printing the layout of the scene
+    //public void PrintMap()
+    //{
+    //    for (int i = 0; i < 11; i++)
+    //    {
+    //        string map = "";
+    //        for (int j = 0; j < 9; j++)
+    //        {
+    //            map = map + layoutMap[i, j] + ": ";
+    //        }
+    //        Debug.Log(map);
+    //    }
+    //}
 }

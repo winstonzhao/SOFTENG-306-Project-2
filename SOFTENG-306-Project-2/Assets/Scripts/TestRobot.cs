@@ -3,6 +3,9 @@
 [CustomEditor(typeof(RobotController))]
 public class TestRobotEditor : Editor
 {
+    /// <summary>
+    /// Customise editor controller used for testing
+    /// </summary>
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -10,22 +13,23 @@ public class TestRobotEditor : Editor
         RobotController myScript = (RobotController)target;
         if (UnityEngine.GUILayout.Button("Move TL"))
         {
-            myScript.MoveTL();
+            myScript.Move(RobotController.Direction.TopLeft);
         }
 
         if (UnityEngine.GUILayout.Button("Move BL"))
         {
-            myScript.MoveBL();
+            myScript.Move(RobotController.Direction.BottomLeft);
         }
 
         if (UnityEngine.GUILayout.Button("Move TR"))
         {
-            myScript.MoveTR();
+            myScript.Move(RobotController.Direction.TopRight);
+
         }
 
         if (UnityEngine.GUILayout.Button("Move BR"))
         {
-            myScript.MoveBR();
+            myScript.Move(RobotController.Direction.BottomRight);
         }
 
         if (UnityEngine.GUILayout.Button("PickUp TL")) 
@@ -68,9 +72,8 @@ public class TestRobotEditor : Editor
             myScript.DropItem(RobotController.Direction.BottomRight);
         }
 
-        if (UnityEngine.GUILayout.Button("Debug")) {
-            myScript.debug();
-        }
-
+        //if (UnityEngine.GUILayout.Button("Debug")) {
+        //    myScript.debug();
+        //}
     }
 }

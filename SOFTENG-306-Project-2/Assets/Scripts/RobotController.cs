@@ -1,34 +1,60 @@
 ﻿using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
-using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(IsoTransform))]
-[RequireComponent(typeof(IsoBoxCollider))]
 [RequireComponent(typeof(IsoRigidbody))]
 public class RobotController : MonoBehaviour
 {
-
+    // Components required for the robot controller
     private IsoTransform isoTransform;
     private SoftwareLevelGenerator generator;
 
+    // Used to map out the position of the robot in the scene
     private int X = 1;
+    private int Y = 1;
     private int Z = 1;
+
+    // Default speed for transforming the robot
+    private float speed = 5;
+
+    // Boolean and object to see if the robot is currently holding an object
     private bool hasElement = false;
     private GameObject carrying;
 
+    // Fields to animating the robot transformation
+    private Vector3 from;
+    private Vector3 to;
+    private float timePassed;
+    private float maxTimePassed;
+
+    // Checking if the last action has been sucessfulyl performed
+    public bool IsFinished {
+        get  {
+            return timePassed >= maxTimePassed;
+        }
+    }
+
+    public enum Command
+    {
+        MOVE,
+        PICKUP,
+        DROP
+    }
+
+    // Sprites used to represent different state of the object
     private static string NO_ELEMENT = "software_minigame/Sprites/robot1";
     private static string HAS_ELEMENT = "software_minigame/Sprites/robot2";
 
+    // Enum to represent the direction for executing the particular action
     public enum Direction
     {
-        TopRight = 3,
-        BottomRight = 1,
-        BottomLeft = 2,
-        TopLeft = 0
+        TopRight,
+        BottomRight,
+        BottomLeft,
+        TopLeft
     }
 
-    // Use this for initialization
+    // Initialization
     void Start()
     {
         isoTransform = this.GetOrAddComponent<IsoTransform>();
@@ -38,185 +64,92 @@ public class RobotController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (from != Vector3.zero && to != Vector3.zero) 
+        {
+            timePassed += Time.deltaTime;
+            isoTransform.Position = Vector3.Lerp(from, to, timePassed / maxTimePassed);
+        }
     }
 
-    public bool Move(int x, int z)
-    {
-        for (int i = x; i != 0;)
+    // Moving 1 step in specified direction, return true if the command is valid
+    public bool Move(Direction direction) {
+        // Initialise position and destination vector
+        var currentPos = this.GetComponent<IsoTransform>().Position;
+        var destPos = Vector3.zero;
+        int dx = 0;
+        int dz = 0;
+
+        // Check the direction of operation and set relevant flag
+        switch (direction)
         {
-            if (i < 0)
-            {
-                if (MoveBL())
-                {
-                    i++;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (MoveTR())
-                {
-                    i--;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            case Direction.BottomLeft:
+                dx = -1;
+                break;
+            case Direction.TopLeft:
+                dz = 1;
+                break;
+            case Direction.TopRight:
+                dx = 1;
+                break;
+            case Direction.BottomRight:
+                dz = -1;
+                break;
         }
 
-        for (int i = z; i != 0;)
-        {
-            if (i < 0)
-            {
-                if (MoveBR())
-                {
-                    i++;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (MoveTL())
-                {
-                    i--;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public bool MoveBL()
-    {
-        isoTransform.Translate(new Vector3(-1, 0, 0));
-        X--;
-
-        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
+        // Check if the tile is empty to allow movement and avoid collisions
+        if (generator.GetMapLayout(X + dx, Z + dz) != SoftwareLevelGenerator.Layout.EMPTY)
         {
             Debug.Log("COLLIDE");
-            isoTransform.Translate(new Vector3(1, 0, 0));
-            X++;
-            Debug.Log("To: x: " + X + " z: " + Z);
-            return false;
-        }
-        Debug.Log("To: x: " + X + " z: " + Z);
-        return true;
-    }
-
-    public bool MoveTL()
-    {
-        isoTransform.Translate(new Vector3(0, 0, 1));
-        Z++;
-
-        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
-        {
-            Debug.Log("COLLIDE");
-            isoTransform.Translate(new Vector3(0, 0, -1));
-            Z--;
-            Debug.Log("To: x: " + X + " z: " + Z);
-            return false;
-        }
-        Debug.Log("To: x: " + X + " z: " + Z);
-        return true;
-    }
-
-    public bool MoveBR()
-    {
-        isoTransform.Translate(new Vector3(0, 0, -1));
-        Z--;
-
-        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
-        {
-            Debug.Log("COLLIDE");
-            isoTransform.Translate(new Vector3(0, 0, 1));
-            Z++;
-            Debug.Log("To: x: " + X + " z: " + Z);
-            return false;
-        }
-
-        Debug.Log("To: x: " + X + " z: " + Z);
-        return true;
-    }
-
-    public bool MoveTR()
-    {
-        isoTransform.Translate(new Vector3(1, 0, 0));
-        X++;
-
-        if (generator.GetMapLayout(X, Z) != SoftwareLevelGenerator.Layout.EMPTY)
-        {
-            Debug.Log("COLLIDE");
-            isoTransform.Translate(new Vector3(-1, 0, 0));
-            X--;
-            Debug.Log("To: x: " + X + " z: " + Z);
-            return false;
-        }
-
-        Debug.Log("To: x: " + X + " z: " + Z);
-        return true;
-    }
-
-    public bool PickUpItem(Direction direction)
-    {
-        if ((hasElement) || (carrying != null))
-        {
             return false;
         }
         else
         {
+            // The operation is valid
+            X += dx;
+            Z += dz;
+
+            destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
+            Shift(currentPos, destPos);
+            return true;
+        }
+    }
+
+
+
+    public bool PickUpItem(Direction direction)
+    {
+        if (!hasElement || (carrying == null))
+        {
+            // Initialise required flags
             var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
+            int dx = 0;
+            int dz = 0;
+
+            // Check the direction of operation and set relevant flag
             switch (direction)
             {
                 case Direction.TopRight:
-                    if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT)
-                    {
-                        carrying = generator.GetObject(X + 1, Z);
-                        generator.SetMapLayout(X + 1, Z, SoftwareLevelGenerator.Layout.EMPTY, null);
-                        hasElement = true;
-                        this.GetComponent<SpriteRenderer>().sprite = sprite;
-                        return true;
-                    }
+                    dx = 1;
                     break;
                 case Direction.BottomRight:
-                    if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.ELEMENT)
-                    {
-                        carrying = generator.GetObject(X, Z - 1);
-                        generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.EMPTY, null);
-                        hasElement = true;
-                        this.GetComponent<SpriteRenderer>().sprite = sprite;
-                        return true;
-                    }
+                    dz = -1;
                     break;
                 case Direction.BottomLeft:
-                    if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.ELEMENT)
-                    {
-                        carrying = generator.GetObject(X - 1, Z);
-                        generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.EMPTY, null);
-                        hasElement = true;
-                        this.GetComponent<SpriteRenderer>().sprite = sprite;
-                        return true;
-                    }
+                    dx = -1;
                     break;
                 case Direction.TopLeft:
-                    if (generator.GetMapLayout(X, Z + 1) == SoftwareLevelGenerator.Layout.ELEMENT)
-                    {
-                        carrying = generator.GetObject(X, Z + 1);
-                        generator.SetMapLayout(X, Z + 1, SoftwareLevelGenerator.Layout.EMPTY, null);
-                        hasElement = true;
-                        this.GetComponent<SpriteRenderer>().sprite = sprite;
-                        return true;
-                    }
+                    dz = 1;
                     break;
+            }
+
+            // Check if the target position has an object to pickup
+            if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
+            {
+                carrying = generator.GetObject(X + dx, Z + dz);
+                generator.SetMapLayout(X + dx, Z + dz, Command.PICKUP, null);
+                hasElement = true;
+                this.GetComponent<SpriteRenderer>().sprite = sprite;
+                return true;
             }
         }
 
@@ -225,67 +158,57 @@ public class RobotController : MonoBehaviour
 
     public bool DropItem(Direction direction)
     {
-        if ((!hasElement) || (carrying == null))
+        if (hasElement || (carrying != null))
         {
-            return false;
-        }
-        else
-        {
+            // Initialise required flags
+            int dx = 0;
+            int dz = 0;
             var sprite = Resources.Load<Sprite>(NO_ELEMENT);
+
+            // Check the direction of operation and set relevant flag
             switch (direction)
             {
                 case Direction.TopRight:
-                    if (generator.GetMapLayout(X + 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
-                    {
-                        generator.SetMapLayout(X + 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying = null;
-                        hasElement = false;
-                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
-                        renderer.sprite = sprite;
-                        return true;
-                    }
+                    dx = 1;
                     break;
                 case Direction.BottomRight:
-                    if (generator.GetMapLayout(X, Z - 1) == SoftwareLevelGenerator.Layout.EMPTY)
-                    {
-                        generator.SetMapLayout(X, Z - 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying = null;
-                        hasElement = false;
-                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
-                        renderer.sprite = sprite;
-                        return true;
-                    }
+                    dz = -1;
                     break;
                 case Direction.BottomLeft:
-                    if (generator.GetMapLayout(X - 1, Z) == SoftwareLevelGenerator.Layout.EMPTY)
-                    {
-                        generator.SetMapLayout(X - 1, Z, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying = null;
-                        hasElement = false;
-                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
-                        renderer.sprite = sprite;
-                        return true;
-                    }
+                    dx = -1;
                     break;
                 case Direction.TopLeft:
-                    if (generator.GetMapLayout(X, Z + 1) == SoftwareLevelGenerator.Layout.EMPTY)
-                    {
-                        generator.SetMapLayout(X, Z + 1, SoftwareLevelGenerator.Layout.ELEMENT, carrying);
-                        carrying = null;
-                        hasElement = false;
-                        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
-                        renderer.sprite = sprite;
-                        return true;
-                    }
+                    dz = 1;
                     break;
             }
+
+            // Check if the target position is empty for dropping the object
+            if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.EMPTY)
+            {
+                generator.SetMapLayout(X + dx, Z + dz, Command.DROP, carrying);
+                carrying = null;
+                hasElement = false;
+                SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+                renderer.sprite = sprite;
+                return true;
+            }
         }
+
         return false;
     }
 
-
-    public void debug()
+    // Animation for moving the robot
+    private void Shift(Vector3 from, Vector3 to)
     {
-        generator.PrintMap();
+        timePassed = 0f;
+        maxTimePassed = Vector3.Distance(from, to) / speed;
+        this.from = from;
+        this.to = to;
     }
+
+    // Used for debugging
+    //public void debug()
+    //{
+    //    generator.PrintMap();
+    //}
 }
