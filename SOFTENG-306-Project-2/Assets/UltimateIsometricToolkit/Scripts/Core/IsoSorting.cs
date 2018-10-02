@@ -53,21 +53,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
             }
         }
 
-        //Singleton access
-        public static IsoSorting Instance
-        {
-            get
-            {
-                //do NOT use ?? operator here
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<IsoSorting>();
-                }
-
-                return _instance;
-            }
-        }
-
         [ExposeProperty]
         public Isometric.Projection Projection
         {

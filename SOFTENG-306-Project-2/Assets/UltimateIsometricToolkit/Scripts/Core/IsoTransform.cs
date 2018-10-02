@@ -132,7 +132,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
             {
                 if (!_isoSorting && gameObject.activeInHierarchy)
                 {
-                    _isoSorting = IsoSorting.Instance;
+                    _isoSorting = FindObjectOfType<IsoSorting>();
                 }
 
                 return _isoSorting;
