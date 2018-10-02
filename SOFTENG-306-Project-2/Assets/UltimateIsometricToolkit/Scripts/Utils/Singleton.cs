@@ -50,7 +50,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                         singleton.name = "(singleton) " + typeof(T);
                         singleton.hideFlags = HideFlags.None;
 
-                        //DontDestroyOnLoad(singleton);
+                        DontDestroyOnLoad(singleton);
 
                         Debug.Log("[Singleton] An instance of " + typeof(T) +
                                   " is needed in the scene, so '" + singleton +
