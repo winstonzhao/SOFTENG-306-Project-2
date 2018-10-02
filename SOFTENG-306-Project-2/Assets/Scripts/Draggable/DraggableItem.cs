@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
 
 public class DraggableItem : Draggable
@@ -90,6 +91,7 @@ public class DraggableItem : Draggable
         if (!mouseInside) return;
         dragging = true;
         moving = false;
+        GetComponent<SpriteRenderer>().sortingOrder = 1;
         Vector3 mousePos = Input.mousePosition;
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
         prevMousePos = mousePosWorld;
@@ -166,11 +168,12 @@ public class DraggableItem : Draggable
     }
 
 
-    void MoveTo(Vector3 newPos)
+   public void MoveTo(Vector3 newPos)
     {
         if (dropZone == null) return;
 
         moving = true;
         target = newPos;
+        GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
 }

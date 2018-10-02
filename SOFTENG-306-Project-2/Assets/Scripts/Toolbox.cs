@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using Multiplayer;
 using UserInterface;
 
@@ -18,8 +17,8 @@ public class Toolbox : Singleton<Toolbox>
         get { return MultiplayerController.Instance; }
     }
 
-    public ChatController ChatController
+    public Multiplayer.ChatController ChatController
     {
-        get { return ChatController.Instance; }
+        get { return Multiplayer.ChatController.Instance; }
     }
 }
