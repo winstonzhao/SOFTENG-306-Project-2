@@ -284,6 +284,11 @@ public class CivilVehicleController : MonoBehaviour {
         tutorialSlideNumber--;
         ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
     }
+
+    public void CloseDialog()
+    {
+        Dialog.enabled = !Dialog.enabled;
+    }
     
     
     /**
