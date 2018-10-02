@@ -34,8 +34,8 @@ public class CivilVehicleController : MonoBehaviour {
     private float currCountdownValueTenthSeconds;
     private float lastClickTime = 0;
     private float catchTime = 0.2f;
-    
 
+    public bool ShowTutorial = false;
     private const int TUTORIAL_SLIDE_COUNT = 8; 
     private int tutorialSlideNumber;
 
@@ -48,6 +48,11 @@ public class CivilVehicleController : MonoBehaviour {
 
         budgetArea = GameObject.Find("Budget").GetComponent<TextMeshProUGUI>();
         budgetArea.SetText("$" + Budget);
+
+        if (ShowTutorial)
+        {
+            StartTutorial();
+        }
     }
 
     void Update()
