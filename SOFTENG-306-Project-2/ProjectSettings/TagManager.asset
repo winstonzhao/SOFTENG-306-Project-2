@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Block1
+  - Block2
+  - LeftTile
+  - RightTile
+  - Tile
+  - Light
+  - Circuit
+  - EndOfLevel
+  - Alien_EOL
   layers:
   - Default
   - TransparentFX
@@ -13,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - FirstUserLayer
   - 
   - 
   - 
@@ -38,11 +47,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: clouds
+    uniqueID: 1415594643
+    locked: 0
   - name: BackGround
     uniqueID: 1586300781
     locked: 0
   - name: Ground
     uniqueID: 1238455367
+    locked: 0
+  - name: Gate
+    uniqueID: 2413584727
+    locked: 0
+  - name: Battery
+    uniqueID: 677227879
     locked: 0
   - name: Default
     uniqueID: 0
