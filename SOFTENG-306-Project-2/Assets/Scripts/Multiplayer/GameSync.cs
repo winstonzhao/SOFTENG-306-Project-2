@@ -6,7 +6,7 @@ namespace Multiplayer
     [Serializable]
     public class GameSync
     {
-        public int iteration;
+        public int lastChatMessageId;
 
         public List<Player> players;
     }
