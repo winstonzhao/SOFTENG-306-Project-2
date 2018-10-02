@@ -27,7 +27,7 @@ namespace Instructions
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/JumpTargetUI");
             var gameObj = Instantiate(prefab);
 
-            gameObj.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform, false);
+            gameObj.GetComponent<RectTransform>().SetParent(GetComponentInParent<Canvas>().transform, false);
 
             jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
             jumpTarget.transform.position = transform.position;

@@ -218,7 +218,8 @@ public class DraggableList : GenericDraggableList, IDropZone
     {
         if (CopyOnDrag)
         {
-            var itemClone = Instantiate(item);
+            var itemClone = Instantiate(item, item.transform.parent);
+//            itemClone.transform.SetParent(item.transform.parent, false);
             item.transform.SetAsLastSibling();
             itemClone.transform.SetAsLastSibling();
             listItems.Insert(listItems.IndexOf(item), itemClone);

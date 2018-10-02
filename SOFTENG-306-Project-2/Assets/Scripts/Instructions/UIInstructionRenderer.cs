@@ -22,6 +22,8 @@ namespace Instructions
 
         public float spacing = 2;
 
+        private bool shouldUpdate = false;
+
         public override bool IsEnabled
         {
             get { return image.enabled; }
@@ -47,9 +49,15 @@ namespace Instructions
 
         private void Start()
         {
-            var canvas = FindObjectOfType<Canvas>();
-            GetComponent<RectTransform>().SetParent(canvas.transform, false);
             Render();
+        }
+
+        private void Update()
+        {
+            if (shouldUpdate)
+            {
+                UpdateSize();
+            }
         }
 
         private Text CreateTextObject(InstructionComponent component, string name = "text")
@@ -88,6 +96,12 @@ namespace Instructions
 
         private void UpdateSize()
         {
+            if (GetComponentInParent<Canvas>() == null)
+            {
+                shouldUpdate = true;
+                return;
+            }
+
             var components = instruction.InstructionComponents;
 
             for (var i = 0; i < components.Count; i++)
@@ -117,7 +131,9 @@ namespace Instructions
             boxCollider.size = new Vector2(width, height);
             rectTransform.sizeDelta = new Vector2(width, height);
             GetComponent<Draggable>().Size = new Vector2(width, height) *
-                                             FindObjectOfType<Canvas>().GetComponent<RectTransform>().lossyScale.x;
+                                             GetComponentInParent<Canvas>().GetComponent<RectTransform>().lossyScale.x;
+
+            shouldUpdate = false;
         }
 
         private void DestroyChildren()
