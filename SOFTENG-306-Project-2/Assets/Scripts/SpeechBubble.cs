@@ -38,7 +38,8 @@ public class SpeechBubble : MonoBehaviour
     {
         if (Follow == null)
         {
-            Follow = transform.parent.GetComponent<IsoTransform>();
+            var parent = transform.parent;
+            Follow = parent == null ? null : parent.GetComponent<IsoTransform>();
         }
 
         ThisTransform = GetComponent<IsoTransform>();
