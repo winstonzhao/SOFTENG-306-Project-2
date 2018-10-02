@@ -11,6 +11,7 @@ using Debug = UnityEngine.Debug;
 using UnityEngine.SceneManagement;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
+using UnityEngine.Analytics;
 
 public class CivilVehicleController : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class CivilVehicleController : MonoBehaviour {
     public List<AstarAgent> AstarAgents = new List<AstarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
     public Canvas Dialog;
+    public Canvas Tutorial;
+    
     public int TimeLimit = 10;
     public int Budget = 1000;
     public string NextLevelName;
@@ -27,6 +30,9 @@ public class CivilVehicleController : MonoBehaviour {
     private bool timerNotStopped = true;
     private TextMeshProUGUI budgetArea;
     private float currCountdownValueTenthSeconds;
+
+    private const int TUTORIAL_SLIDE_COUNT = 8; 
+    private int tutorialSlideNumber;
 
     private void Awake()
 
@@ -92,15 +98,15 @@ public class CivilVehicleController : MonoBehaviour {
             // set parameters in the result info
             SetPlayerName(PlayerName);
             SetTimeAndAmount((int) Math.Round(TimeLimit - currCountdownValueTenthSeconds / 10), Budget);
-            ToggleDialogDisplay("BadPanel", false);
-            ToggleDialogDisplay("GoodPanel", true);
+            ToggleDialogDisplay(Dialog, "BadPanel", false);
+            ToggleDialogDisplay(Dialog, "GoodPanel", true);
         }
         else // Lose
         {
             Debug.Log("Lose:(");
             SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination withing the time limit.");
-            ToggleDialogDisplay("GoodPanel", false);
-            ToggleDialogDisplay("BadPanel", true);
+            ToggleDialogDisplay(Dialog, "GoodPanel", false);
+            ToggleDialogDisplay(Dialog, "BadPanel", true);
         }
         timerNotStopped = false;
         Dialog.enabled = !Dialog.enabled;
@@ -135,10 +141,13 @@ public class CivilVehicleController : MonoBehaviour {
         return true;
     }
 
-    private void ToggleDialogDisplay(string groupName, bool show)
+    private void ToggleDialogDisplay(Canvas canvas, string groupName, bool show)
     {
-        GameObject group = GameObject.Find(groupName).gameObject;
-        group.SetActive(show);
+        GameObject group = FindObject(canvas.gameObject, groupName).gameObject;
+        if (group != null)
+        {
+            group.SetActive(show);
+        }
     }
 
     private void SetTimeAndAmount(int timeInSeconds, int amount)
@@ -220,4 +229,52 @@ public class CivilVehicleController : MonoBehaviour {
         Debug.Log("Next level " + NextLevelName);
         SceneManager.LoadScene(NextLevelName);
     }
+
+    public void StartTutorial()
+    {
+        Tutorial.gameObject.SetActive(true);
+        tutorialSlideNumber = 1;
+        for (int i = 1; i < TUTORIAL_SLIDE_COUNT + 1; i++)
+        {
+            ToggleDialogDisplay(Tutorial, "Slide" + i, false);
+        }
+        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
+
+    }
+
+    public void StopTutorial()
+    {
+        Tutorial.gameObject.SetActive(false);
+    }
+
+    public void NextTutorialSlide()
+    {
+        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
+        tutorialSlideNumber++;
+        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
+        
+    }
+    
+    public void PreviousTutorialSlide()
+    {
+        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
+        tutorialSlideNumber--;
+        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
+    }
+    
+    
+    /**
+     * Find an object in a parent object including parent objects
+     */
+    public GameObject FindObject(GameObject parent, string name)
+    {
+        Transform[] trs= parent.GetComponentsInChildren<Transform>(true);
+        foreach(Transform t in trs){
+            if(t.name == name){
+                return t.gameObject;
+            }
+        }
+        return null;
+    }
+
 }
