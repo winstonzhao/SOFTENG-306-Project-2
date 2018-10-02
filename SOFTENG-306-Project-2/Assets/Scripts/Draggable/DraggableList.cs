@@ -4,6 +4,7 @@ using UnityEngine;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.ObjectModel;
+using UnityEditor;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -218,6 +219,8 @@ public class DraggableList : GenericDraggableList, IDropZone
         if (CopyOnDrag)
         {
             var itemClone = Instantiate(item);
+            item.transform.SetAsLastSibling();
+            itemClone.transform.SetAsLastSibling();
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
             layout();

@@ -33,7 +33,7 @@ namespace Instructions
         public abstract bool Editable { get; set; }
 
         // Called once each time the instruction starts to be executed
-        public abstract void Execute(Instructable target, InstructionExecutor executor);
+        public abstract void Execute(RobotController target, InstructionExecutor executor);
 
         // Called every update while the instruction is the current executing instruction
         // (Move to the next instruction with executor.ExecuteNextInstruction() when done)

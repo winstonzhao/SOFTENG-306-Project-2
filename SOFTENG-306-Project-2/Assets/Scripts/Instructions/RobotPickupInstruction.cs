@@ -9,7 +9,7 @@ namespace Instructions
 
         private Directions moveDirection = Directions.Up;
 
-        public RobotController robot;
+        private RobotController robot;
 
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
@@ -48,14 +48,15 @@ namespace Instructions
             instructionExecutor.ExecuteNextInstruction();
         }
 
-        public override void Execute(Instructable target, InstructionExecutor executor)
+        public override void Execute(RobotController target, InstructionExecutor executor)
         {
             instructionExecutor = executor;
+            robot = target;
             var didMove = false;
 
             didMove = robot.PickUpItem((RobotController.Direction) moveDirection);
 
-            if (!didMove) executor.Stop();
+            if (!didMove) throw new InstructionException();
         }
     }
 }

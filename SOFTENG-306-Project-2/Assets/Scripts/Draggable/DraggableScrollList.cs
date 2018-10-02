@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
 {
 
     public List<Draggable> listItems = new List<Draggable>();
+    public Canvas parentCanvas;
 
     public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
@@ -42,40 +44,37 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     public Vector2 MinSize = new Vector2(1, 1);
 
     private BoxCollider2D boxCollider;
+    private RectTransform rectTransform;
 
     // Use this for initialization
     void Start()
     {
-        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        rectTransform = GetComponent<RectTransform>();
         var rigidbody = gameObject.GetComponent<Rigidbody2D>();
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
         boxCollider.isTrigger = true;
 
-        layout();
+        Layout();
 
         foreach (var draggable in listItems)
         {
             draggable.transform.position = draggable.HomePos;
             draggable.SetDropZone(this);
         }
-        prevPos = GetComponent<RectTransform>().localPosition;
+        prevPos = rectTransform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var rectTransform = GetComponent<RectTransform>();
-        // if (rectTransform.localPosition != prevPos)
-        // {
-        //     layout();
-        // }
-
-        prevPos = rectTransform.localPosition;
     }
 
-    public void layout()
+    public void Layout()
     {
         if (boxCollider == null) return;
+
+        var scale = rectTransform.lossyScale.x;
 
         float i = itemHeight/2;
         float maxWidth = 0;
@@ -88,7 +87,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
                 continue;
             }
 
-            if (itemHeight == 0)
+            if (Math.Abs(itemHeight) < 0.01f)
             {
                 itemHeight = draggable.Size.y;
                 i = itemHeight / 2;
@@ -104,13 +103,14 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
 
         var width = Mathf.Max(MinSize.x, maxWidth);
         var height = Mathf.Max(MinSize.y, i - itemHeight);
-        height = Mathf.Max(maxHeight * GetComponent<RectTransform>().lossyScale.x, height);
-        var colliderSize = new Vector2(width, height) * 1/GetComponent<RectTransform>().lossyScale.x;
+        height = Mathf.Max(maxHeight * scale, height);
+        var colliderSize = new Vector2(width, height) * 1 / scale;
 
         boxCollider.size = colliderSize;
         boxCollider.offset = new Vector2(0, colliderSize.y / 2);
-        GetComponent<RectTransform>().sizeDelta = colliderSize;
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+        rectTransform.sizeDelta = colliderSize;
+        rectTransform.anchoredPosition = new Vector2(0, 0);
 
         if (width > MinSize.x) transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(colliderSize.x, transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta.y);
     }
@@ -119,7 +119,11 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     {
         if (!rearrangeable) return;
 
-        item.GetComponent<RectTransform>().SetParent(FindObjectOfType<Canvas>().transform);
+        if (item.transform.parent == transform.parent)
+        {
+            item.GetComponent<RectTransform>().SetParent(parentCanvas.transform);
+            item.transform.SetAsLastSibling();
+        }
 
         int i = listItems.IndexOf(item);
         int indexDiff = 0;
@@ -155,27 +159,27 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         }
         item.GetComponent<RectTransform>().SetParent(transform.parent);
         listItems.Insert(index, item);
-        layout();
+        Layout();
         return true;
     }
 
     public void RemoveFromList(Draggable item)
     {
         listItems.Remove(item);
-        layout();
+        Layout();
     }
 
     public void AddDummyToList(int index)
     {
         if (!rearrangeable) return;
         listItems.Insert(index, null);
-        layout();
+        Layout();
     }
 
     public void RemoveDummies()
     {
         listItems = listItems.Where(i => i != null).ToList();
-        layout();
+        Layout();
     }
 
     public int IndexOf(Draggable item)
@@ -213,15 +217,15 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
             var itemClone = Instantiate(item);
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
-            layout();
-            itemClone.GetComponent<DraggableItem>().SetDropZone(this);
+            Layout();
+            itemClone.SetDropZone(this);
         }
     }
 
     public void OnItemRemove(Draggable item)
     {
         listItems.Remove(item);
-        layout();
+        Layout();
     }
 
     public void OnDragFinish(Draggable item)
@@ -233,7 +237,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         else
         {
             item.GetComponent<RectTransform>().SetParent(transform.parent);
-            layout();
+            Layout();
         }
     }
 

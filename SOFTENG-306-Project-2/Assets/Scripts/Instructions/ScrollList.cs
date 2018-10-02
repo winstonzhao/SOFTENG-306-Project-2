@@ -16,7 +16,7 @@ public class ScrollList : MonoBehaviour
         scrollList.MinSize =
             new Vector2(GetComponent<RectTransform>().sizeDelta.x * GetComponent<RectTransform>().lossyScale.x,
                 scrollList.MinSize.y);
-        scrollList.layout();
+        scrollList.Layout();
         scrollbar.onValueChanged.AddListener(value =>
         {
             var height = scrollList.GetComponent<RectTransform>().sizeDelta.y;
@@ -38,7 +38,7 @@ public class ScrollList : MonoBehaviour
         if (height > scrollList.maxHeight && !scrollbar.gameObject.activeInHierarchy)
         {
             scrollbar.gameObject.SetActive(true);
-            scrollList.layout();
+            scrollList.Layout();
         }
         else if (height <= scrollList.maxHeight && scrollbar.gameObject.activeInHierarchy)
         {
@@ -47,7 +47,7 @@ public class ScrollList : MonoBehaviour
             scrollbar.gameObject.SetActive(false);
             childrenRectTransform.anchoredPosition = new Vector2(0, 0);
             scrollbar.value = 0;
-            scrollList.layout();
+            scrollList.Layout();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Instructions
         private Vector3 start;
 
         private float t;
-        private Instructable target;
+        private MonoBehaviour target;
 
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
@@ -77,7 +77,7 @@ namespace Instructions
             }
         }
 
-        public override void Execute(Instructable target, InstructionExecutor executor)
+        public override void Execute(RobotController target, InstructionExecutor executor)
         {
             instructionExecutor = executor;
             this.target = target;

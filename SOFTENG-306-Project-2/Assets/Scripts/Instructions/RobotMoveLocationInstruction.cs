@@ -14,7 +14,7 @@ namespace Instructions
         private InstructionRenderer instructionRenderer;
         private bool mouseDebounce;
 
-        public RobotController robot;
+        private RobotController robot;
 
         private IsoTransform selectedObj;
 
@@ -102,12 +102,13 @@ namespace Instructions
             instructionExecutor.ExecuteNextInstruction();
         }
 
-        public override void Execute(Instructable target, InstructionExecutor executor)
+        public override void Execute(RobotController target, InstructionExecutor executor)
         {
             instructionExecutor = executor;
+            robot = target;
             var didMove = false;
 
-            if (!didMove) executor.Stop();
+            if (!didMove) throw new InstructionException();
         }
     }
 }

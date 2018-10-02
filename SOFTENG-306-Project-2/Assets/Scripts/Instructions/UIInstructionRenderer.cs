@@ -117,7 +117,7 @@ namespace Instructions
             boxCollider.size = new Vector2(width, height);
             rectTransform.sizeDelta = new Vector2(width, height);
             GetComponent<Draggable>().Size = new Vector2(width, height) *
-                                             FindObjectOfType<Canvas>().GetComponent<RectTransform>().localScale.x;
+                                             FindObjectOfType<Canvas>().GetComponent<RectTransform>().lossyScale.x;
         }
 
         private void DestroyChildren()

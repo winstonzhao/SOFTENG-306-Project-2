@@ -9,7 +9,7 @@ namespace Instructions
     {
         private InstructionObj currentInstruction;
 
-        public GenericDraggableList draggableList;
+        private GenericDraggableList draggableList;
 
         private bool executeNext;
 
@@ -26,7 +26,7 @@ namespace Instructions
         private Color prevBackground;
         public ClickEventEmitter stopButton;
 
-        public Instructable target;
+        public RobotController target;
 
         private void Start()
         {
@@ -81,7 +81,15 @@ namespace Instructions
             prevBackground = currentInstruction.Renderer.BackgroundColor;
             currentInstruction.Renderer.BackgroundColor = new Color(0, 1, 0.0f);
 
-            currentInstruction.Instruction.Execute(target, this);
+            try
+            {
+                currentInstruction.Instruction.Execute(target, this);
+            }
+            catch (InstructionException e)
+            {
+                FailExecution(e.Message);
+            }
+
             instructionIndex++;
             executeNext = false;
         }
@@ -97,7 +105,9 @@ namespace Instructions
 
         public void FailExecution(string message)
         {
+            Stop();
             Debug.Log("Instruction Exception: " + message);
+            stopButton.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
         }
 
         private void Update()

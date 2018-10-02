@@ -42,7 +42,7 @@ namespace Instructions
             draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
         }
 
-        public override void Execute(Instructable target, InstructionExecutor executor)
+        public override void Execute(RobotController target, InstructionExecutor executor)
         {
             instructionExecutor = executor;
         }
