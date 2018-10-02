@@ -8,18 +8,20 @@ using System.Collections.ObjectModel;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 
-public class DraggableList : MonoBehaviour, IDropZone
+public class DraggableList : GenericDraggableList, IDropZone
 {
 
     public List<Draggable> listItems = new List<Draggable>();
 
-    public IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
+    public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
     [SerializeField]
     private bool copyOnDrag = true;
 
     [SerializeField]
     private bool rearrangeable = true;
+
+    private float itemHeight = 0f;
 
     private List<System.Type> allowedItems = new List<System.Type>();
     public List<System.Type> AllowedItems
@@ -89,30 +91,37 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     void layout()
     {
-        float i = -layoutSpacing;
+        float i = itemHeight/2;
         float maxWidth = 0;
-
-        var itemHeight = 0.0f;
 
         foreach (var draggable in listItems)
         {
-            i += layoutSpacing;
+            if (draggable == null) 
+            {
+                i += itemHeight + layoutSpacing;
+                continue;
+            }
 
-            if (draggable == null) continue;
+            if (itemHeight == 0)
+            {
+                itemHeight = draggable.Size.y;
+                i = itemHeight / 2;
+            }
 
             // Offset by .1f in the z so the child objects will handle mouse clicks before the list
             draggable.HomePos = new Vector3(transform.position.x, transform.position.y + i, transform.position.z - .1f);
 
             maxWidth = Mathf.Max(draggable.Size.x, maxWidth);
+            i += draggable.Size.y + layoutSpacing;
             itemHeight = draggable.Size.y;
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i + itemHeight);
+        var height = Mathf.Max(MinSize.y, i - itemHeight);
         var colliderSize = new Vector2(width, height);
 
         boxCollider.size = colliderSize;
-        boxCollider.offset = new Vector2(0, i / 2);
+        boxCollider.offset = new Vector2(0, colliderSize.y / 2);
     }
 
     public void UpdateObject(Draggable item)
@@ -212,7 +221,7 @@ public class DraggableList : MonoBehaviour, IDropZone
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
             layout();
-            itemClone.GetComponent<DraggableItem>().SetDropZone(this);
+            itemClone.GetComponent<Draggable>().SetDropZone(this);
         }
     }
 

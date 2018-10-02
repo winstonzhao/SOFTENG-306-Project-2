@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
+using System;
 
 public class DraggableItem : Draggable
 {
@@ -10,7 +11,8 @@ public class DraggableItem : Draggable
     private bool dragging = false;
     private bool moving = false;
 
-    private IDropZone dropZone;
+    [NonSerialized]
+    public IDropZone dropZone;
 
     private List<IDropZone> newDropZones = new List<IDropZone>();
 
@@ -23,6 +25,9 @@ public class DraggableItem : Draggable
     public delegate void OnDropZoneChangedDelegate(IDropZone dropZone);
 
     public OnDropZoneChangedDelegate OnDropZoneChanged;
+
+    private float seconds = 0.3f;
+    private float t = 0;
 
     private Vector3 homePos;
     public override Vector3 HomePos
@@ -95,13 +100,16 @@ public class DraggableItem : Draggable
 
         if (moving)
         {
-            transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            //GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            
-            if (Vector3.Distance(transform.position, target) < 0.01f)
+            var tdiff = t;
+            t += Time.deltaTime / seconds;
+            if (t >= 1)
             {
                 moving = false;
+                t = 1;
             }
+            tdiff = t - tdiff;
+
+            transform.position += tdiff * target;
         }
     }
 
@@ -222,8 +230,9 @@ public class DraggableItem : Draggable
     {
         if (dropZone == null) return;
 
+        t = 0;
         moving = true;
-        target = newPos;
+        target = newPos - transform.position;
         var spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) spriteRenderer.sortingOrder = 0;
     }

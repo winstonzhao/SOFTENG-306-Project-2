@@ -25,7 +25,7 @@ namespace Instructions
         private int instructionIndex;
         private InstructionObj currentInstruction;
 
-        private DraggableList draggableList;
+        public GenericDraggableList draggableList;
 
         private Color prevBackground;
 
@@ -37,7 +37,7 @@ namespace Instructions
 
         void Start()
         {
-            draggableList = GetComponent<DraggableList>();
+            draggableList = GetComponent<GenericDraggableList>();
             // draggableList.AllowedItems = new List<System.Type>
             // {
             //     typeof(Instruction)

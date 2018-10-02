@@ -8,19 +8,21 @@ using System.Collections.ObjectModel;
 // [RequireComponent(typeof(Rigidbody2D))]
 // [RequireComponent(typeof(BoxCollider2D))]
 
-public class DraggableScrollList : MonoBehaviour, IDropZone
+public class DraggableScrollList : GenericDraggableList, IDropZone
 {
 
     public List<Draggable> listItems = new List<Draggable>();
 
-    public IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
+    public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
     public bool copyOnDrag = true;
     public bool rearrangeable = true;
 
-    public int maxHeight = 100;
+    public float maxHeight = 100;
 
     private Vector3 prevPos;
+
+    private float itemHeight = 0.0f;
 
     private List<System.Type> allowedItems = new List<System.Type>();
     public List<System.Type> AllowedItems
@@ -71,40 +73,44 @@ public class DraggableScrollList : MonoBehaviour, IDropZone
         prevPos = rectTransform.localPosition;
     }
 
-    void layout()
+    public void layout()
     {
-        float i = -layoutSpacing;
+        float i = itemHeight/2;
         float maxWidth = 0;
-
-        var itemHeight = 0.0f;
 
         foreach (var draggable in listItems)
         {
-            i += layoutSpacing;
+            if (draggable == null)
+            {
+                i += itemHeight + layoutSpacing;
+                continue;
+            }
 
-            if (draggable == null) continue;
+            if (itemHeight == 0)
+            {
+                itemHeight = draggable.Size.y;
+                i = itemHeight / 2;
+            }
 
             // Offset by .1f in the z so the child objects will handle mouse clicks before the list
             draggable.HomePos = new Vector3(transform.position.x, transform.position.y + i, transform.position.z - .1f);
 
             maxWidth = Mathf.Max(draggable.Size.x, maxWidth);
+            i += draggable.Size.y + layoutSpacing;
             itemHeight = draggable.Size.y;
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i + itemHeight);
+        var height = Mathf.Max(MinSize.y, i - itemHeight);
+        height = Mathf.Max(maxHeight * GetComponent<RectTransform>().lossyScale.x, height);
         var colliderSize = new Vector2(width, height) * 1/GetComponent<RectTransform>().lossyScale.x;
 
-        var parentHeight = Mathf.Min(height * 1/GetComponent<RectTransform>().lossyScale.x, maxHeight);
-
         boxCollider.size = colliderSize;
-        boxCollider.offset = new Vector2(0, (height - itemHeight) / 2) * 1/GetComponent<RectTransform>().lossyScale.x;
+        boxCollider.offset = new Vector2(0, colliderSize.y / 2);
         GetComponent<RectTransform>().sizeDelta = colliderSize;
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -parentHeight / 2 + (itemHeight / 2 * 1/GetComponent<RectTransform>().lossyScale.x));
+        GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
-        var parentTransform = transform.parent.parent.GetComponent<RectTransform>();
-        parentTransform.sizeDelta = new Vector2(colliderSize.x, parentHeight);
-        parentTransform.anchoredPosition = new Vector3(0, parentHeight/2, 0);
+        if (width > MinSize.x) transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(colliderSize.x, transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta.y);
     }
 
     public void UpdateObject(Draggable item)
@@ -145,9 +151,8 @@ public class DraggableScrollList : MonoBehaviour, IDropZone
             Destroy(item.gameObject);
             return false;
         }
-
-        listItems.Insert(index, item);
         item.GetComponent<RectTransform>().SetParent(transform.parent);
+        listItems.Insert(index, item);
         layout();
         return true;
     }
