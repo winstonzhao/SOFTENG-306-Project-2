@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 573299214}
   - component: {fileID: 573299213}
   - component: {fileID: 573299212}
+  - component: {fileID: 573299215}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -345,16 +346,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114192120953901298, guid: f0045fdec0bf14c369fd82bfc06312bc,
-          type: 2}
-        m_MethodName: ChangeScene
-        m_Mode: 5
+      - m_Target: {fileID: 573299215}
+        m_MethodName: Finish
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Engineering Leech
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -393,6 +393,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 573299210}
   m_CullTransparentMesh: 0
+--- !u!114 &573299215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 573299210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e859a6cbef62f6146871b962c05b073d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &798511659
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,8 +894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3ebd2ce0e1494f981c7e099ae335ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1802210496714480, guid: f0045fdec0bf14c369fd82bfc06312bc,
-    type: 2}
 --- !u!81 &1559856624
 AudioListener:
   m_ObjectHideFlags: 0

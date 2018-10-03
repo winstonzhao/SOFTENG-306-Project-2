@@ -57,5 +57,7 @@ public class SoftwareEndScreen : MonoBehaviour
         };
 
         Toolbox.Instance.Hiscores.Add(score);
+
+        Toolbox.Instance.GameManager.ChangeScene("Engineering Leech");
     }
 }
