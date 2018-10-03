@@ -28,8 +28,10 @@ namespace Instructions
 
     public abstract class Instruction : MonoBehaviour
     {
+        // List of components to be rendered as part of this instruction
         public abstract ReadOnlyCollection<InstructionComponent> InstructionComponents { get; }
 
+        // Toggle if this instruction should allow changes to it
         public abstract bool Editable { get; set; }
 
         // Called once each time the instruction starts to be executed

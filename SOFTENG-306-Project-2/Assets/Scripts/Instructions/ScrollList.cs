@@ -19,6 +19,7 @@ public class ScrollList : MonoBehaviour
         scrollList.Layout();
         scrollbar.onValueChanged.AddListener(value =>
         {
+            // Scroll the content child on scrollbar change
             var height = scrollList.GetComponent<RectTransform>().sizeDelta.y;
             height -= scrollList.maxHeight;
             if (height < 0) height = 0;
@@ -35,13 +36,16 @@ public class ScrollList : MonoBehaviour
     {
         var height = GetComponentInChildren<DraggableScrollList>().GetComponent<RectTransform>().sizeDelta.y;
         scrollbar.size = scrollList.maxHeight / height;
+
         if (height > scrollList.maxHeight && !scrollbar.gameObject.activeInHierarchy)
         {
+            // Child height will not fit, enable the scrollbar
             scrollbar.gameObject.SetActive(true);
             scrollList.Layout();
         }
         else if (height <= scrollList.maxHeight && scrollbar.gameObject.activeInHierarchy)
         {
+            // Child height will fit, disable the scrollbar and reset position
             var childrenRectTransform =
                 GetComponentInChildren<Mask>().transform.GetChild(0).GetComponent<RectTransform>();
             scrollbar.gameObject.SetActive(false);

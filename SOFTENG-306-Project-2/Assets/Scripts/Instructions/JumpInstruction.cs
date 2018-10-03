@@ -24,6 +24,7 @@ namespace Instructions
 
         private void Start()
         {
+            // Load the End Jump component
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/JumpTargetUI");
             var gameObj = Instantiate(prefab);
 
