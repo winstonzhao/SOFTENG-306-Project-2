@@ -10,10 +10,12 @@ namespace Game.Hiscores.UserInterface
     public class HiscoreView : MonoBehaviour
     {
         private GameObject ScorePrefab;
+        private GameObject TextPrefab;
 
         private void Start()
         {
             ScorePrefab = Resources.Load<GameObject>("Prefabs/Hiscores/Score");
+            TextPrefab = Resources.Load<GameObject>("Prefabs/Hiscores/NoScoresText");
 
             var controller = FindObjectOfType<HiscoreController>();
 
@@ -37,6 +39,11 @@ namespace Game.Hiscores.UserInterface
             var scores = Toolbox.Instance.Hiscores.Get(minigame);
 
             var y = 0.0f;
+
+            var newSize = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, scores.Count * 200);
+
+            transform.GetComponent<RectTransform>().sizeDelta = newSize;
+            transform.parent.GetComponent<RectTransform>().sizeDelta = newSize;
 
             foreach (var score in scores)
             {
@@ -62,6 +69,17 @@ namespace Game.Hiscores.UserInterface
 
                 yield return null;
             }
+
+            if (scores.Count == 0)
+            {
+                var view = Instantiate(TextPrefab);
+                view.transform.SetParent(transform);
+                view.transform.localPosition = new Vector3(0, 0, 0);
+                var rectParent = transform.parent.GetComponent<RectTransform>();
+                rectParent.sizeDelta = new Vector2(rectParent.sizeDelta.x, 300);
+            }
+
+
         }
     }
 }
