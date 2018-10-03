@@ -8,6 +8,10 @@ namespace Instructions
     // [RequireComponent(typeof(DraggableList))]
     public class InstructionExecutor : MonoBehaviour
     {
+        private static string PLAY_REGULAR = "green_sliderRight.png";
+        private static string PLAY_RESET = "green_sliderLeft.png";
+        private static Sprite[] SPRITE_SHEET;
+
         private InstructionObj currentInstruction;
 
         private GenericDraggableList draggableList;
@@ -38,6 +42,7 @@ namespace Instructions
 
         private void Start()
         {
+            SPRITE_SHEET = Resources.LoadAll<Sprite>("software_minigame/Sprites/greenSheet");
             draggableList = GetComponent<GenericDraggableList>();
             // draggableList.AllowedItems = new List<System.Type>
             // {
@@ -55,6 +60,17 @@ namespace Instructions
             }
         }
 
+        public Sprite GetSpriteByName(string name)
+        {
+            for (int i = 0; i < SPRITE_SHEET.Length; i++)
+            {
+                if (SPRITE_SHEET[i].name == name)
+                    return SPRITE_SHEET[i];
+            }
+
+            return null;
+        }
+
         public void JumpToInstruction(Instruction instruction)
         {
             instructionIndex = instructions.FindIndex(i => i.Instruction == instruction);
@@ -69,6 +85,7 @@ namespace Instructions
                 target.ResetPos();
                 LevelGenerator.GeneratedLevel(LevelGenerator.currentLevel);
                 reset = true;
+                playButton.GetComponent<Image>().sprite = GetSpriteByName(PLAY_REGULAR);
                 return;
             }
 
@@ -122,6 +139,7 @@ namespace Instructions
 
         public void Stop()
         {
+            playButton.GetComponent<Image>().sprite = GetSpriteByName(PLAY_RESET);
             playing = false;
 
             Text.text = "Stop";

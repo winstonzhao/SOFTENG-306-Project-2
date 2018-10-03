@@ -42,10 +42,10 @@ public class RobotController : MonoBehaviour
     // Enum to represent the direction for executing the particular action
     public enum Direction
     {
-        TopRight = 3,
-        BottomRight = 1,
-        BottomLeft = 2,
-        TopLeft = 0,
+        TopRight = 0,
+        BottomRight = 3,
+        BottomLeft = 1,
+        TopLeft = 2,
     }
 
     // Initialization

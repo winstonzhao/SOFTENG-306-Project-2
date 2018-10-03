@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Instructions
 {
-    public class RobotMoveLocationInstruction : Instruction
+    public class RobotMoveToInstruction : Instruction
     {
         private InstructionComponent component2;
         private InstructionExecutor instructionExecutor;
@@ -23,7 +23,7 @@ namespace Instructions
         private bool executeNext = false;
         private Vector3 targetPos;
 
-        public RobotMoveLocationInstruction()
+        public RobotMoveToInstruction()
         {
             component2 = new InstructionComponent("POS")
             {
@@ -136,6 +136,8 @@ namespace Instructions
             instructionExecutor = executor;
             robot = target;
             executeNext = false;
+
+            if (selectedObj == null) throw new InstructionException();
 
             targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
             var didMove = robot.MoveTo(targetPos);
