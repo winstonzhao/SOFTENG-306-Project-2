@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEditor;
 using UltimateIsometricToolkit.physics;
 
+/// <summary>
+/// An implementation of IDropZone that can only contain a single item
+/// </summary>
 [RequireComponent(typeof(IsoCollider))]
-//[RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZone : MonoBehaviour, IDropZone
 {
 
@@ -18,8 +20,9 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     public void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         var rigidbody = GetComponent<Rigidbody2D>();
-        if (rigidbody == null) 
+        if (rigidbody == null)
         {
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
@@ -42,7 +45,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
             {
                 Debug.Log("new prefeb created");
             }
-            
+
         }
     }
 
@@ -61,15 +64,11 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     {
         spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
         SetDropZoneActive(true);
+        Debug.Log("Dragged away");
     }
 
     public void OnDragFinish(Draggable item)
     {
-        //if (!item.GetComponent<IsoCollider>().GetComponent<Collider>().IsTouching(GetComponent<IsoCollider>()))
-        //{
-        //    // disable if we need the snapback effect
-        //    //item.GetComponent<DraggableItem>().SetDropZone(null);
-        //}
         SetDropZoneActive(false);
 
         GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
@@ -90,13 +89,18 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void OnItemDrag(Draggable item)
     {
-        
+
     }
 
     public void OnItemRemove(Draggable item)
     {
         currentItem = null;
         createPrefeb();
+    }
+
+    public bool CanDrop(Draggable item)
+    {
+        return true;
     }
 
     /*

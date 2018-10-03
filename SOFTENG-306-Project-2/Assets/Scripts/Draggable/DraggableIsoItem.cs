@@ -47,6 +47,8 @@ public class DraggableIsoItem : Draggable
         }
     }
 
+    public override Vector2 Size { get; set; }
+
     // Use this for initialization
     void Start()
     {

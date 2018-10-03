@@ -3,46 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel;
 using System.Linq;
+using System.Collections.ObjectModel;
+using UnityEditor;
 
-public class DraggableList : MonoBehaviour, IDropZone
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+public class DraggableList : GenericDraggableList, IDropZone
 {
 
     public List<Draggable> listItems = new List<Draggable>();
 
-    public SquareResizer mainObject;
+    public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
 
-    public List<string> strings;
+    [SerializeField]
+    private bool copyOnDrag = true;
 
-    public bool CopyOnDrag = true;
+    [SerializeField]
+    private bool rearrangeable = true;
 
-    public bool Rearrangeable = true;
+    private float itemHeight = 0f;
 
-    public int layoutSpacing = 2;
+    private List<System.Type> allowedItems = new List<System.Type>();
+    public List<System.Type> AllowedItems
+    {
+        get
+        {
+            return allowedItems;
+        }
+        set
+        {
+            allowedItems = value;
+        }
+    }
+
+    public bool Rearrangeable
+    {
+        get
+        {
+            return rearrangeable;
+        }
+        set
+        {
+            rearrangeable = value;
+        }
+    }
+
+    public bool CopyOnDrag
+    {
+        get
+        {
+            return copyOnDrag;
+        }
+        set
+        {
+            copyOnDrag = value;
+        }
+    }
+
+    public float layoutSpacing = 2;
+
+    public Vector2 MinSize = new Vector2(1, 1);
 
     private BoxCollider2D boxCollider;
 
     // Use this for initialization
     void Start()
     {
-        boxCollider = gameObject.AddComponent<BoxCollider2D>();
-        var rigidbody = gameObject.AddComponent<Rigidbody2D>();
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        var rigidbody = gameObject.GetComponent<Rigidbody2D>();
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
         boxCollider.isTrigger = true;
 
-        foreach (var text in strings)
-        {
-            var newSprite = Instantiate(mainObject);
-            var draggable = newSprite.gameObject.AddComponent<DraggableItem>();
-            listItems.Add(newSprite.GetComponent<Draggable>());
-
-            newSprite.GetComponentInChildren<TextMesh>().text = text;
-            newSprite.UpdateSize();
-
-            draggable.SetDropZone(this);
-        }
         layout();
 
-        foreach(var draggable in listItems) draggable.transform.position = draggable.HomePos;
+        foreach (var draggable in listItems)
+        {
+            draggable.transform.position = draggable.HomePos;
+            draggable.SetDropZone(this);
+        }
     }
 
     // Update is called once per frame
@@ -53,25 +91,37 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     void layout()
     {
-        int i = -layoutSpacing;
+        float i = itemHeight/2;
         float maxWidth = 0;
 
         foreach (var draggable in listItems)
         {
-            i += layoutSpacing;
+            if (draggable == null)
+            {
+                i += itemHeight + layoutSpacing;
+                continue;
+            }
 
-            if (draggable == null) continue;
+            if (itemHeight == 0)
+            {
+                itemHeight = draggable.Size.y;
+                i = itemHeight / 2;
+            }
 
             // Offset by .1f in the z so the child objects will handle mouse clicks before the list
             draggable.HomePos = new Vector3(transform.position.x, transform.position.y + i, transform.position.z - .1f);
 
-            maxWidth = Mathf.Max(draggable.GetComponent<SquareResizer>().Width, maxWidth);
+            maxWidth = Mathf.Max(draggable.Size.x, maxWidth);
+            i += draggable.Size.y + layoutSpacing;
+            itemHeight = draggable.Size.y;
         }
 
-        var colliderSize = new Vector2(maxWidth, i + 1);
+        var width = Mathf.Max(MinSize.x, maxWidth);
+        var height = Mathf.Max(MinSize.y, i - itemHeight/2 - layoutSpacing);
+        var colliderSize = new Vector2(width, height) * 1/transform.parent.lossyScale.x;
 
         boxCollider.size = colliderSize;
-        boxCollider.offset = new Vector2(0, (i) / 2);
+        boxCollider.offset = new Vector2(0, colliderSize.y / 2);
     }
 
     public void UpdateObject(Draggable item)
@@ -105,7 +155,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public bool AddToList(Draggable item, int index)
     {
-        if (!Rearrangeable)
+        if (!rearrangeable)
         {
             Destroy(item.gameObject);
             return false;
@@ -124,7 +174,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void AddDummyToList(int index)
     {
-        if (!Rearrangeable) return;
+        if (!rearrangeable) return;
         listItems.Insert(index, null);
         layout();
     }
@@ -143,7 +193,7 @@ public class DraggableList : MonoBehaviour, IDropZone
     public void OnDragEnter(Draggable item)
     {
         if (listItems.Contains(item)) return;
-        
+
         AddDummyToList(0);
     }
 
@@ -165,13 +215,16 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-        if (CopyOnDrag) 
+        if (CopyOnDrag)
         {
-            var itemClone = Instantiate(item);
+            var itemClone = Instantiate(item, item.transform.parent);
+//            itemClone.transform.SetParent(item.transform.parent, false);
+            item.transform.SetAsLastSibling();
+            itemClone.transform.SetAsLastSibling();
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
             layout();
-            itemClone.SetDropZone(this);
+            itemClone.GetComponent<Draggable>().SetDropZone(this);
         }
     }
 
@@ -183,7 +236,7 @@ public class DraggableList : MonoBehaviour, IDropZone
 
     public void OnDragFinish(Draggable item)
     {
-        if (CopyOnDrag)
+        if (copyOnDrag)
         {
             Destroy(item.gameObject);
         }
@@ -191,5 +244,16 @@ public class DraggableList : MonoBehaviour, IDropZone
         {
             layout();
         }
+    }
+
+    public bool CanDrop(Draggable item)
+    {
+        if (allowedItems.Count == 0) return true;
+
+        foreach (var allowedItem in allowedItems)
+        {
+            if (item.GetComponent(allowedItem)) return true;
+        }
+        return false;
     }
 }

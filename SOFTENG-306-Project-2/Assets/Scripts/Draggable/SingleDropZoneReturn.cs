@@ -87,4 +87,9 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
     {
         currentItem = null;
     }
+
+    public bool CanDrop(Draggable item)
+    {
+        return true;
+    }
 }

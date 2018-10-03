@@ -13,7 +13,7 @@ public class Dialog
         _startFrame = startFrame;
         _nameMap = new Dictionary<int, string>();
         _dirMap = new Dictionary<int, string>();
-        _nameMap[0] = GameManager.instance.Player.Username;
+        _nameMap[0] = GameManager.Instance.Player.Username;
         _nameMap[1] = "Kerry Juniper";
         _dirMap[0] = "LHS";
         _dirMap[1] = "RHS";
