@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using Game;
+using Game.Hiscores;
+using UnityEngine;
 
 public class SoftwareEndScreen : MonoBehaviour
 {
     public Canvas InstructionCanvas;
+    public DraggableScrollList scrollList;
 
     private Transform slides;
     
@@ -33,6 +37,15 @@ public class SoftwareEndScreen : MonoBehaviour
     // Used this method to link back to lobby
     public void EndMiniGame()
     {
-       
+        var maxScore = 100;
+        var instructionCount = scrollList.listItems.Count;
+        var score = new Score()
+        {
+            CreatedAt = DateTime.Now,
+            Minigame =  Minigames.Software,
+            Value = maxScore - instructionCount,
+
+        };
+        Toolbox.Instance.Hiscores.Add(score);
     }
 }

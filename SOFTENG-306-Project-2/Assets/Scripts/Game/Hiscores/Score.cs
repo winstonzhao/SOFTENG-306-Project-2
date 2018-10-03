@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Game.Hiscores
 {
@@ -9,7 +10,20 @@ namespace Game.Hiscores
 
         public float Value;
 
-        public DateTime CreatedAt;
+        [SerializeField]
+        private string createdAt;
+        public DateTime CreatedAt
+        {
+            get
+            {
+                return DateTime.Parse(createdAt);
+            }
+            set
+            {
+                createdAt = value.ToLongDateString();
+
+            }
+        }
 
         public object Extras;
 
