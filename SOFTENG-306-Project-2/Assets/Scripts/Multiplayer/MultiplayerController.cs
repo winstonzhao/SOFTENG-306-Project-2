@@ -9,15 +9,6 @@ namespace Multiplayer
     {
         public string Host = "wss://ododo.herokuapp.com";
 
-        public string MyUsername
-        {
-            get
-            {
-                var mp = MyPlayer;
-                return mp == null ? null : mp.username;
-            }
-        }
-
         public TimeSpan TimeDrift { get; private set; }
 
         /// <summary>
@@ -26,13 +17,13 @@ namespace Multiplayer
         [NonSerialized]
         public float SyncPeriod = 0.3f;
 
+        private GameManager GameManager;
+
         private ChatController ChatController;
 
         private bool Connected;
 
         private WebSocket WebSocket;
-
-        private Player MyPlayer;
 
         /// <summary>
         /// Stores the previously sent player position sent to the server. 
@@ -60,11 +51,6 @@ namespace Multiplayer
         ///  Positive when there are more new players compared to the previous tick
         /// </summary>
         private int PlayerCountChange;
-
-        public void Register(Player player)
-        {
-            MyPlayer = player;
-        }
 
         public void SendAsync(string payload, Action<bool> completed)
         {
@@ -96,6 +82,8 @@ namespace Multiplayer
             TimeDrift = TimeSpan.Zero;
 
             PlayerPrefab = Resources.Load<GameObject>("Prefabs/Multiplayer");
+
+            GameManager = Toolbox.Instance.GameManager;
 
             ChatController = Toolbox.Instance.ChatController;
         }
@@ -224,9 +212,9 @@ namespace Multiplayer
 
             foreach (var player in sync.players)
             {
-                if (player.scene == MyPlayer.scene)
+                if (player.Scene == GameManager.Player.Scene)
                 {
-                    players[player.username] = player;
+                    players[player.Username] = player;
                 }
             }
 
@@ -243,13 +231,15 @@ namespace Multiplayer
 
         private void Update()
         {
-            if (MyPlayer == null || !Connected)
+            var player = GameManager.Player;
+
+            if (player == null || !Connected)
             {
                 return;
             }
 
             // Delete all the players if we switch scenes
-            if (SentScene != MyPlayer.scene)
+            if (SentScene != player.Scene)
             {
                 Players = null;
             }
@@ -257,7 +247,7 @@ namespace Multiplayer
             UpdatePlayers();
 
             // Only send player data to server if it changed
-            if (SentScene != MyPlayer.scene || SentX != MyPlayer.x || SentY != MyPlayer.y || SentZ != MyPlayer.z)
+            if (SentScene != player.Scene || SentX != player.X || SentY != player.Y || SentZ != player.Z)
             {
                 var now = Time.time;
 
@@ -265,12 +255,12 @@ namespace Multiplayer
                 {
                     LastSyncAt = now;
 
-                    SentX = MyPlayer.x;
-                    SentY = MyPlayer.y;
-                    SentZ = MyPlayer.z;
-                    SentScene = MyPlayer.scene;
+                    SentX = player.X;
+                    SentY = player.Y;
+                    SentZ = player.Z;
+                    SentScene = player.Scene;
 
-                    var json = JsonUtility.ToJson(MyPlayer);
+                    var json = JsonUtility.ToJson(player);
                     SendAsync("player-sync\n" + json, success => { });
                 }
             }
@@ -298,12 +288,12 @@ namespace Multiplayer
             {
                 var player = pair.Value;
 
-                if (player.username == MyPlayer.username)
+                if (player.Username == GameManager.Player.Username)
                 {
                     continue;
                 }
 
-                var objectName = "Player " + player.username;
+                var objectName = "Player " + player.Username;
 
                 var find = transform.Find(objectName);
                 GameObject playerObject = find != null ? find.gameObject : null;
@@ -325,7 +315,8 @@ namespace Multiplayer
             {
                 foreach (Transform child in transform)
                 {
-                    var username = child.GetComponent<PlayerController>().Username;
+                    var pc = child.GetComponent<PlayerController>();
+                    var username = pc.Player.Username;
                     if (!players.ContainsKey(username))
                     {
                         DestroyImmediate(child.gameObject);

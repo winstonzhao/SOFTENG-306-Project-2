@@ -8,9 +8,8 @@ namespace Multiplayer
 {
     public class PlayerController : MonoBehaviour
     {
-        public string Username = "meme-man";
-
-        public string Scene = "meme-town";
+        [NonSerialized]
+        public Player Player;
 
         public bool Self;
 
@@ -19,8 +18,6 @@ namespace Multiplayer
         private float SyncPeriod;
 
         private Player PrevPlayer;
-
-        private Player Player;
 
         private IsoTransform Transform;
 
@@ -38,10 +35,7 @@ namespace Multiplayer
         {
             if (Self)
             {
-                var userId = Mathf.RoundToInt(Random.value * 10000);
-                Username += "-";
-                Username += userId;
-                Player = new Player { username = Username, scene = Scene };
+                Player = Toolbox.Instance.GameManager.Player;
             }
 
             Transform = GetComponent<IsoTransform>();
@@ -56,14 +50,7 @@ namespace Multiplayer
 
         private void Start()
         {
-            var multiplayer = Toolbox.Instance.MultiplayerController;
-
-            if (Self)
-            {
-                multiplayer.Register(Player);
-            }
-
-            SyncPeriod = multiplayer.SyncPeriod;
+            SyncPeriod = Toolbox.Instance.MultiplayerController.SyncPeriod;
 
             MovementAnimator.SetFloat("hSpeed", 0.0f);
             MovementAnimator.SetFloat("vSpeed", 0.0f);
@@ -92,7 +79,7 @@ namespace Multiplayer
 
             // Try getting a newer message 
             var lastChatMessageId = ChatController.LastChatMessageId;
-            var message = ChatController.GetLastMessageBy(Player.username, LastMessageIdSeen);
+            var message = ChatController.GetLastMessageBy(Player.Username, LastMessageIdSeen);
             LastMessageIdSeen = lastChatMessageId;
 
             if (message != null)
@@ -122,24 +109,24 @@ namespace Multiplayer
             if (Self)
             {
                 var activeScene = SceneManager.GetActiveScene();
-                Player.x = Transform.Position.x;
-                Player.y = Transform.Position.y;
-                Player.z = Transform.Position.z;
-                Player.scene = activeScene.name;
+                Player.X = Transform.Position.x;
+                Player.Y = Transform.Position.y;
+                Player.Z = Transform.Position.z;
+                Player.Scene = activeScene.name;
             }
             else if (PrevPlayer != null)
             {
                 // Interpolate the movement based on the previous location
                 var progress = Mathf.Min(1.0f, (Time.time - LastUpdateAt) / SyncPeriod);
 
-                var dx = Player.x - PrevPlayer.x;
-                var dy = Player.y - PrevPlayer.y;
-                var dz = Player.z - PrevPlayer.z;
+                var dx = Player.X - PrevPlayer.X;
+                var dy = Player.Y - PrevPlayer.Y;
+                var dz = Player.Z - PrevPlayer.Z;
 
                 Transform.Position = new Vector3(
-                    PrevPlayer.x + progress * dx,
-                    PrevPlayer.y + progress * dy,
-                    PrevPlayer.z + progress * dz
+                    PrevPlayer.X + progress * dx,
+                    PrevPlayer.Y + progress * dy,
+                    PrevPlayer.Z + progress * dz
                 );
 
                 // The following code handles player direction/animation
@@ -162,12 +149,11 @@ namespace Multiplayer
         {
             PrevPlayer = Player;
             Player = player;
-            Username = player.username;
 
             // Set the position immediately, otherwise interpolate the changes in Update()
             if (PrevPlayer == null)
             {
-                Transform.Position = new Vector3(Player.x, Player.y, Player.z);
+                Transform.Position = new Vector3(Player.X, Player.Y, Player.Z);
             }
 
             LastUpdateAt = Time.time;

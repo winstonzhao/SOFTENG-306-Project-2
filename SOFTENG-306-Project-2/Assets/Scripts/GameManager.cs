@@ -1,25 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Multiplayer;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    private Player _player = new Player();
+    public Player Player;
 
-	public void ChangeScene(string levelName)
-	{
+    private void Awake()
+    {
+        var userId = Mathf.RoundToInt(Random.value * 100000);
+        Player = new Player { Username = "Luna Lovegood " + userId };
+    }
+
+    public void ChangeScene(string levelName)
+    {
         Initiate.Fade(levelName, Color.black, 1.0f);
-	}
+    }
 
-	public void QuitGame()
-	{
-		Application.Quit();
-	}
-
-	public Player Player
-	{
-		get { return _player; }
-		set { _player = value; }
-	}
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

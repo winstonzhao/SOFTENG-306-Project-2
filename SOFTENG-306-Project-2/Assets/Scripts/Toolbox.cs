@@ -12,6 +12,11 @@ public class Toolbox : Singleton<Toolbox>
         get { return FocusManager.Instance; }
     }
 
+    public GameManager GameManager
+    {
+        get { return GameManager.Instance; }
+    }
+
     public MultiplayerController MultiplayerController
     {
         get { return MultiplayerController.Instance; }

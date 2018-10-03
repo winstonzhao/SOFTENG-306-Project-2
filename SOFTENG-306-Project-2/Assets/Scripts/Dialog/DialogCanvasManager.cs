@@ -176,7 +176,7 @@ public class DialogCanvasManager : MonoBehaviour
 
         if (_currentFrame.TransitionFrame == true)
         {
-            GameManager.Instance.ChangeScene(_currentFrame.LevelName);
+            Toolbox.Instance.GameManager.ChangeScene(_currentFrame.LevelName);
             return;
         }
 
