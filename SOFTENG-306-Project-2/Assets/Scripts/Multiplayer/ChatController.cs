@@ -15,12 +15,15 @@ namespace Multiplayer
         [NonSerialized]
         public int LastChatMessageId;
 
+        private GameManager GameManager;
+
         private MultiplayerController MultiplayerController;
 
         private ChatMessage OptimisticMessage;
 
         private void Awake()
         {
+            GameManager = Toolbox.Instance.GameManager;
             MultiplayerController = Toolbox.Instance.MultiplayerController;
         }
 
@@ -51,7 +54,7 @@ namespace Multiplayer
                 if (message.id > LastChatMessageId)
                 {
                     // Clear the optimistic message once we receive a message sent by our user
-                    if (message.owner == MultiplayerController.MyUsername)
+                    if (message.owner == GameManager.Player.Username)
                     {
                         OptimisticMessage = null;
                     }
@@ -79,7 +82,7 @@ namespace Multiplayer
         public ChatMessage GetLastMessageBy(string username, int sinceMessageId = int.MinValue)
         {
             // Show local/optimistic message if possible
-            if (username == MultiplayerController.MyUsername)
+            if (username == GameManager.Player.Username)
             {
                 var om = OptimisticMessage;
                 if (om != null)

@@ -8,7 +8,7 @@ public class UndergradNPC : NPC {
     public override Dialog GetDialog()
     {
 
-        DialogFrame frame1 = new DialogFrame("Hi, I'm " + GameManager.Instance.Player.Username, 0);
+        DialogFrame frame1 = new DialogFrame("Hi, I'm " + Toolbox.Instance.GameManager.Player.Username, 0);
         DialogFrame frame2 = new DialogFrame("Nice to meet you!", 1);
         DialogFrame frame3 = new DialogFrame("My name's Tina Chen, and I study Software Engineering!", 1);
         DialogFrame frame4 = new DialogFrame("Hey, if you don't mind me asking?", 0);
