@@ -1,35 +1,19 @@
-<<<<<<< HEAD
-﻿using Ultimate_Isometric_Toolkit.Scripts.Core;
-using UltimateIsometricToolkit.physics;
-using UnityEngine;
-
-[RequireComponent(typeof(IsoRigidbody))]
-public class RobotController : MonoBehaviour
-=======
-﻿using System.Collections;
+using System.Collections;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
 using UnityEngine;
 
 [RequireComponent(typeof(IsoRigidbody))]
 public class RobotController : MonoBehaviour
->>>>>>> e155225c... Movement by coordinate implemented
 {
     // Components required for the robot controller
     private IsoTransform isoTransform;
     private SoftwareLevelGenerator generator;
 
-<<<<<<< HEAD
-    // Used to map out the position of the robot in the scene
-    private int X = 1;
-    private int Y = 1;
-    private int Z = 1;
-=======
     // Used to map out the position of the robot in the scene
     public int X;
     public int Y;
     public int Z;
->>>>>>> e155225c... Movement by coordinate implemented
 
     // Default speed for transforming the robot
     private float speed = 5;
@@ -56,10 +40,10 @@ public class RobotController : MonoBehaviour
     // Enum to represent the direction for executing the particular action
     public enum Direction
     {
-        TopRight,
-        BottomRight,
-        BottomLeft,
-        TopLeft,
+        TopRight = 3,
+        BottomRight = 1,
+        BottomLeft = 2,
+        TopLeft = 0,
     }
 
     // Initialization
