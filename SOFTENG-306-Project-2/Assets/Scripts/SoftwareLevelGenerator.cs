@@ -19,7 +19,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
 
     // Prefabs and Sprites used for different states of the scene
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
+    private static string MORE_INPUTS = "software_minigame/Sprites/key1";
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
+    private static string INCORRECT_OUTPUT = "software_minigame/Sprites/lock1";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
 
     private List<GameObject> generatedObjects = new List<GameObject>();
@@ -36,6 +38,16 @@ public class SoftwareLevelGenerator : MonoBehaviour
     void Start()
     {
         GeneratedLevel(1);
+    }
+
+    public void Restart() {
+        GeneratedLevel(1);
+        GameObject input = this.transform.Find("Input").Find("Input").gameObject;
+        Sprite i = Resources.Load<Sprite>(MORE_INPUTS);
+        input.GetComponent<SpriteRenderer>().sprite = i;
+        GameObject output = this.transform.Find("Output").Find("Output").gameObject;
+        Sprite o = Resources.Load<Sprite>(INCORRECT_OUTPUT);
+        output.GetComponent<SpriteRenderer>().sprite = o;
     }
 
     // Update is called once per frame
@@ -182,7 +194,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
 
     IEnumerator EndScreen()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         endScreen.GetComponent<SoftwareEndScreen>().Open();
     }
 

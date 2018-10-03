@@ -74,6 +74,8 @@ public class RobotController : MonoBehaviour
         X = (int)(isoTransform.Position.x + 1);
         Y = 1;
         Z = (int)(isoTransform.Position.z + 1);
+
+        generator.Restart();
     }
 
     // Update is called once per frame
