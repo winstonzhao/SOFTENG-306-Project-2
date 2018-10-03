@@ -180,7 +180,8 @@ namespace UltimateIsometricToolkit.physics
 
                 //waits until Awake has finished
                 yield return new WaitUntil(() => ghostReference.GhostObject != null);
-                _rigidbody = ghostReference.GhostObject.AddComponent<Rigidbody>();
+                // I don't know how the fuck it could already have one but yes it does
+                _rigidbody = ghostReference.GhostObject.transform.GetOrAddComponent<Rigidbody>();
                 _rigidbody.freezeRotation = true;
                 _rigidbody.isKinematic = IsKinematic;
                 _rigidbody.useGravity = UseGravity;
