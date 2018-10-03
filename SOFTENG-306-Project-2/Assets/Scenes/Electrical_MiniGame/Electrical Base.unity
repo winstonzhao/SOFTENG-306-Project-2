@@ -430,6 +430,11 @@ Prefab:
       propertyPath: _position.z
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -1188,6 +1193,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (0, 12)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -1283,10 +1293,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -13.187204, y: -0.1754219, z: 15.763396}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &117468272
 Prefab:
@@ -1407,6 +1419,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (7, 0)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -1467,6 +1484,11 @@ Prefab:
         type: 2}
       propertyPath: _position.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -1959,10 +1981,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 29.735725, y: 0, z: 2.4555073}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 2, z: 2}
   _parent: {fileID: 0}
 --- !u!1 &178526095
 GameObject:
@@ -2051,10 +2075,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 32.08661, y: -1.9662361, z: 0.7785778}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 0.6, y: 0.6, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &179479523
 Prefab:
@@ -2474,10 +2500,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: -0.13592863, z: 26.519997}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2.5, y: 2.5, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &209837027
 Prefab:
@@ -2935,10 +2963,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 5.8993306, z: 18.538502}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &277869252
 Prefab:
@@ -3295,6 +3325,11 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: Floor Tile (12, 0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -3726,6 +3761,11 @@ Prefab:
       propertyPath: _position.x
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -4019,10 +4059,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 20.44292, y: -4.950097, z: -5.929539}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 2, z: 2}
   _parent: {fileID: 0}
 --- !u!1001 &451452720
 Prefab:
@@ -4243,10 +4285,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 9.238458, y: 9.869353, z: 2.6631126}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.5, y: 1.5, z: 1.5}
   _parent: {fileID: 0}
 --- !u!1001 &456559360
 Prefab:
@@ -4984,6 +5028,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (0, 11)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -5110,6 +5159,11 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: Floor Tile (0, 13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -5781,6 +5835,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (0, 14)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -5907,6 +5966,11 @@ Prefab:
         type: 2}
       propertyPath: _position.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -6504,10 +6568,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 19.621265, y: 0.28803205, z: 1.8784919}
   _size: {x: 4, y: 4, z: 4}
-  _scale: {x: 1.5, y: 1.5, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &624963497
 Prefab:
@@ -8350,10 +8416,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -15.847621, y: 0, z: 16.95039}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 1.5, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &809920293
 Prefab:
@@ -8508,10 +8576,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 21.617207, y: 0.20741558, z: 3.4337702}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.8, y: 1.8, z: 2}
   _parent: {fileID: 0}
 --- !u!1001 &842181564
 Prefab:
@@ -9060,6 +9130,16 @@ Prefab:
       propertyPath: ShowBounds
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -9186,6 +9266,11 @@ Prefab:
         type: 2}
       propertyPath: _position.x
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -9387,10 +9472,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 32.08661, y: -9.1924305, z: 1.2052369}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 0.6, y: 0.6, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &878930140
 Prefab:
@@ -9576,6 +9663,11 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: Floor Tile (2, 0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -10457,6 +10549,11 @@ Prefab:
       propertyPath: _position.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -10841,6 +10938,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (0, 10)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -10901,6 +11003,11 @@ Prefab:
         type: 2}
       propertyPath: _position.x
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -11943,6 +12050,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (0, 5)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -12048,6 +12160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651f83cba0c41479eab347d18772797d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newSprite: {fileID: 0}
+  expectedGate: {fileID: 0}
+  endOfLevelCanvas: {fileID: 0}
 --- !u!61 &1080255867
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12150,10 +12265,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 12, y: 0, z: 7}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.04, y: 0.9, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &1080255871
 Transform:
@@ -12419,6 +12536,11 @@ Prefab:
       propertyPath: _position.x
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -12586,10 +12708,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 8.551904, y: 1.6198874, z: 19.323727}
   _size: {x: 1, y: 0.6, z: 1}
-  _scale: {x: 1.4, y: 1.4, z: 1.4}
   _parent: {fileID: 0}
 --- !u!4 &1103041647
 Transform:
@@ -12871,10 +12995,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 1.9383626, y: 8.618475, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &1126863663
 Prefab:
@@ -13126,6 +13252,11 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: Floor Tile (8, 0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -13998,6 +14129,11 @@ Prefab:
       propertyPath: _position.z
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -14169,10 +14305,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 32.724144, y: -10.71514, z: -4.83861}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.5, y: 1.5, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &1227941578
 Prefab:
@@ -14403,10 +14541,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 0, z: 36.824856}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &1230624898
 Prefab:
@@ -14460,6 +14600,11 @@ Prefab:
         type: 2}
       propertyPath: _position.z
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -15175,10 +15320,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 12.844768, y: 0, z: -5.944579}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.5, y: 1.5, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &1271653047
 Prefab:
@@ -16164,10 +16311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 15.284577, y: 0.8396311, z: 20.375074}
   _size: {x: 1, y: 0.6, z: 1}
-  _scale: {x: 1.4, y: 1.4, z: 1.4}
   _parent: {fileID: 0}
 --- !u!4 &1328941210
 Transform:
@@ -16346,10 +16495,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 31.30793, y: -2.8369055, z: -9.055201}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 3, y: 3, z: 2}
   _parent: {fileID: 0}
 --- !u!1001 &1350325372
 Prefab:
@@ -16570,10 +16721,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 21.66866, y: 0, z: -5.7220297}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.5, y: 1.5, z: 1.5}
   _parent: {fileID: 0}
 --- !u!1001 &1354040455
 Prefab:
@@ -17466,10 +17619,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 34.964672, y: -13.800558, z: -0.53304034}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 1.5, z: 1}
   _parent: {fileID: 0}
 --- !u!1 &1416561568
 GameObject:
@@ -18109,6 +18264,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (0, 16)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -18280,6 +18440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651f83cba0c41479eab347d18772797d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newSprite: {fileID: 0}
+  expectedGate: {fileID: 0}
+  endOfLevelCanvas: {fileID: 0}
 --- !u!61 &1508828392
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18382,10 +18545,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 9.5, y: 0, z: 4}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.04, y: 0.9, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &1508828396
 Transform:
@@ -18954,6 +19119,11 @@ Prefab:
       propertyPath: _position.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -19146,6 +19316,11 @@ Prefab:
         type: 2}
       propertyPath: _position.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -20091,6 +20266,11 @@ Prefab:
       propertyPath: _position.x
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -20217,6 +20397,11 @@ Prefab:
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_Name
       value: Floor Tile (13, 0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -20379,10 +20564,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 9.858023, y: 0, z: -6.91634}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &1646219750
 Prefab:
@@ -20436,6 +20623,11 @@ Prefab:
         type: 2}
       propertyPath: _position.x
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -20801,6 +20993,11 @@ Prefab:
       propertyPath: _position.x
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -21067,10 +21264,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: -3.8259194, z: 22.947283}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.5, y: 1.5, z: 1.5}
   _parent: {fileID: 0}
 --- !u!1001 &1692270778
 Prefab:
@@ -21124,6 +21323,11 @@ Prefab:
         type: 2}
       propertyPath: _position.x
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -21230,6 +21434,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651f83cba0c41479eab347d18772797d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newSprite: {fileID: 0}
+  expectedGate: {fileID: 0}
+  endOfLevelCanvas: {fileID: 0}
 --- !u!61 &1697961530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21332,10 +21539,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 4.160671, y: -0.42297173, z: 7}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.04, y: 0.9, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &1697961534
 Transform:
@@ -21379,7 +21588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortingStrategy: {fileID: 1713634242}
-  Dirty: 0
+  Dirty: 1
   _isoAngle: 26.565
   _xRot: 35.625
   _yRot: 45
@@ -22122,6 +22331,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (11, 0)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -22814,10 +23028,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -4.756645, y: -2.505305, z: 13.036656}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 2, z: 2}
   _parent: {fileID: 0}
 --- !u!1001 &1848461874
 Prefab:
@@ -23170,10 +23386,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 12.502566, y: -6.170242, z: 2.4555073}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 2, z: 2}
   _parent: {fileID: 0}
 --- !u!1001 &1861747083
 Prefab:
@@ -23670,10 +23888,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 27.470043, y: -4.260233, z: 14.092821}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 0.6, y: 0.6, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &1891710402
 Prefab:
@@ -24314,14 +24534,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!4 &1954344599
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1954344596}
@@ -24774,10 +24996,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0, y: 0, z: 30.506008}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 3, y: 3, z: 3}
   _parent: {fileID: 0}
 --- !u!1001 &1972373651
 Prefab:
@@ -24964,6 +25188,11 @@ Prefab:
       propertyPath: m_Name
       value: Floor Tile (10, 0)
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -25059,10 +25288,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 0.9705926, y: -4.701988, z: 15.283968}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1.3, y: 1.3, z: 1.3}
   _parent: {fileID: 0}
 --- !u!1001 &1992537312
 Prefab:
@@ -25411,6 +25642,11 @@ Prefab:
       propertyPath: _position.z
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
   m_IsPrefabAsset: 0
@@ -25704,10 +25940,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: -9.151313, y: 0, z: 26.878872}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &2033206934
 Prefab:
@@ -26136,10 +26374,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 36.560204, y: -2.467023, z: 0}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 2, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &2053060711
 Prefab:
@@ -26294,10 +26534,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 21.617207, y: -1.3855658, z: 12.561089}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 2, y: 2, z: 2}
   _parent: {fileID: 0}
 --- !u!1001 &2060864237
 Prefab:
@@ -26417,6 +26659,11 @@ Prefab:
         type: 2}
       propertyPath: _position.z
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899210022073310, guid: 96662b7a1a37846c9bde5ad55dede327,
+        type: 2}
+      propertyPath: _position.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -26711,10 +26958,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 1
   _position: {x: 32.88711, y: -2.7774334, z: 7.7099047}
   _size: {x: 1, y: 1, z: 1}
-  _scale: {x: 1, y: 1, z: 1}
   _parent: {fileID: 0}
 --- !u!1001 &2118413480
 Prefab:
