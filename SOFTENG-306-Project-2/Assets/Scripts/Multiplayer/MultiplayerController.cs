@@ -213,7 +213,7 @@ namespace Multiplayer
 
             foreach (var player in sync.players)
             {
-                if (player.scene == ActiveSceneName)
+                if (player.Scene == GameManager.Player.Scene)
                 {
                     players[player.Username] = player;
                 }
@@ -239,9 +239,6 @@ namespace Multiplayer
 
         private void Update()
         {
-            var activeScene = SceneManager.GetActiveScene();
-            ActiveSceneName = activeScene.name;
-
             var player = GameManager.Player;
 
             if (player == null || !Connected)
