@@ -60,6 +60,7 @@ MonoBehaviour:
   SESprite: {fileID: 21300000, guid: 2df3080c62ad69e49a8d1d857f641d84, type: 3}
   SWSprite: {fileID: 21300000, guid: 24e0412f0699c2e45a41348176107af3, type: 3}
   NWSprite: {fileID: 21300000, guid: 6dce9974ea6d7ff4c9fc189dcb87f814, type: 3}
+  dropZone: {fileID: 0}
   homePos: {x: 0, y: 0, z: 0}
 --- !u!114 &114756306665989360
 MonoBehaviour:
@@ -128,7 +129,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1238455367
-  m_SortingLayer: -1
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 331c1c6ef7c0de148ba8250f6fab5447, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
