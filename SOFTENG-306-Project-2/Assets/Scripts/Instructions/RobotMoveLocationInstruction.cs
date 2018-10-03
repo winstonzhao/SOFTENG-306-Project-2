@@ -20,6 +20,9 @@ namespace Instructions
 
         private bool trackMouse;
 
+        private bool executeNext = false;
+        private Vector3 targetPos;
+
         public RobotMoveLocationInstruction()
         {
             component2 = new InstructionComponent("POS")
@@ -34,7 +37,7 @@ namespace Instructions
             {
                 return new List<InstructionComponent>
                 {
-                    new InstructionComponent("Move"),
+                    new InstructionComponent("MoveTo"),
                     component2
                 }.AsReadOnly();
             }
@@ -71,23 +74,39 @@ namespace Instructions
 
                 var isoRay = Isometric.MouseToIsoRay();
 
-                var hit = false;
-                foreach (var raycastHit in IsoPhysics.RaycastAll(isoRay))
-                {
-                    Debug.Log("we clicked on " + raycastHit.Collider.name + " at " + raycastHit.Point);
-                    if (raycastHit.IsoTransform.name.ToLower().StartsWith("floor tile"))
-                    {
-                        hit = true;
-                        selectedObj = raycastHit.IsoTransform;
+                //do an isometric raycast on left mouse click
+                if (Input.GetMouseButtonDown(0)) {
+                    IsoRaycastHit isoRaycastHit;
+                    if (IsoPhysics.Raycast(isoRay, out isoRaycastHit)) {
+                        selectedObj = isoRaycastHit.IsoTransform;
                         component2 =
                             new InstructionComponent("X: " + selectedObj.Position.x + " Z: " + selectedObj.Position.z)
                             {
                                 OnComponentClicked = onClicked
                             };
                         instructionRenderer.Render();
-                        break;
                     }
                 }
+
+//                var isoRay = Isometric.MouseToIsoRay();
+//
+//                var hit = false;
+//                foreach (var raycastHit in IsoPhysics.RaycastAll(isoRay))
+//                {
+//                    Debug.Log("we clicked on " + raycastHit.Collider.name + " at " + raycastHit.Point);
+//                    if (raycastHit.IsoTransform.name.ToLower().StartsWith("floor tile"))
+//                    {
+//                        hit = true;
+//                        selectedObj = raycastHit.IsoTransform;
+//                        component2 =
+//                            new InstructionComponent("X: " + selectedObj.Position.x + " Z: " + selectedObj.Position.z)
+//                            {
+//                                OnComponentClicked = onClicked
+//                            };
+//                        instructionRenderer.Render();
+//                        break;
+//                    }
+//                }
 
                 // if (!hit) selectedObj = null;
 
@@ -99,15 +118,27 @@ namespace Instructions
 
         public override void UpdateInstruction()
         {
-            instructionExecutor.ExecuteNextInstruction();
+            if (executeNext)
+            {
+                instructionExecutor.ExecuteNextInstruction();
+            }
+            else
+            {
+                if (robot.GetComponent<IsoTransform>().Position == targetPos)
+                {
+                    executeNext = true;
+                }
+            }
         }
 
         public override void Execute(RobotController target, InstructionExecutor executor)
         {
             instructionExecutor = executor;
             robot = target;
-            var didMove = false;
+            executeNext = false;
 
+            targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
+            var didMove = robot.MoveTo(targetPos);
             if (!didMove) throw new InstructionException();
         }
     }

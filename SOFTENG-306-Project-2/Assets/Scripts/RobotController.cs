@@ -15,6 +15,8 @@ public class RobotController : MonoBehaviour
     public int Y;
     public int Z;
 
+    private Vector3 startPos;
+
     // Default speed for transforming the robot
     private float speed = 5;
 
@@ -52,7 +54,23 @@ public class RobotController : MonoBehaviour
         isoTransform = this.GetOrAddComponent<IsoTransform>();
         generator = gameObject.GetComponentInParent(typeof(SoftwareLevelGenerator)) as SoftwareLevelGenerator;
 
+        startPos = isoTransform.Position;
         // Initialise offset coordinates
+        X = (int)(isoTransform.Position.x + 1);
+        Y = 1;
+        Z = (int)(isoTransform.Position.z + 1);
+    }
+
+    public void ResetPos()
+    {
+        hasElement = false;
+        carrying = null;
+
+        var sprite = Resources.Load<Sprite>(NO_ELEMENT);
+        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
+
+        isoTransform.Position = startPos;
         X = (int)(isoTransform.Position.x + 1);
         Y = 1;
         Z = (int)(isoTransform.Position.z + 1);
@@ -72,15 +90,16 @@ public class RobotController : MonoBehaviour
         int z = (int)(destination.z - currentPos.z);
 
         // This is for storing ths sequence of paths to traverse through
-        Vector3[] path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z)];
-        int count = 0;
+        Vector3[] path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
+        path[0] = currentPos;
+        int count = 1;
 
         // temp variables are used as a ghost for collision detection
         int tempX = X;
         int tempZ = Z;
 
         // Traverse through x first by default
-        for (int i = 1; i <= Mathf.Abs(x); i++)
+        for (int i = 0; i < Mathf.Abs(x); i++)
         {
             tempX = x < 0 ? --tempX : ++tempX;
 
@@ -97,7 +116,7 @@ public class RobotController : MonoBehaviour
         }
 
         // Traverse through z with pivot
-        for (int i = 1; i <= Mathf.Abs(z); i++)
+        for (int i = 0; i < Mathf.Abs(z); i++)
         {
             tempZ = z < 0 ? --tempZ : ++tempZ;
 

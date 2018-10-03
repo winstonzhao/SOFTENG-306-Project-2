@@ -31,6 +31,11 @@ namespace Instructions
 
         public Text Text;
 
+        public SoftwareLevelGenerator LevelGenerator;
+
+        private bool playing = false;
+        private bool reset = true;
+
         private void Start()
         {
             draggableList = GetComponent<GenericDraggableList>();
@@ -43,6 +48,11 @@ namespace Instructions
 
             playButton.EventHandler += Play;
             stopButton.EventHandler += Stop;
+
+            if (LevelGenerator == null)
+            {
+                LevelGenerator = FindObjectOfType<SoftwareLevelGenerator>();
+            }
         }
 
         public void JumpToInstruction(Instruction instruction)
@@ -52,6 +62,18 @@ namespace Instructions
 
         public void Play()
         {
+            if (playing) return;
+
+            if (!reset)
+            {
+                target.ResetPos();
+                LevelGenerator.GeneratedLevel(LevelGenerator.currentLevel);
+                reset = true;
+                return;
+            }
+
+            reset = false;
+            playing = true;
             Text.text = "Playing";
             foreach (var instruction in instructions) instruction.Instruction.Editable = false;
 
@@ -61,8 +83,6 @@ namespace Instructions
                 Instruction = l.GetComponent<Instruction>(),
                 Renderer = l.GetComponent<InstructionRenderer>()
             }).ToList();
-
-            Debug.Log(instructions.Count);
 
             ExecuteNextInstruction();
         }
@@ -102,6 +122,8 @@ namespace Instructions
 
         public void Stop()
         {
+            playing = false;
+
             Text.text = "Stop";
             executeNext = false;
             if (currentInstruction != null) currentInstruction.Renderer.BackgroundColor = prevBackground;

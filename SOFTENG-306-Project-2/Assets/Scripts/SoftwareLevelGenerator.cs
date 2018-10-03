@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
 
@@ -20,6 +21,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
+
+    private List<GameObject> generatedObjects = new List<GameObject>();
 
     // Enum used to map out the layout of the scene
     public enum Layout
@@ -43,6 +46,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Used to initialised diferent levels
     public void GeneratedLevel(int level)
     {
+        foreach (var go in generatedObjects)
+        {
+            Destroy(go);
+        }
+
         currentLevel = level;
         // Switch statement for setting up different levels
         switch (currentLevel)
@@ -81,6 +89,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
             obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
             obj.AddComponent<ArrayElement>();
             obj.transform.parent = this.transform;
+            generatedObjects.Add(obj);
             layoutMap[inputX, inputZ] = Layout.ELEMENT;
             objectMap[inputX, inputZ] = obj;
             numElements--;
