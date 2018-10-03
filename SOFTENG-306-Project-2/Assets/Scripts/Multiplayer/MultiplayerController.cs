@@ -154,14 +154,12 @@ namespace Multiplayer
                 return;
             }
 
-            var now = DateTime.Now;
-
             var json = data.Substring(prefix.Length);
             var response = JsonUtility.FromJson<GameInitialization>(json);
             if (response != null)
             {
                 SyncPeriod = response.tickPeriod / 1000.0f;
-                TimeDrift = now - DateTime.Parse(response.currentDateTime);
+                SetTimeDriftFrom(response.currentDateTime);
             }
         }
 
@@ -230,6 +228,13 @@ namespace Multiplayer
             {
                 ChatController.Sync(sync.lastChatMessageId);
             }
+
+            SetTimeDriftFrom(sync.currentTime);
+        }
+
+        private void SetTimeDriftFrom(string time)
+        {
+            TimeDrift = DateTime.Now - DateTime.Parse(time);
         }
 
         private void Update()
