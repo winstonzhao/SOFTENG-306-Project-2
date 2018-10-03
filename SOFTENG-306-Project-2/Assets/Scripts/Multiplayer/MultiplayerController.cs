@@ -97,7 +97,7 @@ namespace Multiplayer
 
             PlayerPrefab = Resources.Load<GameObject>("Prefabs/Multiplayer");
 
-            ChatController = FindObjectOfType<ChatController>();
+            ChatController = Toolbox.Instance.ChatController;
         }
 
         private void Start()

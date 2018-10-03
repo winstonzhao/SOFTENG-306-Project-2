@@ -16,7 +16,7 @@ namespace Multiplayer
 
         private void Start()
         {
-            ChatController = FindObjectOfType<ChatController>();
+            ChatController = Toolbox.Instance.ChatController;
 
             if (ChatController == null)
             {
