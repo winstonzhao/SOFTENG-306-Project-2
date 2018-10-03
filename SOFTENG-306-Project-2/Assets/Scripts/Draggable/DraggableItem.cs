@@ -51,7 +51,7 @@ public class DraggableItem : Draggable
     // Use this for initialization
     void Start()
     {
-        // Size = transform.localScale;
+
     }
 
     public override void SetDropZone(IDropZone newDropZone)
@@ -67,18 +67,13 @@ public class DraggableItem : Draggable
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        //Debug.Log("mouse at (iso): ");
-        //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition));
-
         if (dragging)
         {
             Vector3 localMousePos = Input.mousePosition;
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
 
             Vector3 diff = mousePosWorld - prevMousePos;
-            //Debug.Log("mouse at (iso): ");
-            //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
+
             var isoTransform = GetComponent<IsoTransform>();
             if (isoTransform != null) 
             {
@@ -100,11 +95,15 @@ public class DraggableItem : Draggable
 
         if (moving)
         {
+            // Move back to home position
+
             var tdiff = t;
             t += Time.deltaTime / seconds;
             if (t >= 1)
             {
                 moving = false;
+
+                // Reset t so position is not overshot
                 t = 1;
             }
             tdiff = t - tdiff;
@@ -121,7 +120,6 @@ public class DraggableItem : Draggable
 
     void OnMouseLeave()
     {
-        //Debug.Log("mouse leave");
         mouseInside = false;
     }
 
@@ -137,8 +135,6 @@ public class DraggableItem : Draggable
         Vector3 mousePos = Input.mousePosition;
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
         prevMousePos = mousePosWorld;
-
-        //Debug.Log("mouse clicked");
 
         if (dropZone != null)
         {

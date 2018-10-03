@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEditor;
 using UltimateIsometricToolkit.physics;
 
+/// <summary>
+/// An implementation of IDropZone that can only contain a single item
+/// </summary>
 [RequireComponent(typeof(IsoCollider))]
-//[RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZone : MonoBehaviour, IDropZone
 {
 
@@ -66,11 +68,6 @@ public class SingleDropZone : MonoBehaviour, IDropZone
 
     public void OnDragFinish(Draggable item)
     {
-        //if (!item.GetComponent<IsoCollider>().GetComponent<Collider>().IsTouching(GetComponent<IsoCollider>()))
-        //{
-        //    // disable if we need the snapback effect
-        //    //item.GetComponent<DraggableItem>().SetDropZone(null);
-        //}
         SetDropZoneActive(false);
 
         GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
@@ -104,6 +101,7 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     {
         return true;
     }
+
     /*
      * Enable or disable the drop zone by changing whether or not it can be hit by a ray cast
      */
