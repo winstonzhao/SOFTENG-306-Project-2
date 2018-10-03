@@ -11,10 +11,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private GameObject[,] objectMap;
 
     // Used to locate the input and output gameobject in the scene
-    private int inputX;
-    private int inputZ;
-    private int outputX;
-    private int outputZ;
+    public volatile int inputX;
+    public volatile int inputZ;
+    public Vector3 input;
 
     // Prefabs and Sprites used for different states of the scene
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
@@ -64,8 +63,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 };
                 inputX = 1;
                 inputZ = 7;
-                outputX = 1;
-                outputZ = 1;
+                input = new Vector3(inputX - 1, 1, inputZ - 2);
                 objectMap = new GameObject[11, 9];
                 NextInputElement();
                 break;

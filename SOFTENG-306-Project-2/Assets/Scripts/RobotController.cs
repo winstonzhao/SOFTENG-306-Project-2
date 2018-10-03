@@ -1,18 +1,35 @@
+<<<<<<< HEAD
 ﻿using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
 using UnityEngine;
 
 [RequireComponent(typeof(IsoRigidbody))]
 public class RobotController : MonoBehaviour
+=======
+﻿using System.Collections;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
+using UltimateIsometricToolkit.physics;
+using UnityEngine;
+
+[RequireComponent(typeof(IsoRigidbody))]
+public class RobotController : MonoBehaviour
+>>>>>>> e155225c... Movement by coordinate implemented
 {
     // Components required for the robot controller
     private IsoTransform isoTransform;
     private SoftwareLevelGenerator generator;
 
+<<<<<<< HEAD
     // Used to map out the position of the robot in the scene
     private int X = 1;
     private int Y = 1;
     private int Z = 1;
+=======
+    // Used to map out the position of the robot in the scene
+    public int X;
+    public int Y;
+    public int Z;
+>>>>>>> e155225c... Movement by coordinate implemented
 
     // Default speed for transforming the robot
     private float speed = 5;
@@ -22,17 +39,8 @@ public class RobotController : MonoBehaviour
     private GameObject carrying;
 
     // Fields to animating the robot transformation
-    private Vector3 from;
-    private Vector3 to;
     private float timePassed;
     private float maxTimePassed;
-
-    // Checking if the last action has been sucessfulyl performed
-    public bool IsFinished {
-        get  {
-            return timePassed >= maxTimePassed;
-        }
-    }
 
     public enum Command
     {
@@ -51,7 +59,7 @@ public class RobotController : MonoBehaviour
         TopRight,
         BottomRight,
         BottomLeft,
-        TopLeft
+        TopLeft,
     }
 
     // Initialization
@@ -59,25 +67,82 @@ public class RobotController : MonoBehaviour
     {
         isoTransform = this.GetOrAddComponent<IsoTransform>();
         generator = gameObject.GetComponentInParent(typeof(SoftwareLevelGenerator)) as SoftwareLevelGenerator;
+
+        // Initialise offset coordinates
+        X = (int)(isoTransform.Position.x + 1);
+        Y = 1;
+        Z = (int)(isoTransform.Position.z + 1);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (from != Vector3.zero && to != Vector3.zero) 
+    }
+
+    // Move to the specified coordinate in the scene.
+    public bool MoveTo(Vector3 destination)
+    {
+        // Calculate the required distance to translate for x and z
+        var currentPos = isoTransform.Position;
+        int x = (int)(destination.x - currentPos.x);
+        int z = (int)(destination.z - currentPos.z);
+
+        // This is for storing ths sequence of paths to traverse through
+        Vector3[] path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z)];
+        int count = 0;
+
+        // temp variables are used as a ghost for collision detection
+        int tempX = X;
+        int tempZ = Z;
+
+        // Traverse through x first by default
+        for (int i = 1; i <= Mathf.Abs(x); i++)
         {
-            timePassed += Time.deltaTime;
-            isoTransform.Position = Vector3.Lerp(from, to, timePassed / maxTimePassed);
+            tempX = x < 0 ? --tempX : ++tempX;
+
+            // Check for collision and add to path
+            if ((generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY))
+            {
+                path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                count++;
+            }
+            else
+            {
+                return false;
+            }
         }
+
+        // Traverse through z with pivot
+        for (int i = 1; i <= Mathf.Abs(z); i++)
+        {
+            tempZ = z < 0 ? --tempZ : ++tempZ;
+
+            if ((generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY))
+            {
+                path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                count++;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // If no collision then run it as a coroutine
+        StartCoroutine(Shift(path));
+        return true;
     }
 
     // Moving 1 step in specified direction, return true if the command is valid
-    public bool Move(Direction direction) {
+    public bool Move(Direction direction)
+    {
         // Initialise position and destination vector
         var currentPos = this.GetComponent<IsoTransform>().Position;
         var destPos = Vector3.zero;
         int dx = 0;
         int dz = 0;
+        Vector3[] path = new Vector3[2];
+        path[0] = currentPos;
 
         // Check the direction of operation and set relevant flag
         switch (direction)
@@ -109,13 +174,13 @@ public class RobotController : MonoBehaviour
             Z += dz;
 
             destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
-            Shift(currentPos, destPos);
+            path[1] = destPos;
+            StartCoroutine(Shift(path));
             return true;
         }
     }
 
-
-
+    // Pickup the item in the specified direction
     public bool PickUpItem(Direction direction)
     {
         if (!hasElement || (carrying == null))
@@ -156,6 +221,7 @@ public class RobotController : MonoBehaviour
         return false;
     }
 
+    // Drop the item to specified direction
     public bool DropItem(Direction direction)
     {
         if (hasElement || (carrying != null))
@@ -198,12 +264,34 @@ public class RobotController : MonoBehaviour
     }
 
     // Animation for moving the robot
-    private void Shift(Vector3 from, Vector3 to)
+    private IEnumerator Shift(Vector3[] path)
     {
-        timePassed = 0f;
-        maxTimePassed = Vector3.Distance(from, to) / speed;
-        this.from = from;
-        this.to = to;
+        // Loop through the path
+        for (int i = 0; i < path.Length - 1; i++)
+        {
+            timePassed = 0f;
+            maxTimePassed = Vector3.Distance(path[i], path[i + 1]) / speed;
+
+            // Move if you are not fully translated to next node in the path
+            while (isoTransform.Position != path[i + 1])
+            {
+                timePassed += Time.deltaTime;
+                isoTransform.Position = Vector3.Lerp(path[i], path[i + 1], timePassed / maxTimePassed);
+
+                // If time has passed then round cooridinates to nearest node.
+                if (timePassed >= maxTimePassed)
+                {
+                    var pos = isoTransform.Position;
+                    pos = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z));
+                    break;
+                }
+                yield return null;
+            }
+        }
+
+        // Update the offset coodinates
+        X = (int)isoTransform.Position.x + 1;
+        Z = (int)isoTransform.Position.z + 1;
     }
 
     // Used for debugging

@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(RobotController))]
 public class TestRobotEditor : Editor
@@ -70,6 +71,10 @@ public class TestRobotEditor : Editor
         if (UnityEngine.GUILayout.Button("Drop BR"))
         {
             myScript.DropItem(RobotController.Direction.BottomRight);
+        }
+
+        if (UnityEngine.GUILayout.Button("MOVE")) {
+            myScript.MoveTo(new Vector3(3, 1, 4));
         }
 
         //if (UnityEngine.GUILayout.Button("Debug")) {
