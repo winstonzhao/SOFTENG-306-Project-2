@@ -44,7 +44,9 @@ namespace Game.Hiscores.UserInterface
 
                 view.transform.Find("Name").GetComponent<Text>().text = score.Minigame.ToString();
                 view.transform.Find("Date").GetComponent<Text>().text = score.CreatedAt.ToShortDateString();
-                view.transform.Find("Score").GetComponent<Text>().text = "Scored " + score.Value;
+
+                var scoreText = view.transform.Find("Score").GetComponent<Text>();
+                scoreText.text = score.Value < 1 ? "Completed" : "Scored " + score.Value;
 
                 view.transform.SetParent(transform);
 
