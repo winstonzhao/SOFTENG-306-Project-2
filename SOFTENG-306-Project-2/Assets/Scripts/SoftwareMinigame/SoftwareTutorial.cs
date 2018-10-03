@@ -18,17 +18,24 @@ public class SoftwareTutorial : MonoBehaviour
     void Start()
     {
         slides = transform.GetChild(0);
+        Open();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    public void Open()
+    {
+        slideIndex = 0;
+        gameObject.SetActive(true);
         foreach (Transform child in slides)
         {
             child.gameObject.SetActive(false);
         }
         InstructionCanvas.gameObject.SetActive(false);
         SetSlide();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void Close()
@@ -51,7 +58,7 @@ public class SoftwareTutorial : MonoBehaviour
 
     private void SetSlide()
     {
-        if (slideIndex <= 0) slideIndex = 0;
+        if (slideIndex < 0) slideIndex = 0;
 
         if (currentSlide != null)
         {

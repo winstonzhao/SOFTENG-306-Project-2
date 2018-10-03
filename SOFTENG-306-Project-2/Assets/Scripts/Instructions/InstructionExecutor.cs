@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Instructions
 {
@@ -28,6 +29,8 @@ namespace Instructions
 
         public RobotController target;
 
+        public Text Text;
+
         private void Start()
         {
             draggableList = GetComponent<GenericDraggableList>();
@@ -49,6 +52,7 @@ namespace Instructions
 
         public void Play()
         {
+            Text.text = "Playing";
             foreach (var instruction in instructions) instruction.Instruction.Editable = false;
 
             instructionIndex = 0;
@@ -57,6 +61,8 @@ namespace Instructions
                 Instruction = l.GetComponent<Instruction>(),
                 Renderer = l.GetComponent<InstructionRenderer>()
             }).ToList();
+
+            Debug.Log(instructions.Count);
 
             ExecuteNextInstruction();
         }
@@ -96,6 +102,7 @@ namespace Instructions
 
         public void Stop()
         {
+            Text.text = "Stop";
             executeNext = false;
             if (currentInstruction != null) currentInstruction.Renderer.BackgroundColor = prevBackground;
 
@@ -105,9 +112,10 @@ namespace Instructions
 
         public void FailExecution(string message)
         {
+            if (currentInstruction != null) currentInstruction.Renderer.TextColor = new Color(1, 0, 0);
             Stop();
             Debug.Log("Instruction Exception: " + message);
-            stopButton.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
+            Text.text = "Failed";
         }
 
         private void Update()

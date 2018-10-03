@@ -102,7 +102,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i - itemHeight);
+        var height = Mathf.Max(MinSize.y, i - itemHeight / 2 - layoutSpacing);
         height = Mathf.Max(maxHeight * scale, height);
         var colliderSize = new Vector2(width, height) * 1 / scale;
 

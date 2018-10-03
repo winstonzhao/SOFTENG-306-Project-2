@@ -1,9 +1,22 @@
-public class ClickEventEmitter : EventEmitter
+using UnityEngine.EventSystems;
+
+public class ClickEventEmitter : EventEmitter, IPointerClickHandler
 {
     public EventHandlerDelegate EventHandler;
 
-    public void OnMouseDown()
+    private bool enabled = true;
+
+    public bool Enabled
     {
-        EventHandler();
+        get { return enabled; }
+        set { enabled = value; }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (Enabled)
+        {
+            EventHandler();
+        }
     }
 }

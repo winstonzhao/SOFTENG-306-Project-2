@@ -76,6 +76,7 @@ namespace Instructions
             collider.enabled = component.OnComponentClicked != null;
             var eventHandler = go.GetComponent<ClickEventEmitter>();
             eventHandler.EventHandler += () => component.OnComponentClicked(null);
+            eventHandler.Enabled = component.OnComponentClicked != null;
 
             return text;
         }
