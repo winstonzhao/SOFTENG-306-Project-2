@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
-using UnityEditor;
+using System.Collections;
 
 public class SoftwareLevelGenerator : MonoBehaviour
 {
     // Fields used to represent the current level and game
     public int currentLevel;
     public int numElements;
+    public GameObject endScreen;
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
 
@@ -125,6 +126,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
                 Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
                 renderer.sprite = sprite;
+                StartCoroutine(EndScreen());
                 return true;
         }
 
@@ -167,6 +169,12 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public GameObject GetObject(int x, int z)
     {
         return objectMap[x, z];
+    }
+
+    IEnumerator EndScreen()
+    {
+        yield return new WaitForSeconds(2.0f);
+        endScreen.GetComponent<SoftwareEndScreen>().Open();
     }
 
     // Used for debugging and printing the layout of the scene
