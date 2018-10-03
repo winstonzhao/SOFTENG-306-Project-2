@@ -47,7 +47,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         switch (currentLevel)
         {
             case 1:
-                numElements = 6;
+                numElements = 1;
                 layoutMap = new Layout[11, 9]
                 {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
@@ -106,16 +106,12 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             case 1:
                 int max = 0;
-                for (int x = 3; x < 9; x++)
+                for (int x = 5; x < 6; x++)
                 {
                     if (objectMap[x, 6] != null)
                     {
                         int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
-                        if (value >= max)
-                        {
-                            max = value;
-                        }
-                        else
+                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
                         {
                             return false;
                         }
