@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using WebSocketSharp;
 
 namespace Multiplayer
@@ -35,6 +36,8 @@ namespace Multiplayer
         /// Similar to <see cref="SentX"/> etc, stores the previously sent player's scene
         /// </summary>
         private string SentScene;
+
+        private string ActiveSceneName;
 
         private GameObject PlayerPrefab;
 
@@ -212,7 +215,7 @@ namespace Multiplayer
 
             foreach (var player in sync.players)
             {
-                if (player.Scene == GameManager.Player.Scene)
+                if (player.scene == ActiveSceneName)
                 {
                     players[player.Username] = player;
                 }
@@ -231,6 +234,9 @@ namespace Multiplayer
 
         private void Update()
         {
+            var activeScene = SceneManager.GetActiveScene();
+            ActiveSceneName = activeScene.name;
+
             var player = GameManager.Player;
 
             if (player == null || !Connected)
