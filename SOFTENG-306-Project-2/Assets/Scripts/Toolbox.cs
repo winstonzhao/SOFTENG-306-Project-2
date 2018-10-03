@@ -1,3 +1,4 @@
+using Game.Hiscores;
 using Multiplayer;
 using UserInterface;
 
@@ -25,5 +26,10 @@ public class Toolbox : Singleton<Toolbox>
     public Multiplayer.ChatController ChatController
     {
         get { return Multiplayer.ChatController.Instance; }
+    }
+
+    public Hiscores Hiscores
+    {
+        get { return Hiscores.Instance; }
     }
 }
