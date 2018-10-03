@@ -82,6 +82,7 @@ namespace Instructions
 
             if (!reset)
             {
+                // Reset the level
                 target.ResetPos();
                 LevelGenerator.GeneratedLevel(LevelGenerator.currentLevel);
                 reset = true;

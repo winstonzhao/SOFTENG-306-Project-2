@@ -105,18 +105,23 @@ namespace Instructions
 
             var components = instruction.InstructionComponents;
 
+            // Update text in all DropdownComponents of type text
             for (var i = 0; i < components.Count; i++)
+            {
                 if (children[i].InstructionComponent.GetType() != typeof(DropdownInstructionComponent))
                 {
                     var text = children[i].RectTransform.GetComponent<Text>();
                     text.text = components[i].Text;
                     children[i].Size = new Vector2(text.preferredWidth, text.preferredHeight);
                 }
+            }
 
+            // Find total width
             float height = 0;
             var width = children.Sum(c => c.Size.x);
             width += spacing * components.Count - spacing;
 
+            // Layout children left to right
             float start = 0;
             foreach (var child in children)
             {
@@ -127,6 +132,7 @@ namespace Instructions
                 height = Mathf.Max(child.Size.y, height);
             }
 
+            // Update parent size to encapsulate all children, plus padding on each side
             width = width + padding.x * 2;
             height = height + padding.y * 2;
             boxCollider.size = new Vector2(width, height);
@@ -142,11 +148,11 @@ namespace Instructions
             while (transform.childCount != 0)
                 foreach (Transform child in transform)
                 {
-#if UNITY_EDITOR
-                    DestroyImmediate(child.gameObject);
-#else
-                    Destroy(child.gameObject);
-                #endif
+                    #if UNITY_EDITOR
+                        DestroyImmediate(child.gameObject);
+                    #else
+                        Destroy(child.gameObject);
+                    #endif
                 }
 
             children.Clear();
@@ -157,7 +163,10 @@ namespace Instructions
             var components = instruction.InstructionComponents;
             if (children.Count != components.Count)
             {
+                // More ccomponents than before -> start again from scratch
                 DestroyChildren();
+
+                // Create one child for each InstrucitonComponent
                 for (var i = 0; i < components.Count; i++)
                 {
                     var child = new ChildComp();
@@ -184,6 +193,7 @@ namespace Instructions
 
             var dirtyText = false;
 
+            // Check if any children need their text updated
             for (var i = 0; i < children.Count; i++)
             {
                 if (children[i].InstructionComponent.Text != components[i].Text) dirtyText = true;
