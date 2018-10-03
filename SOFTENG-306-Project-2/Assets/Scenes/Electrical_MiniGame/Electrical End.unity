@@ -344,7 +344,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 573299213}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114192120953901298, guid: f0045fdec0bf14c369fd82bfc06312bc,
+          type: 2}
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Engineering Leech
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &573299213
@@ -565,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 573299212}
-  path: Welcome Screen
+  path: Engineering Leech
 --- !u!4 &849039162
 Transform:
   m_ObjectHideFlags: 0

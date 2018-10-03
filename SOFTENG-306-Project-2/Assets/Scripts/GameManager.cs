@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void ChangeScene(string levelName)
 	{
-        Initiate.Fade(levelName, new Color(0.968f, 0.835f, 0.403f), 1.0f);
+        Initiate.Fade(levelName, Color.black, 1.0f);
 	}
 
 	public void QuitGame()
