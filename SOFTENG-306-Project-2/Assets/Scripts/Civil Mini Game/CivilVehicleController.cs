@@ -134,7 +134,7 @@ public class CivilVehicleController : MonoBehaviour {
         else // Lose
         {
             Debug.Log("Lose:(");
-            SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination withing the time limit.");
+            SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination within the time limit.");
             ToggleDialogDisplay(Dialog, "GoodPanel", false);
             ToggleDialogDisplay(Dialog, "BadPanel", true);
         }
