@@ -42,22 +42,22 @@ _Edit the above paths to match your own enviroment
  Find more info [here](https://gist.github.com/Ikalou/197c414d62f45a1193fd)
  
  ## Playing
-Checkout the “PROTOTYPE” branch from github
-Open the game by and start running the game through Unity navigating to the ‘Menu’ scene and then pressing the play button located in the the Unity interface.
-Once you’ve successfully reached the Menu screen, press the button marked with the ‘Play’ text to progress.
+1. Checkout the “PROTOTYPE” branch from github
+1. Open the game by and start running the game through Unity navigating to the ‘Menu’ scene and then pressing the play button located in the the Unity interface.
+1. Once you’ve successfully reached the Menu screen, press the button marked with the ‘Play’ text to progress.
 
 ## Gameplay
 ### Lobby
-Now you’ve reached the lobby, you can wondering and around talk the NPCs by pressing spacebar when within sufficient distance and then pressing the spacebar again to progress through the dialogue.
+1. Now you’ve reached the lobby, you can wondering and around talk the NPCs by pressing spacebar when within sufficient distance and then pressing the spacebar again to progress through the dialogue.
 
 ### Minigames
-Walk to the elevator and progress to the Leech level, you’ll know when you’ve reached this level when you’re in a level with many stalls listing different engineering specializations on them.
-Talk to any of the instructors standing nearby to the stalls and choose the ‘Play [Specialization] Game’ button when presented the option.
+1. Walk to the elevator and progress to the Leech level, you’ll know when you’ve reached this level when you’re in a level with many stalls listing different engineering specializations on them.
+1. Talk to any of the instructors standing nearby to the stalls and choose the ‘Play [Specialization] Game’ button when presented the option.
 Follow the instructions to progress through the selected minigame.
 
 ### Multiplayer
-Open 2 instances of the game either on different systems or on the same system.
-Making sure you’re on the same level, you should see the other player’s character moving throughout the scene.
-You can make sure the multiplayer is working by using the chat feature, this is done by pressing enter to allow text input into the textbox and then pressing enter again to send the message.
-You should observe a dialogue bubble instantiate above the corresponding players’ head.
+1. Open 2 instances of the game either on different systems or on the same system.
+1. Making sure you’re on the same level, you should see the other player’s character moving throughout the scene.
+1. You can make sure the multiplayer is working by using the chat feature, this is done by pressing enter to allow text input into the textbox and then pressing enter again to send the message.
+1. You should observe a dialogue bubble instantiate above the corresponding players’ head.
 
