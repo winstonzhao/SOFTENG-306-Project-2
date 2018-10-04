@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 using UltimateIsometricToolkit.physics;
 
 /// <summary>
@@ -36,8 +35,8 @@ public class SingleDropZone : MonoBehaviour, IDropZone
         if (prefebName != "")
         {
             // instantiate
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/" + prefebName + ".prefab", typeof(GameObject));
-            child = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + prefebName + ".prefab");
+            child = Instantiate(prefab);
             child.GetComponent<DraggableItem>().SetDropZone(this);
             child.GetComponent<DraggableItem>().HomePos = transform.position;
             Debug.Log(child.GetComponent<DraggableItem>().HomePos);
