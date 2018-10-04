@@ -6,6 +6,8 @@ using Ultimate_Isometric_Toolkit.Scripts.Pathfinding;
 using UnityEngine;
 using System;
 using System.Diagnostics;
+using Game;
+using Game.Hiscores;
 using TMPro;
 using Debug = UnityEngine.Debug;
 using UnityEngine.SceneManagement;
@@ -26,6 +28,9 @@ public class CivilVehicleController : MonoBehaviour {
     public string NextLevelName;
     public string CheatLevelName;
     public string UndoCheatLevelName;
+    public int BudgetMaxScore = 50;
+    public int TimeMaxScore = 30;
+    public int CompletionBaseScore = 20;
 
     private string PlayerName = "Anonymous";
     private TextMeshProUGUI timerArea;
@@ -34,6 +39,7 @@ public class CivilVehicleController : MonoBehaviour {
     private float currCountdownValueTenthSeconds;
     private float lastClickTime = 0;
     private float catchTime = 0.2f;
+    private int maxBudget;
 
     public bool ShowTutorial = false;
     private const int TUTORIAL_SLIDE_COUNT = 8; 
@@ -42,6 +48,7 @@ public class CivilVehicleController : MonoBehaviour {
     private void Awake()
 
     {
+        maxBudget = Budget;
         timerArea = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
         timerArea.SetText(timerLabel);
@@ -125,6 +132,9 @@ public class CivilVehicleController : MonoBehaviour {
         if (AllCarsReachedGoal()) // Win
         {
             Debug.Log("Win!!!!!!");
+            // add high score
+            AddHighScore(currCountdownValueTenthSeconds, Budget);
+            
             // set parameters in the result info
             SetPlayerName(PlayerName);
             SetTimeAndAmount((int) Math.Round(TimeLimit - currCountdownValueTenthSeconds / 10), Budget);
@@ -142,7 +152,28 @@ public class CivilVehicleController : MonoBehaviour {
         Dialog.enabled = !Dialog.enabled;
     }
 
-    
+    private void AddHighScore(float timeLeft, int budget)
+    {
+        float timeLeftPortion = timeLeft / (float) (TimeLimit*10);
+        Debug.Log(timeLeftPortion);
+        float budgetLeftPortion = budget / (float) maxBudget;
+        Debug.Log(budgetLeftPortion);
+
+        float timeScore = timeLeftPortion * TimeMaxScore;
+        Debug.Log(timeScore);
+        float budgetScore = budgetLeftPortion * BudgetMaxScore;
+        Debug.Log(budgetScore);
+
+        Score score = new Score();
+        score.Minigame = Minigames.Civil;
+        score.Value = timeScore + budgetScore + CompletionBaseScore;
+        score.CreatedAt = DateTime.Now;
+        Debug.Log(DateTime.Now);
+
+        Debug.Log(score);
+        Toolbox.Instance.Hiscores.Add(score);
+    }
+
 
     private bool AreCarsMoving()
     {
