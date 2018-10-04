@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
+using System;
 
 public class DraggableItem : Draggable
 {
@@ -10,7 +12,8 @@ public class DraggableItem : Draggable
     private bool dragging = false;
     private bool moving = false;
 
-    private IDropZone dropZone;
+    [NonSerialized]
+    public IDropZone dropZone;
 
     private List<IDropZone> newDropZones = new List<IDropZone>();
 
@@ -18,7 +21,16 @@ public class DraggableItem : Draggable
 
     Vector3 prevMousePos;
 
-    public Vector3 homePos;
+    private List<DraggableItem> connectedItems = new List<DraggableItem>();
+
+    public delegate void OnDropZoneChangedDelegate(IDropZone dropZone);
+
+    public OnDropZoneChangedDelegate OnDropZoneChanged;
+
+    private float seconds = 0.3f;
+    private float t = 0;
+
+    private Vector3 homePos;
     public override Vector3 HomePos
     {
         get
@@ -35,34 +47,43 @@ public class DraggableItem : Draggable
         }
     }
 
+    public override Vector2 Size { get; set; }
+
     // Use this for initialization
     void Start()
     {
 
     }
 
-    public void SetDropZone(IDropZone list)
+    public override void SetDropZone(IDropZone newDropZone)
     {
-        this.dropZone = list;
+        dropZone = newDropZone;
+    }
+
+    public void AddConnectedItem(DraggableItem item)
+    {
+        connectedItems.Add(item);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        //Debug.Log("mouse at (iso): ");
-        //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition));
-
         if (dragging)
         {
             Vector3 localMousePos = Input.mousePosition;
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
 
             Vector3 diff = mousePosWorld - prevMousePos;
-            //transform.Translate(diff);
-            //Debug.Log("mouse at (iso): ");
-            //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
-            GetComponent<IsoTransform>().transform.Translate(diff);
+
+            var isoTransform = GetComponent<IsoTransform>();
+            if (isoTransform != null) 
+            {
+                isoTransform.transform.Translate(diff);
+            }
+            else
+            {
+                transform.Translate(diff);
+            }
 
             if (dropZone != null) 
             {
@@ -75,13 +96,20 @@ public class DraggableItem : Draggable
 
         if (moving)
         {
-            transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            //GetComponent<Ultimate_Isometric_Toolkit.Scripts.Core.IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            
-            if (Vector3.Distance(transform.position, target) < 0.01f)
+            // Move back to home position
+
+            var tdiff = t;
+            t += Time.deltaTime / seconds;
+            if (t >= 1)
             {
                 moving = false;
+
+                // Reset t so position is not overshot
+                t = 1;
             }
+            tdiff = t - tdiff;
+
+            transform.position += tdiff * target;
         }
     }
 
@@ -93,7 +121,6 @@ public class DraggableItem : Draggable
 
     void OnMouseLeave()
     {
-        //Debug.Log("mouse leave");
         mouseInside = false;
     }
 
@@ -102,12 +129,13 @@ public class DraggableItem : Draggable
         if (!mouseInside) return;
         dragging = true;
         moving = false;
-        GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) spriteRenderer.sortingOrder = 1;
+
         Vector3 mousePos = Input.mousePosition;
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
         prevMousePos = mousePosWorld;
-
-        //Debug.Log("mouse clicked");
 
         if (dropZone != null)
         {
@@ -118,15 +146,15 @@ public class DraggableItem : Draggable
     void OnMouseUp()
     {
         dragging = false;
-        if (newDropZones.Count > 0)
+        if (newDropZones.Count > 0 && newDropZones[0] != dropZone)
         {
             if (dropZone != null) 
             {
                 dropZone.OnItemRemove(this);
+                connectedItems.ForEach(i => dropZone.OnItemRemove(i));
             }
-            
-            newDropZones[0].OnDrop(this);
-            dropZone = newDropZones[0];
+        
+            OnDrop(newDropZones[0]);
             newDropZones.Clear();
         }
         else
@@ -139,19 +167,32 @@ public class DraggableItem : Draggable
         MoveTo(homePos);
     }
 
+    private void OnDrop(IDropZone newDropZone)
+    {
+        newDropZone.OnDrop(this);
+        if (OnDropZoneChanged != null) OnDropZoneChanged(newDropZone);
+
+        foreach (var item in connectedItems)
+        {
+            newDropZone.OnDrop(item);
+            item.dropZone = newDropZone;
+            item.MoveTo(item.HomePos);
+        }
+        dropZone = newDropZone;
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
-        //Debug.Log("trigger enter");
         if (!dragging) return;
-        
+    
         var possibleDropZone = col.GetComponent<IDropZone>();
-        if (possibleDropZone == null) return;
+        if (possibleDropZone == null || !possibleDropZone.CanDrop(this)) return;
         
         foreach(var dropZone in newDropZones)
         {
             dropZone.OnDragExit(this);
         }
-        
+    
         newDropZones.Insert(0, possibleDropZone);
         newDropZones[0].OnDragEnter(this);
     }
@@ -162,7 +203,7 @@ public class DraggableItem : Draggable
 
         var possibleDropZone = col.GetComponent<IDropZone>();
         if (possibleDropZone == null) return;
-        
+    
         var prevIndex = newDropZones.IndexOf(possibleDropZone);
         if (prevIndex > -1)
         {
@@ -186,8 +227,10 @@ public class DraggableItem : Draggable
     {
         if (dropZone == null) return;
 
+        t = 0;
         moving = true;
-        target = newPos;
-        GetComponent<SpriteRenderer>().sortingOrder = 0;
+        target = newPos - transform.position;
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) spriteRenderer.sortingOrder = 0;
     }
 }

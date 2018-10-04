@@ -143,6 +143,11 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().UpdateBudget(-ItemPrice);
     }
 
+    public bool CanDrop(Draggable item)
+    {
+        return true;
+    }
+
     /*
      * Enable or disable the drop zone by changing whether or not it can be hit by a ray cast
      */

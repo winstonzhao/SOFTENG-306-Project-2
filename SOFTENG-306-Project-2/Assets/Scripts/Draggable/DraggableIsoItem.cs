@@ -47,6 +47,8 @@ public class DraggableIsoItem : Draggable
         }
     }
 
+    public override Vector2 Size { get; set; }
+
     // Use this for initialization
     void Start()
     {
@@ -56,6 +58,15 @@ public class DraggableIsoItem : Draggable
     public void SetDropZone(IsoDropZone list)
     {
         this.dropZone = list;
+    }
+
+    public override void SetDropZone(IDropZone list)
+    {
+        var isoDropZone = list as IsoDropZone;
+        if (isoDropZone != null)
+        {
+            SetDropZone(isoDropZone);
+        }
     }
 
     // Update is called once per frame

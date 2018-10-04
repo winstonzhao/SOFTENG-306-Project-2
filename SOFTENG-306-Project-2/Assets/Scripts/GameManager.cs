@@ -1,46 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Multiplayer;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-	public static GameManager instance;
-	private Player _player;
+    public Player Player;
 
-	
-	private void Awake()
-	{
-		Debug.Log("gameManager Alive");
-		//Check if instance already exists
-		if (instance == null)
-                
-			//if not, set instance to this
-			instance = this;
-            
-		//If instance already exists and it's not this:
-		else if (instance != this)
-                
-			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-			Destroy(gameObject);    
-            
-		//Sets this to not be destroyed when reloading scene
-		DontDestroyOnLoad(gameObject);
-	}
+    private void Awake()
+    {
+        var userId = Mathf.RoundToInt(Random.value * 100000);
+        Player = new Player { Username = "Luna Lovegood " + userId };
+    }
 
-	public void ChangeScene(string levelName)
-	{
-		SceneManager.LoadScene(levelName);
-	}
+    public void ChangeScene(string levelName)
+    {
+        Initiate.Fade(levelName, Color.black, 1.0f);
+    }
 
-	public void QuitGame()
-	{
-		Application.Quit();
-	}
-
-	public Player Player
-	{
-		get { return _player; }
-		set { _player = value; }
-	}
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

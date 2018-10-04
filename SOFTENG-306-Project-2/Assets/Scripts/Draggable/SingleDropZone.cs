@@ -2,22 +2,27 @@ using UnityEngine;
 using UnityEditor;
 using UltimateIsometricToolkit.physics;
 
+/// <summary>
+/// An implementation of IDropZone that can only contain a single item
+/// </summary>
 [RequireComponent(typeof(IsoCollider))]
-//[RequireComponent(typeof(Rigidbody2D))]
 public class SingleDropZone : MonoBehaviour, IDropZone
 {
 
-    private  GameObject child;
+    private GameObject child;
 
     public string prefebName;
 
     private Draggable currentItem;
 
+    private SpriteRenderer spriteRenderer;
+
     public void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         var rigidbody = GetComponent<Rigidbody2D>();
-        if (rigidbody == null) 
+        if (rigidbody == null)
         {
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
@@ -34,13 +39,13 @@ public class SingleDropZone : MonoBehaviour, IDropZone
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/" + prefebName + ".prefab", typeof(GameObject));
             child = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
             child.GetComponent<DraggableItem>().SetDropZone(this);
-            child.GetComponent<DraggableItem>().homePos = transform.position;
-            Debug.Log(child.GetComponent<DraggableItem>().homePos);
+            child.GetComponent<DraggableItem>().HomePos = transform.position;
+            Debug.Log(child.GetComponent<DraggableItem>().HomePos);
             if (child)
             {
                 Debug.Log("new prefeb created");
             }
-            
+
         }
     }
 
@@ -52,25 +57,18 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     public void OnDragEnter(Draggable item)
     {
         SetDropZoneActive(false);
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
+        spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
     }
 
     public void OnDragExit(Draggable item)
     {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
         SetDropZoneActive(true);
         Debug.Log("Dragged away");
-        
-
     }
 
     public void OnDragFinish(Draggable item)
     {
-        //if (!item.GetComponent<IsoCollider>().GetComponent<Collider>().IsTouching(GetComponent<IsoCollider>()))
-        //{
-        //    // disable if we need the snapback effect
-        //    //item.GetComponent<DraggableItem>().SetDropZone(null);
-        //}
         SetDropZoneActive(false);
 
         GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
@@ -85,19 +83,24 @@ public class SingleDropZone : MonoBehaviour, IDropZone
     {
         currentItem = item;
         currentItem.HomePos = transform.position;
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-        GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
+        spriteRenderer.sortingLayerName = "BackGround";
     }
 
     public void OnItemDrag(Draggable item)
     {
-        
+
     }
 
     public void OnItemRemove(Draggable item)
     {
         currentItem = null;
         createPrefeb();
+    }
+
+    public bool CanDrop(Draggable item)
+    {
+        return true;
     }
 
     /*
