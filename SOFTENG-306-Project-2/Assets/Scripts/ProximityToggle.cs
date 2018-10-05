@@ -2,7 +2,7 @@ using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LocalityToggle : MonoBehaviour
+public class ProximityToggle : MonoBehaviour
 {
     public float Threshold;
 
