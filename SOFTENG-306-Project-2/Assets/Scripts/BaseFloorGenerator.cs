@@ -49,7 +49,7 @@ public class BaseFloorGenerator : MonoBehaviour
         var parentY = isoTransform.Position.y;
         var parentZ = isoTransform.Position.z;
 
-        var collider = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/invis_collider.prefab", typeof(GameObject));
+        var collider = Resources.Load<GameObject>("Prefabs/invis_collider.prefab");
 
         var height = 1.0f;
 
@@ -85,9 +85,9 @@ public class BaseFloorGenerator : MonoBehaviour
         }
     }
 
-    private GameObject Insert(Object prefab, String name, float x, float y, float z)
+    private GameObject Insert(GameObject prefab, String name, float x, float y, float z)
     {
-        GameObject gameObject = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        GameObject gameObject = Instantiate(prefab);
         gameObject.transform.parent = transform;
         gameObject.name = name;
 

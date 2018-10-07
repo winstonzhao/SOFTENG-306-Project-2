@@ -53,6 +53,8 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
             }
         }
 
+        private bool sorted = false;
+
         [ExposeProperty]
         public Isometric.Projection Projection
         {
@@ -121,6 +123,16 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Core
             if (SortingStrategy != null)
                 SortingStrategy.Sort();
             Dirty = false;
+
+            if (!sorted)
+            {
+                foreach (var isoTransform in FindObjectsOfType<IsoTransform>())
+                {
+                    Resolve(isoTransform);
+                }
+                sorted = true;
+            }
+
         }
 
         #endregion
