@@ -58,8 +58,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
 
     void FixedUpdate()
     {
-        //if (prefebName != null && !CivilVehicleController.instance.IsBudgetAvailable(ItemPrice))
-        if (prefebName != null && !GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().IsBudgetAvailable(ItemPrice))
+        //if (prefebName != null && !CivilLevelController.instance.IsBudgetAvailable(ItemPrice))
+        if (prefebName != null && !GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().IsBudgetAvailable(ItemPrice))
         {
 
             //Debug.Log("Budget not available for " + prefebName);
@@ -114,8 +114,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         // update budget if this drop zone is a factory
         if (prefebName != "")
         {
-            //CivilVehicleController.instance.UpdateBudget(ItemPrice);
-            GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().UpdateBudget(ItemPrice);
+            //CivilLevelController.instance.UpdateBudget(ItemPrice);
+            GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().UpdateBudget(ItemPrice);
             // delete the returned block to prevent duplicated building blocks been instantiated
             item.gameObject.SetActive(false);
         }
@@ -139,8 +139,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         SetDropZoneActive(true);
 
         // update budget
-        //CivilVehicleController.instance.UpdateBudget(-ItemPrice);
-        GameObject.Find("CivilVehicleController").GetComponent<CivilVehicleController>().UpdateBudget(-ItemPrice);
+        //CivilLevelController.instance.UpdateBudget(-ItemPrice);
+        GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().UpdateBudget(-ItemPrice);
     }
 
     public bool CanDrop(Draggable item)

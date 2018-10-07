@@ -33652,7 +33652,7 @@ GameObject:
   - component: {fileID: 1831151251}
   - component: {fileID: 1831151252}
   m_Layer: 0
-  m_Name: CivilVehicleController
+  m_Name: CivilLevelController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33691,12 +33691,15 @@ MonoBehaviour:
   - {fileID: 1957706337}
   - {fileID: 891843050}
   Dialog: {fileID: 1507861440}
-  Tutorial: {fileID: 2136563544}
   TimeLimit: 5
   Budget: 2500
   NextLevelName: Civil Level 2
   CheatLevelName: Civil Level 1 Cheating
   UndoCheatLevelName: 
+  BudgetMaxScore: 50
+  TimeMaxScore: 30
+  CompletionBaseScore: 20
+  Tutorial: {fileID: 2136563544}
   ShowTutorial: 1
 --- !u!1001 &1832064513
 Prefab:

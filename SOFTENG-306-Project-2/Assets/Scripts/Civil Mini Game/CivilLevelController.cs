@@ -15,13 +15,12 @@ using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using UnityEngine.Analytics;
 
-public class CivilVehicleController : MonoBehaviour {
+public class CivilLevelController : MonoBehaviour {
 
-    //public static CivilVehicleController instance;
     public List<AstarAgent> AstarAgents = new List<AstarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
     public Canvas Dialog;
-    public Canvas Tutorial;
+
     
     public int TimeLimit = 10;
     public int Budget = 1000;
@@ -31,24 +30,23 @@ public class CivilVehicleController : MonoBehaviour {
     public int BudgetMaxScore = 50;
     public int TimeMaxScore = 30;
     public int CompletionBaseScore = 20;
+    public Canvas Tutorial;
 
-    private string PlayerName = "Anonymous";
+    private string PlayerName;
     private TextMeshProUGUI timerArea;
     private bool timerNotStopped = true;
     private TextMeshProUGUI budgetArea;
     private float currCountdownValueTenthSeconds;
-    private float lastClickTime = 0;
-    private float catchTime = 0.2f;
     private int maxBudget;
-
+    private int tutorialSlideNumber;
+    private const int TUTORIAL_SLIDE_COUNT = 8;
 
     public bool ShowTutorial = false;
-    private const int TUTORIAL_SLIDE_COUNT = 8; 
-    private int tutorialSlideNumber;
 
     private void Awake()
 
     {
+        PlayerName = CivilGameManager.instance.playerName;
         maxBudget = Budget;
         timerArea = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
@@ -65,33 +63,7 @@ public class CivilVehicleController : MonoBehaviour {
 
     void Update()
     {
-        CheckMouseClickForRotation();
-    }
-
-    private void CheckMouseClickForRotation()
-    {
-        //mouse ray in isometric coordinate system 
-        var isoRay = Isometric.MouseToIsoRay();
-
-        //do an isometric raycast on double left mouse click 
-        if(Input.GetMouseButtonDown(0)){
-            if(Time.time-lastClickTime < catchTime){
-                //double click
-                Debug.Log("double click");
-                IsoRaycastHit isoRaycastHit;
-                if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
-                {
-                    GameObject hitObject = isoRaycastHit.Collider.gameObject;
-                    Debug.Log("we clicked on " + hitObject.name + " at " + isoRaycastHit.Point + " tagged as " + hitObject.tag);
-                    if (hitObject.tag == "BuildingBlock")
-                    {
-                        hitObject.GetComponent<DraggableIsoItem>().Rotate();
-                        Debug.Log(hitObject.name + " rotated to direction " + hitObject.GetComponent<DraggableIsoItem>().direction);
-                    }
-                }
-            }
-            lastClickTime=Time.time;
-        }
+        CivilGameManager.CheckMouseClickForRotation();
     }
 
     public void run()
@@ -108,9 +80,9 @@ public class CivilVehicleController : MonoBehaviour {
         }
         StartCoroutine(StartCountdown(TimeLimit));
         StartCoroutine(WaitCarsStop());
-    }
+    } // Level
 
-    IEnumerator WaitCarsStop()
+    IEnumerator WaitCarsStop() // level
     {
         yield return new WaitUntil(() => !AreCarsMoving());
 
@@ -123,21 +95,21 @@ public class CivilVehicleController : MonoBehaviour {
             // set parameters in the result info
             SetPlayerName(PlayerName);
             SetTimeAndAmount((int) Math.Round(TimeLimit - currCountdownValueTenthSeconds / 10), Budget);
-            ToggleDialogDisplay(Dialog, "BadPanel", false);
-            ToggleDialogDisplay(Dialog, "GoodPanel", true);
+            CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", false);
+            CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", true);
         }
         else // Lose
         {
             Debug.Log("Lose:(");
             SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination within the time limit.");
-            ToggleDialogDisplay(Dialog, "GoodPanel", false);
-            ToggleDialogDisplay(Dialog, "BadPanel", true);
+            CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", false);
+            CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", true);
         }
         timerNotStopped = false;
         Dialog.enabled = !Dialog.enabled;
     }
 
-    private void AddHighScore(float timeLeft, int budget)
+    private void AddHighScore(float timeLeft, int budget) // Level
     {
         float timeLeftPortion = timeLeft / (float) (TimeLimit*10);
         Debug.Log(timeLeftPortion);
@@ -159,8 +131,7 @@ public class CivilVehicleController : MonoBehaviour {
         Toolbox.Instance.Hiscores.Add(score);
     }
 
-
-    private bool AreCarsMoving()
+    private bool AreCarsMoving() // Level
     {
      
         foreach (AstarAgent agent in AstarAgents)
@@ -185,16 +156,7 @@ public class CivilVehicleController : MonoBehaviour {
         }
 
         return true;
-    }
-
-    private void ToggleDialogDisplay(Canvas canvas, string groupName, bool show)
-    {
-        GameObject group = FindObject(canvas.gameObject, groupName).gameObject;
-        if (group != null)
-        {
-            group.SetActive(show);
-        }
-    }
+    } // Level
 
     private void SetTimeAndAmount(int timeInSeconds, int amount)
     {
@@ -206,22 +168,21 @@ public class CivilVehicleController : MonoBehaviour {
         text = text.Replace("<amount>", amount.ToString());
 
         resultInfoArea.SetText(text);
-    }
+    }   // Level
 
     private void SetPlayerName(string name)
     {
         TextMeshProUGUI nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         nameArea.SetText(name);
-    }
+    }   // Level, TODO rename
 
-    private void SetFailInfo(string failInfo)
+    private void SetFailInfo(string failInfo) // Level
     {
         TextMeshProUGUI failInfoArea = GameObject.Find("FailInfo").GetComponent<TextMeshProUGUI>();
         failInfoArea.SetText(failInfo);
     }
 
-    
-    public IEnumerator StartCountdown(int timeLimit)
+    IEnumerator StartCountdown(int timeLimit)
     {
         float countdownValue = (TimeLimit - 1) * 10;
         currCountdownValueTenthSeconds = countdownValue;
@@ -233,7 +194,7 @@ public class CivilVehicleController : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
             currCountdownValueTenthSeconds--;
         }
-    }
+    }   // Level
 
     public void UpdateBudget(int itemPrice)
     {
@@ -241,9 +202,9 @@ public class CivilVehicleController : MonoBehaviour {
         budgetArea.SetText("$" + Budget);
         Debug.Log("updated budget to " + Budget);
         UpdateBudgetAvailability();
-    }
+    }   // Level
 
-    private void UpdateBudgetAvailability()
+    private void UpdateBudgetAvailability() // Level
     {
         GameObject[] tileFactories = GameObject.FindGameObjectsWithTag("TileFactory");
         foreach (GameObject tileFactory in tileFactories)
@@ -260,7 +221,7 @@ public class CivilVehicleController : MonoBehaviour {
         }
     }
 
-    public bool IsBudgetAvailable(int itemPrice)
+    public bool IsBudgetAvailable(int itemPrice)  // Level
     {
         return itemPrice <= Budget;
     }
@@ -268,76 +229,65 @@ public class CivilVehicleController : MonoBehaviour {
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    }   // Level
 
     public void NextLevel()
     {
         Debug.Log("Next level " + NextLevelName);
         SceneManager.LoadScene(NextLevelName);
-    }
+    }   // Level
 
     public void Cheat()
     {
         Debug.Log("Cheat level " + CheatLevelName);
         SceneManager.LoadScene(CheatLevelName);
-    }
+    }   // Level
 
     public void UndoCheat()
     {
         Debug.Log("Undo cheat, level " + UndoCheatLevelName);
         SceneManager.LoadScene(UndoCheatLevelName);
-    }
+    } // Level
 
-    public void StartTutorial()
+    public void CloseDialog()
+    {
+        Dialog.enabled = !Dialog.enabled;
+    }   // Level, TODO rename
+
+
+    public void StartTutorial() // Super
     {
         Tutorial.gameObject.SetActive(true);
         tutorialSlideNumber = 1;
         for (int i = 1; i < TUTORIAL_SLIDE_COUNT + 1; i++)
         {
-            ToggleDialogDisplay(Tutorial, "Slide" + i, false);
+            CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + i, false);
         }
-        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
+        CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
 
     }
+
 
     public void StopTutorial()
     {
         Tutorial.gameObject.SetActive(false);
-    }
+    }   // Super
+
+
 
     public void NextTutorialSlide()
     {
-        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
+        CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
         tutorialSlideNumber++;
-        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
-        
-    }
-    
+        CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
+
+    } // Super
+
     public void PreviousTutorialSlide()
     {
-        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
+        CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
         tutorialSlideNumber--;
-        ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
-    }
-
-    public void CloseDialog()
-    {
-        Dialog.enabled = !Dialog.enabled;
-    }
-    
-    
-    /**
-     * Find an object in a parent object including parent objects
-     */
-    public GameObject FindObject(GameObject parent, string name)
-    {
-        Transform[] trs= parent.GetComponentsInChildren<Transform>(true);
-        foreach(Transform t in trs){
-            if(t.name == name){
-                return t.gameObject;
-            }
-        }
-        return null;
-    }
+        CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
+    }   // Super
 
 }
