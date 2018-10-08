@@ -17,7 +17,7 @@ using UnityEngine.Analytics;
 
 public class CivilLevelController : MonoBehaviour {
 
-    public List<AstarAgent> AstarAgents = new List<AstarAgent>();
+    public List<CivilCarAgent> CarAgents = new List<CivilCarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
     public Canvas Dialog;
 
@@ -70,11 +70,11 @@ public class CivilLevelController : MonoBehaviour {
     {
         foreach (GoalAgent goal in Goals)
         {
-            foreach (AstarAgent agent in AstarAgents)
+            foreach (CivilCarAgent agent in CarAgents)
             {
                 if (agent.Type == goal.GoalType)
                 {
-                    agent.MoveTo(goal.GetComponentInParent<IsoTransform>().Position);
+                    agent.StartMoving(goal.GetComponentInParent<IsoTransform>().Position);
                 }
             }
         }
@@ -84,7 +84,7 @@ public class CivilLevelController : MonoBehaviour {
 
     IEnumerator WaitCarsStop() // level
     {
-        yield return new WaitUntil(() => !AreCarsMoving());
+        yield return new WaitUntil(() => currCountdownValueTenthSeconds <= 0 || !AreCarsMoving());
 
         if (AllCarsReachedGoal()) // Win
         {
@@ -134,7 +134,7 @@ public class CivilLevelController : MonoBehaviour {
     private bool AreCarsMoving() // Level
     {
      
-        foreach (AstarAgent agent in AstarAgents)
+        foreach (CivilCarAgent agent in CarAgents)
         {
             if (!agent.hasReachedGoal && !agent.noPathFound)
             {
@@ -147,7 +147,7 @@ public class CivilLevelController : MonoBehaviour {
 
     private bool AllCarsReachedGoal()
     {
-        foreach (AstarAgent agent in AstarAgents)
+        foreach (CivilCarAgent agent in CarAgents)
         {
             if (!agent.hasReachedGoal)
             {
@@ -188,7 +188,7 @@ public class CivilLevelController : MonoBehaviour {
         currCountdownValueTenthSeconds = countdownValue;
         while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
         {
-            Debug.Log((currCountdownValueTenthSeconds) / 10);
+            //Debug.Log((currCountdownValueTenthSeconds) / 10);
             string timerLabel = String.Format("{0:00}:{1:00}", Math.Floor((currCountdownValueTenthSeconds) / 10), (currCountdownValueTenthSeconds % 10) * 10);
             timerArea.SetText(timerLabel);
             yield return new WaitForSeconds(0.1f);
