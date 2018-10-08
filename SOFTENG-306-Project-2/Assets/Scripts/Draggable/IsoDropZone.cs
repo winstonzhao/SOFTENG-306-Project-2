@@ -115,7 +115,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         if (prefebName != "")
         {
             //CivilLevelController.instance.UpdateBudget(ItemPrice);
-            GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().UpdateBudget(ItemPrice);
+            GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().UpdateBudget(((DraggableIsoItem)item).Price);
             // delete the returned block to prevent duplicated building blocks been instantiated
             item.gameObject.SetActive(false);
         }

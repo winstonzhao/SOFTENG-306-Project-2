@@ -21,6 +21,7 @@ public class DraggableIsoItem : Draggable
     public Sprite SWSprite;
     public Sprite NWSprite;
     public IsoDropZone dropZone;
+    public int Price;
 
 
     private bool mouseInside = false;
