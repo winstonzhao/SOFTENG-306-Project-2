@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System;
+using UltimateIsometricToolkit.physics;
+using Ultimate_Isometric_Toolkit.Scripts.physics;
+using Ultimate_Isometric_Toolkit.Scripts.Utils;
 
 public class DraggableIsoItem : Draggable
 {
@@ -23,6 +26,7 @@ public class DraggableIsoItem : Draggable
     private bool mouseInside = false;
     private bool dragging = false;
     private bool moving = false;
+    private IsoCollider currentHitCollider;
 
     private List<IsoDropZone> newDropZones = new List<IsoDropZone>();
 
@@ -78,6 +82,35 @@ public class DraggableIsoItem : Draggable
 
         if (dragging)
         {
+            // detect iso ray cast collision
+            //mouse ray in isometric coordinate system 
+            var isoRay = Isometric.MouseToIsoRay();
+            IsoRaycastHit isoRaycastHit;
+            if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
+            {
+                // GameObject hitObject = isoRaycastHit.Collider.gameObject;
+                IsoCollider hitCollider = isoRaycastHit.Collider;
+                if (hitCollider != currentHitCollider)
+                {
+                    Debug.Log("block ray cast hits " + hitCollider.gameObject.name + " at " + isoRaycastHit.Point);
+                    if (currentHitCollider != null)
+                    {
+                        OnIsoTriggerExitDZ(currentHitCollider);
+                    }
+                    OnIsoTriggerEnterDZ(hitCollider);
+                    currentHitCollider = hitCollider;
+                }
+            }
+            else
+            {
+                if (currentHitCollider != null)
+                {
+                    Debug.Log("block ray cast exit everything");
+                    OnIsoTriggerExitDZ(currentHitCollider);
+                    currentHitCollider = null;
+                }
+            }
+            
             Vector3 localMousePos = Input.mousePosition;
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
 
@@ -122,6 +155,7 @@ public class DraggableIsoItem : Draggable
 
     void OnMouseDown()
     {
+        //Debug.Log("Mouse down");
         if (!mouseInside) return;
         dragging = true;
         moving = false;
@@ -140,6 +174,7 @@ public class DraggableIsoItem : Draggable
 
     void OnMouseUp()
     {
+        Debug.Log("Mouse up");
         dragging = false;
         
         if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name))   // dropped on a new available drop zone
@@ -176,25 +211,26 @@ public class DraggableIsoItem : Draggable
         MoveTo(homePos);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnIsoTriggerEnterDZ(IsoCollider col)
+         {
+             Debug.Log("trigger enter");
+             if (!dragging) return;
+     
+             var possibleDropZone = col.GetComponent<IsoDropZone>();
+             if (possibleDropZone == null) return;
+     
+             foreach (var dropZone in newDropZones)
+             {
+                 dropZone.OnDragExit(this);
+             }
+     
+             newDropZones.Insert(0, possibleDropZone);
+             newDropZones[0].OnDragEnter(this);
+         }
+
+    void OnIsoTriggerExitDZ(IsoCollider col)
     {
-        //Debug.Log("trigger enter");
-        if (!dragging) return;
-
-        var possibleDropZone = col.GetComponent<IsoDropZone>();
-        if (possibleDropZone == null) return;
-
-        foreach (var dropZone in newDropZones)
-        {
-            dropZone.OnDragExit(this);
-        }
-
-        newDropZones.Insert(0, possibleDropZone);
-        newDropZones[0].OnDragEnter(this);
-    }
-
-    void OnTriggerExit2D(Collider2D col)
-    {
+        Debug.Log("trigger exit");
         if (!dragging) return;
 
         var possibleDropZone = col.GetComponent<IsoDropZone>();

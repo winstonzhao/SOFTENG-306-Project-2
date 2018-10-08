@@ -70,7 +70,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     {
         if(isEnabled)
         {
-            SetDropZoneActive(false);
+            //SetDropZoneActive(false);
             GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
         }
 
