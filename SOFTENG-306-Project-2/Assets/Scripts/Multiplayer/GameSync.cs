@@ -1,15 +1,37 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Multiplayer
 {
     [Serializable]
     public class GameSync
     {
-        public string currentTime;
+        [SerializeField]
+        private string currentTime;
 
-        public int lastChatMessageId;
+        [SerializeField]
+        private int lastChatMessageId;
 
-        public List<Player> players;
+        [SerializeField]
+        private List<Player> players;
+
+        public string CurrentTime
+        {
+            get { return currentTime; }
+            set { currentTime = value; }
+        }
+
+        public int LastChatMessageId
+        {
+            get { return lastChatMessageId; }
+            set { lastChatMessageId = value; }
+        }
+
+        public List<Player> Players
+        {
+            get { return players; }
+            set { players = value; }
+        }
     }
 }

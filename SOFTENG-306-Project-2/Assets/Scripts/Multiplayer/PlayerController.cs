@@ -91,10 +91,10 @@ namespace Multiplayer
 
             if (active != null)
             {
-                SpeechBubble.Message = active.message;
+                SpeechBubble.Message = active.Message;
 
                 // Get rid of the message if it's been shown for longer than the active duration
-                if (DateTime.Now - active.sentAtDateTime > ChatController.ActiveDuration)
+                if (DateTime.Now - active.SentAt > ChatController.ActiveDuration)
                 {
                     active = null;
                     ActiveChatMessage = null;

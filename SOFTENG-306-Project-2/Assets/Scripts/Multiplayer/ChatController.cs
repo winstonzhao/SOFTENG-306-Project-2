@@ -36,7 +36,7 @@ namespace Multiplayer
             }
 
             // Ask the server for the new messages
-            var request = new GetMessages { sinceMessageId = LastChatMessageId, limit = 20 };
+            var request = new GetMessages { SinceMessageId = LastChatMessageId, Limit = 20 };
             var json = JsonUtility.ToJson(request);
             MultiplayerController.SendAsync("get-messages\n" + json, success => { });
         }
@@ -51,27 +51,27 @@ namespace Multiplayer
             foreach (var message in messages)
             {
                 // This assumes that the messages are received in ascending id order
-                if (message.id > LastChatMessageId)
+                if (message.Id > LastChatMessageId)
                 {
                     // Clear the optimistic message once we receive a message sent by our user
-                    if (message.owner == GameManager.Player.Username)
+                    if (message.Owner == GameManager.Player.Username)
                     {
                         OptimisticMessage = null;
                     }
 
-                    LastChatMessageId = message.id;
+                    LastChatMessageId = message.Id;
                     Messages.Add(message);
 
                     // Todo - use the server time in the future - I suspect something's wrong
                     // Parse the ISO-8601 date into a workable format
-                    message.sentAtDateTime = DateTime.Now;
+                    message.SentAt = DateTime.Now;
                 }
             }
         }
 
         public void Send(string message)
         {
-            var chatMessage = new ChatMessage { message = message, sentAtDateTime = DateTime.Now };
+            var chatMessage = new ChatMessage { Message = message, SentAt = DateTime.Now };
 
             var json = JsonUtility.ToJson(chatMessage);
             var payload = "send-chat-message\n" + json;
@@ -103,12 +103,12 @@ namespace Multiplayer
             {
                 var message = Messages[i];
 
-                if (message.id <= sinceMessageId)
+                if (message.Id <= sinceMessageId)
                 {
                     return null;
                 }
 
-                if (message.owner == username)
+                if (message.Owner == username)
                 {
                     return message;
                 }

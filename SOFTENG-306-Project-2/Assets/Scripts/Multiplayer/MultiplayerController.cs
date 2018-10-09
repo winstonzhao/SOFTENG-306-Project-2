@@ -158,8 +158,8 @@ namespace Multiplayer
             var response = JsonUtility.FromJson<GameInitialization>(json);
             if (response != null)
             {
-                SyncPeriod = response.tickPeriod / 1000.0f;
-                SetTimeDriftFrom(response.currentDateTime);
+                SyncPeriod = response.TickPeriod / 1000.0f;
+                SetTimeDriftFrom(response.CurrentDateTime);
             }
         }
 
@@ -197,7 +197,7 @@ namespace Multiplayer
             var response = JsonUtility.FromJson<GetMessages>(json);
             if (response != null)
             {
-                ChatController.Sync(response.messages);
+                ChatController.Sync(response.Messages);
             }
         }
 
@@ -211,7 +211,7 @@ namespace Multiplayer
         {
             var players = new Dictionary<string, Player>();
 
-            foreach (var player in sync.players)
+            foreach (var player in sync.Players)
             {
                 if (player.Scene == GameManager.Player.Scene)
                 {
@@ -226,10 +226,10 @@ namespace Multiplayer
 
             if (ChatController != null)
             {
-                ChatController.Sync(sync.lastChatMessageId);
+                ChatController.Sync(sync.LastChatMessageId);
             }
 
-            SetTimeDriftFrom(sync.currentTime);
+            SetTimeDriftFrom(sync.CurrentTime);
         }
 
         private void SetTimeDriftFrom(string time)

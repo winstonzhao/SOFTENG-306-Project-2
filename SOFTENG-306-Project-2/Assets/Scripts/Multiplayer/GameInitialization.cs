@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Multiplayer
 {
@@ -8,15 +9,29 @@ namespace Multiplayer
     [Serializable]
     public class GameInitialization
     {
+        [SerializeField]
+        private string currentDateTime;
+
+        [SerializeField]
+        private int tickPeriod;
+
         /// <summary>
         /// The server's current time given in ISO 8601. 
         /// Used to calculate time drift between the client and server
         /// </summary>
-        public string currentDateTime;
+        public string CurrentDateTime
+        {
+            get { return currentDateTime; }
+            set { currentDateTime = value; }
+        }
 
         /// <summary>
         /// The time in milliseconds between each game tick 
         /// </summary>
-        public int tickPeriod;
+        public int TickPeriod
+        {
+            get { return tickPeriod; }
+            set { tickPeriod = value; }
+        }
     }
 }
