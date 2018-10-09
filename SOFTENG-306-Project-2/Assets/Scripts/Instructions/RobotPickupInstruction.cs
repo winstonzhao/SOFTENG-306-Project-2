@@ -54,7 +54,7 @@ namespace Instructions
             robot = target;
             var didMove = false;
 
-            didMove = robot.PickUpItem((RobotController.Direction) moveDirection);
+            didMove = robot.PickUpItem(moveDirection);
 
             if (!didMove) throw new InstructionException();
         }

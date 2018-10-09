@@ -50,12 +50,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         output.GetComponent<SpriteRenderer>().sprite = o;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    // Used to initialised diferent levels
+    // Used to initialised different levels
     public void GeneratedLevel(int level)
     {
         foreach (var go in generatedObjects)
@@ -69,7 +64,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             case 1:
                 numElements = 1;
-                layoutMap = new Layout[11, 9]
+                layoutMap = new[,]
                 {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
@@ -192,23 +187,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
         return objectMap[x, z];
     }
 
-    IEnumerator EndScreen()
+    private IEnumerator EndScreen()
     {
         yield return new WaitForSeconds(1.0f);
         endScreen.GetComponent<SoftwareEndScreen>().Open();
     }
-
-    // Used for debugging and printing the layout of the scene
-    //public void PrintMap()
-    //{
-    //    for (int i = 0; i < 11; i++)
-    //    {
-    //        string map = "";
-    //        for (int j = 0; j < 9; j++)
-    //        {
-    //            map = map + layoutMap[i, j] + ": ";
-    //        }
-    //        Debug.Log(map);
-    //    }
-    //}
 }

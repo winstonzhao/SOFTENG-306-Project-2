@@ -53,7 +53,7 @@ namespace Instructions
             instructionExecutor = executor;
             robot = target;
             var didMove = false;
-            didMove = robot.Move((RobotController.Direction)moveDirection);
+            didMove = robot.Move(moveDirection);
 
             if (!didMove) throw new InstructionException();
         }

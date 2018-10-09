@@ -1,4 +1,5 @@
 using System.Collections;
+using Instructions;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
 using UnityEngine;
@@ -38,15 +39,6 @@ public class RobotController : MonoBehaviour
     // Sprites used to represent different state of the object
     private static string NO_ELEMENT = "software_minigame/Sprites/robot1";
     private static string HAS_ELEMENT = "software_minigame/Sprites/robot2";
-
-    // Enum to represent the direction for executing the particular action
-    public enum Direction
-    {
-        TopRight = 0,
-        BottomRight = 3,
-        BottomLeft = 1,
-        TopLeft = 2,
-    }
 
     // Initialization
     void Start()
@@ -139,7 +131,7 @@ public class RobotController : MonoBehaviour
     }
 
     // Moving 1 step in specified direction, return true if the command is valid
-    public bool Move(Direction direction)
+    public bool Move(Directions direction)
     {
         // Initialise position and destination vector
         var currentPos = this.GetComponent<IsoTransform>().Position;
@@ -152,16 +144,16 @@ public class RobotController : MonoBehaviour
         // Check the direction of operation and set relevant flag
         switch (direction)
         {
-            case Direction.BottomLeft:
+            case Directions.Down:
                 dx = -1;
                 break;
-            case Direction.TopLeft:
+            case Directions.Left:
                 dz = 1;
                 break;
-            case Direction.TopRight:
+            case Directions.Up:
                 dx = 1;
                 break;
-            case Direction.BottomRight:
+            case Directions.Right:
                 dz = -1;
                 break;
         }
@@ -186,7 +178,7 @@ public class RobotController : MonoBehaviour
     }
 
     // Pickup the item in the specified direction
-    public bool PickUpItem(Direction direction)
+    public bool PickUpItem(Directions direction)
     {
         if (!hasElement || (carrying == null))
         {
@@ -198,16 +190,16 @@ public class RobotController : MonoBehaviour
             // Check the direction of operation and set relevant flag
             switch (direction)
             {
-                case Direction.TopRight:
+                case Directions.Up:
                     dx = 1;
                     break;
-                case Direction.BottomRight:
+                case Directions.Right:
                     dz = -1;
                     break;
-                case Direction.BottomLeft:
+                case Directions.Down:
                     dx = -1;
                     break;
-                case Direction.TopLeft:
+                case Directions.Left:
                     dz = 1;
                     break;
             }
@@ -227,7 +219,7 @@ public class RobotController : MonoBehaviour
     }
 
     // Drop the item to specified direction
-    public bool DropItem(Direction direction)
+    public bool DropItem(Directions direction)
     {
         if (hasElement || (carrying != null))
         {
@@ -239,16 +231,16 @@ public class RobotController : MonoBehaviour
             // Check the direction of operation and set relevant flag
             switch (direction)
             {
-                case Direction.TopRight:
+                case Directions.Up:
                     dx = 1;
                     break;
-                case Direction.BottomRight:
+                case Directions.Right:
                     dz = -1;
                     break;
-                case Direction.BottomLeft:
+                case Directions.Down:
                     dx = -1;
                     break;
-                case Direction.TopLeft:
+                case Directions.Left:
                     dz = 1;
                     break;
             }
@@ -264,9 +256,11 @@ public class RobotController : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
+    
+    
+    
 
     // Animation for moving the robot
     private IEnumerator Shift(Vector3[] path)
@@ -283,7 +277,7 @@ public class RobotController : MonoBehaviour
                 timePassed += Time.deltaTime;
                 isoTransform.Position = Vector3.Lerp(path[i], path[i + 1], timePassed / maxTimePassed);
 
-                // If time has passed then round cooridinates to nearest node.
+                // If time has passed then round coordinates to nearest node.
                 if (timePassed >= maxTimePassed)
                 {
                     var pos = isoTransform.Position;
@@ -294,14 +288,8 @@ public class RobotController : MonoBehaviour
             }
         }
 
-        // Update the offset coodinates
+        // Update the offset coordinates
         X = (int)isoTransform.Position.x + 1;
         Z = (int)isoTransform.Position.z + 1;
     }
-
-    // Used for debugging
-    //public void debug()
-    //{
-    //    generator.PrintMap();
-    //}
 }
