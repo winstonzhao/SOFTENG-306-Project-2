@@ -33,7 +33,8 @@ public class RobotController : MonoBehaviour
     {
         MOVE,
         PICKUP,
-        DROP
+        DROP,
+        SWAP
     }
 
     // Sprites used to represent different state of the object
@@ -98,7 +99,7 @@ public class RobotController : MonoBehaviour
             tempX = x < 0 ? --tempX : ++tempX;
 
             // Check for collision and add to path
-            if ((generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY))
+            if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
             {
                 path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
                 count++;
@@ -114,7 +115,7 @@ public class RobotController : MonoBehaviour
         {
             tempZ = z < 0 ? --tempZ : ++tempZ;
 
-            if ((generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY))
+            if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
             {
                 path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
                 count++;
@@ -164,23 +165,21 @@ public class RobotController : MonoBehaviour
             Debug.Log("COLLIDE");
             return false;
         }
-        else
-        {
-            // The operation is valid
-            X += dx;
-            Z += dz;
 
-            destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
-            path[1] = destPos;
-            StartCoroutine(Shift(path));
-            return true;
-        }
+        // The operation is valid
+        X += dx;
+        Z += dz;
+
+        destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
+        path[1] = destPos;
+        StartCoroutine(Shift(path));
+        return true;
     }
 
     // Pickup the item in the specified direction
     public bool PickUpItem(Directions direction)
     {
-        if (!hasElement || (carrying == null))
+        if (!hasElement || carrying == null)
         {
             // Initialise required flags
             var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
@@ -221,7 +220,7 @@ public class RobotController : MonoBehaviour
     // Drop the item to specified direction
     public bool DropItem(Directions direction)
     {
-        if (hasElement || (carrying != null))
+        if (hasElement || carrying != null)
         {
             // Initialise required flags
             int dx = 0;
@@ -251,17 +250,49 @@ public class RobotController : MonoBehaviour
                 generator.SetMapLayout(X + dx, Z + dz, Command.DROP, carrying);
                 carrying = null;
                 hasElement = false;
-                SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
-                renderer.sprite = sprite;
+                this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
         }
         return false;
     }
-    
-    
-    
 
+    public bool SwapItem(Directions direction)
+    {
+        if (hasElement || carrying != null)
+        {
+            // Initialise required flags
+            int dx = 0;
+            int dz = 0;
+            var sprite = Resources.Load<Sprite>(NO_ELEMENT);
+
+            // Check the direction of operation and set relevant flag
+            switch (direction)
+            {
+                case Directions.Up:
+                    dx = 1;
+                    break;
+                case Directions.Right:
+                    dz = -1;
+                    break;
+                case Directions.Down:
+                    dx = -1;
+                    break;
+                case Directions.Left:
+                    dz = 1;
+                    break;
+            }
+            
+            if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
+            {
+                carrying = generator.SetMapLayout(X + dx, Z + dz, Command.SWAP, carrying);
+                return true;
+            }
+        }
+
+        return false;
+    } 
+    
     // Animation for moving the robot
     private IEnumerator Shift(Vector3[] path)
     {

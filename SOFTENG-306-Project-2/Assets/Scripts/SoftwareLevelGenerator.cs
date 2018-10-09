@@ -63,7 +63,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         switch (currentLevel)
         {
             case 1:
-                numElements = 1;
+                numElements = 2;
                 layoutMap = new[,]
                 {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
@@ -150,7 +150,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     }
 
     // Used for updating the layout of the scene when a command is valid
-    public void SetMapLayout(int x, int z, RobotController.Command command, GameObject obj)
+    public GameObject SetMapLayout(int x, int z, RobotController.Command command, GameObject obj)
     {
         if (command == RobotController.Command.PICKUP)
         {
@@ -163,16 +163,30 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             Debug.Log("Drop x: " + x + " z: " + z);
             var oldPos = obj.GetComponent<IsoTransform>().Position;
-            objectMap[(int)oldPos.x, (int)oldPos.z] = null;
+            objectMap[(int) oldPos.x, (int) oldPos.z] = null;
             layoutMap[x, z] = Layout.ELEMENT;
             obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, z - 1);
             objectMap[x, z] = obj;
             objectMap[x, z].SetActive(true);
-            if (((x != inputX) || (z != inputZ)) && (objectMap[inputX, inputZ] == null)) {
+            if (((x != inputX) || (z != inputZ)) && objectMap[inputX, inputZ] == null)
+            {
                 NextInputElement();
             }
+
             CheckAnswer();
+        } 
+        else if (command == RobotController.Command.SWAP)
+        {
+            Debug.Log("Swap x: " + x + " z: " + z);
+            GameObject temp = objectMap[x, z];
+            temp.SetActive(false);
+            objectMap[x, z] = obj;
+            obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, z - 1);
+            obj.SetActive(true);
+            return temp;
         }
+
+        return null;
     }
 
     // Getter for checking if a specific index is empty or not

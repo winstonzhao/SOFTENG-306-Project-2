@@ -9,9 +9,6 @@ public class ArrayElement : MonoBehaviour {
 
         switch (level)
         {
-            case 1:
-                value = 6 - this.GetComponentInParent<SoftwareLevelGenerator>().numElements;
-                break;
             default:
                 System.Random random = new System.Random();
                 value = random.Next(1, 10);
