@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using UnityEditor;
 using UnityEngine;
 
 namespace Game.Hiscores
@@ -62,7 +61,11 @@ namespace Game.Hiscores
             foreach (var line in data)
             {
                 var score = JsonUtility.FromJson<Score>(line);
-                Add(score);
+                lock (this)
+                {
+                    Get(score.Minigame).Add(score);
+                    All.Add(score);
+                }
             }
         }
 
