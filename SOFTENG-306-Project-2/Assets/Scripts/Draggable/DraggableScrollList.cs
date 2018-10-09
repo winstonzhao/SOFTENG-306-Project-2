@@ -154,28 +154,12 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
             Scrollbar.value -= 0.1f;
         }
 
-        int i = listItems.IndexOf(item);
-        int indexDiff = 0;
+        int targetIndex = FindIndex(item);
+        targetIndex = Math.Min(targetIndex, listItems.Count - 1);
 
-        if (i > 0 && item.transform.position.y < listItems[i - 1].transform.position.y)
-        {
-            indexDiff = -1;
-        }
-        else if (i < listItems.Count - 1 && item.transform.position.y > listItems[i + 1].transform.position.y)
-        {
-            indexDiff = 1;
-        }
-
-        if (indexDiff != 0)
-        {
-            listItems[i] = listItems[i + indexDiff];
-            listItems[i + indexDiff] = item;
-
-            var oldHome = item.HomePos;
-            var newHome = listItems[i].HomePos;
-            item.HomePos = newHome;
-            listItems[i].HomePos = oldHome;
-        }
+        listItems.Remove(item);
+        listItems.Insert(targetIndex, item);
+        Layout();
 
     }
 
@@ -211,6 +195,20 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         Layout();
     }
 
+    private int FindIndex(Draggable item)
+    {
+        var maxIndex = -1;
+        for (int i = 0; i < listItems.Count; i++)
+        {
+            if (listItems[i].transform.position.y < item.transform.position.y)
+            {
+                maxIndex = i;
+            }
+        }
+
+        return maxIndex + 1;
+    }
+
     public int IndexOf(Draggable item)
     {
         return listItems.IndexOf(item);
@@ -220,7 +218,8 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     {
         if (listItems.Contains(item)) return;
 
-        AddDummyToList(0);
+
+        AddDummyToList(FindIndex(item));
     }
 
     public void OnDragExit(Draggable item)
@@ -231,7 +230,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     public void OnDrop(Draggable item)
     {
         RemoveDummies();
-        AddToList(item, 0);
+        AddToList(item, FindIndex(item));
     }
 
     public void OnItemDrag(Draggable item)
