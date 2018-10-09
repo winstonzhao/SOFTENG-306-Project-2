@@ -104,7 +104,34 @@ public class RobotController : MonoBehaviour
         bool moveZ = true;
 
         // Traverse through x first by default
-        Debug.Log("Trying x then z");
+        Debug.Log("Trying z then x");
+        
+        for (int i = 0; i < Mathf.Abs(z); i++)
+        {
+            tempZ = z < 0 ? --tempZ : ++tempZ;
+
+            if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
+            {
+                path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                count++;
+            }
+            else
+            {
+                moveZ = false;
+            }
+        }
+
+        if (!moveZ)
+        {
+            path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
+            path[0] = currentPos;
+            count = 1;
+            // temp variables are used as a ghost for collision detection
+            tempX = X;
+            tempZ = Z;
+        }
+
+        // Traverse through x with pivot
         for (int i = 0; i < Mathf.Abs(x); i++)
         {
             tempX = x < 0 ? --tempX : ++tempX;
@@ -121,42 +148,15 @@ public class RobotController : MonoBehaviour
             }
         }
 
-        if (!moveX)
+        if (!moveZ && moveX)
         {
-            path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
-            path[0] = currentPos;
-            count = 1;
-            // temp variables are used as a ghost for collision detection
-            tempX = X;
-            tempZ = Z;
-        }
-
-        // Traverse through z with pivot
-        for (int i = 0; i < Mathf.Abs(z); i++)
-        {
-            tempZ = z < 0 ? --tempZ : ++tempZ;
-
-            if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
-            {
-                path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
-                count++;
-            }
-            else
-            {
-                moveZ = false;
-            }
-        }
-
-        if (!moveX && moveZ)
-        {
-            moveX = true;
-            Debug.Log("No x then z path, trying z then x");
+            moveZ = true;
+            Debug.Log("No z then x path, trying x then z");
             // Traverse through x first by default
-            for (int i = 0; i < Mathf.Abs(x); i++)
+            for (int i = 0; i < Mathf.Abs(z); i++)
             {
-                tempX = x < 0 ? --tempX : ++tempX;
+                tempZ = z < 0 ? --tempZ : ++tempZ;
 
-                // Check for collision and add to path
                 if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
                 {
                     path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
@@ -164,12 +164,11 @@ public class RobotController : MonoBehaviour
                 }
                 else
                 {
-                    moveX = false;
+                    moveZ = false;
                 }
             }
         }
         
-
         // If no collision then run it as a coroutine
         if (moveX && moveZ)
         {

@@ -37,11 +37,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Initialisation
     void Start()
     {
-        GeneratedLevel(1);
+        GeneratedLevel(currentLevel);
     }
 
     public void Restart() {
-        GeneratedLevel(1);
+        GeneratedLevel(currentLevel);
         GameObject input = this.transform.Find("Input").Find("Input").gameObject;
         Sprite i = Resources.Load<Sprite>(MORE_INPUTS);
         input.GetComponent<SpriteRenderer>().sprite = i;
@@ -57,33 +57,38 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             Destroy(go);
         }
-
         currentLevel = level;
+        
+        layoutMap = new[,]
+        {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
+        };
+        inputX = 1;
+        inputZ = 7;
+        input = new Vector3(inputX - 1, 1, inputZ - 2);
+        objectMap = new GameObject[11, 9];
+
+        
         // Switch statement for setting up different levels
         switch (currentLevel)
         {
             case 1:
                 numElements = 1;
-                layoutMap = new[,]
-                {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
-                };
-                inputX = 1;
-                inputZ = 7;
-                input = new Vector3(inputX - 1, 1, inputZ - 2);
-                objectMap = new GameObject[11, 9];
-                NextInputElement();
+                break;
+            case 2:
+                numElements = 4;
                 break;
         }
+        NextInputElement();
     }
 
     // Used for displaying the next element if the current element has been moved else where
@@ -118,11 +123,14 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             return false;
         }
+        
+        GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
+        SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+        Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
 
         switch (currentLevel)
         {
             case 1:
-                int max = 0;
                 for (int x = 5; x < 6; x++)
                 {
                     if (objectMap[x, 6] != null)
@@ -138,14 +146,29 @@ public class SoftwareLevelGenerator : MonoBehaviour
                         return false;
                     }
                 }
-                GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
-                SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-                Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
                 renderer.sprite = sprite;
-                StartCoroutine(EndScreen());
+                return true;
+            case 2:
+                for (int x = 4; x < 8; x++)
+                {
+                    if (objectMap[x, 6] != null)
+                    {
+                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
+                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                renderer.sprite = sprite;
                 return true;
         }
-
+        
+//        StartCoroutine(EndScreen());
         return false;
     }
 
