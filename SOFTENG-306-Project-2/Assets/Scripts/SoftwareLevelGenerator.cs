@@ -63,7 +63,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         switch (currentLevel)
         {
             case 1:
-                numElements = 2;
+                numElements = 1;
                 layoutMap = new[,]
                 {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
                     {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},

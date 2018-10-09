@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Instructions;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
@@ -15,6 +16,10 @@ public class RobotController : MonoBehaviour
     public int X;
     public int Y;
     public int Z;
+
+    // temp variables used for directions
+    private int dx;
+    private int dz;
 
     private Vector3 startPos;
 
@@ -37,6 +42,13 @@ public class RobotController : MonoBehaviour
         SWAP
     }
 
+    public enum Compare
+    {
+        LESS_THAN,
+        GREATER_THAN,
+        EQUAL_TO
+    }
+
     // Sprites used to represent different state of the object
     private static string NO_ELEMENT = "software_minigame/Sprites/robot1";
     private static string HAS_ELEMENT = "software_minigame/Sprites/robot2";
@@ -54,6 +66,7 @@ public class RobotController : MonoBehaviour
         Z = (int)(isoTransform.Position.z + 1);
     }
 
+    // Used to reset the position of the robot to start
     public void ResetPos()
     {
         hasElement = false;
@@ -69,11 +82,6 @@ public class RobotController : MonoBehaviour
         Z = (int)(isoTransform.Position.z + 1);
 
         generator.Restart();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     // Move to the specified coordinate in the scene.
@@ -92,8 +100,11 @@ public class RobotController : MonoBehaviour
         // temp variables are used as a ghost for collision detection
         int tempX = X;
         int tempZ = Z;
+        bool moveX = true;
+        bool moveZ = true;
 
         // Traverse through x first by default
+        Debug.Log("Trying x then z");
         for (int i = 0; i < Mathf.Abs(x); i++)
         {
             tempX = x < 0 ? --tempX : ++tempX;
@@ -106,8 +117,18 @@ public class RobotController : MonoBehaviour
             }
             else
             {
-                return false;
+                moveX = false;
             }
+        }
+
+        if (!moveX)
+        {
+            path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
+            path[0] = currentPos;
+            count = 1;
+            // temp variables are used as a ghost for collision detection
+            tempX = X;
+            tempZ = Z;
         }
 
         // Traverse through z with pivot
@@ -122,13 +143,42 @@ public class RobotController : MonoBehaviour
             }
             else
             {
-                return false;
+                moveZ = false;
             }
         }
 
+        if (!moveX && moveZ)
+        {
+            moveX = true;
+            Debug.Log("No x then z path, trying z then x");
+            // Traverse through x first by default
+            for (int i = 0; i < Mathf.Abs(x); i++)
+            {
+                tempX = x < 0 ? --tempX : ++tempX;
+
+                // Check for collision and add to path
+                if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
+                {
+                    path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                    count++;
+                }
+                else
+                {
+                    moveX = false;
+                }
+            }
+        }
+        
+
         // If no collision then run it as a coroutine
-        StartCoroutine(Shift(path));
-        return true;
+        if (moveX && moveZ)
+        {
+            StartCoroutine(Shift(path));
+            return true;
+        }
+        
+        Debug.Log("COLLIDE");
+        return false;  
     }
 
     // Moving 1 step in specified direction, return true if the command is valid
@@ -137,27 +187,11 @@ public class RobotController : MonoBehaviour
         // Initialise position and destination vector
         var currentPos = this.GetComponent<IsoTransform>().Position;
         var destPos = Vector3.zero;
-        int dx = 0;
-        int dz = 0;
         Vector3[] path = new Vector3[2];
         path[0] = currentPos;
 
         // Check the direction of operation and set relevant flag
-        switch (direction)
-        {
-            case Directions.Down:
-                dx = -1;
-                break;
-            case Directions.Left:
-                dz = 1;
-                break;
-            case Directions.Up:
-                dx = 1;
-                break;
-            case Directions.Right:
-                dz = -1;
-                break;
-        }
+        CheckDirection(direction);
 
         // Check if the tile is empty to allow movement and avoid collisions
         if (generator.GetMapLayout(X + dx, Z + dz) != SoftwareLevelGenerator.Layout.EMPTY)
@@ -173,6 +207,7 @@ public class RobotController : MonoBehaviour
         destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
         path[1] = destPos;
         StartCoroutine(Shift(path));
+
         return true;
     }
 
@@ -181,27 +216,11 @@ public class RobotController : MonoBehaviour
     {
         if (!hasElement || carrying == null)
         {
-            // Initialise required flags
+            // Initialise required var
             var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
-            int dx = 0;
-            int dz = 0;
 
             // Check the direction of operation and set relevant flag
-            switch (direction)
-            {
-                case Directions.Up:
-                    dx = 1;
-                    break;
-                case Directions.Right:
-                    dz = -1;
-                    break;
-                case Directions.Down:
-                    dx = -1;
-                    break;
-                case Directions.Left:
-                    dz = 1;
-                    break;
-            }
+            CheckDirection(direction);
 
             // Check if the target position has an object to pickup
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
@@ -222,27 +241,11 @@ public class RobotController : MonoBehaviour
     {
         if (hasElement || carrying != null)
         {
-            // Initialise required flags
-            int dx = 0;
-            int dz = 0;
+            // Initialise required var
             var sprite = Resources.Load<Sprite>(NO_ELEMENT);
 
             // Check the direction of operation and set relevant flag
-            switch (direction)
-            {
-                case Directions.Up:
-                    dx = 1;
-                    break;
-                case Directions.Right:
-                    dz = -1;
-                    break;
-                case Directions.Down:
-                    dx = -1;
-                    break;
-                case Directions.Left:
-                    dz = 1;
-                    break;
-            }
+            CheckDirection(direction);
 
             // Check if the target position is empty for dropping the object
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.EMPTY)
@@ -254,6 +257,7 @@ public class RobotController : MonoBehaviour
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -261,37 +265,92 @@ public class RobotController : MonoBehaviour
     {
         if (hasElement || carrying != null)
         {
-            // Initialise required flags
-            int dx = 0;
-            int dz = 0;
-            var sprite = Resources.Load<Sprite>(NO_ELEMENT);
+            // Initialise required var
+            var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
 
             // Check the direction of operation and set relevant flag
-            switch (direction)
-            {
-                case Directions.Up:
-                    dx = 1;
-                    break;
-                case Directions.Right:
-                    dz = -1;
-                    break;
-                case Directions.Down:
-                    dx = -1;
-                    break;
-                case Directions.Left:
-                    dz = 1;
-                    break;
-            }
+            CheckDirection(direction);
             
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
             {
                 carrying = generator.SetMapLayout(X + dx, Z + dz, Command.SWAP, carrying);
+                this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
         }
 
         return false;
-    } 
+    }
+
+    public bool CompareItem(Directions direction, Compare option)
+    {
+        if (hasElement || carrying != null)
+        {
+            
+            // Check the direction of operation and set relevant flag
+            CheckDirection(direction);
+
+            if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
+            {
+                var compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().value;
+                var value = carrying.GetComponent<ArrayElement>().value;
+                switch (option)
+                {
+                    case Compare.EQUAL_TO:
+                        if (value == compareWith)
+                        {
+                            print("yes");
+                            return true;
+                        }
+                        break;
+                    case Compare.LESS_THAN:
+                        if (value < compareWith)
+                        {
+                            print("yes");
+                            return true;
+                        }
+                        break;
+                    case Compare.GREATER_THAN:
+                        if (value > compareWith)
+                        {
+                            print("yes");
+                            return true;
+                        }
+                        break;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Used for checking direction for commands
+    private void CheckDirection(Directions direction)
+    {
+        ResetDirection();
+        switch (direction)
+        {
+            case Directions.Up:
+                dx = 1;
+                break;
+            case Directions.Right:
+                dz = -1;
+                break;
+            case Directions.Down:
+                dx = -1;
+                break;
+            case Directions.Left:
+                dz = 1;
+                break;
+        }
+    }
+
+    // Used to reset direction check at end of commands
+    private void ResetDirection()
+    {
+        dx = 0;
+        dz = 0;
+    }
     
     // Animation for moving the robot
     private IEnumerator Shift(Vector3[] path)
