@@ -10,4 +10,9 @@ public abstract class GenericDraggableList : MonoBehaviour
     /// All draggable items in this list
     /// </summary>
     public abstract IEnumerable<Draggable> ListItems { get; }
+
+    public virtual void Highlight(Draggable item)
+    {
+
+    }
 }

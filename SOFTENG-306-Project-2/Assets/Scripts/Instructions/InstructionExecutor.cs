@@ -99,7 +99,8 @@ namespace Instructions
             instructions = draggableList.ListItems.Reverse().Select(l => new InstructionObj
             {
                 Instruction = l.GetComponent<Instruction>(),
-                Renderer = l.GetComponent<InstructionRenderer>()
+                Renderer = l.GetComponent<InstructionRenderer>(),
+                Draggable =  l.GetComponent<Draggable>()
             }).ToList();
 
             ExecuteNextInstruction();
@@ -122,6 +123,7 @@ namespace Instructions
                 if (currentInstruction != null)
                 {
                     currentInstruction.Renderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                    currentInstruction = null;
                 }
                 Stop();
                 return;
@@ -130,6 +132,7 @@ namespace Instructions
             currentInstruction = instructions[instructionIndex];
 
             currentInstruction.Renderer.BackgroundColor = InstructionRenderer.ExecutingBackgroundColor;
+            draggableList.Highlight(currentInstruction.Draggable);
 
             try
             {
@@ -189,6 +192,7 @@ namespace Instructions
         {
             public Instruction Instruction { get; set; }
             public InstructionRenderer Renderer { get; set; }
+            public Draggable Draggable { get; set; }
         }
     }
 }
