@@ -113,6 +113,7 @@ namespace Instructions
                     var text = children[i].RectTransform.GetComponent<Text>();
                     text.text = components[i].Text;
                     children[i].Size = new Vector2(text.preferredWidth, text.preferredHeight);
+                    text.color = TextColor;
                 }
             }
 
@@ -204,6 +205,12 @@ namespace Instructions
 
             image.color = BackgroundColor;
             images.ForEach(i => i.color = BackgroundColor);
+        }
+
+        public override void ResetStyle()
+        {
+            BackgroundColor = DefaultBackgoundColor;
+            Render();
         }
 
         private class ChildComp

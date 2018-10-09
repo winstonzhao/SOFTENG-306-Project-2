@@ -70,7 +70,6 @@ namespace Instructions
             if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
             {
                 trackMouse = false;
-                Debug.Log("Check raycast");
 
                 var isoRay = Isometric.MouseToIsoRay();
 
@@ -87,28 +86,6 @@ namespace Instructions
                         instructionRenderer.Render();
                     }
                 }
-
-//                var isoRay = Isometric.MouseToIsoRay();
-//
-//                var hit = false;
-//                foreach (var raycastHit in IsoPhysics.RaycastAll(isoRay))
-//                {
-//                    Debug.Log("we clicked on " + raycastHit.Collider.name + " at " + raycastHit.Point);
-//                    if (raycastHit.IsoTransform.name.ToLower().StartsWith("floor tile"))
-//                    {
-//                        hit = true;
-//                        selectedObj = raycastHit.IsoTransform;
-//                        component2 =
-//                            new InstructionComponent("X: " + selectedObj.Position.x + " Z: " + selectedObj.Position.z)
-//                            {
-//                                OnComponentClicked = onClicked
-//                            };
-//                        instructionRenderer.Render();
-//                        break;
-//                    }
-//                }
-
-                // if (!hit) selectedObj = null;
 
                 if (instructionRenderer != null) instructionRenderer.BackgroundColor = new Color(1, 1, 1);
             }

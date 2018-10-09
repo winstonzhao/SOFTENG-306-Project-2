@@ -28,7 +28,6 @@ namespace Instructions
 
         public ClickEventEmitter playButton;
 
-        private Color prevBackground;
         public ClickEventEmitter stopButton;
 
         public RobotController target;
@@ -87,6 +86,7 @@ namespace Instructions
                 LevelGenerator.GeneratedLevel(LevelGenerator.currentLevel);
                 reset = true;
                 playButton.GetComponent<Image>().sprite = GetSpriteByName(PLAY_REGULAR);
+                foreach (var instruction in instructions) instruction.Renderer.ResetStyle();
                 return;
             }
 
@@ -112,18 +112,24 @@ namespace Instructions
 
         private void DoExecute()
         {
-            if (currentInstruction != null) currentInstruction.Renderer.BackgroundColor = prevBackground;
+            if (currentInstruction != null)
+            {
+                currentInstruction.Renderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+            }
 
             if (instructionIndex > instructions.Count - 1)
             {
+                if (currentInstruction != null)
+                {
+                    currentInstruction.Renderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                }
                 Stop();
                 return;
             }
 
             currentInstruction = instructions[instructionIndex];
 
-            prevBackground = currentInstruction.Renderer.BackgroundColor;
-            currentInstruction.Renderer.BackgroundColor = new Color(0, 1, 0.0f);
+            currentInstruction.Renderer.BackgroundColor = InstructionRenderer.ExecutingBackgroundColor;
 
             try
             {
@@ -145,7 +151,10 @@ namespace Instructions
 
             Text.text = "Stop";
             executeNext = false;
-            if (currentInstruction != null) currentInstruction.Renderer.BackgroundColor = prevBackground;
+            if (currentInstruction != null)
+            {
+                currentInstruction.Renderer.BackgroundColor = InstructionRenderer.ExecutingBackgroundColor;
+            }
 
             currentInstruction = null;
             foreach (var instruction in instructions) instruction.Instruction.Editable = true;
@@ -153,7 +162,13 @@ namespace Instructions
 
         public void FailExecution(string message)
         {
-            if (currentInstruction != null) currentInstruction.Renderer.TextColor = new Color(1, 0, 0);
+            if (currentInstruction != null)
+            {
+                currentInstruction.Renderer.BackgroundColor = InstructionRenderer.FailBackgroundColor;
+                currentInstruction.Renderer.Render();
+                currentInstruction = null;
+            }
+
             Stop();
             Debug.Log("Instruction Exception: " + message);
             Text.text = "Failed";

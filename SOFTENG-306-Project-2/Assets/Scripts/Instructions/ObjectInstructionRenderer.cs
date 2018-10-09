@@ -165,5 +165,10 @@ namespace Instructions
 
             square.GetComponent<SpriteRenderer>().color = backgroundColor;
         }
+
+        public override void ResetStyle()
+        {
+
+        }
     }
 }
