@@ -122,6 +122,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
             case 6:
                 numElements = 4;
                 break;
+            case 7:
+                numElements = 4;
+                break;
         }
         NextInputElement();
     }
@@ -214,6 +217,26 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     }
                 }
                 renderer.sprite = sprite;
+                return true;
+            case 7:
+                for (int x = 4; x < 7; x++)
+                {
+                    GameObject a = objectMap[x, 6];
+                    GameObject b = objectMap[x + 1, 6];
+                    
+                    if (a == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (b == null || layoutMap[x + 1, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (a.GetComponent<ArrayElement>().value > b.GetComponent<ArrayElement>().value)
+                    {
+                        return false;
+                    }   
+                }
                 return true;
             case 8:
                 StartCoroutine(EndScreen());
