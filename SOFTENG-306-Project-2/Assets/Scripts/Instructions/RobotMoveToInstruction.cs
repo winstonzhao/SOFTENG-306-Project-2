@@ -140,7 +140,7 @@ namespace Instructions
             if (selectedObj == null) throw new InstructionException();
 
             targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
-            var didMove = robot.MoveTo(targetPos);
+            var didMove = robot.MoveTo(targetPos, "");
             if (!didMove) throw new InstructionException();
         }
     }

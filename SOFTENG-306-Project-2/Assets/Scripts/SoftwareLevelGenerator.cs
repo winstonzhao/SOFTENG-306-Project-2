@@ -25,6 +25,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
 
     private List<GameObject> generatedObjects = new List<GameObject>();
+    private Dictionary<string, Vector3> arrayMap;
 
     // Enum used to map out the layout of the scene
     public enum Layout
@@ -76,6 +77,9 @@ public class SoftwareLevelGenerator : MonoBehaviour
         inputZ = 7;
         input = new Vector3(inputX - 1, 1, inputZ - 2);
         objectMap = new GameObject[11, 9];
+        GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
+        GameObject obj;
+        arrayMap = new Dictionary<string, Vector3>();
 
         // Switch statement for setting up different levels
         switch (currentLevel)
@@ -90,14 +94,30 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 break;
             case 3:
                 numElements = 1;
-                GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
-                GameObject obj = Instantiate<GameObject>(prefab);
+                obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(5, 0.8f, 4);
                 obj.AddComponent<ArrayElement>();
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
                 layoutMap[6, 5] = Layout.ELEMENT;
                 objectMap[6, 5] = obj;
+                break;
+            case 4:
+                numElements = 1;
+                for (int x = 4; x < 8; x++)
+                {
+                    if (x != 5)
+                    {
+                        obj = Instantiate<GameObject>(prefab);
+                        obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, 5);
+                        obj.AddComponent<ArrayElement>();
+                        obj.transform.parent = this.transform;
+                        generatedObjects.Add(obj);
+                        layoutMap[x, 6] = Layout.ELEMENT;
+                        objectMap[x, 6] = obj;
+                    }
+                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                }
                 break;
             case 6:
                 numElements = 4;
@@ -175,10 +195,20 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     return true;
                 }
                 return false;
+            case 4:
+                for (int x = 4; x < 8; x++)
+                {
+                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                }
+                renderer.sprite = sprite;
+                return true;
             case 6:
                 for (int x = 4; x < 8; x++)
                 {
-                    if (objectMap[5, 6] == null || layoutMap[5, 6] != Layout.ELEMENT)
+                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
                     {
                         return false;
                     }
@@ -242,6 +272,12 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public GameObject GetObject(int x, int z)
     {
         return objectMap[x, z];
+    }
+
+    public Vector3 IndexLocation(string index)
+    {
+        Vector3 pos;
+        return arrayMap.TryGetValue(index, out pos) ? pos : Vector3.zero;
     }
 
     private IEnumerator EndScreen()

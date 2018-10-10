@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Security.Principal;
 using Instructions;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
@@ -85,12 +86,22 @@ public class RobotController : MonoBehaviour
     }
 
     // Move to the specified coordinate in the scene.
-    public bool MoveTo(Vector3 destination)
+    public bool MoveTo(Vector3 destination, string index)
     {
+        var dest = destination;
+        if (destination == Vector3.zero)
+        {
+            dest = generator.IndexLocation(index);
+            if (dest == Vector3.zero)
+            {
+                return false;
+            }
+        }
+        
         // Calculate the required distance to translate for x and z
         var currentPos = isoTransform.Position;
-        int x = (int)(destination.x - currentPos.x);
-        int z = (int)(destination.z - currentPos.z);
+        int x = (int)(dest.x - currentPos.x);
+        int z = (int)(dest.z - currentPos.z);
 
         // This is for storing ths sequence of paths to traverse through
         Vector3[] path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
@@ -152,7 +163,6 @@ public class RobotController : MonoBehaviour
         {
             moveZ = true;
             Debug.Log("No z then x path, trying x then z");
-            // Traverse through x first by default
             for (int i = 0; i < Mathf.Abs(z); i++)
             {
                 tempZ = z < 0 ? --tempZ : ++tempZ;
