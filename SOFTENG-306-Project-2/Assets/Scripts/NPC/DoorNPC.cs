@@ -1,25 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using GameDialog;
 
-public class DoorNPC : NPC {
-
+public class DoorNPC : NPC
+{
     public string Level;
 
     public override Dialog GetDialog()
     {
+        var me = Toolbox.Instance.GameManager.Player.Username;
 
-        DialogFrame frame1 = new DialogFrame("This is going to take me to " + Level + ".", 0);
-        DialogFrame frame2 = new DialogFrame("Let's go!", 0);
-        DialogFrame frame3 = new DialogFrame("On second thought....", 0);
-      
-        Dictionary<string, DialogFrame> frameMap = new Dictionary<string, DialogFrame>();
-        frameMap.Add("Let's go!", frame2);
-        frameMap.Add("I want to stay!", frame3);
-        frame2.MakeTransitionFrame(Level);
+        var frame = new DialogFrame(me, "This is going to take me to Engineering Leech.")
+        {
+            Options = new Dictionary<string, DialogFrame>
+            {
+                {
+                    "Let's go!", new DialogFrame(me, "Let's go!")
+                    {
+                        TransitionToScene = Level
+                    }
+                },
+                {
+                    "I want to stay!", new DialogFrame(me, "On second thought…")
+                }
+            }
+        };
 
-        frame1.MakeOptionFrame(frameMap);
+        var directions = new Dictionary<string, DialogPosition>
+        {
+            { me, DialogPosition.Left }
+        };
 
-        return new Dialog(frame1);
+        return new Dialog(frame, directions);
     }
 }

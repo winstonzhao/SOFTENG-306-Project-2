@@ -1,39 +1,62 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using GameDialog;
 
-public class CivilNPC : NPC {
-
+public class CivilNPC : NPC
+{
     // Use this for initialization
     public override Dialog GetDialog()
     {
+        var me = Toolbox.Instance.GameManager.Player.Username;
 
-        DialogFrame frame1 = new DialogFrame("Hello, I'm " + GameManager.Instance.Player.Username, 0);
-        DialogFrame frame2 = new DialogFrame("Hi, I'm the Civil Instructor!", 1);
-        DialogFrame frame3 = new DialogFrame("Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including works such as roads, bridges, canals, dams, airports, sewerage systems, pipelines, and railways.", 1);
-        DialogFrame frame32 = new DialogFrame("Civil engineering is traditionally broken into a number of sub-disciplines. It is considered the second-oldest engineering discipline after military engineering,[3] and it is defined to distinguish non-military engineering from military engineering.", 1);
-        DialogFrame frame33 = new DialogFrame("Civil engineering takes place in the public sector from municipal through to national governments, and in the private sector from individual homeowners through to international companies.", 1);
-        DialogFrame frame34 = new DialogFrame("Wow, Civil sounds really great!", 0);
-        DialogFrame frame4 = new DialogFrame("Alright let's play!", 1);
-        DialogFrame frame5 = new DialogFrame("Bye!", 1);
+        const string npc = "Civil Instructor";
 
-        frame3.Next = frame32;
-        frame32.Next = frame33;
-        frame33.Next = frame34;
+        var frame = new DialogFrame(me, "Hello, I'm " + me)
+        {
+            Next = new DialogFrame(npc, "Hi, I'm the " + npc + "!")
+            {
+                Options = new Dictionary<string, DialogFrame>
+                {
+                    {
+                        "What is Civil?", new DialogFrame(npc,
+                            "Civil engineering is a professional engineering discipline that deals with the design, " +
+                            "construction, and maintenance of the physical and naturally built environment, " +
+                            "including works such as roads, bridges, canals, dams, airports, sewerage systems, " +
+                            "pipelines, and railways.")
+                        {
+                            Next = new DialogFrame(npc,
+                                "Civil engineering is traditionally broken into a number of sub-disciplines. It " +
+                                "is considered the second-oldest engineering discipline after military " +
+                                "engineering, and it is defined to distinguish non-military engineering from " +
+                                "military engineering.")
+                            {
+                                Next = new DialogFrame(npc,
+                                    "Civil engineering takes place in the public sector from municipal through " +
+                                    "to national governments, and in the private sector from individual " +
+                                    "homeowners through to international companies.")
+                                {
+                                    Next = new DialogFrame(me, "Wow, Civil sounds really great!")
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "Play Civil Game", new DialogFrame(me, "Alright let's play!")
+                        {
+                            TransitionToScene = "Civil Level 1"
+                        }
+                    },
+                    {
+                        "Bye", new DialogFrame(me, "Bye!")
+                    }
+                }
+            }
+        };
 
-        Dictionary<string, DialogFrame> frameMap = new Dictionary<string, DialogFrame>();
-        frameMap.Add("What is Civil?", frame3);
-        frameMap.Add("Play Civil Game", frame4);
-        frameMap.Add("Bye", frame5);
+        var directions = new Dictionary<string, DialogPosition>
+        {
+            { me, DialogPosition.Left }, { npc, DialogPosition.Right }
+        };
 
-        frame2.MakeOptionFrame(frameMap);
-        frame4.MakeTransitionFrame("Civil Level 1");
-
-        frame1.Next = frame2;
-
-        Dialog dialog = new Dialog(frame1);
-        dialog.NameMap[1] = "Civil Instructor";
-      
-        return dialog;
+        return new Dialog(frame, directions);
     }
 }

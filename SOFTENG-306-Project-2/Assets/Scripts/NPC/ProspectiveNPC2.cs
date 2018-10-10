@@ -1,32 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using GameDialog;
 
-public class ProspectiveNPC2 : NPC {
-
+public class ProspectiveNPC2 : NPC
+{
     // Use this for initialization
     public override Dialog GetDialog()
     {
-        DialogFrame frame1 = new DialogFrame("I'm Lestrange, Bellatrix Lestrange!", 1);
-        DialogFrame frame2 = new DialogFrame("Nice to make your aquaintance...",
-            1);
-        DialogFrame frame3 = new DialogFrame("Are you enjoying the exhibition day?",
-            0);
-        DialogFrame frame4 = new DialogFrame("Well...", 1);
-        DialogFrame frame5 = new DialogFrame(" We each have a unique toolbox comprised of life experience, daily experience, school experience, sport experience, and anything else that we know without knowing we know...", 1);
-        DialogFrame frame6 = new DialogFrame("...which can empower us to improve the conditions of life we see around us, if we know how to be creative in how we approach this toolbox.", 1);
+        var me = Toolbox.Instance.GameManager.Player.Username;
 
-        Dictionary<int, string> nameMap = new Dictionary<int, string>();
+        const string npc = "Bellatrix Lestrange";
 
-        frame1.Next = frame2;
-        frame2.Next = frame3;
-        frame3.Next = frame4;
-        frame4.Next = frame5;
-        frame5.Next = frame6;
+        var frame = new DialogFrame(npc, "I'm Lestrange, " + npc + "!")
+        {
+            Next = new DialogFrame(npc, "Nice to make your acquaintance…")
+            {
+                Next = new DialogFrame(me, "Are you enjoying the exhibition day?")
+                {
+                    Next = new DialogFrame(npc, "Well…")
+                    {
+                        Next = new DialogFrame(npc,
+                            "We each have a unique toolbox comprised of life experience, daily experience, school " +
+                            "experience, sport experience, and anything else that we know without knowing we know…")
+                        {
+                            Next = new DialogFrame(npc,
+                                "…which can empower us to improve the conditions of life we see around us, if we " +
+                                "know how to be creative in how we approach this toolbox.")
+                        }
+                    }
+                }
+            }
+        };
 
-        Dialog dialog = new Dialog(frame1);
-        dialog.NameMap[1] = "Bellatrix Lestrange";
+        var directions = new Dictionary<string, DialogPosition>
+        {
+            { me, DialogPosition.Left }, { npc, DialogPosition.Right }
+        };
 
-        return dialog;
+        return new Dialog(frame, directions);
     }
 }

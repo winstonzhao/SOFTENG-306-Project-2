@@ -1,32 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using GameDialog;
 
-public class ProspectiveNPC3 : NPC {
-
+public class ProspectiveNPC3 : NPC
+{
     // Use this for initialization
     public override Dialog GetDialog()
     {
-        DialogFrame frame1 = new DialogFrame("Helloooooooo!", 1);
-        DialogFrame frame2 = new DialogFrame("I'm Minerva!",
-            1);
-        DialogFrame frame3 = new DialogFrame("I'm really enjoying today!",
-            1);
-        DialogFrame frame4 = new DialogFrame("One of the more striking comments from the student panel was, 'don’t hesitate in taking opportunities.'", 1);
-        DialogFrame frame5 = new DialogFrame("So whether you have any doubts, or if you are dead set on engineering, you may find yourself pleasantly surprised", 1);
-        DialogFrame frame6 = new DialogFrame(" as I have. It was because of this event that I decided to shed my perpetual state of ambiguity with my career choice, and set my heart on becoming an engineer.", 1);
+        const string npc = "Minerva McGonagall";
 
-        Dictionary<int, string> nameMap = new Dictionary<int, string>();
+        var frame = new DialogFrame(npc, "Helloooooooo!")
+        {
+            Next = new DialogFrame(npc, "I'm Minerva!")
+            {
+                Next = new DialogFrame(npc, "I'm really enjoying today!")
+                {
+                    Next = new DialogFrame(npc,
+                        "One of the more striking comments from the student panel was, 'don’t hesitate in " +
+                        "taking opportunities.'")
+                    {
+                        Next = new DialogFrame(npc,
+                            "So whether you have any doubts, or if you are dead set on engineering, you may find " +
+                            "yourself pleasantly surprised")
+                        {
+                            Next = new DialogFrame(npc,
+                                "as I have. It was because of this event that I decided to shed my perpetual state " +
+                                "of ambiguity with my career choice, and set my heart on becoming an engineer.")
+                        }
+                    }
+                }
+            }
+        };
 
-        frame1.Next = frame2;
-        frame2.Next = frame3;
-        frame3.Next = frame4;
-        frame4.Next = frame5;
-        frame5.Next = frame6;
+        var directions = new Dictionary<string, DialogPosition>
+        {
+            { npc, DialogPosition.Right }
+        };
 
-        Dialog dialog = new Dialog(frame1);
-        dialog.NameMap[1] = "Minerva McGonagall";
-
-        return dialog;
+        return new Dialog(frame, directions);
     }
 }
