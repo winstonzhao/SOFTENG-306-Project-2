@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Security.Principal;
 using Instructions;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
@@ -35,14 +33,15 @@ public class RobotController : MonoBehaviour
     private float timePassed;
     private float maxTimePassed;
 
+    // Which command the robot is executing which changes the layout of the map
     public enum Command
     {
-        MOVE,
         PICKUP,
         DROP,
         SWAP
     }
-
+    
+    // Possible compare instructions for the Robot
     public enum Compare
     {
         LESS_THAN,
@@ -85,9 +84,13 @@ public class RobotController : MonoBehaviour
         generator.Restart();
     }
 
-    // Move to the specified coordinate in the scene.
+    // Move to the specified coordinate or index of the an array in the scene
+    // If it is coordinate, it will use the destination vector3
+    // If destination is Vector3.zero, it will use the array concatenate with index as identifier for accessing the array
+    // e.g "a" + 0 will access index 0 of array a
     public bool MoveTo(Vector3 destination, string index)
     {
+        // Check if is index or coordinate access
         var dest = destination;
         if (destination == Vector3.zero)
         {
@@ -114,9 +117,8 @@ public class RobotController : MonoBehaviour
         bool moveX = true;
         bool moveZ = true;
 
-        // Traverse through x first by default
+        // Traverse through z first by default
         Debug.Log("Trying z then x");
-        
         for (int i = 0; i < Mathf.Abs(z); i++)
         {
             tempZ = z < 0 ? --tempZ : ++tempZ;
@@ -132,6 +134,7 @@ public class RobotController : MonoBehaviour
             }
         }
 
+        // Check if collision exist if z direction, if it does the reset the path and try path x then z
         if (!moveZ)
         {
             path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
@@ -142,7 +145,7 @@ public class RobotController : MonoBehaviour
             tempZ = Z;
         }
 
-        // Traverse through x with pivot
+        // Traverse through x
         for (int i = 0; i < Mathf.Abs(x); i++)
         {
             tempX = x < 0 ? --tempX : ++tempX;
@@ -159,6 +162,8 @@ public class RobotController : MonoBehaviour
             }
         }
 
+        // This is when there was a collision in the path z then x, and no collision was detected in x path,
+        // therefore, is not checking path x then z
         if (!moveZ && moveX)
         {
             moveZ = true;
@@ -179,7 +184,7 @@ public class RobotController : MonoBehaviour
             }
         }
         
-        // If no collision then run it as a coroutine
+        // If no collision then run it as a co-routine
         if (moveX && moveZ)
         {
             StartCoroutine(Shift(path));
@@ -270,6 +275,7 @@ public class RobotController : MonoBehaviour
         return false;
     }
 
+    // Used to swap the item which the robot is holding with the item in the specified direction
     public bool SwapItem(Directions direction)
     {
         if (hasElement || carrying != null)
@@ -280,6 +286,7 @@ public class RobotController : MonoBehaviour
             // Check the direction of operation and set relevant flag
             CheckDirection(direction);
             
+            // Check if an element exists in the specified direction
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
             {
                 carrying = generator.SetMapLayout(X + dx, Z + dz, Command.SWAP, carrying);
@@ -291,11 +298,19 @@ public class RobotController : MonoBehaviour
         return false;
     }
 
+    // This is used for both the compare operation as well as the jump if operation
+    // If it is compare operation, the item param will be set to true, and the compare is done between the item which the 
+    // robot is currently holding and the item in the direction specified.
+    // Otherwise, for jump compare, the item param is set to false and the comparison is done between the variable and
+    // the input param
     public bool CompareItem(Directions direction, Compare option, bool item, int variable, int input)
     {
-
+        // Set to compare for jump by default
         int compareWith = input;
         int value = variable;
+        
+        // If item flag is set then it is used by the compare instruction and override the comparing values with
+        // appropriate values.
         if (item)
         {
             if (hasElement || carrying != null)
@@ -303,11 +318,13 @@ public class RobotController : MonoBehaviour
                 // Check the direction of operation and set relevant flag
                 CheckDirection(direction);
 
+                // Check if the item exist
                 if (generator.GetMapLayout(X + dx, Z + dz) != SoftwareLevelGenerator.Layout.ELEMENT)
                 {
                     return false;
                 }
                 
+                // Override flags for to the compare instruction
                 compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().value;
                 value = carrying.GetComponent<ArrayElement>().value;
             }
@@ -317,26 +334,24 @@ public class RobotController : MonoBehaviour
             }
         }
         
+        // Check for specified type of comparison
         switch (option)
         {
             case Compare.EQUAL_TO:
                 if (value == compareWith)
                 {
-                    print("yes");
                     return true;
                 }
                 break;
             case Compare.LESS_THAN:
                 if (value < compareWith)
                 {
-                    print("yes");
                     return true;
                 }
                 break;
             case Compare.GREATER_THAN:
                 if (value > compareWith)
                 {
-                    print("yes");
                     return true;
                 }
                 break;
@@ -348,7 +363,10 @@ public class RobotController : MonoBehaviour
     // Used for checking direction for commands
     private void CheckDirection(Directions direction)
     {
-        ResetDirection();
+        // Reset old direction
+        dx = 0;
+        dz = 0;
+        // Checking the direction which the command specifies and set relevant flags
         switch (direction)
         {
             case Directions.Up:
@@ -366,13 +384,6 @@ public class RobotController : MonoBehaviour
         }
     }
 
-    // Used to reset direction check at end of commands
-    private void ResetDirection()
-    {
-        dx = 0;
-        dz = 0;
-    }
-    
     // Animation for moving the robot
     private IEnumerator Shift(Vector3[] path)
     {

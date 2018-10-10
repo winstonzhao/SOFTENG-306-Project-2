@@ -54,12 +54,14 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Used to initialised different levels
     public void GeneratedLevel(int level)
     {
+        // Destroy any outdated objects
         foreach (var go in generatedObjects)
         {
             Destroy(go);
         }
         currentLevel = level;
         
+        // Regenerate floor layout
         layoutMap = new[,]
         {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
             {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
@@ -73,26 +75,37 @@ public class SoftwareLevelGenerator : MonoBehaviour
             {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
             {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
         };
+        
+        // Default input location
         inputX = 1;
         inputZ = 7;
         input = new Vector3(inputX - 1, 1, inputZ - 2);
+        
+        // Empty object map
         objectMap = new GameObject[11, 9];
+        
+        // Used for creating custom input elements
         GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
         GameObject obj;
+        
+        // Dictionary used to map index and location of arrays
         arrayMap = new Dictionary<string, Vector3>();
 
         // Switch statement for setting up different levels
         switch (currentLevel)
         {
             case 1:
+                // Pick and Drop without movement into array of size 1 - PickUp and Drop
                 inputX = 6;
                 inputZ = 5;
                 numElements = 1;
                 break;
             case 2:
+                // Insert single element from input to array of size 1 - MoveTo (by coordinate)
                 numElements = 1;
                 break;
             case 3:
+                // Select the larger element to put in an array of size 1 - Compare
                 numElements = 1;
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(5, 0.8f, 4);
@@ -103,6 +116,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 objectMap[6, 5] = obj;
                 break;
             case 4:
+                // Out of order insertion into empty index - MoveTo (by index), Initialise variable
                 numElements = 1;
                 for (int x = 4; x < 8; x++)
                 {
@@ -119,11 +133,24 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
                 }
                 break;
+            case 5:
+                // Sort 2 element from input - Swap, Mixture of previous levels
+                numElements = 2;
+                for (int x = 4; x < 6; x++)
+                {
+                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                }
+                break;
             case 6:
+                // Insert into 4 element array but no order required - Jump (Loop), Mixture of previous levels
                 numElements = 4;
                 break;
             case 7:
+                // Sorting 4 element array - Mixture of above
                 numElements = 4;
+                break;
+            case 8:
+                // Grouping into 2 arrays - Holding instruction/Compare if even/odd
                 break;
         }
         NextInputElement();
@@ -156,7 +183,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Used to check if the answer is correct
     public bool CheckAnswer()
     {
-        // There are stil elements left
+        // There are still elements left
         if (numElements != 0)
         {
             return false;
@@ -166,6 +193,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
         Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
 
+        // Checking correctness of output for current level
         switch (currentLevel)
         {
             case 1:
@@ -207,6 +235,26 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     }
                 }
                 renderer.sprite = sprite;
+                return true;
+            case 5:
+                for (int x = 4; x < 5; x++)
+                {
+                    GameObject a = objectMap[x, 6];
+                    GameObject b = objectMap[x + 1, 6];
+                    
+                    if (a == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (b == null || layoutMap[x + 1, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (a.GetComponent<ArrayElement>().value > b.GetComponent<ArrayElement>().value)
+                    {
+                        return false;
+                    }   
+                }
                 return true;
             case 6:
                 for (int x = 4; x < 8; x++)
@@ -297,15 +345,17 @@ public class SoftwareLevelGenerator : MonoBehaviour
         return objectMap[x, z];
     }
 
+    // Used to find the location for specified index and array combination
     public Vector3 IndexLocation(string index)
     {
         Vector3 pos;
         return arrayMap.TryGetValue(index, out pos) ? pos : Vector3.zero;
     }
 
+    // Show end screen
     private IEnumerator EndScreen()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         endScreen.GetComponent<SoftwareEndScreen>().Open();
     }
 }
