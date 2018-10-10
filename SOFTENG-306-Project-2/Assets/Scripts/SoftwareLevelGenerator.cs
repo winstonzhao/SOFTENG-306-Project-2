@@ -77,14 +77,18 @@ public class SoftwareLevelGenerator : MonoBehaviour
         input = new Vector3(inputX - 1, 1, inputZ - 2);
         objectMap = new GameObject[11, 9];
 
-        
         // Switch statement for setting up different levels
         switch (currentLevel)
         {
             case 1:
+                inputX = 6;
+                inputZ = 5;
                 numElements = 1;
                 break;
             case 2:
+                numElements = 1;
+                break;
+            case 6:
                 numElements = 4;
                 break;
         }
@@ -149,6 +153,24 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 renderer.sprite = sprite;
                 return true;
             case 2:
+                for (int x = 5; x < 6; x++)
+                {
+                    if (objectMap[x, 6] != null)
+                    {
+                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
+                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                renderer.sprite = sprite;
+                return true;
+            case 6:
                 for (int x = 4; x < 8; x++)
                 {
                     if (objectMap[x, 6] != null)

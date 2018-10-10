@@ -281,45 +281,57 @@ public class RobotController : MonoBehaviour
         return false;
     }
 
-    public bool CompareItem(Directions direction, Compare option)
+    public bool CompareItem(Directions direction, Compare option, bool item, int variable, int input)
     {
-        if (hasElement || carrying != null)
-        {
-            
-            // Check the direction of operation and set relevant flag
-            CheckDirection(direction);
 
-            if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
+        int compareWith = input;
+        int value = variable;
+        if (item)
+        {
+            if (hasElement || carrying != null)
             {
-                var compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().value;
-                var value = carrying.GetComponent<ArrayElement>().value;
-                switch (option)
+                // Check the direction of operation and set relevant flag
+                CheckDirection(direction);
+
+                if (generator.GetMapLayout(X + dx, Z + dz) != SoftwareLevelGenerator.Layout.ELEMENT)
                 {
-                    case Compare.EQUAL_TO:
-                        if (value == compareWith)
-                        {
-                            print("yes");
-                            return true;
-                        }
-                        break;
-                    case Compare.LESS_THAN:
-                        if (value < compareWith)
-                        {
-                            print("yes");
-                            return true;
-                        }
-                        break;
-                    case Compare.GREATER_THAN:
-                        if (value > compareWith)
-                        {
-                            print("yes");
-                            return true;
-                        }
-                        break;
+                    return false;
                 }
+                
+                compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().value;
+                value = carrying.GetComponent<ArrayElement>().value;
+            }
+            else
+            {
+                return false;
             }
         }
-
+        
+        switch (option)
+        {
+            case Compare.EQUAL_TO:
+                if (value == compareWith)
+                {
+                    print("yes");
+                    return true;
+                }
+                break;
+            case Compare.LESS_THAN:
+                if (value < compareWith)
+                {
+                    print("yes");
+                    return true;
+                }
+                break;
+            case Compare.GREATER_THAN:
+                if (value > compareWith)
+                {
+                    print("yes");
+                    return true;
+                }
+                break;
+        }
+        
         return false;
     }
 
