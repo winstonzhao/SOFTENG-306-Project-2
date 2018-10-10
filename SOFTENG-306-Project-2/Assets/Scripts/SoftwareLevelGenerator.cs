@@ -88,6 +88,17 @@ public class SoftwareLevelGenerator : MonoBehaviour
             case 2:
                 numElements = 1;
                 break;
+            case 3:
+                numElements = 1;
+                GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
+                GameObject obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(5, 0.8f, 4);
+                obj.AddComponent<ArrayElement>();
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[6, 5] = Layout.ELEMENT;
+                objectMap[6, 5] = obj;
+                break;
             case 6:
                 numElements = 4;
                 break;
@@ -135,62 +146,49 @@ public class SoftwareLevelGenerator : MonoBehaviour
         switch (currentLevel)
         {
             case 1:
-                for (int x = 5; x < 6; x++)
+                if (objectMap[5, 6] != null && layoutMap[5, 6] == Layout.ELEMENT)
                 {
-                    if (objectMap[x, 6] != null)
-                    {
-                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
-                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    renderer.sprite = sprite;
+                    return true;
                 }
-                renderer.sprite = sprite;
-                return true;
+                return false;
             case 2:
-                for (int x = 5; x < 6; x++)
+                if (objectMap[5, 6] != null && layoutMap[5, 6] == Layout.ELEMENT)
                 {
-                    if (objectMap[x, 6] != null)
+                    renderer.sprite = sprite;
+                    return true;
+                }
+                return false;
+            case 3:
+                if (objectMap[5, 6] != null)
+                {
+                    int value = objectMap[5, 6].GetComponent<ArrayElement>().value;
+                    foreach (GameObject o in generatedObjects)
                     {
-                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
-                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
+                        if (o.GetComponent<ArrayElement>().value > value)
                         {
                             return false;
                         }
                     }
-                    else
-                    {
-                        return false;
-                    }
+                    
+                    renderer.sprite = sprite;
+                    return true;
                 }
-                renderer.sprite = sprite;
-                return true;
+                return false;
             case 6:
                 for (int x = 4; x < 8; x++)
                 {
-                    if (objectMap[x, 6] != null)
-                    {
-                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
-                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
-                        {
-                            return false;
-                        }
-                    }
-                    else
+                    if (objectMap[5, 6] == null || layoutMap[5, 6] != Layout.ELEMENT)
                     {
                         return false;
                     }
                 }
                 renderer.sprite = sprite;
                 return true;
+            case 8:
+                StartCoroutine(EndScreen());
+                return true;
         }
-        
-//        StartCoroutine(EndScreen());
         return false;
     }
 
