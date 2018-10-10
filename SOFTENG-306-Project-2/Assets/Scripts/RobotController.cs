@@ -44,9 +44,9 @@ public class RobotController : MonoBehaviour
     // Possible compare instructions for the Robot
     public enum Compare
     {
-        LESS_THAN,
-        GREATER_THAN,
-        EQUAL_TO
+        LESS_THAN = 0,
+        GREATER_THAN = 2,
+        EQUAL_TO = 1
     }
 
     // Sprites used to represent different state of the object

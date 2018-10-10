@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel;
@@ -78,9 +79,10 @@ public class DraggableList : GenericDraggableList, IDropZone
 
         foreach (var draggable in listItems)
         {
-            draggable.transform.position = draggable.HomePos;
+//            draggable.transform.position = draggable.HomePos;
             draggable.SetDropZone(this);
         }
+        layout();
     }
 
     // Update is called once per frame
@@ -102,54 +104,58 @@ public class DraggableList : GenericDraggableList, IDropZone
                 continue;
             }
 
-            if (itemHeight == 0)
+            if (Math.Abs(itemHeight) < 0.01f)
             {
                 itemHeight = draggable.Size.y;
                 i = itemHeight / 2;
             }
 
             // Offset by .1f in the z so the child objects will handle mouse clicks before the list
-            draggable.HomePos = new Vector3(transform.position.x, transform.position.y + i, transform.position.z - .1f);
+            draggable.HomePos = new Vector3(transform.localPosition.x, transform.localPosition.y + i, transform.position.z - .1f);
 
             maxWidth = Mathf.Max(draggable.Size.x, maxWidth);
             i += draggable.Size.y + layoutSpacing;
             itemHeight = draggable.Size.y;
         }
 
+//        var scale = transform.lossyScale.x;
+
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i - itemHeight/2 - layoutSpacing);
-        var colliderSize = new Vector2(width, height) * 1/transform.lossyScale.x;
+        var height = Mathf.Max(MinSize.y, i - itemHeight / 2 - layoutSpacing);
+        var colliderSize = new Vector2(width, height);
 
         boxCollider.size = colliderSize;
         boxCollider.offset = new Vector2(0, colliderSize.y / 2);
+
+//        rectTransform.sizeDelta = colliderSize;
+//        rectTransform.anchoredPosition = new Vector2(0, 0);
     }
+
+    private int FindIndex(Draggable item)
+    {
+        var maxIndex = -1;
+        for (int i = 0; i < listItems.Count; i++)
+        {
+            if (listItems[i].transform.position.y < item.transform.position.y)
+            {
+                maxIndex = i;
+            }
+        }
+
+        return maxIndex + 1;
+    }
+
 
     public void UpdateObject(Draggable item)
     {
         if (!Rearrangeable) return;
 
-        int i = listItems.IndexOf(item);
-        int indexDiff = 0;
+        int targetIndex = FindIndex(item);
+        targetIndex = Math.Min(targetIndex, listItems.Count - 1);
 
-        if (i > 0 && item.transform.position.y < listItems[i - 1].transform.position.y)
-        {
-            indexDiff = -1;
-        }
-        else if (i < listItems.Count - 1 && item.transform.position.y > listItems[i + 1].transform.position.y)
-        {
-            indexDiff = 1;
-        }
-
-        if (indexDiff != 0)
-        {
-            listItems[i] = listItems[i + indexDiff];
-            listItems[i + indexDiff] = item;
-
-            var oldHome = item.HomePos;
-            var newHome = listItems[i].HomePos;
-            item.HomePos = newHome;
-            listItems[i].HomePos = oldHome;
-        }
+        listItems.Remove(item);
+        listItems.Insert(targetIndex, item);
+        layout();
 
     }
 

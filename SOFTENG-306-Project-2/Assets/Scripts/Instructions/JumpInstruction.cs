@@ -60,7 +60,7 @@ namespace Instructions
             draggableItem.AddConnectedItem(targetDraggable);
             draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
 
-            curve = FindObjectOfType<BezierLines>().AddCurve(
+            curve = BezierLines.Instance.AddCurve(
                 new Vector3[]
                 {
                     this.transform.position,

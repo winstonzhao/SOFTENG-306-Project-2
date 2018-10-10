@@ -110,7 +110,7 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
             }
             tdiff = t - tdiff;
 
-            transform.position += tdiff * target;
+            (transform as RectTransform).anchoredPosition += new Vector2((tdiff * target).x, (tdiff * target).y);
         }
     }
 
@@ -176,7 +176,7 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
 
         t = 0;
         moving = true;
-        target = newPos - transform.position;
+        target = new Vector2(newPos.x, newPos.y) - (transform as RectTransform).anchoredPosition;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -191,6 +191,7 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("Pointer Down");
         if (!mouseInside) return;
         dragging = true;
         moving = false;

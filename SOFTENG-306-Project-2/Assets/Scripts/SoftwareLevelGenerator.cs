@@ -59,6 +59,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             Destroy(go);
         }
+        generatedObjects.Clear();
         currentLevel = level;
         
         // Regenerate floor layout

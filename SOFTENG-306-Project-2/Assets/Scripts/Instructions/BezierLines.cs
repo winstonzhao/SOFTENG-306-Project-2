@@ -3,12 +3,18 @@ using UnityEngine;
 
 namespace Instructions
 {
-    public class BezierLines : MonoBehaviour
+    public class BezierLines
     {
         [SerializeField] private int segmentsCount = 100;
         private List<BezierCurve> _curves;
+        private static BezierLines instance;
 
-        void Awake()
+        public static BezierLines Instance
+        {
+            get { return instance ?? (instance = new BezierLines()); }
+        }
+
+        private BezierLines()
         {
             _curves = new List<BezierCurve>();
         }
@@ -20,7 +26,6 @@ namespace Instructions
             Color finishColor = endColor ?? Color.red;
             GameObject line = new GameObject("Line-" + _curves.Count);
             line.transform.position = Vector3.zero;
-            line.transform.SetParent(transform);
             line.transform.localPosition = Vector3.zero;
             line.transform.localScale = Vector3.one;
             line.AddComponent<RectTransform>();
@@ -43,12 +48,12 @@ namespace Instructions
             return curve;
         }
 
-        public void RemoveCurves()
-        {
-            _curves.Clear();
-            int childs = transform.childCount;
-            for (int i = childs - 1; i >= 0; i--)
-                Destroy(transform.GetChild(i).gameObject);
-        }
+//        public void RemoveCurves()
+//        {
+//            _curves.Clear();
+//            int childs = transform.childCount;
+//            for (int i = childs - 1; i >= 0; i--)
+//                Destroy(transform.GetChild(i).gameObject);
+//        }
     }
 }
