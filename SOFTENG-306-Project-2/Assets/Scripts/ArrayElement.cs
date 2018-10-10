@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using System;
+using System.Security.Cryptography;
+using Random = System.Random;
 
 public class ArrayElement : MonoBehaviour {
-    public int value = 0;
+    public int value;
 
 	// Use this for initialization
 	void Start () {
@@ -10,14 +13,19 @@ public class ArrayElement : MonoBehaviour {
         switch (level)
         {
             default:
-                System.Random random = new System.Random();
-                value = random.Next(1, 10);
+	            value = NextInt(1, 10);
                 break;
         }
     }
+	
+	private static int NextInt(int min, int max)
+	{
+		RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+		byte[] buffer = new byte[4];
 
-    // Update is called once per frame
-    void Update () {
-		
+		rng.GetBytes(buffer);
+		int result = BitConverter.ToInt32(buffer, 0);
+
+		return new Random(result).Next(min, max);
 	}
 }
