@@ -22,6 +22,7 @@ public class DraggableIsoItem : Draggable
     public Sprite NWSprite;
     public IsoDropZone dropZone;
     public int Price;
+    public bool Rotatable = true;
 
 
     private bool mouseInside = false;
@@ -294,21 +295,25 @@ public class DraggableIsoItem : Draggable
 
     public void Rotate()
     {
-        switch (this.direction)
+        if (Rotatable)
         {
-            case Direction.NE:
-                SetDirection(Direction.SE);
-                break;
-            case Direction.SE:
-                SetDirection(Direction.SW);
-                break;
-            case Direction.SW:
-                SetDirection(Direction.NW);
-                break;
-            case Direction.NW:
-                SetDirection(Direction.NE);
-                break;
+            switch (this.direction)
+            {
+                case Direction.NE:
+                    SetDirection(Direction.SE);
+                    break;
+                case Direction.SE:
+                    SetDirection(Direction.SW);
+                    break;
+                case Direction.SW:
+                    SetDirection(Direction.NW);
+                    break;
+                case Direction.NW:
+                    SetDirection(Direction.NE);
+                    break;
 
+            }
         }
+        
     }
 }
