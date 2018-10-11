@@ -1,6 +1,7 @@
 using Game;
 using Game.Hiscores;
 using Multiplayer;
+using Quests;
 using UserInterface;
 
 public class Toolbox : Singleton<Toolbox>
@@ -32,5 +33,10 @@ public class Toolbox : Singleton<Toolbox>
     public Hiscores Hiscores
     {
         get { return Hiscores.Instance; }
+    }
+
+    public QuestManager QuestManager
+    {
+        get { return QuestManager.Instance; }
     }
 }
