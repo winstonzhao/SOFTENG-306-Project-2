@@ -30,6 +30,8 @@ public class DraggableIsoItem : Draggable
     private bool moving = false;
     private IsoCollider currentHitCollider;
 
+    private static bool holdingItem = false;
+
     private List<IsoDropZone> newDropZones = new List<IsoDropZone>();
 
     private Vector3 target;
@@ -84,17 +86,19 @@ public class DraggableIsoItem : Draggable
 
         if (dragging)
         {
-            // detect iso ray cast collision
-            //mouse ray in isometric coordinate system 
+            // fire a ray cast from the current mouse position to the Isometric dimension system
             var isoRay = Isometric.MouseToIsoRay();
             IsoRaycastHit isoRaycastHit;
             if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
             {
-                // GameObject hitObject = isoRaycastHit.Collider.gameObject;
+                
+                // if the ray cast hits something, check which tile is it hitting, trigger entering the drop zone 
+                // and exiting the previous drop zone
                 IsoCollider hitCollider = isoRaycastHit.Collider;
                 if (hitCollider != currentHitCollider)
                 {
-                    Debug.Log("block ray cast hits " + hitCollider.gameObject.name + " at " + isoRaycastHit.Point);
+                    // if the ray cast did not hit any tile, the block is moved to an empty space, trigger exiting the  
+                    // previous drop zone
                     if (currentHitCollider != null)
                     {
                         OnIsoTriggerExitDZ(currentHitCollider);
@@ -158,9 +162,10 @@ public class DraggableIsoItem : Draggable
     void OnMouseDown()
     {
         //Debug.Log("Mouse down");
-        if (!mouseInside) return;
+        if (!mouseInside || holdingItem) return;
         dragging = true;
         moving = false;
+        holdingItem = true;
         GetComponent<SpriteRenderer>().sortingOrder = 1;
         Vector3 mousePos = Input.mousePosition;
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
@@ -178,7 +183,7 @@ public class DraggableIsoItem : Draggable
     {
         Debug.Log("Mouse up");
         dragging = false;
-        
+        holdingItem = false;
         if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name))   // dropped on a new available drop zone
         {
             Debug.Log("entered 1st if statement");
