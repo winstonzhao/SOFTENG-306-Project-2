@@ -40,7 +40,6 @@ public class CivilLevelController : MonoBehaviour {
     private int maxBudget;
     private int tutorialSlideNumber;
     private const int TUTORIAL_SLIDE_COUNT = 8;
-    private DraggableIsoItem currDraggingIsoItem = null;
 
     public bool ShowTutorial = false;
 
@@ -65,10 +64,6 @@ public class CivilLevelController : MonoBehaviour {
     void Update()
     {
         CivilGameManager.CheckMouseClickForRotation();
-        // try catch a mouse click event and start dragging the item being clicked
-        if (currDraggingIsoItem == null) currDraggingIsoItem = CivilGameManager.CheckMouseDownForDragging();
-        // try catch a mouse release event to stop the dragging
-        currDraggingIsoItem = CivilGameManager.CheckMouseUpForDragging(currDraggingIsoItem);
     }
 
     public void run()

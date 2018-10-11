@@ -32,9 +32,6 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         createPrefeb();
     }
 
-    /**
-     * Create a new tile prefab to be placed on top of the factory for road building
-     */
     void createPrefeb()
     {
         if (prefebName != "")
@@ -159,9 +156,6 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         gameObject.layer = enable ? 1 : 2;
     }
 
-    /**
-     * Display the tile factories as enable or disable depending on budget availability
-     */
     public void setEnable(bool enable)
     {
         if (enable == isEnabled) return;

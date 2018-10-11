@@ -75,51 +75,6 @@ public class CivilGameManager : MonoBehaviour {
         }
     }
 
-    public static DraggableIsoItem CheckMouseDownForDragging()
-    {
-        //mouse ray in isometric coordinate system 
-        var isoRay = Isometric.MouseToIsoRay();
-
-        //do an isometric ray cast on a single left mouse click 
-        if (Input.GetMouseButtonDown(0))
-        {
-            IsoRaycastHit isoRaycastHit;
-            if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
-            {
-                GameObject hitObject = isoRaycastHit.Collider.gameObject;
-                Debug.Log("we clicked on " + hitObject.name + " at " + isoRaycastHit.Point + " tagged as " +
-                          hitObject.tag);
-                if (hitObject.tag == "BuildingBlock")
-                {
-                    // trigger the OnMouseDownIso method of the hit draggable iso item and return it
-                    DraggableIsoItem hitDraggableIsoItem = hitObject.GetComponent<DraggableIsoItem>();
-                    hitDraggableIsoItem.OnMouseDownIso();
-                    return hitDraggableIsoItem;
-                }
-            }
-        }
-
-        return null;
-    }
-    
-    public static DraggableIsoItem CheckMouseUpForDragging(DraggableIsoItem currDraggingIsoItem)
-    {
-        if (currDraggingIsoItem == null) // nothing need to be done if the user is not dragging any item right now
-        {
-            return null;
-        } 
-        else if (Input.GetMouseButtonUp(0)) // check is there a mouse release
-        {
-            // if mouse released, trigger the OnMouseUpIso method of the hit draggable iso item and return null
-            currDraggingIsoItem.OnMouseUpIso();
-            return null;
-        }
-        else // otherwise if the mouse did not release, do nothing
-        {
-            return currDraggingIsoItem;
-        }
-    }
-
     public static void ToggleDialogDisplay(Canvas canvas, string groupName, bool show)    // super
     {
         GameObject group = FindObject(canvas.gameObject, groupName).gameObject;
@@ -144,6 +99,4 @@ public class CivilGameManager : MonoBehaviour {
         }
         return null;
     }
-
-    
 }
