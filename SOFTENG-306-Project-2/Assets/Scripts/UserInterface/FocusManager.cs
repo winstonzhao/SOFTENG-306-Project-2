@@ -1,3 +1,4 @@
+using GameDialog;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ namespace UserInterface
         }
 
         public Selectable Focus;
+
+        public Dialog Dialog;
 
         public void Update()
         {

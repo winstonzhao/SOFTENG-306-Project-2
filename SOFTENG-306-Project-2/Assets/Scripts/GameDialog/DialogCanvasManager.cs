@@ -20,6 +20,8 @@ namespace GameDialog
 
         public void ShowDialog(Dialog dialog, Sprite lhs, Sprite rhs)
         {
+            Toolbox.Instance.FocusManager.Dialog = dialog;
+
             LhsSprite = lhs;
             RhsSprite = rhs;
             Showing = true;
@@ -62,6 +64,7 @@ namespace GameDialog
 
         private void CloseDialog()
         {
+            Toolbox.Instance.FocusManager.Dialog = null;
             DestroyGameFrame();
             StartCoroutine(UnsetShowingAfter(0.25f));
         }
@@ -283,6 +286,31 @@ namespace GameDialog
                         button.onClick.Invoke();
                     }
                 }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            var toolbox = Toolbox.Instance;
+
+            // If the application is being destroyed, the singleton may also be destroyed at this point
+            if (toolbox == null)
+            {
+                return;
+            }
+
+            var focusManager = toolbox.FocusManager;
+
+            // Ditto
+            if (focusManager == null)
+            {
+                return;
+            }
+
+            // Clear the dialog if we're getting destroyed
+            if (focusManager.Dialog == CurrentDialog)
+            {
+                focusManager.Dialog = null;
             }
         }
     }
