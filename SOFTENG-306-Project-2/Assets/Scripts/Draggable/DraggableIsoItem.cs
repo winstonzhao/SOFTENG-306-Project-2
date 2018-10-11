@@ -61,6 +61,7 @@ public class DraggableIsoItem : Draggable
     void Start()
     {
         SetDirection(this.direction);
+        homePos = GetComponentInParent<Transform>().position;
     }
 
     public void SetDropZone(IsoDropZone list)
@@ -137,11 +138,12 @@ public class DraggableIsoItem : Draggable
 
         if (moving)
         {
-            //transform.position = Vector3.Lerp(transform.position, target, 0.1f);
+            transform.position = Vector3.Lerp(transform.position, target, 0.1f);
             //GetComponent<IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
+            //GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
+                GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
                 moving = false;
             }
         }

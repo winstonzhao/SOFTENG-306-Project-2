@@ -14,6 +14,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     public string prefebName;
     public List<string> droppableNames;
     public int ItemPrice = 0;
+    public bool Returner = false;
 
     private Draggable currentItem;
 
@@ -115,7 +116,7 @@ public class IsoDropZone : MonoBehaviour, IDropZone
         GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
 
         // update budget if this drop zone is a factory
-        if (prefebName != "")
+        if (prefebName != "" || Returner)
         {
             //CivilLevelController.instance.UpdateBudget(ItemPrice);
             GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().UpdateBudget(((DraggableIsoItem)item).Price);

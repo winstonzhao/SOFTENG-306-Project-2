@@ -161,6 +161,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!212 &7228672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -788,7 +789,7 @@ GameObject:
   - component: {fileID: 41858853}
   - component: {fileID: 41858856}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Trash Can
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -805,7 +806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9300e2529a85a4eb0f0dc024ae1ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefebName: ' '
+  prefebName: 
   droppableNames:
   - road
   - bridge
@@ -813,6 +814,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 1
 --- !u!212 &41858854
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -861,7 +863,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!4 &41858855
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 41858852}
@@ -1047,6 +1049,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &62929560
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1377,6 +1380,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &69879497
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1675,6 +1679,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &82989473
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1864,6 +1869,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &86882877
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2156,6 +2162,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &94384028
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2331,6 +2338,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &98353591
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2615,7 +2623,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -2789,6 +2797,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &116630022
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3488,6 +3497,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &175510381
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3771,6 +3781,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &178432327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4084,6 +4095,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &185044290
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4508,6 +4520,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &203429155
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4697,6 +4710,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &212468491
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5022,6 +5036,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &240229596
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5197,6 +5212,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &246019774
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5386,6 +5402,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &246532278
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5561,6 +5578,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &249348022
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5826,6 +5844,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &256404483
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6015,6 +6034,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &263910715
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6491,6 +6511,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &282882914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6652,6 +6673,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &291981401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7088,6 +7110,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &308454957
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -7237,8 +7260,8 @@ Transform:
   - {fileID: 1723096440}
   - {fileID: 1875407641}
   - {fileID: 882393228}
-  - {fileID: 1637096735}
   - {fileID: 1417313208}
+  - {fileID: 1637096735}
   - {fileID: 516518420}
   - {fileID: 1625637788}
   - {fileID: 1424096607}
@@ -7292,7 +7315,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -7922,6 +7945,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &356162307 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
@@ -8117,6 +8141,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &373259640
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -8615,6 +8640,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &388237624
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -8977,6 +9003,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &413703847
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -9251,6 +9278,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &429773125
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -9436,6 +9464,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &435652411
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -9521,7 +9550,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -9920,6 +9949,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &475876261
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -10109,6 +10139,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &481705844
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -10203,6 +10234,7 @@ MonoBehaviour:
   droppableNames:
   - road
   ItemPrice: 400
+  Returner: 0
 --- !u!50 &491003956
 Rigidbody2D:
   serializedVersion: 4
@@ -10348,6 +10380,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!212 &491374048
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10957,6 +10990,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &539506437
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -11045,7 +11079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortingStrategy: {fileID: 542837591}
-  Dirty: 1
+  Dirty: 0
   _isoAngle: 26.565
   _xRot: 35.625
   _yRot: 45
@@ -11176,6 +11210,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &559951616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11962,6 +11997,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &588691304
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -12045,6 +12081,7 @@ MonoBehaviour:
   droppableNames:
   - road
   ItemPrice: 100
+  Returner: 0
 --- !u!212 &596162479
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12455,6 +12492,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &615715790
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -12644,6 +12682,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &622842212
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -13219,6 +13258,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &646354097
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -13545,6 +13585,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &670839172
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -13903,6 +13944,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &685013868
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -14078,6 +14120,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &689474079
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -14361,6 +14404,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &714431778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15100,6 +15144,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &729307264 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
@@ -15450,6 +15495,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &753579999
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -15644,6 +15690,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &766045772
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -15841,6 +15888,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!212 &809036698
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16407,7 +16455,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -16561,6 +16609,7 @@ MonoBehaviour:
   droppableNames:
   - road
   ItemPrice: 300
+  Returner: 0
 --- !u!50 &839094746
 Rigidbody2D:
   serializedVersion: 4
@@ -16799,6 +16848,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &848928862
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -17146,6 +17196,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &890464152
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -17801,6 +17852,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &928533908
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -17990,6 +18042,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &932825671
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -18334,6 +18387,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &987301738
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -18523,6 +18577,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &994625723
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -18770,7 +18825,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1009234859
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1009234854}
@@ -18969,6 +19024,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1027320231
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -19590,6 +19646,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1083744032
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -19779,6 +19836,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1089332609
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -19997,6 +20055,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1091343720
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -20616,6 +20675,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1142296157
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -20988,6 +21048,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &1155443316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21178,6 +21239,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1157164532
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -21504,6 +21566,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &1161799160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21689,6 +21752,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1163293349
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -21986,6 +22050,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1174069789
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -22304,7 +22369,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1190493254
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1190493246}
@@ -22792,6 +22857,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1232843595
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -23122,6 +23188,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1244274655
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -24079,6 +24146,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1335620328
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -24329,6 +24397,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1340292906
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -24512,6 +24581,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &1342345112 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
@@ -24707,6 +24777,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1349923175
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -24801,6 +24872,7 @@ MonoBehaviour:
   droppableNames:
   - road
   ItemPrice: 200
+  Returner: 0
 --- !u!50 &1357098317
 Rigidbody2D:
   serializedVersion: 4
@@ -25237,6 +25309,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1374042253
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -25561,6 +25634,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1381435909
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -25750,6 +25824,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1388764387
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -25904,7 +25979,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -26069,6 +26144,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1401628404
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -26244,6 +26320,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1402384743
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -27608,6 +27685,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1439341576
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -27906,6 +27984,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1453235474
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -28081,6 +28160,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1466217889
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -28422,6 +28502,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1495305222
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -28596,6 +28677,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1500158569
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -29175,6 +29257,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1520273380
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -29260,7 +29343,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4152675991301618, guid: 78253d565adad8e43ae8f5322a13a699, type: 2}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 114878648993955440, guid: 78253d565adad8e43ae8f5322a13a699,
         type: 2}
@@ -29343,6 +29426,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 200
+  Returner: 0
 --- !u!212 &1530103123
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29815,7 +29899,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -29890,7 +29974,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4981570718024412, guid: 45014e507e612a948bd2902cf30d4fee, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -30196,6 +30280,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1593444390
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -30385,6 +30470,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1607254073
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -30574,6 +30660,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1613743088
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -30759,6 +30846,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1624527961
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -31228,6 +31316,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1642743277
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -31615,6 +31704,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1665166713
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -31804,6 +31894,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1669790431
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -32068,6 +32159,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1692704286
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -32533,7 +32625,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4518742222201194, guid: d94d2e029a91f254e856959bfe3d75a5, type: 2}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 114419445000970062, guid: d94d2e029a91f254e856959bfe3d75a5,
         type: 2}
@@ -32698,6 +32790,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1754240729
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -32874,7 +32967,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4228705279701560, guid: 8c903d0c1f82f704da934bdc64b727a8, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1848736258367056, guid: 8c903d0c1f82f704da934bdc64b727a8, type: 2}
       propertyPath: m_Name
@@ -33048,6 +33141,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1787202729
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -33735,6 +33829,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1822632932
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -34071,6 +34166,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1832064518
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -34256,6 +34352,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1835180930
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -34445,6 +34542,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1836616997
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -34733,6 +34831,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1886655486
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -35045,6 +35144,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1891383938
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -35234,6 +35334,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1899174724
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -35625,6 +35726,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &1915635723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36078,6 +36180,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1931602136
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -36261,6 +36364,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1938121566
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -36823,6 +36927,7 @@ MonoBehaviour:
   droppableNames:
   - bridge
   ItemPrice: 0
+  Returner: 0
 --- !u!212 &1981895573
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37077,6 +37182,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &1988454888
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -37260,6 +37366,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!114 &1995266545 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
@@ -37868,6 +37975,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &2024465798
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -38057,6 +38165,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &2040403669
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -38242,6 +38351,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &2041470999
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -38773,6 +38883,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &2076750952
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -39398,6 +39509,7 @@ MonoBehaviour:
   - three_way_intersection
   - four_way_intersection
   ItemPrice: 0
+  Returner: 0
 --- !u!60 &2117407461
 PolygonCollider2D:
   m_ObjectHideFlags: 0

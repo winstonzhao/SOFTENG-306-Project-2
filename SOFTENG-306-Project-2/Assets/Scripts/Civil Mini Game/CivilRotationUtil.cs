@@ -78,6 +78,8 @@ namespace Civil_Mini_Game
             {
                 if (thisDir == NE || thisDir == SW) // for road or bridge tiles heading in NE or SW direction
                 {
+                    bool noAdjAtNE = false;
+                    bool noAdjAtSW = false;
                     if (adjacentTiles.TryGetValue(NE, out adjTile)) // get the adjacent tile at NE
                     {
                         draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
@@ -96,6 +98,10 @@ namespace Civil_Mini_Game
                                 if (adjTileDirection == NW) tilesToRemove.Add(tile);
                                 break;
                         }
+                    }
+                    else
+                    {
+                        noAdjAtNE = true;
                     }
 
                     if (adjacentTiles.TryGetValue(SW, out adjTile)) // get the adjacent tile at SW
@@ -117,9 +123,21 @@ namespace Civil_Mini_Game
                                 break;
                         }
                     }
+                    else
+                    {
+                        noAdjAtSW = true;
+                    }
+
+                    if (noAdjAtNE && noAdjAtSW)
+                    {
+                        // if the road or bridge does not have adjacent tile on both ends, it is certainly not traversable
+                        tilesToRemove.Add(tile);
+                    }
                 }
                 else if (thisDir == SE || thisDir == NW) // for road or bridge tiles heading in SE or NW direction
                 {
+                    bool noAdjAtSE = false;
+                    bool noAdjAtNW = false;
                     if (adjacentTiles.TryGetValue(SE, out adjTile)) // get the adjacent tile at SE
                     {
                         draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
@@ -138,6 +156,10 @@ namespace Civil_Mini_Game
                                 if (adjTileDirection == NE) tilesToRemove.Add(tile);
                                 break;
                         }
+                    }
+                    else
+                    {
+                        noAdjAtSE = true;
                     }
 
                     if (adjacentTiles.TryGetValue(NW, out adjTile)) // get the adjacent tile at NW
@@ -158,6 +180,16 @@ namespace Civil_Mini_Game
                                 if (adjTileDirection == SW) tilesToRemove.Add(tile);
                                 break;
                         }
+                    }
+                    else
+                    {
+                        noAdjAtNW = true;
+                    }
+                    
+                    if (noAdjAtSE && noAdjAtNW)
+                    {
+                        // if the road or bridge does not have adjacent tile on both ends, it is certainly not traversable
+                        tilesToRemove.Add(tile);
                     }
                 }
             }
