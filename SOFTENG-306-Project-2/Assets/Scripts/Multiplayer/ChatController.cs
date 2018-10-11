@@ -63,9 +63,8 @@ namespace Multiplayer
                     LastChatMessageId = message.Id;
                     Messages.Add(message);
 
-                    // Todo - use the server time in the future - I suspect something's wrong
-                    // Parse the ISO-8601 date into a workable format
-                    message.SentAt = DateTime.Now;
+                    // Offset by the time drift between client & server
+                    message.SentAt += MultiplayerController.TimeDrift;
                 }
             }
         }
