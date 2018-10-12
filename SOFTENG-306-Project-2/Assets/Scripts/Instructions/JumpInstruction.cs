@@ -26,7 +26,7 @@ namespace Instructions
 
         private void OnDestroy()
         {
-            Destroy(curve.gameObject);
+            if (curve != null) Destroy(curve.gameObject);
         }
 
         private void Update()
@@ -58,6 +58,8 @@ namespace Instructions
 
             var draggableItem = GetComponent<DraggableUIItem>();
             draggableItem.AddConnectedItem(targetDraggable);
+            targetDraggable.AddConnectedItem(draggableItem);
+
             draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
 
             curve = BezierLines.Instance.AddCurve(

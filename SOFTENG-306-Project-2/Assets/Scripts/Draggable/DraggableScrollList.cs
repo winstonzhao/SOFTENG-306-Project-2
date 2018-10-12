@@ -216,7 +216,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     {
         if (listItems.Contains(item)) return;
 
-
+        RemoveDummies();
         AddDummyToList(FindIndex(item));
     }
 

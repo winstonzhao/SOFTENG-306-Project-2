@@ -53,19 +53,21 @@ namespace Instructions
 
         private void onClicked(object obj)
         {
-            if (!Editable || trackMouse) return;
-            trackMouse = true;
+            if (!Editable) return;
+            trackMouse = !trackMouse;
             mouseDebounce = true;
+            if (trackMouse)
+            {
+                instructionRenderer.BackgroundColor = InstructionRenderer.SelectedBackgroundColor;
+            }
+            else
+            {
+                instructionRenderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+            }
         }
 
         public void Update()
         {
-            if (trackMouse)
-                if (instructionRenderer != null)
-                {
-                    instructionRenderer.BackgroundColor = new Color(0, 0, 1);
-                    instructionRenderer.Render();
-                }
 
             if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
             {
@@ -87,7 +89,10 @@ namespace Instructions
                     }
                 }
 
-                if (instructionRenderer != null) instructionRenderer.BackgroundColor = new Color(1, 1, 1);
+                if (instructionRenderer != null)
+                {
+                    instructionRenderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                }
             }
 
             mouseDebounce = false;

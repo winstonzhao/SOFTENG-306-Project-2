@@ -17,6 +17,10 @@ public class SoftwareTutorial : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (InstructionCanvas == null)
+        {
+            InstructionCanvas = GameObject.Find("Instruction Canvas").GetComponent<Canvas>();
+        }
         slides = transform.GetChild(0);
         Open();
     }

@@ -24,8 +24,6 @@ namespace Instructions
 
         private List<InstructionObj> instructions = new List<InstructionObj>();
 
-        public float MinExecutionSeconds = 0.4f;
-
         public ClickEventEmitter playButton;
 
         public ClickEventEmitter stopButton;
@@ -41,6 +39,11 @@ namespace Instructions
 
         private void Start()
         {
+            if (target == null)
+            {
+                target = FindObjectOfType<RobotController>();
+            }
+
             SPRITE_SHEET = Resources.LoadAll<Sprite>("software_minigame/Sprites/greenSheet");
             draggableList = GetComponent<GenericDraggableList>();
             // draggableList.AllowedItems = new List<System.Type>
@@ -181,7 +184,12 @@ namespace Instructions
         {
             if (currentInstruction != null && !executeNext) currentInstruction.Instruction.UpdateInstruction();
 
-            if (executeNext && Time.time - executionStart > MinExecutionSeconds)
+            if (currentInstruction != null && Time.time - executionStart < currentInstruction.Instruction.MinTiming)
+            {
+                return;
+            }
+
+            if (executeNext)
             {
                 executionStart = Time.time;
                 DoExecute();

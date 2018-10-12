@@ -56,6 +56,18 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
 
     }
 
+    private void OnDestroy()
+    {
+        foreach (var item in connectedItems)
+        {
+            if (item != null)
+            {
+                if (item.dropZone != null) item.dropZone.OnItemRemove(item);
+                Destroy(item.gameObject);
+            }
+        }
+    }
+
     public override void SetDropZone(IDropZone newDropZone)
     {
         dropZone = newDropZone;
@@ -92,7 +104,12 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
             }
 
             prevMousePos = mousePosWorld;
-        }
+
+            if (newDropZones.Count > 0)
+            {
+                newDropZones[0].OnDragEnter(this);
+            }
+         }
 
 
         if (moving)
@@ -191,7 +208,6 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Pointer Down");
         if (!mouseInside) return;
         dragging = true;
         moving = false;

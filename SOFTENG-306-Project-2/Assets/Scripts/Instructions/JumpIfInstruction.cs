@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace Instructions
 {
-    public class CompareInstruction : Instruction
+    public class JumpIfInstruction : Instruction
     {
         private InstructionExecutor instructionExecutor;
         private JumpTargetInstruction trueTarget;
-        private JumpTargetInstruction falseTarget;
 
         private RobotController robot;
 
@@ -25,7 +24,7 @@ namespace Instructions
             {
                 return new List<InstructionComponent>
                 {
-                    new InstructionComponent("Compare"),
+                    new InstructionComponent("JumpIf"),
                     new DropdownInstructionComponent("up")
                     {
                         OnComponentClicked = OnDirClicked
@@ -82,8 +81,6 @@ namespace Instructions
 
             var draggableItem = GetComponent<DraggableUIItem>();
             draggableItem.AddConnectedItem(targetDraggable);
-            targetDraggable.AddConnectedItem(draggableItem);
-
             draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
 
             target.Label = name;
@@ -94,8 +91,7 @@ namespace Instructions
         private void Start()
         {
             // Load the End Jump component
-            trueTarget = CreateTarget("Compare TRUE");
-            falseTarget = CreateTarget("Compare FALSE");
+            trueTarget = CreateTarget("JumpIf END");
 
 //            curve = FindObjectOfType<BezierLines>().AddCurve(
 //                new Vector3[]
@@ -118,10 +114,6 @@ namespace Instructions
             if (robot.CompareItem(compareDirection, comparison, true, -1, -1))
             {
                 instructionExecutor.JumpToInstruction(trueTarget);
-            }
-            else
-            {
-                instructionExecutor.JumpToInstruction(falseTarget);
             }
 
             instructionExecutor.ExecuteNextInstruction();

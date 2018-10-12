@@ -17,6 +17,11 @@ namespace Instructions
             set { label = value; }
         }
 
+        public override float MinTiming
+        {
+            get { return 0.0f; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
