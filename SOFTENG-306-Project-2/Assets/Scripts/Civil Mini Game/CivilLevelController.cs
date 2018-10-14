@@ -24,9 +24,14 @@ public class CivilLevelController : MonoBehaviour {
     
     public int TimeLimit = 10;
     public int Budget = 1000;
+    public float IdealTimeLeft;
+    public float IdealBudgetLeft;
+    
+    public string ThisLevelName;
     public string NextLevelName;
     public string CheatLevelName;
     public string UndoCheatLevelName;
+    
     public int BudgetMaxScore = 50;
     public int TimeMaxScore = 30;
     public int CompletionBaseScore = 20;
@@ -89,12 +94,12 @@ public class CivilLevelController : MonoBehaviour {
         if (AllCarsReachedGoal()) // Win
         {
             Debug.Log("Win!!!!!!");
-            // add high score
-            AddHighScore(currCountdownValueTenthSeconds, Budget);
+            // add high score based on the time left (in seconds) and the budget left
+            int score = AddHighScore(currCountdownValueTenthSeconds / 10.0f, Budget);
             
             // set parameters in the result info
             SetPlayerName(PlayerName);
-            SetTimeAndAmount((int) Math.Round(TimeLimit - currCountdownValueTenthSeconds / 10), Budget);
+            SetTimeAmountAndScore((int) Math.Round(TimeLimit - currCountdownValueTenthSeconds / 10), Budget, score);
             CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", false);
             CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", true);
         }
@@ -109,26 +114,31 @@ public class CivilLevelController : MonoBehaviour {
         Dialog.enabled = !Dialog.enabled;
     }
 
-    private void AddHighScore(float timeLeft, int budget) // Level
+    private int AddHighScore(float timeLeft, int budget) // Level
     {
-        float timeLeftPortion = timeLeft / (float) (TimeLimit*10);
-        Debug.Log(timeLeftPortion);
-        float budgetLeftPortion = budget / (float) maxBudget;
-        Debug.Log(budgetLeftPortion);
+        float timeLeftPortion = timeLeft / IdealTimeLeft;
+        Debug.Log("time left portion: " + timeLeftPortion);
+        float budgetLeftPortion = budget / (float) IdealBudgetLeft;
+        Debug.Log("budget left portion: " + budgetLeftPortion);
 
         float timeScore = timeLeftPortion * TimeMaxScore;
-        Debug.Log(timeScore);
+        Debug.Log("time score: " + timeScore);
         float budgetScore = budgetLeftPortion * BudgetMaxScore;
-        Debug.Log(budgetScore);
+        Debug.Log("budget score: " + budgetScore);
 
         Score score = new Score();
         score.Minigame = Minigames.Civil;
-        score.Value = timeScore + budgetScore + CompletionBaseScore;
+        int highScore =(int) Math.Round(timeScore + budgetScore + CompletionBaseScore);
+        highScore = highScore > 100 ? 100 : highScore;
+        Debug.Log("actual score: " + highScore);
+        score.Value = highScore;
+        Debug.Log("high score: " + score.Value);
         score.CreatedAt = DateTime.Now;
-        Debug.Log(DateTime.Now);
+        Debug.Log("high score time: " + score.CreatedAt);
 
-        Debug.Log(score);
         Toolbox.Instance.Hiscores.Add(score);
+
+        return highScore;
     }
 
     private bool AreCarsMoving() // Level
@@ -158,7 +168,7 @@ public class CivilLevelController : MonoBehaviour {
         return true;
     } // Level
 
-    private void SetTimeAndAmount(int timeInSeconds, int amount)
+    private void SetTimeAmountAndScore(int timeInSeconds, int amount, int score)
     {
         TextMeshProUGUI resultInfoArea = GameObject.Find("ResultInfo").GetComponent<TextMeshProUGUI>();
 
@@ -166,6 +176,7 @@ public class CivilLevelController : MonoBehaviour {
 
         text = text.Replace("<time>", timeInSeconds.ToString() + (timeInSeconds == 1 ? " second" : " seconds"));
         text = text.Replace("<amount>", amount.ToString());
+        text = text.Replace("<score>", score.ToString());
 
         resultInfoArea.SetText(text);
     }   // Level
@@ -173,7 +184,10 @@ public class CivilLevelController : MonoBehaviour {
     private void SetPlayerName(string name)
     {
         TextMeshProUGUI nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
-        nameArea.SetText(name);
+        string text = nameArea.text;
+        text = text.Replace("<name>", name);
+        Debug.Log(text);
+        nameArea.SetText(text);
     }   // Level, TODO rename
 
     private void SetFailInfo(string failInfo) // Level

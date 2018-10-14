@@ -11,7 +11,7 @@ public class CivilGameManager : MonoBehaviour {
 
 
     private static float lastClickTime = 0;
-    private static float catchTime = 0.2f;
+    private static float catchTime = 0.3f;
 
 
     private void Awake()
