@@ -1,19 +1,22 @@
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UltimateIsometricToolkit.physics;
+using Ultimate_Isometric_Toolkit.Scripts.Core;
+using Ultimate_Isometric_Toolkit.Scripts.Pathfinding;
 using UnityEngine;
+using System;
+using System.Diagnostics;
 using Game;
 using Game.Hiscores;
 using TMPro;
-using System;
+using Debug = UnityEngine.Debug;
+using UnityEngine.SceneManagement;
+using Ultimate_Isometric_Toolkit.Scripts.Utils;
+using Ultimate_Isometric_Toolkit.Scripts.physics;
+using UnityEngine.Analytics;
 
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
-public class SingleDropZoneReturn : MonoBehaviour, IDropZone
+public class Timing : MonoBehaviour
 {
-    public Sprite newSprite;
-    private Draggable currentItem;
-    public Draggable expectedGate;
-    public Canvas endOfLevelCanvas;
-
     public int TimeLimit = 10;
     public int TimeMaxScore = 30;
     public int CompletionBaseScore = 20;
@@ -24,92 +27,6 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
 
     private float currCountdownValueTenthSeconds;
 
-    public void Start()
-    {
-        var rigidbody = GetComponent<Rigidbody2D>();
-        if (rigidbody == null) 
-        {
-            rigidbody = gameObject.AddComponent<Rigidbody2D>();
-            rigidbody.bodyType = RigidbodyType2D.Kinematic;
-        }
-
-        StartCoroutine(StartCountdown(TimeLimit));
-    }
-
-    public void OnDragEnter(Draggable item)
-    {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
-    }
-
-    public void OnDragExit(Draggable item)
-    {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-    }
-
-    public void OnDragFinish(Draggable item)
-    {
-        if (!item.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
-        {
-            item.GetComponent<DraggableItemReturn>().SetDropZone(null);
-        }
-    }
-
-    public void OnDragStart(Draggable item)
-    {
-        
-    }
-
-    public void OnDrop(Draggable item)
-    {
-        currentItem = item;
-        currentItem.HomePos = transform.position;
-
-        if (currentItem == expectedGate)
-        {
-            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-            GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
-
-            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
-
-            foreach (GameObject circ in circuitPieces)
-            {
-                circ.GetComponent<SpriteRenderer>().color = Color.yellow;
-            }
-
-            timerNotStopped = false;
-            StartCoroutine(endOfLevel((delayTime) =>
-            {
-                if (delayTime) {
-                    endOfLevelCanvas.enabled = true;
-                }
-            }));
-        }
-
-    }
-
-    private IEnumerator endOfLevel(System.Action<bool> callback)
-    {
-        yield return new WaitForSeconds(2);
-        callback(true);
-       
- 
-    }
-
-    public void OnItemDrag(Draggable item)
-    {
-        
-    }
-
-    public void OnItemRemove(Draggable item)
-    {
-        currentItem = null;
-    }
-
-    public bool CanDrop(Draggable item)
-    {
-        return true;
-    }
-
     private void Awake()
 
     {
@@ -118,6 +35,11 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
         timerArea.SetText(timerLabel);
     }
 
+
+    public void Start()
+    {
+        StartCoroutine(StartCountdown(TimeLimit));
+    }
 
     private void AddHighScore(float timeLeft, int budget)
     {
