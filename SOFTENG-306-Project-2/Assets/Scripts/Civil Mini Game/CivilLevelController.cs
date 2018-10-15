@@ -194,6 +194,7 @@ public class CivilLevelController : MonoBehaviour {
 
     IEnumerator StartCountdown(int timeLimit)
     {
+        Debug.Log("CivilLevelController: Start Countdown");
         float countdownValue = (TimeLimit - 1) * 10;
         currCountdownValueTenthSeconds = countdownValue;
         while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
@@ -241,6 +242,22 @@ public class CivilLevelController : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }   // Level
 
+    public void ResetTimerAndCars()
+    {
+        Debug.Log("CivilLevelController: ResetTimerAndCars");
+        
+        // reset cars
+        foreach (var carAgent in CarAgents)
+        {
+            carAgent.ResetCar();
+        }
+        
+        // reset timer
+        timerNotStopped = true;
+        string timerLabel = String.Format("{0:00}:00", (TimeLimit));
+        timerArea.text = timerLabel;
+    }
+
     public void NextLevel()
     {
         Debug.Log("Next level " + NextLevelName);
@@ -261,7 +278,10 @@ public class CivilLevelController : MonoBehaviour {
 
     public void CloseDialog()
     {
+        // set the canvas to be disabled, but make the panels inside it to be both available
         Dialog.enabled = !Dialog.enabled;
+        CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", true);
+        CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", true);
     }   // Level, TODO rename
 
 

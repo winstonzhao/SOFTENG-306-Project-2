@@ -31,7 +31,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         [HideInInspector]
         public volatile bool noPathFound = false;
 
-        void Awake()
+        public void Awake()
         {
             animator = GetComponent<Animator>();
             hasReachedGoal = false;

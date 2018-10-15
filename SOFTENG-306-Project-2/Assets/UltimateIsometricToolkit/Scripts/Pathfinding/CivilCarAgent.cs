@@ -14,6 +14,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
     public class CivilCarAgent : AstarAgent
     {
         private Vector3 goal;
+        private Vector3 originalPosition;
         private float currCountdownValue;
         private bool timerNotStopped;
 
@@ -21,9 +22,17 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
 
         private bool checkForBlockingCars = true;
 
+
+        public void Awake()
+        {
+            originalPosition = GetComponentInParent<IsoTransform>().Position;
+            base.Awake();
+        }
+
         public void StopMoving()
         {
             // stop the movement
+            Debug.Log("CivilCarAgent " + gameObject.name + ": stopped moving");
             base.StopAllCoroutines();
         }
 
@@ -94,9 +103,16 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                         StopMoving();
                     }
                 }
-            
 
+        }
 
+        public void ResetCar()
+        {
+            GetComponentInParent<IsoTransform>().Position = originalPosition;
+            GetComponent<Animator>().Rebind();
+            hasReachedGoal = false;
+            noPathFound = false;
+            notPassable = false;
         }
     }
 

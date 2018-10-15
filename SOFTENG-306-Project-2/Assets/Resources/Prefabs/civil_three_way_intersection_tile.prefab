@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 212558302502103222}
   - component: {fileID: 60944669196593384}
   - component: {fileID: 114429397083125100}
-  - component: {fileID: 114715839198883994}
   - component: {fileID: 114387262341595448}
   m_Layer: 0
   m_Name: civil_three_way_intersection_tile
@@ -127,22 +126,6 @@ MonoBehaviour:
   Price: 300
   Rotatable: 1
   homePos: {x: 0, y: 0, z: 0}
---- !u!114 &114715839198883994
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1848736258367056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isoTransform: {fileID: 0}
-  _isTrigger: 0
-  _material: {fileID: 0}
-  _size: {x: 0, y: 0, z: 0}
-  _center: {x: 0, y: 0, z: 0}
 --- !u!212 &212558302502103222
 SpriteRenderer:
   m_ObjectHideFlags: 1
