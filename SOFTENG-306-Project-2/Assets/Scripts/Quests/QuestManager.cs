@@ -51,6 +51,61 @@ namespace Quests
         {
             var every = TimeSpan.FromSeconds(3);
             DebounceSave = new DebounceAction(every, Save);
+
+            quests.Add(new Quest
+            {
+                Id = "get-timetable",
+                Title = "Speak to Naomi",
+                Description = "Naomi has asked me to speak to her next to the student services stall"
+            });
+            quests.Add(new Quest
+            {
+                Id = "visit-leech",
+                Title = "Visit Engineering Leech",
+                Description = "I should go to the engineering leech to speak to the instructors"
+            });
+            quests.Add(new Quest
+            {
+                Id = "software-workshop",
+                Title = "Software Workshop",
+                Description = "Catherine is waiting for me at the software workshop"
+            });
+            quests.Add(new Quest
+            {
+                Id = "software-workshop",
+                Title = "Software Workshop",
+                Description = "The software instructor is waiting for me at the software workshop"
+            });
+            quests.Add(new Quest
+            {
+                Id = "civil-workshop",
+                Title = "Civil Workshop",
+                Description = "The civil instructor is waiting for me at the software workshop"
+            });
+            quests.Add(new Quest
+            {
+                Id = "electrical-workshop",
+                Title = "Electrical Workshop",
+                Description = "The electrical instructor is waiting for me at the software workshop"
+            });
+            quests.Add(new Quest
+            {
+                Id = "networking",
+                Title = "Networking Event",
+                Description = "Speak to undergraduate students and industry professionals!"
+            });
+            quests.Add(new Quest
+            {
+                Id = "naomi-final",
+                Title = "Speak to Naomi",
+                Description = "Naomi wants to speak to you one last time"
+            });
+            quests.Add(new Quest
+            {
+                Id = "free-roam",
+                Title = "You're done!",
+                Description = "Feel free to visit the various stalls and chat with other students"
+            });
         }
 
         private void Awake()
