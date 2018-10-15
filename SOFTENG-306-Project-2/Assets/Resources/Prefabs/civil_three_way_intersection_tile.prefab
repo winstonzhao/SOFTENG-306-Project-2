@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 60944669196593384}
   - component: {fileID: 114429397083125100}
   - component: {fileID: 114715839198883994}
+  - component: {fileID: 114387262341595448}
   m_Layer: 0
   m_Name: civil_three_way_intersection_tile
   m_TagString: BuildingBlock
@@ -94,6 +95,17 @@ MonoBehaviour:
   _position: {x: 6, y: 6, z: 7}
   _size: {x: 1, y: 0.4, z: 1}
   _parent: {fileID: 0}
+--- !u!114 &114387262341595448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1848736258367056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1b7e394a4fc5e4baad304fe3ad11b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114429397083125100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,6 +125,7 @@ MonoBehaviour:
   NWSprite: {fileID: 21300000, guid: 42e73d1b6b983b14ab93b1bc01828307, type: 3}
   dropZone: {fileID: 0}
   Price: 300
+  Rotatable: 1
   homePos: {x: 0, y: 0, z: 0}
 --- !u!114 &114715839198883994
 MonoBehaviour:

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 60148422858811474}
   - component: {fileID: 114387176330801290}
   - component: {fileID: 114216334509094010}
+  - component: {fileID: 114610107079644862}
   m_Layer: 0
   m_Name: civil_road_tile
   m_TagString: BuildingBlock
@@ -111,7 +112,19 @@ MonoBehaviour:
   NWSprite: {fileID: 21300000, guid: ac8a3d18c839fd44dbbc47e65d710f1b, type: 3}
   dropZone: {fileID: 0}
   Price: 100
+  Rotatable: 1
   homePos: {x: 0, y: 0, z: 0}
+--- !u!114 &114610107079644862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163544479429800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1b7e394a4fc5e4baad304fe3ad11b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114958083693229736
 MonoBehaviour:
   m_ObjectHideFlags: 1

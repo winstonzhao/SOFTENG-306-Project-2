@@ -6,6 +6,7 @@ using System;
 using UltimateIsometricToolkit.physics;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
+using UnityEngine.EventSystems;
 
 public class DraggableIsoItem : Draggable
 {
@@ -151,73 +152,88 @@ public class DraggableIsoItem : Draggable
 
     void OnMouseEnter()
     {
-        //Debug.Log("mouse enter");
-        mouseInside = true;
+        if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
+        {
+            //Debug.Log("mouse enter");
+            mouseInside = true;
+        }
     }
 
     void OnMouseLeave()
     {
-        //Debug.Log("mouse leave");
-        mouseInside = false;
+        if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
+        {
+            //Debug.Log("mouse leave");
+            mouseInside = false;
+        }
     }
 
     void OnMouseDown()
     {
-        //Debug.Log("Mouse down");
-        if (!mouseInside || holdingItem) return;
-        dragging = true;
-        moving = false;
-        holdingItem = true;
-        GetComponent<SpriteRenderer>().sortingOrder = 1;
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
-        prevMousePos = mousePosWorld;
-
-        //Debug.Log("mouse clicked");
-
-        if (dropZone != null)
+        if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            dropZone.OnDragStart(this);
+            //Debug.Log("Mouse down");
+            if (!mouseInside || holdingItem) return;
+            dragging = true;
+            moving = false;
+            holdingItem = true;
+            GetComponent<SpriteRenderer>().sortingOrder = 1;
+            Vector3 mousePos = Input.mousePosition;
+            Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
+            prevMousePos = mousePosWorld;
+
+            //Debug.Log("mouse clicked");
+
+            if (dropZone != null)
+            {
+                dropZone.OnDragStart(this);
+            }
         }
     }
 
     void OnMouseUp()
     {
-        Debug.Log("Mouse up");
-        dragging = false;
-        holdingItem = false;
-        if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name))   // dropped on a new available drop zone
+        if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            Debug.Log("entered 1st if statement");
-            if (dropZone != null)
+            Debug.Log("Mouse up");
+            dragging = false;
+            holdingItem = false;
+            if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name)
+            ) // dropped on a new available drop zone
             {
-                dropZone.OnItemRemove(this);
+                Debug.Log("entered 1st if statement");
+                if (dropZone != null)
+                {
+                    dropZone.OnItemRemove(this);
+                }
+
+                newDropZones[0].OnDrop(this);
+                dropZone = newDropZones[0];
+                newDropZones.Clear();
+            }
+            else if (newDropZones.Count > 0 && !newDropZones[0].droppableNames.Contains(this.name)
+            ) // dropped on a new unavailable drop zone
+            {
+                newDropZones[0].OnDragExit(this);
+                Debug.Log("entered 2nd if statement");
+                if (dropZone != null)
+                {
+                    dropZone.OnDragFinish(this);
+                }
+            }
+            else // did not drop on any new drop zone
+            {
+                Debug.Log("entered else statement");
+                Debug.Log(dropZone);
+                if (dropZone != null)
+                {
+                    dropZone.OnDragFinish(this);
+                }
             }
 
-            newDropZones[0].OnDrop(this);
-            dropZone = newDropZones[0];
-            newDropZones.Clear();
+            Debug.Log(homePos);
+            MoveTo(homePos);
         }
-        else if (newDropZones.Count > 0 && !newDropZones[0].droppableNames.Contains(this.name)) // dropped on a new unavailable drop zone
-        {
-            newDropZones[0].OnDragExit(this);
-            Debug.Log("entered 2nd if statement");
-            if (dropZone != null)
-            {
-                dropZone.OnDragFinish(this);
-            }
-        }
-        else    // did not drop on any new drop zone
-        {
-            Debug.Log("entered else statement");
-            Debug.Log(dropZone);
-            if (dropZone != null)
-            {
-                dropZone.OnDragFinish(this);
-            }
-        }
-        Debug.Log(homePos);
-        MoveTo(homePos);
     }
 
     void OnIsoTriggerEnterDZ(IsoCollider col)
