@@ -35,7 +35,7 @@ namespace UltimateIsometricToolkit.controller
         private float InputGetAxis(string name)
         {
             var inputManager = Toolbox.Instance.FocusManager;
-            if (inputManager.Focus != null || inputManager.Dialog != null)
+            if (inputManager.HasBlocking)
             {
                 return 0.0f;
             }

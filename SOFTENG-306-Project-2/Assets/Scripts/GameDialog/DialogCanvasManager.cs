@@ -181,6 +181,11 @@ namespace GameDialog
                 return;
             }
 
+            if (CurrentDialogFrame.OnComplete != null)
+            {
+                CurrentDialogFrame.OnComplete();
+            }
+
             // Close dialog if there is none left
             if (CurrentDialogFrame.Next == null)
             {

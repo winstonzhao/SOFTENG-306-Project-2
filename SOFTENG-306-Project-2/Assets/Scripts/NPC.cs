@@ -13,7 +13,7 @@ public abstract class NPC : MonoBehaviour
     private Sprite _playerSprite;
 
     // Use this for initialization
-    void Start()
+    public virtual void Start()
     {
         var player = GameObject.Find("Player");
         _playerPos = player.GetComponent<IsoTransform>();
@@ -25,7 +25,7 @@ public abstract class NPC : MonoBehaviour
     public abstract Dialog GetDialog();
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         float x1 = _playerPos.Position.x;
         float x2 = _npcPos.Position.x;
@@ -39,7 +39,12 @@ public abstract class NPC : MonoBehaviour
 
         if (Input.GetKeyDown("space") && distance < 1.5 && _canvas.Showing == false)
         {
-            _canvas.ShowDialog(GetDialog(), _playerSprite, RHSSprite);
+            ShowDialog();
         }
+    }
+
+    protected void ShowDialog()
+    {
+        _canvas.ShowDialog(GetDialog(), _playerSprite, RHSSprite);
     }
 }

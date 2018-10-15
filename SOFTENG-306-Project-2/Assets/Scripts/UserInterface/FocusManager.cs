@@ -14,6 +14,13 @@ namespace UserInterface
 
         public Dialog Dialog;
 
+        public Object Other;
+
+        public bool HasBlocking
+        {
+            get { return Focus != null || Dialog != null || Other != null; }
+        }
+
         public void Update()
         {
             Selectable focus = null;

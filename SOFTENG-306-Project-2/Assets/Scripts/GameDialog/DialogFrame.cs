@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Utils;
 
 namespace GameDialog
 {
@@ -35,6 +36,8 @@ namespace GameDialog
                 transitionToScene = value;
             }
         }
+
+        public Runnable OnComplete;
 
         public DialogFrame(string name, string text)
         {

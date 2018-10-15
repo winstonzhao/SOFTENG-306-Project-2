@@ -9,21 +9,31 @@ public class DoorNPC : NPC
     {
         var me = Toolbox.Instance.GameManager.Player.Username;
 
-        var frame = new DialogFrame(me, "This is going to take me to Engineering Leech.")
+        DialogFrame frame;
+
+        if (!Toolbox.Instance.GameManager.Settings.HasBeenGreeted)
         {
-            Options = new Dictionary<string, DialogFrame>
+            // Block the player from switching levels if they haven't been introduced to the game
+            frame = new DialogFrame(me, "Maybe I should talk to Naomi first…");
+        }
+        else
+        {
+            frame = new DialogFrame(me, "This is going to take me to Engineering Leech.")
             {
+                Options = new Dictionary<string, DialogFrame>
                 {
-                    "Let's go!", new DialogFrame(me, "Let's go!")
                     {
-                        TransitionToScene = Level
+                        "Let's go!", new DialogFrame(me, "Let's go!")
+                        {
+                            TransitionToScene = Level
+                        }
+                    },
+                    {
+                        "I want to stay!", new DialogFrame(me, "On second thought…")
                     }
-                },
-                {
-                    "I want to stay!", new DialogFrame(me, "On second thought…")
                 }
-            }
-        };
+            };
+        }
 
         var directions = new Dictionary<string, DialogPosition>
         {
