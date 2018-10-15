@@ -62,10 +62,9 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	private void OnMouseUp()
 	{
-		if (!EventSystem.current.IsPointerOverGameObject())
-		{
-			handler.CursorClear();
-		}
+
+		handler.CursorClear();
+
 	}
 
 	private void OnMouseDrag()

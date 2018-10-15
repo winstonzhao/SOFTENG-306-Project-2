@@ -20,10 +20,14 @@ public class CivilLevelController : MonoBehaviour {
     public List<CivilCarAgent> CarAgents = new List<CivilCarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
     public Canvas Dialog;
-
+    public Canvas Tutorial;
+    public Canvas AlienInfo;
     
     public int TimeLimit = 10;
     public int Budget = 1000;
+    public int BudgetMaxScore = 50;
+    public int TimeMaxScore = 30;
+    public int CompletionBaseScore = 20;
     public float IdealTimeLeft;
     public float IdealBudgetLeft;
     
@@ -32,33 +36,30 @@ public class CivilLevelController : MonoBehaviour {
     public string CheatLevelName;
     public string UndoCheatLevelName;
     
-    public int BudgetMaxScore = 50;
-    public int TimeMaxScore = 30;
-    public int CompletionBaseScore = 20;
-    public Canvas Tutorial;
+    public bool ShowTutorial = false;
+    public bool ShowAlienInfo = false;
+    
 
     private string PlayerName;
-    private TextMeshProUGUI timerArea;
+    private TextMesh timerArea;
     private bool timerNotStopped = true;
-    private TextMeshProUGUI budgetArea;
+    private TextMesh budgetArea;
     private float currCountdownValueTenthSeconds;
     private int maxBudget;
     private int tutorialSlideNumber;
     private const int TUTORIAL_SLIDE_COUNT = 8;
 
-    public bool ShowTutorial = false;
 
     private void Awake()
-
     {
         PlayerName = CivilGameManager.instance.playerName;
         maxBudget = Budget;
-        timerArea = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+        timerArea = GameObject.Find("Timer").GetComponent<TextMesh>();
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
-        timerArea.SetText(timerLabel);
+        timerArea.text = timerLabel;
 
-        budgetArea = GameObject.Find("Budget").GetComponent<TextMeshProUGUI>();
-        budgetArea.SetText("$" + Budget);
+        budgetArea = GameObject.Find("Budget").GetComponent<TextMesh>();
+        budgetArea.text = "$" + Budget;
 
         if (ShowTutorial)
         {
@@ -204,7 +205,7 @@ public class CivilLevelController : MonoBehaviour {
         {
             //Debug.Log((currCountdownValueTenthSeconds) / 10);
             string timerLabel = String.Format("{0:00}:{1:00}", Math.Floor((currCountdownValueTenthSeconds) / 10), (currCountdownValueTenthSeconds % 10) * 10);
-            timerArea.SetText(timerLabel);
+            timerArea.text = timerLabel;
             yield return new WaitForSeconds(0.1f);
             currCountdownValueTenthSeconds--;
         }
@@ -213,7 +214,7 @@ public class CivilLevelController : MonoBehaviour {
     public void UpdateBudget(int itemPrice)
     {
         Budget += itemPrice;
-        budgetArea.SetText("$" + Budget);
+        budgetArea.text = "$" + Budget;
         Debug.Log("updated budget to " + Budget);
         UpdateBudgetAvailability();
     }   // Level
@@ -278,16 +279,30 @@ public class CivilLevelController : MonoBehaviour {
             CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + i, false);
         }
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
-
     }
 
 
     public void StopTutorial()
     {
         Tutorial.gameObject.SetActive(false);
+        if (ShowAlienInfo)
+        {
+            DisplayAlienInfo();
+        }
     }   // Super
 
+    public void DisplayAlienInfo()
+    {
+        AlienInfo.enabled = true;
+    }
 
+    public void CloseAlienInfo()
+    {
+        // set canvas disabled to trigger OnMouseExit method on the close button's cursor styler instead of set the gameobject disabled
+        AlienInfo.enabled = false;    
+        // also set ShowAlienInfo to false so the AlienInfo won't popup until player restart level or go to the next level
+        ShowAlienInfo = false;
+    }
 
     public void NextTutorialSlide()
     {
