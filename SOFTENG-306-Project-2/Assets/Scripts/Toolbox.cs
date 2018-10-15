@@ -1,3 +1,4 @@
+using Achievements;
 using Game;
 using Game.Hiscores;
 using Multiplayer;
@@ -44,5 +45,10 @@ public class Toolbox : Singleton<Toolbox>
     public JsonFiles JsonFiles
     {
         get { return JsonFiles.Instance; }
+    }
+
+    public AchievementsManager AchievementsManager
+    {
+        get { return AchievementsManager.Instance; }
     }
 }
