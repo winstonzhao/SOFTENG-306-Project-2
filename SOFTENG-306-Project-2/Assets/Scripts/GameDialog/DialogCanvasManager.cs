@@ -16,6 +16,7 @@ namespace GameDialog
         private Dialog CurrentDialog;
         private DialogFrame CurrentDialogFrame;
         private bool IsTypingText;
+        private bool IsFrameSkippable;
         private Button[] Buttons = new Button[0];
 
         public void ShowDialog(Dialog dialog, Sprite lhs, Sprite rhs)
@@ -24,12 +25,11 @@ namespace GameDialog
 
             LhsSprite = lhs;
             RhsSprite = rhs;
+            IsFrameSkippable = false;
             Showing = true;
             CurrentDialog = dialog;
-            var head = new DialogFrame(dialog.StartFrame.Text, dialog.StartFrame.Name) { Next = dialog.StartFrame };
-            CurrentDialogFrame = head;
 
-            SkipFrame();
+            ShowFrame(dialog.StartFrame);
         }
 
         /// <summary>
@@ -45,11 +45,17 @@ namespace GameDialog
             // Show a new character on each frame
             foreach (var c in frame.Text)
             {
+                if (GameFrameDialogueText.text.Length > 10)
+                {
+                    IsFrameSkippable = true;
+                }
+
                 GameFrameDialogueText.text += c;
                 yield return null;
             }
 
             IsTypingText = false;
+            IsFrameSkippable = true;
 
             // Move to new scene upon finish
             if (frame.TransitionFrame)
@@ -159,8 +165,7 @@ namespace GameDialog
 
         private void SkipFrame()
         {
-            // Don't skip a transition 
-            if (CurrentDialogFrame.TransitionFrame)
+            if (CurrentDialogFrame.TransitionFrame || !IsFrameSkippable)
             {
                 return;
             }
