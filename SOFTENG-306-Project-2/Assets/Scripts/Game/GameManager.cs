@@ -30,8 +30,6 @@ namespace Game
             set { Settings.Player = value; }
         }
 
-        private string PersistentDataPath;
-
         private readonly DebounceAction DebounceSaveSettings;
 
         public GameManager()
@@ -42,8 +40,6 @@ namespace Game
 
         private void Awake()
         {
-            PersistentDataPath = Application.persistentDataPath;
-
             if (Player == null)
             {
                 var userId = Mathf.RoundToInt(Random.value * 100000);
@@ -76,16 +72,7 @@ namespace Game
         /// </summary>
         private GameSettings LoadSettings()
         {
-            var file = PersistentDataPath + "/settings.dat";
-
-            if (!File.Exists(file))
-            {
-                return new GameSettings();
-            }
-
-            var serialized = File.ReadAllText(file);
-
-            return JsonUtility.FromJson<GameSettings>(serialized);
+            return Toolbox.Instance.JsonFiles.Read<GameSettings>("settings.dat");
         }
 
         /// <summary>
@@ -93,11 +80,7 @@ namespace Game
         /// </summary>
         private void SaveSettings()
         {
-            var serialized = JsonUtility.ToJson(Settings);
-
-            var file = PersistentDataPath + "/settings.dat";
-
-            File.WriteAllText(file, serialized);
+            Toolbox.Instance.JsonFiles.Write("settings.dat", Settings);
         }
     }
 }

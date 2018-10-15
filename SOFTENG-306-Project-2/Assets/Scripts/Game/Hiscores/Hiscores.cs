@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using UnityEngine;
+using Utils;
 
 namespace Game.Hiscores
 {
@@ -16,11 +15,13 @@ namespace Game.Hiscores
 
         private readonly List<Score> Electrical = new List<Score>();
 
-        private string PersistentDataPath;
+        private readonly DebounceAction DebounceSave;
 
-        private object DirtyLock = new object();
-
-        private bool Dirty;
+        public Hiscores()
+        {
+            var every = TimeSpan.FromSeconds(3);
+            DebounceSave = new DebounceAction(every, Save);
+        }
 
         public void Add(Score score)
         {
@@ -33,10 +34,7 @@ namespace Game.Hiscores
                 All.Add(score);
             }
 
-            lock (DirtyLock)
-            {
-                Dirty = true;
-            }
+            DebounceSave.Run();
         }
 
         public List<Score> Get(Minigames minigame)
@@ -56,59 +54,30 @@ namespace Game.Hiscores
 
         private void Read()
         {
-            var file = PersistentDataPath + "/scores.dat";
-            var data = File.ReadAllLines(file);
-            foreach (var line in data)
-            {
-                var score = JsonUtility.FromJson<Score>(line);
-                lock (this)
-                {
-                    Get(score.Minigame).Add(score);
-                    All.Add(score);
-                }
-            }
-        }
+            var values = Toolbox.Instance.JsonFiles.ReadList<Score>("scores.dat");
 
-        private void Write()
-        {
-            string json = "";
+            if (values == null)
+            {
+                return;
+            }
 
             lock (this)
             {
-                foreach (var score in All)
-                {
-                    json += JsonUtility.ToJson(score) + "\n";
-                }
+                All.AddRange(values);
             }
+        }
 
-            var file = PersistentDataPath + "/scores.dat";
-
-            File.WriteAllText(file, json);
+        /// <summary>
+        /// Do not invoke directly unless required - use <see cref="DebounceSave"/>
+        /// </summary>
+        private void Save()
+        {
+            Toolbox.Instance.JsonFiles.WriteList("scores.dat", All);
         }
 
         private void Awake()
         {
-            PersistentDataPath = Application.persistentDataPath;
-
-            new Thread(Read).Start();
-        }
-
-        private void Update()
-        {
-            // Double check pattern
-            // ReSharper disable once InconsistentlySynchronizedField
-            if (Dirty)
-            {
-                lock (DirtyLock)
-                {
-                    if (Dirty)
-                    {
-                        new Thread(Write).Start();
-
-                        Dirty = false;
-                    }
-                }
-            }
+            Read();
         }
     }
 }

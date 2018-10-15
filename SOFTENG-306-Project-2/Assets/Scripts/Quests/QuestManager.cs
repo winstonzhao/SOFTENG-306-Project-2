@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using UnityEngine;
 using Utils;
 
 namespace Quests
 {
     public class QuestManager : Singleton<QuestManager>
     {
+        private const string JsonFile = "quest-log.dat";
+
         private QuestLog questLog;
         public QuestLog QuestLog
         {
@@ -47,8 +47,6 @@ namespace Quests
 
         private readonly DebounceAction DebounceSave;
 
-        private string PersistentDataPath;
-
         public QuestManager()
         {
             var every = TimeSpan.FromSeconds(3);
@@ -57,8 +55,6 @@ namespace Quests
 
         private void Awake()
         {
-            PersistentDataPath = Application.persistentDataPath;
-
             // Load the quest log upon wake
             var x = QuestLog;
         }
@@ -74,16 +70,7 @@ namespace Quests
 
         private QuestLog Load()
         {
-            var file = PersistentDataPath + "/quest-log.dat";
-
-            if (!File.Exists(file))
-            {
-                return new QuestLog();
-            }
-
-            var serialized = File.ReadAllText(file);
-
-            return JsonUtility.FromJson<QuestLog>(serialized);
+            return Toolbox.Instance.JsonFiles.Read<QuestLog>(JsonFile);
         }
 
         /// <summary>
@@ -91,11 +78,7 @@ namespace Quests
         /// </summary>
         private void Save()
         {
-            var serialized = JsonUtility.ToJson(QuestLog);
-
-            var file = PersistentDataPath + "/quest-log.dat";
-
-            File.WriteAllText(file, serialized);
+            Toolbox.Instance.JsonFiles.Write(JsonFile, questLog);
         }
     }
 }

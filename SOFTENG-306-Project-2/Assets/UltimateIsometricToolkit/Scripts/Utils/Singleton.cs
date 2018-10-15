@@ -48,7 +48,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                         GameObject singleton = new GameObject();
                         _instance = singleton.AddComponent<T>();
                         singleton.name = "(singleton) " + typeof(T);
-                        singleton.hideFlags = HideFlags.None;
+                        // Comment out to let background threads create the singleton
+                        // singleton.hideFlags = HideFlags.None;
 
                         DontDestroyOnLoad(singleton);
 
@@ -63,7 +64,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     }
                 }
 
-                _instance.hideFlags = HideFlags.None;
+                // Comment out to let background threads create the singleton
+                // _instance.hideFlags = HideFlags.None;
                 return _instance;
             }
         }

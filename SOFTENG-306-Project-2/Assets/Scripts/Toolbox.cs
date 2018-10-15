@@ -3,6 +3,7 @@ using Game.Hiscores;
 using Multiplayer;
 using Quests;
 using UserInterface;
+using Utils;
 
 public class Toolbox : Singleton<Toolbox>
 {
@@ -38,5 +39,10 @@ public class Toolbox : Singleton<Toolbox>
     public QuestManager QuestManager
     {
         get { return QuestManager.Instance; }
+    }
+
+    public JsonFiles JsonFiles
+    {
+        get { return JsonFiles.Instance; }
     }
 }
