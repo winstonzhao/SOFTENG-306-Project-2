@@ -4,14 +4,17 @@ using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
 
+/**
+ * This class is a singleton class for managing the civil mini game across multiple levels.
+ * This class also includes a few util methods that can be used independently by any level.
+ */
 public class CivilGameManager : MonoBehaviour {
 
+    // singleton CivilGameManager instance
     public static CivilGameManager instance;
+    
+    // player name, default is "Anonymous"
     public string playerName  = "Anonymous";
-
-
-    private static float lastClickTime = 0;
-    private static float catchTime = 0.3f;
 
 
     private void Awake()
@@ -32,47 +35,9 @@ public class CivilGameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void SetPlayerName(string playerName)
     {
         instance.playerName = playerName;
-    }
-
-    public static void CheckMouseClickForRotation() // Super
-    {
-        //mouse ray in isometric coordinate system 
-        var isoRay = Isometric.MouseToIsoRay();
-
-        //do an isometric raycast on double left mouse click 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Time.time - lastClickTime < catchTime)
-            {
-                //double click
-                Debug.Log("double click");
-                IsoRaycastHit isoRaycastHit;
-                if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
-                {
-                    GameObject hitObject = isoRaycastHit.Collider.gameObject;
-                    Debug.Log("we clicked on " + hitObject.name + " at " + isoRaycastHit.Point + " tagged as " + hitObject.tag);
-                    if (hitObject.tag == "BuildingBlock")
-                    {
-                        hitObject.GetComponent<DraggableIsoItem>().Rotate();
-                        Debug.Log(hitObject.name + " rotated to direction " + hitObject.GetComponent<DraggableIsoItem>().direction);
-                    }
-                }
-            }
-            lastClickTime = Time.time;
-        }
     }
 
     public static void ToggleDialogDisplay(Canvas canvas, string groupName, bool show)    // super

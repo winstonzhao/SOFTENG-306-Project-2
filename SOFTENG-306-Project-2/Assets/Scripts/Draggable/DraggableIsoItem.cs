@@ -38,6 +38,10 @@ public class DraggableIsoItem : Draggable
     private Vector3 target;
 
     Vector3 prevMousePos;
+    
+    // fields for detecting double clicking
+    private static float lastClickTime = 0;
+    private static float catchTime = 0.3f;
 
     public Vector3 homePos;
     public override Vector3 HomePos
@@ -172,22 +176,32 @@ public class DraggableIsoItem : Draggable
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            //Debug.Log("Mouse down");
-            if (!mouseInside || holdingItem) return;
-            dragging = true;
-            moving = false;
-            holdingItem = true;
-            GetComponent<SpriteRenderer>().sortingOrder = 1;
-            Vector3 mousePos = Input.mousePosition;
-            Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
-            prevMousePos = mousePosWorld;
-
-            //Debug.Log("mouse clicked");
-
-            if (dropZone != null)
+            if (Time.time - lastClickTime < catchTime) // double click
             {
-                dropZone.OnDragStart(this);
+                Debug.Log("DraggableIsoItem: double click");
+                Rotate();
             }
+            else // single click
+            {
+                //Debug.Log("Mouse down");
+                Debug.Log("DraggableIsoItem: single click");
+                if (!mouseInside || holdingItem) return;
+                dragging = true;
+                moving = false;
+                holdingItem = true;
+                GetComponent<SpriteRenderer>().sortingOrder = 1;
+                Vector3 mousePos = Input.mousePosition;
+                Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
+                prevMousePos = mousePosWorld;
+
+                //Debug.Log("mouse clicked");
+
+                if (dropZone != null)
+                {
+                    dropZone.OnDragStart(this);
+                }
+            }
+            lastClickTime = Time.time;
         }
     }
 

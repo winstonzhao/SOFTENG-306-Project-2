@@ -67,11 +67,6 @@ public class CivilLevelController : MonoBehaviour {
         }
     }
 
-    void Update()
-    {
-        CivilGameManager.CheckMouseClickForRotation();
-    }
-
     public void run()
     {
         foreach (GoalAgent goal in Goals)
