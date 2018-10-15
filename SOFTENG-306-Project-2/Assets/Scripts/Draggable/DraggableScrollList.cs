@@ -76,7 +76,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         if (boxCollider == null) return;
 
         float i = itemHeight/2;
-        float maxWidth = 0;
+        float maxWidth = 325;
 
         foreach (var draggable in listItems)
         {

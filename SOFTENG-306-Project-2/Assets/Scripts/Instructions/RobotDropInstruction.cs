@@ -55,7 +55,7 @@ namespace Instructions
 
             didMove = robot.DropItem(moveDirection);
 
-            if (!didMove) throw new InstructionException();
+            if (!didMove) throw new InstructionException("Could not drop in given direction");
         }
     }
 }

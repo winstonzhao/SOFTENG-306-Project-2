@@ -56,7 +56,7 @@ namespace Instructions
 
             didMove = robot.PickUpItem(moveDirection);
 
-            if (!didMove) throw new InstructionException();
+            if (!didMove) throw new InstructionException("Could not pick up in the " + moveDirection.ToString() + " direction");
         }
     }
 }

@@ -100,12 +100,13 @@ namespace Instructions
             var arrayElement = obj.GetComponent<ArrayElement>();
             if (arrayElement == null)
             {
+                throw new InstructionException("Could not find object " + moveDirection.ToString());
                 return;
             }
 
             targetPos = softwareLevelGenerator.IndexLocation("a" + arrayElement.value);
             var didMove = robot.MoveTo(Vector3.zero, "a" + arrayElement.value);
-            if (!didMove) throw new InstructionException();
+            if (!didMove) throw new InstructionException("Could not move to " + arrayElement.value);
         }
     }
 }

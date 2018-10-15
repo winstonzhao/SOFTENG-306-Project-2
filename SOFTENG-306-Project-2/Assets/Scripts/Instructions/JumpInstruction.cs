@@ -8,8 +8,7 @@ namespace Instructions
     {
         private InstructionExecutor instructionExecutor;
         private JumpTargetInstruction jumpTarget;
-
-        private BezierCurve curve;
+        private InstructionManager instructionManager;
 
         public override bool Editable { get; set; }
 
@@ -26,18 +25,10 @@ namespace Instructions
 
         private void OnDestroy()
         {
-            if (curve != null) Destroy(curve.gameObject);
-        }
-
-        private void Update()
-        {
-            curve.UpdatePoints(new Vector3[]
+            if (instructionManager != null)
             {
-                this.transform.position,
-                Vector3.Lerp(this.transform.position, jumpTarget.transform.position, 0.25f) + new Vector3(4, 0, 0),
-                Vector3.Lerp(this.transform.position, jumpTarget.transform.position, 0.75f) + new Vector3(4, 0, 0),
-                this.jumpTarget.transform.position
-            });
+                instructionManager.RemoveColor(GetInstanceID() + "Jump");
+            }
         }
 
         private void Start()
@@ -51,10 +42,24 @@ namespace Instructions
             jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
             jumpTarget.transform.position = transform.position;
 
+
+            instructionManager = FindObjectOfType<InstructionManager>();
+            if (instructionManager == null)
+            {
+                var go = new GameObject();
+                instructionManager = go.AddComponent<InstructionManager>();
+            }
+
             var targetDraggable = gameObj.GetComponent<DraggableUIItem>();
 
+            var instructionRenderer = GetComponent<InstructionRenderer>();
             var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
             targetRenderer.IsEnabled = false;
+
+            // Set colors to match
+            var color = instructionManager.GenerateColor(GetInstanceID() + "Jump");
+            targetRenderer.DefaultBackgroundColor = color;
+            instructionRenderer.DefaultBackgroundColor = color;
 
             var draggableItem = GetComponent<DraggableUIItem>();
             draggableItem.AddConnectedItem(targetDraggable);
@@ -62,14 +67,6 @@ namespace Instructions
 
             draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
 
-            curve = BezierLines.Instance.AddCurve(
-                new Vector3[]
-                {
-                    this.transform.position,
-                    Vector3.Lerp(this.transform.position, jumpTarget.transform.position, 0.25f) + new Vector3(4, 0, 0),
-                    Vector3.Lerp(this.transform.position, jumpTarget.transform.position, 0.75f) + new Vector3(4, 0, 0),
-                    this.jumpTarget.transform.position
-                });
         }
 
         public override void Execute(RobotController target, InstructionExecutor executor)

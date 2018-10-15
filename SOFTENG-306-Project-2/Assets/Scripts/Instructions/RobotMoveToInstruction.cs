@@ -62,7 +62,7 @@ namespace Instructions
             }
             else
             {
-                instructionRenderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                instructionRenderer.BackgroundColor = instructionRenderer.DefaultBackgroundColor;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Instructions
 
                 if (instructionRenderer != null)
                 {
-                    instructionRenderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                    instructionRenderer.BackgroundColor = instructionRenderer.DefaultBackgroundColor;
                 }
             }
 
@@ -119,11 +119,11 @@ namespace Instructions
             robot = target;
             executeNext = false;
 
-            if (selectedObj == null) throw new InstructionException();
+            if (selectedObj == null) throw new InstructionException("No Move target selected");
 
             targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
             var didMove = robot.MoveTo(targetPos, "");
-            if (!didMove) throw new InstructionException();
+            if (!didMove) throw new InstructionException("Could not move to selected target");
         }
     }
 }

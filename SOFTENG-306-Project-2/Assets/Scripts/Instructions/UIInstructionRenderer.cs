@@ -125,6 +125,8 @@ namespace Instructions
             var width = children.Sum(c => c.Size.x);
             width += spacing * components.Count - spacing;
 
+            width = Mathf.Max(width, 315);
+
             // Layout children left to right
             float start = 0;
             foreach (var child in children)
@@ -211,7 +213,7 @@ namespace Instructions
 
         public override void ResetStyle()
         {
-            BackgroundColor = DefaultBackgoundColor;
+            BackgroundColor = DefaultBackgroundColor;
             Render();
         }
 

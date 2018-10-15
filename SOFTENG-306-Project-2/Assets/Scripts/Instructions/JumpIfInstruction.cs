@@ -8,13 +8,12 @@ namespace Instructions
     {
         private InstructionExecutor instructionExecutor;
         private JumpTargetInstruction trueTarget;
+        private InstructionManager instructionManager;
 
         private RobotController robot;
 
         private Directions compareDirection;
         private RobotController.Compare comparison;
-
-        private BezierCurve curve;
 
         public override bool Editable { get; set; }
 
@@ -50,18 +49,10 @@ namespace Instructions
 
         private void OnDestroy()
         {
-//            Destroy(curve.gameObject);
-        }
-
-        private void Update()
-        {
-//            curve.UpdatePoints(new Vector3[]
-//            {
-//                this.transform.position,
-//                Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.25f) + new Vector3(4, 0, 0),
-//                Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.75f) + new Vector3(4, 0, 0),
-//                this.trueTarget.transform.position
-//            });
+            if (instructionManager != null)
+            {
+                instructionManager.RemoveColor(GetInstanceID() + "JumpIf");
+            }
         }
 
         private JumpTargetInstruction CreateTarget(string name)
@@ -71,13 +62,27 @@ namespace Instructions
 
             gameObj.GetComponent<RectTransform>().SetParent(GetComponentInParent<Canvas>().transform, false);
 
+            instructionManager = FindObjectOfType<InstructionManager>();
+            if (instructionManager == null)
+            {
+                var go = new GameObject();
+                instructionManager = go.AddComponent<InstructionManager>();
+            }
+
+
             var target = gameObj.GetComponent<JumpTargetInstruction>();
             target.transform.position = transform.position;
 
             var targetDraggable = gameObj.GetComponent<DraggableUIItem>();
 
+            var instructionRenderer = GetComponent<InstructionRenderer>();
             var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
             targetRenderer.IsEnabled = false;
+
+            // Set colors to match
+            var color = instructionManager.GenerateColor(GetInstanceID() + "JumpIf");
+            targetRenderer.DefaultBackgroundColor = color;
+            instructionRenderer.DefaultBackgroundColor = color;
 
             var draggableItem = GetComponent<DraggableUIItem>();
             draggableItem.AddConnectedItem(targetDraggable);
@@ -92,15 +97,6 @@ namespace Instructions
         {
             // Load the End Jump component
             trueTarget = CreateTarget("JumpIf END");
-
-//            curve = FindObjectOfType<BezierLines>().AddCurve(
-//                new Vector3[]
-//                {
-//                    this.transform.position,
-//                    Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.25f) + new Vector3(4, 0, 0),
-//                    Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.75f) + new Vector3(4, 0, 0),
-//                    this.trueTarget.transform.position
-//                });
         }
 
         public override void Execute(RobotController target, InstructionExecutor executor)

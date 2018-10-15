@@ -9,13 +9,14 @@ namespace Instructions
         private InstructionExecutor instructionExecutor;
         private JumpTargetInstruction trueTarget;
         private JumpTargetInstruction falseTarget;
+        private InstructionManager instructionManager;
 
         private RobotController robot;
 
+        private Color color;
+
         private Directions compareDirection;
         private RobotController.Compare comparison;
-
-        private BezierCurve curve;
 
         public override bool Editable { get; set; }
 
@@ -51,18 +52,10 @@ namespace Instructions
 
         private void OnDestroy()
         {
-//            Destroy(curve.gameObject);
-        }
-
-        private void Update()
-        {
-//            curve.UpdatePoints(new Vector3[]
-//            {
-//                this.transform.position,
-//                Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.25f) + new Vector3(4, 0, 0),
-//                Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.75f) + new Vector3(4, 0, 0),
-//                this.trueTarget.transform.position
-//            });
+            if (instructionManager != null)
+            {
+                instructionManager.RemoveColor(GetInstanceID() + "JumpComp");
+            }
         }
 
         private JumpTargetInstruction CreateTarget(string name)
@@ -77,8 +70,13 @@ namespace Instructions
 
             var targetDraggable = gameObj.GetComponent<DraggableUIItem>();
 
+            var instructionRenderer = GetComponent<InstructionRenderer>();
             var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
             targetRenderer.IsEnabled = false;
+
+            // Set colors to match
+            targetRenderer.DefaultBackgroundColor = color;
+            instructionRenderer.DefaultBackgroundColor = color;
 
             var draggableItem = GetComponent<DraggableUIItem>();
             draggableItem.AddConnectedItem(targetDraggable);
@@ -93,18 +91,18 @@ namespace Instructions
 
         private void Start()
         {
+            instructionManager = FindObjectOfType<InstructionManager>();
+            if (instructionManager == null)
+            {
+                var go = new GameObject();
+                instructionManager = go.AddComponent<InstructionManager>();
+            }
+
+            color = instructionManager.GenerateColor(GetInstanceID() + "JumpComp");
+
             // Load the End Jump component
             trueTarget = CreateTarget("Compare TRUE");
             falseTarget = CreateTarget("Compare FALSE");
-
-//            curve = FindObjectOfType<BezierLines>().AddCurve(
-//                new Vector3[]
-//                {
-//                    this.transform.position,
-//                    Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.25f) + new Vector3(4, 0, 0),
-//                    Vector3.Lerp(this.transform.position, trueTarget.transform.position, 0.75f) + new Vector3(4, 0, 0),
-//                    this.trueTarget.transform.position
-//                });
         }
 
         public override void Execute(RobotController target, InstructionExecutor executor)

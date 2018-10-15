@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,6 +34,8 @@ namespace Instructions
         public Text Text;
 
         public SoftwareLevelGenerator LevelGenerator;
+
+        public Text errorText;
 
         private bool playing = false;
         private bool reset = true;
@@ -118,14 +121,14 @@ namespace Instructions
         {
             if (currentInstruction != null)
             {
-                currentInstruction.Renderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                currentInstruction.Renderer.BackgroundColor = currentInstruction.Renderer.DefaultBackgroundColor;
             }
 
             if (instructionIndex > instructions.Count - 1)
             {
                 if (currentInstruction != null)
                 {
-                    currentInstruction.Renderer.BackgroundColor = InstructionRenderer.DefaultBackgoundColor;
+                    currentInstruction.Renderer.BackgroundColor = currentInstruction.Renderer.DefaultBackgroundColor;
                     currentInstruction = null;
                 }
                 Stop();
@@ -175,9 +178,31 @@ namespace Instructions
                 currentInstruction = null;
             }
 
+            errorText.text = "<b>" + message + "</b>";
+            StartCoroutine(AnimateErrorText());
+
             Stop();
             Debug.Log("Instruction Exception: " + message);
             Text.text = "Failed";
+        }
+
+        private IEnumerator AnimateErrorText()
+        {
+            while (errorText.rectTransform.anchoredPosition.y < errorText.rectTransform.sizeDelta.y/2 + 10)
+            {
+                errorText.rectTransform.anchoredPosition +=
+                    new Vector2(0, errorText.rectTransform.sizeDelta.y * 4) * Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1.0f);
+
+            while (errorText.rectTransform.anchoredPosition.y > - errorText.rectTransform.sizeDelta.y/2)
+            {
+                errorText.rectTransform.anchoredPosition +=
+                    new Vector2(0, -errorText.rectTransform.sizeDelta.y * 4) * Time.deltaTime;
+                yield return null;
+            }
         }
 
         private void Update()

@@ -56,7 +56,7 @@ namespace Instructions
 
             didMove = robot.SwapItem(moveDirection);
 
-            if (!didMove) throw new InstructionException();
+            if (!didMove) throw new InstructionException("Could not swap");
         }
     }
 }
