@@ -90,7 +90,9 @@ public class DraggableIsoItem : Draggable
         //Debug.Log("mouse at (iso): ");
         //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition));
 
-        if (dragging)
+        // give a small gap before dragging, preventing that when user clicks on the DraggableIsoItem, the mouse is 
+        // also firing at the IsoDropZone besides it, causing the block to be shifted to the drag zone beside
+        if (dragging && Time.time - lastClickTime > 0.1f) 
         {
             // fire a ray cast from the current mouse position to the Isometric dimension system
             var isoRay = Isometric.MouseToIsoRay();

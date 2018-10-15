@@ -123,11 +123,10 @@ public class IsoDropZone : MonoBehaviour, IDropZone
             // delete the returned block to prevent duplicated building blocks been instantiated
             item.gameObject.SetActive(false);
         }
-        else // otherwise diable the ground tile
+        else // otherwise disable the ground tile
         {
             gameObject.SetActive(false);
         }
-
     }
 
     public void OnItemDrag(Draggable item)
