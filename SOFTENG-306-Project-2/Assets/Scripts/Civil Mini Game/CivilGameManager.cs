@@ -21,7 +21,7 @@ public class CivilGameManager : MonoBehaviour {
     // player name, default is "Anonymous"
     public string playerName  = "Anonymous";
 
-    private List<int> scores = new List<int>();
+    private Dictionary<int, int> scores = new Dictionary<int, int>();
     
     private void Awake()
     {
@@ -46,9 +46,13 @@ public class CivilGameManager : MonoBehaviour {
         instance.playerName = playerName;
     }
 
-    public void AddScore(int score)
+    public void AddScore(int score, int level)
     {
-        scores.Add(score);
+        if (!scores.ContainsKey(level) || score > scores[level])
+        {
+            scores[level] = score;
+        }
+        Debug.Log("CivilGameManager: Added Score " + score + " for level " + level);
     }
 
     public void AddHighScore()
@@ -57,12 +61,13 @@ public class CivilGameManager : MonoBehaviour {
         {
             Score score = new Score();
             score.Minigame = Minigames.Civil;
-            int highScore = (int) scores.Average();
+            int highScore = (int) scores.Values.Average();
             score.Value = highScore;
             score.CreatedAt = DateTime.Now;
 
             Toolbox.Instance.Hiscores.Add(score);
             scores.Clear();
+            Debug.Log("CivilGameManager: Added High Score " + highScore);
         }
     }
 

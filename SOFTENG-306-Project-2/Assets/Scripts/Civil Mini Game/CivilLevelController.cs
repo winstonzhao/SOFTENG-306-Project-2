@@ -32,7 +32,7 @@ public class CivilLevelController : MonoBehaviour {
     public float IdealTimeLeft;
     public float IdealBudgetLeft;
     
-    public string ThisLevelName;
+    public int ThisLevel;
     public string CheatLevelName;
     public string UndoCheatLevelName;
     
@@ -138,7 +138,7 @@ public class CivilLevelController : MonoBehaviour {
 
         int highScore =(int) Math.Round(timeScore + budgetScore + CompletionBaseScore);
         highScore = highScore > 100 ? 100 : highScore;
-        CivilGameManager.instance.AddScore(highScore);
+        CivilGameManager.instance.AddScore(highScore, ThisLevel);
 
         return highScore;
     }
