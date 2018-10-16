@@ -14740,7 +14740,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 605767216}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1697961529}
+        m_MethodName: skipLevels
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &605767216
@@ -40062,6 +40073,7 @@ MonoBehaviour:
   expectedGates:
   - {fileID: 1328941206}
   endOfLevelCanvas: {fileID: 350249853}
+  levelNumber: 1
   TimeLimit: 31
   TimeMaxScore: 30
   CompletionBaseScore: 20
@@ -40176,7 +40188,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1697961534
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1697961528}

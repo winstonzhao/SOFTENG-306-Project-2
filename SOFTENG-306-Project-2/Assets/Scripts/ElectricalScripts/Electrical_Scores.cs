@@ -27,11 +27,15 @@ namespace ElectricalScripts.Electrical_Scores
 
         public int getScore()
         {
-            foreach (int score in levelScores)
+            for (int i=0; i<totalLevels;i++)
             {
-                totalScore += score;
+                totalScore += levelScores[i, 1];
             }
-            return totalScore / totalLevels;
+           // foreach (int score in levelScores)
+            //{
+              //  totalScore += score;
+            //}
+            return (totalScore / totalLevels);
         }
 
         public int getLevel()

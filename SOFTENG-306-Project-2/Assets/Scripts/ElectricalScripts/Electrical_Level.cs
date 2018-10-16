@@ -28,6 +28,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private bool circuitComplete = false;
     private bool levelCompleteCalled = false;
     private int tutorialLevelNumber = 4;
+    private int levelScore = 100;
 
 
     public void Start()
@@ -151,14 +152,14 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             }
         }));
 
-        Toolbox.Instance.Electrical_Scores.addScore(levelNumber, 100);
+        Toolbox.Instance.Electrical_Scores.addScore(levelNumber, levelScore);
     }
 
     public void skipLevels()
     {
         for (int i = 1; i <= tutorialLevelNumber; i++)
         {
-            Toolbox.Instance.Electrical_Scores.addScore(i, 100);
+            Toolbox.Instance.Electrical_Scores.addScore(i, levelScore);
         }
     }
 
