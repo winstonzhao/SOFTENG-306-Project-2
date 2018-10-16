@@ -38105,6 +38105,9 @@ MonoBehaviour:
   newSprite: {fileID: 21300000, guid: 924e19c3808c23246b0082351663f40f, type: 3}
   expectedGate: {fileID: 1328941206}
   endOfLevelCanvas: {fileID: 350249853}
+  TimeLimit: 10
+  TimeMaxScore: 30
+  CompletionBaseScore: 20
 --- !u!61 &1697961530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38216,7 +38219,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1697961534
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1697961528}
