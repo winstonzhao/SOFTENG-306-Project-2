@@ -33,7 +33,6 @@ public class CivilLevelController : MonoBehaviour {
     public float IdealBudgetLeft;
     
     public string ThisLevelName;
-    public string NextLevelName;
     public string CheatLevelName;
     public string UndoCheatLevelName;
     
@@ -272,12 +271,12 @@ public class CivilLevelController : MonoBehaviour {
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
         timerArea.text = timerLabel;
     }
-
-    public void NextLevel()
+    
+    public void GoToLevel(int levelNumber)
     {
-        Debug.Log("Next level " + NextLevelName);
-        SceneManager.LoadScene(NextLevelName);
-    }   // Level
+        Debug.Log("go to level: "+ levelNumber);
+        SceneManager.LoadScene("Civil Level " + levelNumber);
+    }
 
     public void Cheat()
     {
