@@ -70,15 +70,15 @@ namespace Quests
             });
             quests.Add(new Quest
             {
-                Id = "civil-workshop",
-                Title = "Civil Workshop",
-                Description = "The civil instructor is waiting for me at the civil workshop"
-            });
-            quests.Add(new Quest
-            {
                 Id = "electrical-workshop",
                 Title = "Electrical Workshop",
                 Description = "The electrical instructor is waiting for me at the electrical workshop"
+            });
+            quests.Add(new Quest
+            {
+                Id = "civil-workshop",
+                Title = "Civil Workshop",
+                Description = "The civil instructor is waiting for me at the civil workshop"
             });
             quests.Add(new Quest
             {
