@@ -68,12 +68,6 @@ namespace Quests
             {
                 Id = "software-workshop",
                 Title = "Software Workshop",
-                Description = "Catherine is waiting for me at the software workshop"
-            });
-            quests.Add(new Quest
-            {
-                Id = "software-workshop",
-                Title = "Software Workshop",
                 Description = "The software instructor is waiting for me at the software workshop"
             });
             quests.Add(new Quest
