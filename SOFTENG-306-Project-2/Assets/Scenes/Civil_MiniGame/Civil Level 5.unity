@@ -2733,8 +2733,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1831151252}
-        m_MethodName: GoToLevel
-        m_Mode: 3
+        m_MethodName: ExitCivilMiniGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -30408,7 +30408,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Next Level Coming Soon
+  m_Text: Back To Lobby
 --- !u!222 &1427334686
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37469,11 +37469,11 @@ MonoBehaviour:
   CompletionBaseScore: 20
   IdealTimeLeft: 0.7
   IdealBudgetLeft: 200
-  ThisLevelName: 
+  ThisLevel: 5
   CheatLevelName: 
-  UndoCheatLevelName: Civil Level 1
-  ShowTutorial: 1
-  ShowAlienInfo: 1
+  UndoCheatLevelName: 
+  ShowTutorial: 0
+  ShowAlienInfo: 0
 --- !u!1001 &1832064513
 Prefab:
   m_ObjectHideFlags: 0
@@ -43216,7 +43216,7 @@ TextMesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2086565340}
-  m_Text: Level 2
+  m_Text: Level 5
   m_OffsetZ: 0
   m_CharacterSize: 0.45
   m_LineSpacing: 1
