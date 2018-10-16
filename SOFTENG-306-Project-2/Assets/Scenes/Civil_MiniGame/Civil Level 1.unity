@@ -9021,7 +9021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortingStrategy: {fileID: 542837591}
-  Dirty: 1
+  Dirty: 0
   _isoAngle: 26.565
   _xRot: 35.625
   _yRot: 45
@@ -10245,7 +10245,7 @@ Prefab:
     - target: {fileID: 114958083693229736, guid: d09f45a1e4de9354f9db3c7dce47ca42,
         type: 2}
       propertyPath: freezeX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: d09f45a1e4de9354f9db3c7dce47ca42,
         type: 2}
@@ -10255,7 +10255,7 @@ Prefab:
     - target: {fileID: 114958083693229736, guid: d09f45a1e4de9354f9db3c7dce47ca42,
         type: 2}
       propertyPath: freezeZ
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114387176330801290, guid: d09f45a1e4de9354f9db3c7dce47ca42,
         type: 2}
@@ -27499,12 +27499,12 @@ MonoBehaviour:
   Tutorial: {fileID: 2136563544}
   AlienInfo: {fileID: 997734682}
   TimeLimit: 4
-  Budget: 600
+  Budget: 800
   BudgetMaxScore: 50
   TimeMaxScore: 30
   CompletionBaseScore: 20
   IdealTimeLeft: 0.6
-  IdealBudgetLeft: 100
+  IdealBudgetLeft: 300
   ThisLevel: 1
   CheatLevelName: 
   UndoCheatLevelName: 
@@ -29342,15 +29342,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: freezeX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: freezeY
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: freezeZ
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21245996, guid: 1c7c72e0ea9121a43b43a3021c4159d0, type: 2}
       propertyPath: m_Color.r
@@ -31307,7 +31307,7 @@ Prefab:
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
       propertyPath: freezeX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -31317,7 +31317,7 @@ Prefab:
     - target: {fileID: 114958083693229736, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
       propertyPath: freezeZ
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114387176330801290, guid: 45014e507e612a948bd2902cf30d4fee,
         type: 2}
@@ -31584,8 +31584,8 @@ Transform:
   - {fileID: 1453235470}
   - {fileID: 1174069785}
   - {fileID: 1401628400}
-  - {fileID: 82989469}
   - {fileID: 1708255644}
+  - {fileID: 82989469}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
