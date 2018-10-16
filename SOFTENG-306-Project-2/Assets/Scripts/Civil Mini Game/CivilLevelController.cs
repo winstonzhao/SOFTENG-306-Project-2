@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using UnityEngine.Analytics;
+using UnityEngine.UI;
 
 public class CivilLevelController : MonoBehaviour {
 
@@ -48,7 +49,13 @@ public class CivilLevelController : MonoBehaviour {
     private int maxBudget;
     private int tutorialSlideNumber;
     private const int TUTORIAL_SLIDE_COUNT = 8;
-
+    
+    // game control buttons
+    private List<GameObject> gameControlButtons = new List<GameObject>();
+    private GameObject runButton;
+    private GameObject restartButton;
+    private GameObject exitButton;
+    private GameObject cheatButton;
 
     private void Awake()
     {
@@ -60,6 +67,12 @@ public class CivilLevelController : MonoBehaviour {
 
         budgetArea = GameObject.Find("Budget").GetComponent<TextMesh>();
         budgetArea.text = "$" + Budget;
+        
+        // get references to the game control buttons
+        gameControlButtons.Add(GameObject.Find("RunButton"));
+        gameControlButtons.Add(GameObject.Find("RestartButton"));
+        gameControlButtons.Add(GameObject.Find("ExitButton"));
+        gameControlButtons.Add(GameObject.Find("CheatButton"));
 
         if (ShowTutorial)
         {
@@ -108,6 +121,8 @@ public class CivilLevelController : MonoBehaviour {
         }
         timerNotStopped = false;
         Dialog.enabled = !Dialog.enabled;
+        // disable game control buttons
+        ToggleGameControlButtons(false);
     }
 
     private int AddHighScore(float timeLeft, int budget) // Level
@@ -282,11 +297,15 @@ public class CivilLevelController : MonoBehaviour {
         Dialog.enabled = !Dialog.enabled;
         CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", true);
         CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", true);
+        // enable game control buttons
+        ToggleGameControlButtons(true);
     }   // Level, TODO rename
 
 
     public void StartTutorial() // Super
     {
+        // disable game control buttons
+        ToggleGameControlButtons(false);
         Tutorial.gameObject.SetActive(true);
         tutorialSlideNumber = 1;
         for (int i = 1; i < TUTORIAL_SLIDE_COUNT + 1; i++)
@@ -304,6 +323,8 @@ public class CivilLevelController : MonoBehaviour {
         {
             DisplayAlienInfo();
         }
+        // enable game control buttons
+        ToggleGameControlButtons(true);
     }   // Super
 
     public void DisplayAlienInfo()
@@ -333,5 +354,20 @@ public class CivilLevelController : MonoBehaviour {
         tutorialSlideNumber--;
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
     }   // Super
+
+    public void ToggleGameControlButtons(bool enable)
+    {
+        Debug.Log("Toggle game control buttons");
+        foreach (var button in gameControlButtons)
+        {
+            Debug.Log("Toggle button");
+            if (button != null)
+            {
+                Debug.Log(button.name);
+                button.GetComponent<Button>().interactable = enable;
+                button.GetComponent<CursorStyler>().enabled = enable;
+            }
+        }
+    }
 
 }

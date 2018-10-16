@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
  */
 public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+	public bool enabled = true;
+	
 	private CursorHandler handler;
 
 	/**
@@ -25,7 +27,10 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	 */
 	public void OnPointerEnter(PointerEventData pointerEventData)
 	{
-		handler.CursorEnter();
+		if (enabled)
+		{
+			handler.CursorEnter();
+		}
 	}
 
 	/**
@@ -33,7 +38,10 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	 */
 	public void OnPointerExit(PointerEventData pointerEventData)
 	{
-		handler.CursorClear();
+		if (enabled)
+		{
+			handler.CursorClear();
+		}
 	}
 
 	
@@ -46,7 +54,7 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	
 	void OnMouseEnter()
 	{
-		if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
+		if (!EventSystem.current.IsPointerOverGameObject() && enabled) // Block mouse clicks through a canvas
 		{
 			handler.CursorEnter();
 		}
@@ -54,7 +62,7 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	private void OnMouseExit()
 	{
-		if (!EventSystem.current.IsPointerOverGameObject())
+		if (!EventSystem.current.IsPointerOverGameObject() && enabled)
 		{
 			handler.CursorClear();
 		}
@@ -62,14 +70,12 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	private void OnMouseUp()
 	{
-
 		handler.CursorClear();
-
 	}
 
 	private void OnMouseDrag()
 	{
-		if (!EventSystem.current.IsPointerOverGameObject())
+		if (!EventSystem.current.IsPointerOverGameObject() && enabled)
 		{
 			handler.CursorDrag();
 		}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class Clickable : MonoBehaviour {
 
@@ -20,6 +21,10 @@ public class Clickable : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		onClick.Invoke();
+		if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
+		{
+
+			onClick.Invoke();
+		}
 	}
 }
