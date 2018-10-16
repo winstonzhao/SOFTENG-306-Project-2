@@ -1889,7 +1889,7 @@ GameObject:
   - component: {fileID: 126623335}
   - component: {fileID: 126623334}
   m_Layer: 5
-  m_Name: Help_Gate_XOR
+  m_Name: Help_Gate_NOT
   m_TagString: EndOfLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2869,7 +2869,7 @@ GameObject:
   - component: {fileID: 178015437}
   - component: {fileID: 178015436}
   m_Layer: 5
-  m_Name: Okay_AND
+  m_Name: Okay_NOT
   m_TagString: EndOfLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19237,7 +19237,7 @@ GameObject:
   - component: {fileID: 1056026923}
   - component: {fileID: 1056026922}
   m_Layer: 2
-  m_Name: Dropzone (1)
+  m_Name: NOT_Dropzone
   m_TagString: DropZone2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21496,7 +21496,7 @@ GameObject:
   - component: {fileID: 1164152830}
   - component: {fileID: 1164152834}
   m_Layer: 0
-  m_Name: Gate_XOR
+  m_Name: Gate_NOT
   m_TagString: Block2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21504,7 +21504,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1164152829
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1164152828}
@@ -21547,7 +21547,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3875, y: 1.6}
+    oldSize: {x: 1.4415585, y: 1.6623377}
     newSize: {x: 0.27, y: 0.49}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -21591,7 +21591,7 @@ SpriteRenderer:
   m_SortingLayerID: -1881382569
   m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300176, guid: 71285029d6034b14591391e0df47c14c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b497bc1bff2da94fadba7aa25da1ac0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -22908,7 +22908,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: This  is  an  exclusive  or  gate.  The  inputs  must  be  different  to  produce  a  light  output.
+  m_Text: This  is  a  not  gate.  It  inverts  the  input!
 --- !u!222 &1260214790
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23648,7 +23648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1283302289}
   m_Layer: 0
-  m_Name: XOR Gate
+  m_Name: NOT Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30383,7 +30383,7 @@ GameObject:
   - component: {fileID: 1697961530}
   - component: {fileID: 1697961529}
   m_Layer: 2
-  m_Name: Dropzone
+  m_Name: OR_Dropzone
   m_TagString: LeftTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31104,7 +31104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortingStrategy: {fileID: 1713634242}
-  Dirty: 1
+  Dirty: 0
   _isoAngle: 26.565
   _xRot: 35.625
   _yRot: 45
@@ -33157,7 +33157,7 @@ GameObject:
   - component: {fileID: 1833299875}
   - component: {fileID: 1833299874}
   m_Layer: 0
-  m_Name: Label_XOR
+  m_Name: Label_NOT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33165,7 +33165,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1833299873
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1833299872}
@@ -33183,7 +33183,7 @@ TextMesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1833299872}
-  m_Text: XOR GATE
+  m_Text: NOT GATE
   m_OffsetZ: 0
   m_CharacterSize: 0.5
   m_LineSpacing: 1
