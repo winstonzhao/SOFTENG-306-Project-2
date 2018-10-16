@@ -63,6 +63,7 @@ namespace GameDialog
                 // Add a slight delay before transitioning
                 yield return new WaitForSeconds(0.25f);
 
+                OnCompleteFrame();
                 CloseDialog();
                 Toolbox.Instance.GameManager.ChangeScene(frame.TransitionToScene);
             }
@@ -186,10 +187,7 @@ namespace GameDialog
                 return;
             }
 
-            if (CurrentDialogFrame.OnComplete != null)
-            {
-                CurrentDialogFrame.OnComplete();
-            }
+            OnCompleteFrame();
 
             // Close dialog if there is none left
             if (CurrentDialogFrame.Next == null)
@@ -200,6 +198,14 @@ namespace GameDialog
 
             // Move to the next frame
             ShowFrame(CurrentDialogFrame.Next);
+        }
+
+        private void OnCompleteFrame()
+        {
+            if (CurrentDialogFrame.OnComplete != null)
+            {
+                CurrentDialogFrame.OnComplete();
+            }
         }
 
         private void DestroyGameFrame()
