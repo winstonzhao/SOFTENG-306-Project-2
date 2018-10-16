@@ -79,10 +79,11 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             var maxTimePassed = Vector3.Distance(from, to) / speed;
             var transition = to - from;
 
-            animator.SetBool("NE", transition.x == 1);
-            animator.SetBool("NW", transition.z == 1);
-            animator.SetBool("SE", transition.z == -1);
-            animator.SetBool("SW", transition.x == -1);
+            // For checking the direction the agent is travelling in, notify the animator
+            animator.SetBool("NE", (int)Math.Round(transition.x) == 1);
+            animator.SetBool("NW", (int)Math.Round(transition.z) == 1);
+            animator.SetBool("SE", (int)Math.Round(transition.z) == -1);
+            animator.SetBool("SW", (int)Math.Round(transition.x) == -1);
 
             while (timePassed + Time.deltaTime < maxTimePassed)
             {
