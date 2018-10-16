@@ -1636,8 +1636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1369405182}
-  firstCanvas: {fileID: 288531333}
-  secondCanvas: {fileID: 2019390667}
+  canvases: []
 --- !u!114 &73954700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1650,8 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1369405182}
-  firstCanvas: {fileID: 196559159}
-  secondCanvas: {fileID: 111165524}
+  canvases: []
 --- !u!1001 &79805137
 Prefab:
   m_ObjectHideFlags: 0
@@ -4805,8 +4803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 57407501}
-  firstCanvas: {fileID: 306895108}
-  secondCanvas: {fileID: 231397120}
+  canvases: []
 --- !u!1001 &179738349
 Prefab:
   m_ObjectHideFlags: 0
@@ -5089,13 +5086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4dcedeaba51884fbe913482fa79d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exit: {fileID: 553365345}
-  backgroundCanvas: {fileID: 288531333}
-  screen1: {fileID: 2019390667}
-  screen2: {fileID: 97046672}
-  screen3: {fileID: 733287397}
-  screen4: {fileID: 1582461744}
-  screen5: {fileID: 1983991339}
+  exitButton: {fileID: 0}
+  canvases: []
 --- !u!1 &182346020
 GameObject:
   m_ObjectHideFlags: 0
@@ -7635,8 +7627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1398691200}
-  firstCanvas: {fileID: 1972125190}
-  secondCanvas: {fileID: 231397120}
+  canvases: []
 --- !u!1 &262797834
 GameObject:
   m_ObjectHideFlags: 0
@@ -10915,8 +10906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 885899528}
-  firstCanvas: {fileID: 1343232644}
-  secondCanvas: {fileID: 199923511}
+  canvases: []
 --- !u!114 &434703332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10929,8 +10919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 885899528}
-  firstCanvas: {fileID: 196559159}
-  secondCanvas: {fileID: 111165524}
+  canvases: []
 --- !u!1 &437500414
 GameObject:
   m_ObjectHideFlags: 0
@@ -13021,8 +13010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 480051707}
-  firstCanvas: {fileID: 1983991339}
-  secondCanvas: {fileID: 1582461744}
+  canvases: []
 --- !u!1 &496004047
 GameObject:
   m_ObjectHideFlags: 0
@@ -13527,8 +13515,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1334198269}
-  firstCanvas: {fileID: 196559159}
-  secondCanvas: {fileID: 111165524}
+  canvases:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &528710746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14992,8 +14981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 831982945}
-  firstCanvas: {fileID: 306895108}
-  secondCanvas: {fileID: 199923511}
+  canvases: []
 --- !u!1001 &626344051
 Prefab:
   m_ObjectHideFlags: 0
@@ -18162,8 +18150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1267729837}
-  firstCanvas: {fileID: 231397120}
-  secondCanvas: {fileID: 1972125190}
+  canvases: []
 --- !u!1 &783251306
 GameObject:
   m_ObjectHideFlags: 0
@@ -18439,8 +18426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 607095620}
-  firstCanvas: {fileID: 1972125190}
-  secondCanvas: {fileID: 983677632}
+  canvases: []
 --- !u!1001 &791698509
 Prefab:
   m_ObjectHideFlags: 0
@@ -22687,13 +22673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4dcedeaba51884fbe913482fa79d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exit: {fileID: 241110225}
-  backgroundCanvas: {fileID: 1343232644}
-  screen1: {fileID: 199923511}
-  screen2: {fileID: 306895108}
-  screen3: {fileID: 231397120}
-  screen4: {fileID: 1972125190}
-  screen5: {fileID: 983677632}
+  exitButton: {fileID: 0}
+  canvases: []
 --- !u!1001 &951579033
 Prefab:
   m_ObjectHideFlags: 0
@@ -26180,8 +26161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 140626316}
-  firstCanvas: {fileID: 983677632}
-  secondCanvas: {fileID: 1343232644}
+  canvases: []
 --- !u!1001 &1074117497
 Prefab:
   m_ObjectHideFlags: 0
@@ -26533,8 +26513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1340666610}
-  firstCanvas: {fileID: 196559159}
-  secondCanvas: {fileID: 111165524}
+  canvases: []
 --- !u!1001 &1093539197
 Prefab:
   m_ObjectHideFlags: 0
@@ -28532,8 +28511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 480314077}
-  firstCanvas: {fileID: 196559159}
-  secondCanvas: {fileID: 111165524}
+  canvases: []
 --- !u!114 &1178484463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28546,8 +28524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 480314077}
-  firstCanvas: {fileID: 1343232644}
-  secondCanvas: {fileID: 199923511}
+  canvases: []
 --- !u!1 &1180166946
 GameObject:
   m_ObjectHideFlags: 0
@@ -29033,8 +29010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 876065061}
-  firstCanvas: {fileID: 733287397}
-  secondCanvas: {fileID: 1582461744}
+  canvases: []
 --- !u!1001 &1212567479
 Prefab:
   m_ObjectHideFlags: 0
@@ -29137,8 +29113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 151655975}
-  firstCanvas: {fileID: 306895108}
-  secondCanvas: {fileID: 231397120}
+  canvases: []
 --- !u!1001 &1229844967
 Prefab:
   m_ObjectHideFlags: 0
@@ -30312,7 +30287,6 @@ GameObject:
   - component: {fileID: 1269586291}
   - component: {fileID: 1269586290}
   - component: {fileID: 1269586288}
-  - component: {fileID: 1269586289}
   m_Layer: 0
   m_Name: Transition_GameObject
   m_TagString: Untagged
@@ -30333,19 +30307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {fileID: 1633687543}
   path: Electrical Level6
---- !u!114 &1269586289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1269586287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  start: {fileID: 1278394764}
-  helpCanvas: {fileID: 1202105740}
 --- !u!114 &1269586290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31319,8 +31280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1946550315}
-  firstCanvas: {fileID: 199923511}
-  secondCanvas: {fileID: 306895108}
+  canvases: []
 --- !u!1001 &1315861374
 Prefab:
   m_ObjectHideFlags: 0
@@ -33156,8 +33116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1474460328}
-  firstCanvas: {fileID: 97046672}
-  secondCanvas: {fileID: 733287397}
+  canvases: []
 --- !u!1 &1379106130
 GameObject:
   m_ObjectHideFlags: 0
@@ -34538,7 +34497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 1698602970}
-  path: Engineering Leech
+  path: Electrical End
 --- !u!114 &1450650366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34564,7 +34523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 1278394764}
-  helpCanvas: {fileID: 1202105740}
+  canvases:
+  - {fileID: 1202105740}
 --- !u!1001 &1454086705
 Prefab:
   m_ObjectHideFlags: 0
@@ -35121,8 +35081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 124442156}
-  firstCanvas: {fileID: 1582461744}
-  secondCanvas: {fileID: 1983991339}
+  canvases: []
 --- !u!1001 &1471408468
 Prefab:
   m_ObjectHideFlags: 0
@@ -36081,8 +36040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1802081724}
-  firstCanvas: {fileID: 97046672}
-  secondCanvas: {fileID: 2019390667}
+  canvases: []
 --- !u!1001 &1527958892
 Prefab:
   m_ObjectHideFlags: 0
@@ -36991,8 +36949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 440243391}
-  firstCanvas: {fileID: 1582461744}
-  secondCanvas: {fileID: 733287397}
+  canvases: []
 --- !u!1001 &1577104471
 Prefab:
   m_ObjectHideFlags: 0
@@ -39399,8 +39356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 986513675}
-  firstCanvas: {fileID: 196559159}
-  secondCanvas: {fileID: 111165524}
+  canvases: []
 --- !u!114 &1681648480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39413,8 +39369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 986513675}
-  firstCanvas: {fileID: 288531333}
-  secondCanvas: {fileID: 2019390667}
+  canvases: []
 --- !u!1001 &1683429885
 Prefab:
   m_ObjectHideFlags: 0
@@ -40377,8 +40332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 2146572939}
-  firstCanvas: {fileID: 1983991339}
-  secondCanvas: {fileID: 288531333}
+  canvases: []
 --- !u!1001 &1702578846
 Prefab:
   m_ObjectHideFlags: 0
@@ -41929,8 +41883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 233961331}
-  firstCanvas: {fileID: 2019390667}
-  secondCanvas: {fileID: 97046672}
+  canvases: []
 --- !u!1001 &1797864378
 Prefab:
   m_ObjectHideFlags: 0
@@ -44805,8 +44758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 293392598}
-  firstCanvas: {fileID: 733287397}
-  secondCanvas: {fileID: 97046672}
+  canvases: []
 --- !u!1001 &1928020104
 Prefab:
   m_ObjectHideFlags: 0
@@ -49750,8 +49702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1604349039}
-  firstCanvas: {fileID: 983677632}
-  secondCanvas: {fileID: 1972125190}
+  canvases: []
 --- !u!1001 &2123670375
 Prefab:
   m_ObjectHideFlags: 0

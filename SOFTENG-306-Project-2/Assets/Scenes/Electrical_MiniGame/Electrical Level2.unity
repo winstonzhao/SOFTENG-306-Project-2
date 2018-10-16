@@ -12069,7 +12069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 841844654}
-  path: Engineering Leech
+  path: Electrical End
 --- !u!114 &571200830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28200,7 +28200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 1278394764}
-  helpCanvas: {fileID: 1332837776}
+  canvases:
+  - {fileID: 1332837776}
 --- !u!114 &1269586290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32121,7 +32122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 308961583}
-  canvases: []
+  canvases:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1450232537
 Transform:
   m_ObjectHideFlags: 0
