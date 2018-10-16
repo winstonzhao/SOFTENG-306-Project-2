@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System;
+
 
 public class HideHelp : MonoBehaviour {
 
@@ -9,12 +12,15 @@ public class HideHelp : MonoBehaviour {
     public Button start;
     public Canvas helpDialog;
 
+    private TextMeshProUGUI timerArea;
+
     // Use this for initialization
     void Start()
     {
         start = start.GetComponent<Button>();
-
         start.onClick.AddListener(TaskOnClick);
+
+        timerArea = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
     }
 
     void TaskOnClick()
@@ -26,4 +32,5 @@ public class HideHelp : MonoBehaviour {
     void Update () {
 		
 	}
+
 }

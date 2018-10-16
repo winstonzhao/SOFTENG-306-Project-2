@@ -23,6 +23,9 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
     private bool timerNotStopped = true;
 
     private float currCountdownValueTenthSeconds;
+    private float pausedValue;
+    private bool paused = false;
+
 
     public void Start()
     {
@@ -32,8 +35,34 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }
-
+        //timerArea.color = Color.black;
         StartCoroutine(StartCountdown(TimeLimit));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // get paused value as the current countdown time
+        pausedValue = currCountdownValueTenthSeconds;
+
+        // check if the timer is deactivated
+        if (timerArea.color == Color.gray) {
+            timerNotStopped = false;
+            paused = true;
+
+            // stop all current timing
+            StopAllCoroutines();
+
+        } else if (timerArea.color == Color.black) {
+            // check that the player is exiting a tutorial
+            if (paused == true) {
+                paused = false;
+                timerNotStopped = true;
+
+                // start new timing using current timer value on new background thread
+                StartCoroutine(StartCountdown(Mathf.RoundToInt(1+ (pausedValue/10))));
+            }
+        }
     }
 
     public void OnDragEnter(Draggable item)
@@ -157,11 +186,11 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
 
     public IEnumerator StartCountdown(int timeLimit)
     {
-        float countdownValue = (TimeLimit - 1) * 10;
+        float countdownValue = (timeLimit - 1) * 10;
         currCountdownValueTenthSeconds = countdownValue;
         while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
         {
-            Debug.Log((currCountdownValueTenthSeconds) / 10);
+            //Debug.Log((currCountdownValueTenthSeconds) / 10);
             string timerLabel = String.Format("{0:00}:{1:00}", Math.Floor((currCountdownValueTenthSeconds) / 10), (currCountdownValueTenthSeconds % 10) * 10);
             timerArea.SetText(timerLabel);
             yield return new WaitForSeconds(0.1f);
