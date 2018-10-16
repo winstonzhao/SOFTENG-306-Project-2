@@ -12,6 +12,9 @@ namespace Civil_Mini_Game
         static DraggableIsoItem.Direction SW = DraggableIsoItem.Direction.SW;
         static DraggableIsoItem.Direction NW = DraggableIsoItem.Direction.NW;
 
+        /**
+         * Get all four tiles adjacent to the given tile in four directions.
+         */
         public override Dictionary<DraggableIsoItem.Direction, IsoTransform> GetAdjacentTiles(IsoTransform tile,
             Dictionary<Vector3, IsoTransform> locs)
         {
@@ -61,13 +64,21 @@ namespace Civil_Mini_Game
             return adjacentTiles;
         }
 
+        /**
+         * Get the invalid tiles (those ones that rotate in the wrong directions) with the given tile and the
+         * given adjacent tiles.
+         */
         public override List<IsoTransform> GetInvalidTiles(IsoTransform tile,
             Dictionary<DraggableIsoItem.Direction, IsoTransform> adjacentTiles)
         {
             List<IsoTransform> tilesToRemove = new List<IsoTransform>();
+            
+            // get information of the current tile we are looking at
             var draggableTile = tile.GetComponentInParent<DraggableIsoItem>();
-            var thisTileName = draggableTile.name;
-            var thisDir = draggableTile.direction;
+            var thisTileName = draggableTile.name;  // name of the tile (road, bridge, etc.)
+            var thisDir = draggableTile.direction;  // direction of the tile
+            
+            // check validness of the adjacent tiles one by one
             IsoTransform adjTile;
             DraggableIsoItem draggableAdjTile;
             string adjTileName;
@@ -89,12 +100,15 @@ namespace Civil_Mini_Game
                         {
                             case "road":
                             case "bridge":
+                                // the road or bridge at the NE should be directing NE or SW
                                 if (adjTileDirection != NE && adjTileDirection != SW) tilesToRemove.Add(tile);
                                 break;
                             case "corner":
+                                // the corner at NE should be direction NE or SE
                                 if (adjTileDirection != NE && adjTileDirection != SE) tilesToRemove.Add(tile);
                                 break;
                             case "three_way_intersection":
+                                // the three way intersection at NE should not face NW
                                 if (adjTileDirection == NW) tilesToRemove.Add(tile);
                                 break;
                         }
@@ -113,12 +127,15 @@ namespace Civil_Mini_Game
                         {
                             case "road":
                             case "bridge":
+                                // the road or bridge at the SW should be directing NE or SW
                                 if (adjTileDirection != NE && adjTileDirection != SW) tilesToRemove.Add(tile);
                                 break;
                             case "corner":
+                                // the corner at SW should be direction SW or NE
                                 if (adjTileDirection != SW && adjTileDirection != NW) tilesToRemove.Add(tile);
                                 break;
                             case "three_way_intersection":
+                                // the three way intersection at SW should not face SE
                                 if (adjTileDirection == SE) tilesToRemove.Add(tile);
                                 break;
                         }
@@ -147,12 +164,15 @@ namespace Civil_Mini_Game
                         {
                             case "road":
                             case "bridge":
+                                // the road or bridge at the SE should be directing SE or NW
                                 if (adjTileDirection != SE && adjTileDirection != NW) tilesToRemove.Add(tile);
                                 break;
                             case "corner":
+                                // the corner at SE should be direction SE or SW
                                 if (adjTileDirection != SE && adjTileDirection != SW) tilesToRemove.Add(tile);
                                 break;
                             case "three_way_intersection":
+                                // the three way intersection at SE should not face NE
                                 if (adjTileDirection == NE) tilesToRemove.Add(tile);
                                 break;
                         }
@@ -171,12 +191,15 @@ namespace Civil_Mini_Game
                         {
                             case "road":
                             case "bridge":
+                                // the road or bridge at the NW should be directing SE or NW
                                 if (adjTileDirection != SE && adjTileDirection != NW) tilesToRemove.Add(tile);
                                 break;
                             case "corner":
+                                // the corner at NW should be direction NE or NW
                                 if (adjTileDirection != NE && adjTileDirection != NW) tilesToRemove.Add(tile);
                                 break;
                             case "three_way_intersection":
+                                // the three way intersection at NW should not face SW
                                 if (adjTileDirection == SW) tilesToRemove.Add(tile);
                                 break;
                         }
