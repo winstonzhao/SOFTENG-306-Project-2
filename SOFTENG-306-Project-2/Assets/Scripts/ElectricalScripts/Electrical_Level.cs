@@ -26,6 +26,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private float pausedValue;
     private bool paused = false;
     private bool expected = false;
+    private bool circuitComplete = false;
 
 
     public void Start()
@@ -43,6 +44,19 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.FindWithTag("DropZone2") == null)
+        {
+            circuitComplete = true;
+        }
+        else
+        {
+            circuitComplete = GameObject.FindWithTag("DropZone2").GetComponent<Second_DropZone>().GetExpected();
+        }
+
+        if (expected && circuitComplete)
+        {
+            completeLevel();
+        }
         // get paused value as the current countdown time
         pausedValue = currCountdownValueTenthSeconds;
 
@@ -102,27 +116,33 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             }
         }
 
-        if (expected)
+        if (expected && circuitComplete)
         {
-            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-            GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
-
-            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
-
-            foreach (GameObject circ in circuitPieces)
-            {
-                circ.GetComponent<SpriteRenderer>().color = Color.yellow;
-            }
-
-            timerNotStopped = false;
-            StartCoroutine(endOfLevel((delayTime) =>
-            {
-                if (delayTime) {
-                    endOfLevelCanvas.enabled = true;
-                }
-            }));
+            completeLevel();
         }
 
+    }
+
+    private void completeLevel()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
+
+        GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
+
+        foreach (GameObject circ in circuitPieces)
+        {
+            circ.GetComponent<SpriteRenderer>().color = Color.yellow;
+        }
+
+        timerNotStopped = false;
+        StartCoroutine(endOfLevel((delayTime) =>
+        {
+            if (delayTime)
+            {
+                endOfLevelCanvas.enabled = true;
+            }
+        }));
     }
 
     private IEnumerator endOfLevel(System.Action<bool> callback)
