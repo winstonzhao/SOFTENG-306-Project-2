@@ -49,6 +49,12 @@ public class DraggableIsoItem : Draggable
     private static float lastClickTime = 0;
     private static float catchTime = 0.3f; // If another click is registered within this time, it is a double click
 
+    
+    /**
+    * Get component fields
+    */
+    private SpriteRenderer spriteRenderer;
+    
     /**
      * Position of the block to return to
      */
@@ -76,6 +82,11 @@ public class DraggableIsoItem : Draggable
     {
         SetDirection(this.direction);
         homePos = GetComponentInParent<Transform>().position;
+    }
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     /**
@@ -198,7 +209,7 @@ public class DraggableIsoItem : Draggable
                 dragging = true;
                 moving = false;
                 holdingItem = true;
-                GetComponent<SpriteRenderer>().sortingOrder = 1;  // Put the block on top
+                spriteRenderer.sortingOrder = 1;  // Put the block on top
                 // Drag the block under the mouse
                 Vector3 mousePos = Input.mousePosition;
                 Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
@@ -310,7 +321,7 @@ public class DraggableIsoItem : Draggable
 
         moving = true;
         target = newPos;
-        GetComponent<SpriteRenderer>().sortingOrder = 0;
+        spriteRenderer.sortingOrder = 0;
     }
 
     /**
@@ -343,7 +354,7 @@ public class DraggableIsoItem : Draggable
      */
     private void SetSprite(Sprite sprite)
     {
-        GetComponentInParent<SpriteRenderer>().sprite = sprite;
+        spriteRenderer.sprite = sprite;
     }
 
     /**

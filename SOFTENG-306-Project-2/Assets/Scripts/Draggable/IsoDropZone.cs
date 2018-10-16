@@ -21,6 +21,16 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     public bool Returner = false;  // If the drop zone returns blocks
     private Draggable currentItem;  // Item currently in the drop zone
     private bool isEnabled = true;  // The drop zone can have items placed into it
+    
+    /**
+     * Get component fields
+     */
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void Start()
     {
@@ -58,8 +68,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     {
         if(isEnabled)
         {
-            //SetDropZoneActive(false);
-            GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f); // Red
+            CheckSpriteRenderer();
+            spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f); // Red
         }
 
     }
@@ -70,7 +80,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     public void OnDragExit(Draggable item)
     {
         if(isEnabled) {
-            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f); // White
+            CheckSpriteRenderer();
+            spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f); // White
         }
 
 
@@ -81,8 +92,9 @@ public class IsoDropZone : MonoBehaviour, IDropZone
      */
     public void OnDragFinish(Draggable item)
     {
+        CheckSpriteRenderer();
         SetDropZoneActive(false); // Disable the drop zone
-        GetComponent<SpriteRenderer>().sortingLayerName = "BackGround"; // Send the drop zone backwards
+        spriteRenderer.sortingLayerName = "BackGround"; // Send the drop zone backwards
     }
 
     /**
@@ -90,7 +102,8 @@ public class IsoDropZone : MonoBehaviour, IDropZone
      */
     public void OnDragStart(Draggable item)
     {
-        GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+        CheckSpriteRenderer();
+        spriteRenderer.sortingLayerName = "Ground";
     }
 
     /**
@@ -100,8 +113,9 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     {
         currentItem = item;
         currentItem.HomePos = transform.position;
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-        GetComponent<SpriteRenderer>().sortingLayerName = "BackGround";
+        CheckSpriteRenderer();
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
+        spriteRenderer.sortingLayerName = "BackGround";
 
         // Update budget if this drop zone is a factory/returner
         if (prefebName != "" || Returner)
@@ -156,16 +170,25 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     {
         if (enable == isEnabled) return;
         isEnabled = enable;
-
+        CheckSpriteRenderer();
         if (!enable) // Disabling factory
         {
             child.SetActive(false); // Hide the created prefab from being dragged
-            GetComponent<SpriteRenderer>().color = new Color(0.49f, 0.49f, 0.49f); // Gray
+            spriteRenderer.color = new Color(0.49f, 0.49f, 0.49f); // Gray
         }
         else // Enabling factory
         {
             child.SetActive(true);  // Enable the created prefab to be dragged
-            GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f); // White
+            spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f); // White
         }
+    }
+
+    /**
+     * Double check the sprite renderer isn't null before using it
+     */
+    private void CheckSpriteRenderer()
+    {
+        if (spriteRenderer != null) return;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 }
