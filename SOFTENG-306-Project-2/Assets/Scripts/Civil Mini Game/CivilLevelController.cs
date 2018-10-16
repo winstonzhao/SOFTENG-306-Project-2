@@ -117,6 +117,11 @@ public class CivilLevelController : MonoBehaviour {
             SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination within the time limit.");
             CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", false);
             CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", true);
+            // if there are cars not stopped yet, make them stop
+            foreach (var carAgent in CarAgents)
+            {
+                carAgent.StopMoving();
+            }
         }
         timerNotStopped = false;
         Dialog.enabled = !Dialog.enabled;
