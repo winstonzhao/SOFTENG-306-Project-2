@@ -1,5 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Game;
+using Game.Hiscores;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
@@ -17,7 +21,8 @@ public class CivilGameManager : MonoBehaviour {
     // player name, default is "Anonymous"
     public string playerName  = "Anonymous";
 
-
+    private List<int> scores = new List<int>();
+    
     private void Awake()
     {
         //Check if instance already exists
@@ -39,6 +44,26 @@ public class CivilGameManager : MonoBehaviour {
     public void SetPlayerName(string playerName)
     {
         instance.playerName = playerName;
+    }
+
+    public void AddScore(int score)
+    {
+        scores.Add(score);
+    }
+
+    public void AddHighScore()
+    {
+        if (scores.Count > 0)
+        {
+            Score score = new Score();
+            score.Minigame = Minigames.Civil;
+            int highScore = (int) scores.Average();
+            score.Value = highScore;
+            score.CreatedAt = DateTime.Now;
+
+            Toolbox.Instance.Hiscores.Add(score);
+            scores.Clear();
+        }
     }
 
     public static void ToggleDialogDisplay(Canvas canvas, string groupName, bool show)    // super

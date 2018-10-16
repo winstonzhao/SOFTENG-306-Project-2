@@ -136,17 +136,9 @@ public class CivilLevelController : MonoBehaviour {
         float budgetScore = budgetLeftPortion * BudgetMaxScore;
         Debug.Log("budget score: " + budgetScore);
 
-        Score score = new Score();
-        score.Minigame = Minigames.Civil;
         int highScore =(int) Math.Round(timeScore + budgetScore + CompletionBaseScore);
         highScore = highScore > 100 ? 100 : highScore;
-        Debug.Log("actual score: " + highScore);
-        score.Value = highScore;
-        Debug.Log("high score: " + score.Value);
-        score.CreatedAt = DateTime.Now;
-        Debug.Log("high score time: " + score.CreatedAt);
-
-        Toolbox.Instance.Hiscores.Add(score);
+        CivilGameManager.instance.AddScore(highScore);
 
         return highScore;
     }
@@ -367,6 +359,12 @@ public class CivilLevelController : MonoBehaviour {
                 button.GetComponent<CursorStyler>().enabled = enable;
             }
         }
+    }
+
+    public void ExitCivilMiniGame()
+    {
+        CivilGameManager.instance.AddHighScore();
+        GameManager.Instance.ChangeScene("Engineering Leech");
     }
 
 }
