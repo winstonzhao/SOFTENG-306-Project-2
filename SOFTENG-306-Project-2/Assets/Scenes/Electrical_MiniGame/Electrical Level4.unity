@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 7664484}
   - component: {fileID: 7664483}
   - component: {fileID: 7664482}
+  - component: {fileID: 7664486}
   m_Layer: 5
   m_Name: Restart_Button
   m_TagString: Untagged
@@ -449,6 +450,18 @@ RectTransform:
   m_AnchoredPosition: {x: -259, y: 446}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7664486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 7664481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &8854598
 Prefab:
   m_ObjectHideFlags: 0
@@ -2264,6 +2277,7 @@ GameObject:
   - component: {fileID: 113017390}
   - component: {fileID: 113017389}
   - component: {fileID: 113017388}
+  - component: {fileID: 113017392}
   m_Layer: 5
   m_Name: Next_Level
   m_TagString: EndOfLevel
@@ -2365,6 +2379,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0.2600002, y: -77.755005}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &113017392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 113017387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &120384588
 Prefab:
   m_ObjectHideFlags: 0
@@ -11281,6 +11307,7 @@ GameObject:
   - component: {fileID: 541216129}
   - component: {fileID: 541216128}
   - component: {fileID: 541216127}
+  - component: {fileID: 541216130}
   m_Layer: 5
   m_Name: Confirm_Exit_Button
   m_TagString: EndOfLevel
@@ -11382,6 +11409,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 541216125}
   m_CullTransparentMesh: 0
+--- !u!114 &541216130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 541216125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &547353870
 GameObject:
   m_ObjectHideFlags: 0
@@ -19034,6 +19073,7 @@ GameObject:
   - component: {fileID: 877851290}
   - component: {fileID: 877851289}
   - component: {fileID: 877851288}
+  - component: {fileID: 877851291}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: EndOfLevel
@@ -19135,6 +19175,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 877851286}
   m_CullTransparentMesh: 0
+--- !u!114 &877851291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 877851286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &884556403
 GameObject:
   m_ObjectHideFlags: 0
@@ -25986,6 +26038,7 @@ GameObject:
   - component: {fileID: 1176128014}
   - component: {fileID: 1176128013}
   - component: {fileID: 1176128012}
+  - component: {fileID: 1176128016}
   m_Layer: 5
   m_Name: Hide
   m_TagString: EndOfLevel
@@ -26087,6 +26140,18 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: -16}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1176128016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176128011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1177402864
 Prefab:
   m_ObjectHideFlags: 0
@@ -29082,6 +29147,7 @@ GameObject:
   - component: {fileID: 1328941207}
   - component: {fileID: 1328941206}
   - component: {fileID: 1328941211}
+  - component: {fileID: 1328941212}
   m_Layer: 0
   m_Name: Gate_NOT
   m_TagString: Block2
@@ -29219,6 +29285,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helpCanvas: {fileID: 1145897551}
+--- !u!114 &1328941212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1328941205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1332136894
 Prefab:
   m_ObjectHideFlags: 0
@@ -36338,6 +36416,7 @@ GameObject:
   - component: {fileID: 1702396099}
   - component: {fileID: 1702396098}
   - component: {fileID: 1702396097}
+  - component: {fileID: 1702396100}
   m_Layer: 5
   m_Name: Cancel_Exit_Button
   m_TagString: EndOfLevel
@@ -36439,6 +36518,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1702396095}
   m_CullTransparentMesh: 0
+--- !u!114 &1702396100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1702396095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1703091612
 Prefab:
   m_ObjectHideFlags: 0
@@ -42950,6 +43041,7 @@ GameObject:
   - component: {fileID: 1979490860}
   - component: {fileID: 1979490859}
   - component: {fileID: 1979490858}
+  - component: {fileID: 1979490862}
   m_Layer: 5
   m_Name: Exit_Button
   m_TagString: Untagged
@@ -43051,6 +43143,18 @@ RectTransform:
   m_AnchoredPosition: {x: -225, y: 332}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1979490862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1979490857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1981183446
 Prefab:
   m_ObjectHideFlags: 0

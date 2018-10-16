@@ -24794,6 +24794,7 @@ GameObject:
   - component: {fileID: 1016463969}
   - component: {fileID: 1016463968}
   - component: {fileID: 1016463967}
+  - component: {fileID: 1016463970}
   m_Layer: 5
   m_Name: Confirm_Exit_Button
   m_TagString: EndOfLevel
@@ -24895,6 +24896,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1016463965}
   m_CullTransparentMesh: 0
+--- !u!114 &1016463970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1016463965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &1017236153
 GameObject:
   m_ObjectHideFlags: 0
@@ -47287,6 +47300,7 @@ GameObject:
   - component: {fileID: 2070201659}
   - component: {fileID: 2070201658}
   - component: {fileID: 2070201657}
+  - component: {fileID: 2070201660}
   m_Layer: 5
   m_Name: Cancel_Exit_Button
   m_TagString: EndOfLevel
@@ -47388,6 +47402,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2070201655}
   m_CullTransparentMesh: 0
+--- !u!114 &2070201660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070201655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &2071474483
 Prefab:
   m_ObjectHideFlags: 0

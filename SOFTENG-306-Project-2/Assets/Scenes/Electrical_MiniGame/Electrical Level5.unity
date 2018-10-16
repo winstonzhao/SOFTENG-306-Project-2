@@ -866,6 +866,7 @@ GameObject:
   - component: {fileID: 15501577}
   - component: {fileID: 15501576}
   - component: {fileID: 15501575}
+  - component: {fileID: 15501579}
   m_Layer: 5
   m_Name: Hide
   m_TagString: EndOfLevel
@@ -967,6 +968,18 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: -16}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &15501579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 15501574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &18320408
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,6 +2587,7 @@ GameObject:
   - component: {fileID: 79882928}
   - component: {fileID: 79882927}
   - component: {fileID: 79882926}
+  - component: {fileID: 79882930}
   m_Layer: 5
   m_Name: Next_Level
   m_TagString: EndOfLevel
@@ -2675,6 +2689,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0.2600002, y: -77.755005}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &79882930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 79882925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &83091275
 GameObject:
   m_ObjectHideFlags: 0
@@ -14828,6 +14854,7 @@ GameObject:
   - component: {fileID: 564136814}
   - component: {fileID: 564136813}
   - component: {fileID: 564136812}
+  - component: {fileID: 564136815}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: EndOfLevel
@@ -14929,6 +14956,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 564136810}
   m_CullTransparentMesh: 0
+--- !u!114 &564136815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 564136810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &571705036
 Prefab:
   m_ObjectHideFlags: 0
@@ -24720,6 +24759,7 @@ GameObject:
   - component: {fileID: 978505372}
   - component: {fileID: 978505371}
   - component: {fileID: 978505370}
+  - component: {fileID: 978505374}
   m_Layer: 5
   m_Name: Confirm_Exit_Button
   m_TagString: EndOfLevel
@@ -24821,6 +24861,18 @@ RectTransform:
   m_AnchoredPosition: {x: -81, y: -54}
   m_SizeDelta: {x: 150, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &978505374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 978505369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &981383284
 Prefab:
   m_ObjectHideFlags: 0
@@ -28878,6 +28930,7 @@ GameObject:
   - component: {fileID: 1164152831}
   - component: {fileID: 1164152830}
   - component: {fileID: 1164152834}
+  - component: {fileID: 1164152835}
   m_Layer: 0
   m_Name: Gate_AND
   m_TagString: Block2
@@ -29015,6 +29068,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helpCanvas: {fileID: 709401201}
+--- !u!114 &1164152835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1164152828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1164928379
 Prefab:
   m_ObjectHideFlags: 0
@@ -30304,6 +30369,7 @@ GameObject:
   - component: {fileID: 1210439921}
   - component: {fileID: 1210439920}
   - component: {fileID: 1210439919}
+  - component: {fileID: 1210439922}
   m_Layer: 5
   m_Name: Cancel_Exit_Button
   m_TagString: EndOfLevel
@@ -30405,6 +30471,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1210439917}
   m_CullTransparentMesh: 0
+--- !u!114 &1210439922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210439917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1211208390
 Prefab:
   m_ObjectHideFlags: 0
@@ -32191,6 +32269,7 @@ GameObject:
   - component: {fileID: 1278394766}
   - component: {fileID: 1278394765}
   - component: {fileID: 1278394764}
+  - component: {fileID: 1278394768}
   m_Layer: 5
   m_Name: Exit_Button
   m_TagString: Untagged
@@ -32292,6 +32371,18 @@ RectTransform:
   m_AnchoredPosition: {x: -225, y: 332}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1278394768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1278394763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &1280717335
 GameObject:
   m_ObjectHideFlags: 0
@@ -33793,6 +33884,7 @@ GameObject:
   - component: {fileID: 1328941207}
   - component: {fileID: 1328941206}
   - component: {fileID: 1328941211}
+  - component: {fileID: 1328941212}
   m_Layer: 0
   m_Name: Gate_OR
   m_TagString: Block2
@@ -33930,6 +34022,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helpCanvas: {fileID: 362805566}
+--- !u!114 &1328941212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1328941205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1341009955
 Prefab:
   m_ObjectHideFlags: 0
@@ -39391,6 +39495,7 @@ GameObject:
   - component: {fileID: 1633687545}
   - component: {fileID: 1633687544}
   - component: {fileID: 1633687543}
+  - component: {fileID: 1633687547}
   m_Layer: 5
   m_Name: Restart_Button
   m_TagString: Untagged
@@ -39492,6 +39597,18 @@ RectTransform:
   m_AnchoredPosition: {x: -259, y: 446}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1633687547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1633687542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1633833299
 Prefab:
   m_ObjectHideFlags: 0
