@@ -47,7 +47,7 @@ public class CivilLevelController : MonoBehaviour {
     private float currCountdownValueTenthSeconds;
     private int maxBudget;
     private int tutorialSlideNumber;
-    private const int TUTORIAL_SLIDE_COUNT = 8;
+    private const int TUTORIAL_SLIDE_COUNT = 9;
     
     // game control buttons
     private List<GameObject> gameControlButtons = new List<GameObject>();
