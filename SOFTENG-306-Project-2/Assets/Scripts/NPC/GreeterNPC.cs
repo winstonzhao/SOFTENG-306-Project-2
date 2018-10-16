@@ -50,11 +50,11 @@ public class GreeterNPC : NPC
         {
             switch (Toolbox.Instance.QuestManager.Current.Id)
             {
-                case "post-workshops":
-                    frame = PostWorkshopDialogFrame(me, npc);
-                    break;
                 case "networking":
                     frame = NetworkingDialogFrame(me, npc);
+                    break;
+                case "collect-prize":
+                    frame = CollectPrizeDialogFrame(me, npc);
                     break;
                 default:
                     frame = new DialogFrame(npc, "I hope you had a great time at enginuity day!");
@@ -272,7 +272,21 @@ public class GreeterNPC : NPC
         };
     }
 
-    private DialogFrame PostWorkshopDialogFrame(string me, string npc)
+    private DialogFrame NetworkingDialogFrame(string me, string npc)
+    {
+        return new DialogFrame(npc,
+            "It's so nice to see other students and graduates back at university.")
+        {
+            Next = new DialogFrame(npc,
+                "This is a great chance for you to find out more about engineering in general.")
+            {
+                Next = new DialogFrame(me,
+                    "I should go speak to these people…")
+            }
+        };
+    }
+
+    private DialogFrame CollectPrizeDialogFrame(string me, string npc)
     {
         return new DialogFrame(npc,
             "Well done, I see you have come to collect your prize.")
@@ -289,24 +303,17 @@ public class GreeterNPC : NPC
                         "chance to experience them all before you make your decision to specialise.")
                     {
                         Next = new DialogFrame(npc,
-                            "Once again, I hope you have enjoyed your Enginuity Day, and you will find your " +
-                            "prize in your backpack.")
+                            "Once again, I hope you have enjoyed your Enginuity Day.")
                         {
-                            OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("post-workshops"); }
+                            Next = new DialogFrame(npc,
+                                "You can find your prize in your backpack.")
+                            {
+                                OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("post-workshops"); }
+                            }
                         }
                     }
                 }
             }
-        };
-    }
-
-    private DialogFrame NetworkingDialogFrame(string me, string npc)
-    {
-        return new DialogFrame(npc,
-            "It's so nice to see other students and graduates back at university.")
-        {
-            Next = new DialogFrame(npc,
-                "This is a great chance for you to find out more about engineering in general.")
         };
     }
 }

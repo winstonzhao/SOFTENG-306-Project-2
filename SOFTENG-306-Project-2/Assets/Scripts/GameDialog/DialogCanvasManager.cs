@@ -71,6 +71,11 @@ namespace GameDialog
 
         private void CloseDialog()
         {
+            if (CurrentDialog.OnComplete != null)
+            {
+                CurrentDialog.OnComplete();
+            }
+
             Toolbox.Instance.FocusManager.Dialog = null;
             DestroyGameFrame();
             StartCoroutine(UnsetShowingAfter(0.25f));

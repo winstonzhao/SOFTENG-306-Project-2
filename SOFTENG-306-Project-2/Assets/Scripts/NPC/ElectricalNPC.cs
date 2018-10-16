@@ -12,7 +12,11 @@ public class ElectricalNPC : NPC
 
         DialogFrame frame;
 
-        if (Toolbox.Instance.QuestManager.HasFinishedOrIsCurrent("electrical-workshop"))
+        if (Toolbox.Instance.QuestManager.Current.Id == "networking")
+        {
+            frame = new DialogFrame(npc, "Naomi is looking for you upstairs!");
+        }
+        else if (Toolbox.Instance.QuestManager.HasFinishedOrIsCurrent("electrical-workshop"))
         {
             frame = new DialogFrame(me, "Hello, I'm " + me)
             {

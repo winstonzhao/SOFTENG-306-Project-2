@@ -100,6 +100,15 @@ public class UndergradNPC3 : NPC
             { me, DialogPosition.Left }, { npc, DialogPosition.Right }
         };
 
-        return new Dialog(frame, directions);
+        var questManager = Toolbox.Instance.QuestManager;
+        return new Dialog(frame, directions, () => { questManager.MarkCurrentFinished("networking"); });
+    }
+
+    public override void Update()
+    {
+        var networking = Toolbox.Instance.QuestManager.HasFinishedOrIsCurrent("networking");
+        gameObject.SetActive(networking);
+
+        base.Update();
     }
 }

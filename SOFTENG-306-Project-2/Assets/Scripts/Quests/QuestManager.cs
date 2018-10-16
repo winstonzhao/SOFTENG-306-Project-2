@@ -86,15 +86,15 @@ namespace Quests
             });
             quests.Add(new Quest
             {
-                Id = "post-workshops",
-                Title = "Speak to Naomi",
-                Description = "Head to the engineering lobby to claim your prize"
-            });
-            quests.Add(new Quest
-            {
                 Id = "networking",
                 Title = "Networking Event",
                 Description = "Speak to undergraduates and industry professionals"
+            });
+            quests.Add(new Quest
+            {
+                Id = "collect-prize",
+                Title = "Speak to Naomi",
+                Description = "Head to the engineering lobby to claim your prize"
             });
             quests.Add(new Quest
             {
@@ -112,6 +112,18 @@ namespace Quests
         public bool HasFinished(string questId)
         {
             return Completed.ContainsKey(questId) && Completed[questId];
+        }
+
+        /// <summary>
+        /// Marks the quest as finished if the current quest matches the given <paramref name="questId"/>
+        /// </summary>
+        /// <param name="questId"></param>
+        public void MarkCurrentFinished(string questId)
+        {
+            if (Current.Id == questId)
+            {
+                MarkFinished(questId);
+            }
         }
 
         public void MarkFinished(string questId)

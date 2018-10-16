@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Utils;
 
 namespace GameDialog
 {
@@ -14,10 +15,13 @@ namespace GameDialog
 
         public readonly Dictionary<string, DialogPosition> Directions;
 
-        public Dialog(DialogFrame startFrame, Dictionary<string, DialogPosition> directions)
+        public readonly Runnable OnComplete;
+
+        public Dialog(DialogFrame startFrame, Dictionary<string, DialogPosition> directions, Runnable onComplete = null)
         {
             StartFrame = startFrame;
             Directions = directions;
+            OnComplete = onComplete;
         }
     }
 }
