@@ -4,6 +4,7 @@ using Ultimate_Isometric_Toolkit.Scripts.Core;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Instructions
 {
@@ -97,6 +98,12 @@ namespace Instructions
             }
 
             var obj = softwareLevelGenerator.GetObject(currentX, currentZ);
+            if (obj == null)
+            {
+                throw new InstructionException("Could not find object " + moveDirection.ToString());
+                return;
+            }
+
             var arrayElement = obj.GetComponent<ArrayElement>();
             if (arrayElement == null)
             {
@@ -108,5 +115,6 @@ namespace Instructions
             var didMove = robot.MoveTo(Vector3.zero, "a" + arrayElement.value);
             if (!didMove) throw new InstructionException("Could not move to " + arrayElement.value);
         }
+
     }
 }

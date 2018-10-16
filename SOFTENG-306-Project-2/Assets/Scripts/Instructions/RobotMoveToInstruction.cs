@@ -4,10 +4,11 @@ using Ultimate_Isometric_Toolkit.Scripts.Core;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Instructions
 {
-    public class RobotMoveToInstruction : Instruction
+    public class RobotMoveToInstruction : Instruction, IPointerExitHandler, IPointerEnterHandler
     {
         private InstructionComponent component2;
         private InstructionExecutor instructionExecutor;
@@ -22,6 +23,8 @@ namespace Instructions
 
         private bool executeNext = false;
         private Vector3 targetPos;
+
+        private GameObject tile;
 
         public RobotMoveToInstruction()
         {
@@ -49,6 +52,11 @@ namespace Instructions
         {
             Editable = true;
             instructionRenderer = GetComponent<InstructionRenderer>();
+        }
+
+        private void OnDestroy()
+        {
+            if (tile != null) Destroy(tile);
         }
 
         private void onClicked(object obj)
@@ -124,6 +132,28 @@ namespace Instructions
             targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
             var didMove = robot.MoveTo(targetPos, "");
             if (!didMove) throw new InstructionException("Could not move to selected target");
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (tile == null) return;
+
+            Destroy(tile);
+            tile = null;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.Log("enter1");
+            if (selectedObj == null) return;
+
+            Debug.Log("enter");
+            var prefab = Resources.Load<GameObject>("Prefabs/Instructions/RobotGhost");
+
+            tile = Instantiate(prefab);
+            tile.GetComponent<IsoTransform>().Position = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
+            tile.transform.localScale = new Vector3(.8f, .8f, 1);
+
         }
     }
 }

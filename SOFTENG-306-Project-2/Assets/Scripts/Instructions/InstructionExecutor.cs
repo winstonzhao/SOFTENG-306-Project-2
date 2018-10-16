@@ -59,6 +59,8 @@ namespace Instructions
             playButton.EventHandler += Play;
             stopButton.EventHandler += Stop;
 
+            stopButton.GetComponent<Image>().color = new Color(.6f, .6f,.6f);
+
             if (LevelGenerator == null)
             {
                 LevelGenerator = FindObjectOfType<SoftwareLevelGenerator>();
@@ -95,6 +97,8 @@ namespace Instructions
                 foreach (var instruction in instructions) instruction.Renderer.ResetStyle();
                 return;
             }
+
+            stopButton.GetComponent<Image>().color = new Color(1, 1, 1);
 
             reset = false;
             playing = true;
@@ -155,7 +159,10 @@ namespace Instructions
 
         public void Stop()
         {
+            if (!playing) return;
+
             playButton.GetComponent<Image>().sprite = GetSpriteByName(PLAY_RESET);
+            stopButton.GetComponent<Image>().color = new Color(.6f, .6f,.6f);
             playing = false;
 
             Text.text = "Stop";

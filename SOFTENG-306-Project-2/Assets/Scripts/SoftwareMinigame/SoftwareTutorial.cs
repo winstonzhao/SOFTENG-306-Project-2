@@ -19,9 +19,8 @@ public class SoftwareTutorial : MonoBehaviour
     {
         if (InstructionCanvas == null)
         {
-            InstructionCanvas = GameObject.Find("Instruction Canvas").GetComponent<Canvas>();
+            InstructionCanvas = GameObject.Find("InstructionCanvas").GetComponent<Canvas>();
         }
-        slides = transform.GetChild(0);
         Open();
     }
 
@@ -32,6 +31,7 @@ public class SoftwareTutorial : MonoBehaviour
 
     public void Open()
     {
+        slides = transform.GetChild(0);
         slideIndex = 0;
         gameObject.SetActive(true);
         foreach (Transform child in slides)
