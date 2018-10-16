@@ -7,11 +7,11 @@ using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class SingleDropZoneReturn : MonoBehaviour, IDropZone
+public class Electrical_Level : MonoBehaviour, IDropZone
 {
     public Sprite newSprite;
     private Draggable currentItem;
-    public Draggable expectedGate;
+    public Draggable[] expectedGates;
     public Canvas endOfLevelCanvas;
 
     public int TimeLimit = 10;
@@ -25,6 +25,7 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
     private float currCountdownValueTenthSeconds;
     private float pausedValue;
     private bool paused = false;
+    private bool expected = false;
 
 
     public void Start()
@@ -93,7 +94,15 @@ public class SingleDropZoneReturn : MonoBehaviour, IDropZone
         currentItem = item;
         currentItem.HomePos = transform.position;
 
-        if (currentItem == expectedGate)
+        foreach (Draggable gate in expectedGates)
+        {
+            if (currentItem == gate)
+            {
+                expected = true;
+            }
+        }
+
+        if (expected)
         {
             GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
             GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
