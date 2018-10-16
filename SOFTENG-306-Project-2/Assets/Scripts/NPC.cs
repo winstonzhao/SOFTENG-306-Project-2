@@ -37,7 +37,7 @@ public abstract class NPC : MonoBehaviour
 
         float distance = Mathf.Sqrt(x * x + y * y);
 
-        if (Input.GetKeyDown("space") && distance < 1.5 && _canvas.Showing == false)
+        if (Input.GetKeyDown("space") && distance < 1.25 && _canvas.Showing == false)
         {
             ShowDialog();
         }
