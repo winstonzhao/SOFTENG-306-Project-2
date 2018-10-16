@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Game;
-using Game.Hiscores;
 using TMPro;
 using System;
 
@@ -13,6 +11,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private Draggable currentItem;
     public Draggable[] expectedGates;
     public Canvas endOfLevelCanvas;
+    public int levelNumber;
 
     public int TimeLimit = 10;
     public int TimeMaxScore = 30;
@@ -27,6 +26,8 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private bool paused = false;
     private bool expected = false;
     private bool circuitComplete = false;
+    private bool levelCompleteCalled = false;
+    private int tutorialLevelNumber = 4;
 
 
     public void Start()
@@ -55,7 +56,12 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
         if (expected && circuitComplete)
         {
-            completeLevel();
+            if (!levelCompleteCalled)
+            {
+                levelCompleteCalled = true;
+                completeLevel();
+            }
+            
         }
         // get paused value as the current countdown time
         pausedValue = currCountdownValueTenthSeconds;
@@ -118,6 +124,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
         if (expected && circuitComplete)
         {
+            levelCompleteCalled = true;
             completeLevel();
         }
 
@@ -143,6 +150,16 @@ public class Electrical_Level : MonoBehaviour, IDropZone
                 endOfLevelCanvas.enabled = true;
             }
         }));
+
+        Toolbox.Instance.Electrical_Scores.addScore(levelNumber, 100);
+    }
+
+    public void skipLevels()
+    {
+        for (int i = 1; i <= tutorialLevelNumber; i++)
+        {
+            Toolbox.Instance.Electrical_Scores.addScore(i, 100);
+        }
     }
 
     private IEnumerator endOfLevel(System.Action<bool> callback)
@@ -177,23 +194,23 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     }
 
 
-    private void AddHighScore(float timeLeft, int budget)
-    {
-        float timeLeftPortion = timeLeft / (float)(TimeLimit * 10);
-        Debug.Log(timeLeftPortion);
+    //private void AddHighScore(float timeLeft, int budget)
+    //{
+    //    float timeLeftPortion = timeLeft / (float)(TimeLimit * 10);
+    //    Debug.Log(timeLeftPortion);
 
-        float timeScore = timeLeftPortion * TimeMaxScore;
-        Debug.Log(timeScore);
+    //    float timeScore = timeLeftPortion * TimeMaxScore;
+    //    Debug.Log(timeScore);
 
-        Score score = new Score();
-        score.Minigame = Minigames.Civil;
-        score.Value = timeScore + CompletionBaseScore;
-        score.CreatedAt = DateTime.Now;
-        Debug.Log(DateTime.Now);
+    //    Score score = new Score();
+    //    score.Minigame = Minigames.Civil;
+    //    score.Value = timeScore + CompletionBaseScore;
+    //    score.CreatedAt = DateTime.Now;
+    //    Debug.Log(DateTime.Now);
 
-        Debug.Log(score);
-        Toolbox.Instance.Hiscores.Add(score);
-    }
+    //    Debug.Log(score);
+    //    Toolbox.Instance.Hiscores.Add(score);
+    //}
 
     private void SetTimeAndAmount(int timeInSeconds, int amount)
     {

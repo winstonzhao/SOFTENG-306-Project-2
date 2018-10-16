@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game;
 using Game.Hiscores;
 using UnityEngine;
 
 public class ElectricalEnd : MonoBehaviour
 {
+    private int gameScore;
 
 	public void Finish()
 	{
-		var score = new Score()
+        gameScore = Toolbox.Instance.Electrical_Scores.getScore();
+
+
+        var score = new Score()
 		{
 			Minigame = Minigames.Electrical,
-			Value = 0,
+			Value = gameScore,
 			CreatedAt = DateTime.Now
 		};
 		Toolbox.Instance.Hiscores.Add(score);

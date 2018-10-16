@@ -1,6 +1,7 @@
 using Game.Hiscores;
 using Multiplayer;
 using UserInterface;
+using ElectricalScripts.Electrical_Scores;
 
 public class Toolbox : Singleton<Toolbox>
 {
@@ -32,4 +33,11 @@ public class Toolbox : Singleton<Toolbox>
     {
         get { return Hiscores.Instance; }
     }
+
+    public Electrical_Scores Electrical_Scores
+    {
+        get { return Electrical_Scores.Instance;  }
+    }
+
+    
 }
