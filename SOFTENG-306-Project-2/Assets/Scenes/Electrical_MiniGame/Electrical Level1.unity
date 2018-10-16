@@ -13094,7 +13094,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: To  light  up  the  lightbulb,  the  circuit  has  to  be  connected.   drag  a  logic  gate  into  a  hole  like  this  in  the  circuit.
+  m_Text: To  light  up  the  lightbulb,  the  circuit  has  to  be  connected.   drag  a  logic  gate  into  a  dropzone  like  this  in  the  circuit.
 --- !u!222 &559945682
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21733,7 +21733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -151.22375, y: -6.555954}
+  m_AnchoredPosition: {x: -185, y: -6.555954}
   m_SizeDelta: {x: 1.3875, y: 1.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &925372118
@@ -25063,7 +25063,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86, y: 0}
+  m_AnchoredPosition: {x: 86, y: -21}
   m_SizeDelta: {x: 300, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1023027114
@@ -25098,9 +25098,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "each  battery  in  the  circuit  can  supply  light  or  not  light. \n\nthe
-    \ output  of  the  battery  cannot  be  controlled,  but  the  gate(s)  can  change
-    \ that  or  use  what   the  gates  provide."
+  m_Text: 'Each  battery  in  the  circuit  may  or  not   supply  light.
+
+
+    The  output  of  the  battery  can  be  changed  by  the  gates.'
 --- !u!222 &1023027115
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26791,7 +26792,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Given  batteries  that  may  or  not  may  supply  power  or  light,  the  aim  is  to  place  logic  gate(s)  to  connect  the
+  m_Text: 'Given  batteries  that  may  or  not  may  supply  light,  the  aim  is  to  place  logic  gates  to  connect  the
     circuit.
 
 
@@ -29620,8 +29621,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A  timer  at  the  bottom  of  the  screen  shows  the  time  remaining  for  extra  points
-    !
+  m_Text: A  timer  at  the  bottom  of  the  screen  shows  the  time  remaining  to  get  extra  points
 --- !u!222 &1217563950
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -44694,7 +44694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11, y: 26}
+  m_AnchoredPosition: {x: 11, y: 8}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1961223546
@@ -46527,7 +46527,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The  aim  of  the  game  is  to  get  the  circuit  connecting  to  the  lightbulb  to  be  on  or  light,  and  turn  the  lightbulb  on. '
+  m_Text: The  aim  of  the  game  is  to  get  the  circuit  connecting  correctly  to  the  lightbulb  to  turn  it  on.
 --- !u!222 &2059577228
 CanvasRenderer:
   m_ObjectHideFlags: 0
