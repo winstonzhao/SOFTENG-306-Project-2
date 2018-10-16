@@ -13,14 +13,12 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
     [RequireComponent(typeof(IsoTransform)), AddComponentMenu("UIT/Pathfinding/A* Agent")]
     public class CivilCarAgent : AstarAgent
     {
-        private Vector3 goal;
-        private Vector3 originalPosition;
-        private float currCountdownValue;
-        private bool timerNotStopped;
-
-        private bool notPassable = false;
-
-        private bool checkForBlockingCars = true;
+        private Vector3 goal;  // Location of the goal the car is trying to reach
+        private Vector3 originalPosition;  // Starting position of the car
+        private float currCountdownValue;  // For countdown timer
+        private bool timerNotStopped;  // If the timer is still running
+        private bool notPassable = false;  // If a car should act as a wall to other cars not allowing them past
+        private bool checkForBlockingCars = true;  // If the cars should be checking for wall cars in front of them
 
 
         public void Awake()
@@ -29,12 +27,18 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             base.Awake();
         }
 
+        
+        /**
+         * Stop the cars moving to the goals
+         */
         public void StopMoving()
         {
-            // stop the movement
             base.StopAllCoroutines();
         }
 
+        /**
+         * Start the cars moving to the goals
+         */
         public void StartMoving(Vector3 destination)
         {
             goal = destination;
@@ -43,12 +47,15 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
 
         private void FixedUpdate()
         {
-            if (!notPassable && base.noPathFound)
+            if (!notPassable && base.noPathFound) // If the car can't move to its goal, then make it block other cars
             {
                 notPassable = true;
             }
         }
 
+        /**
+         * Resume the cars moving to the goals
+         */
         public void ResumeMoving()
         {
             if (goal != null)
@@ -57,17 +64,22 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             }
         }
 
+        /**
+         * Pause the cars temporarily moving to the goals based off the wait time in milliseconds
+         */
         public void PauseMoving(float milliseconds)
         {
             if (goal != null)
             {
                 StopMoving();
-                StartCoroutine(StartCountdown(milliseconds));
+                StartCoroutine(StartCountdown(milliseconds)); // Wait x milliseconds
                 StartCoroutine(WaitCountdown());
             }
         }
 
-
+        /**
+         * Start the countdown timer
+         */
         IEnumerator StartCountdown(float timeLimit)
         {
             float countdownValue = timeLimit;
@@ -81,6 +93,9 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             }
         }
 
+        /**
+         * Wait for timer to expire
+         */
         IEnumerator WaitCountdown()
         {
             yield return new WaitUntil(() => currCountdownValue <= 0);
@@ -89,13 +104,16 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         }
 
 
+        /**
+         * Detect iso trigger collisions
+         */
         void OnIsoTriggerEnter(IsoCollider isoCollider)
         {
 
                 CivilCarAgent collidedCar = isoCollider.GetComponentInParent<CivilCarAgent>();
-                if (collidedCar != null)
+                if (collidedCar != null)  // If the car has collided with another car
                 {
-                    if (collidedCar.notPassable)
+                    if (collidedCar.notPassable)  // And the car is a wall
                     {
                         StopMoving();
                     }
@@ -103,6 +121,9 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
 
         }
 
+        /**
+         * Reset cars to their original positions and checking for paths
+         */
         public void ResetCar()
         {
             GetComponentInParent<IsoTransform>().Position = originalPosition;
