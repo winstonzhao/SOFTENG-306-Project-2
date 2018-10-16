@@ -5,16 +5,19 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
+/*
+ * Class to show the tutorial 
+ */
 public class Show_Tutorial : MonoBehaviour {
 
     public Button button;
-    public Canvas firstCanvas;
-    public Canvas secondCanvas;
+    public Canvas[] canvases;
 
     private TextMeshProUGUI timerArea;
 
     void Start()
     {
+        // set a listener on the exit button
         button = button.GetComponent<Button>();
         button.onClick.AddListener(TaskOnClick);
 
@@ -24,8 +27,11 @@ public class Show_Tutorial : MonoBehaviour {
 
     void TaskOnClick()
     {
-        firstCanvas.enabled = !firstCanvas.enabled;
-        secondCanvas.enabled = !secondCanvas.enabled;
+        // set each canvas as invisible
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.enabled = !canvas.enabled;
+        }
 
         // change the colour of timer text to black to activate timer if player exits tutorial
         if ((EventSystem.current.currentSelectedGameObject.name == "Exit_Button") ||
