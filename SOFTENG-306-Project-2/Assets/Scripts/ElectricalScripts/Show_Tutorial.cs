@@ -29,7 +29,7 @@ public class Show_Tutorial : MonoBehaviour {
         // set each canvas as visible
         foreach (Canvas canvas in canvases)
         {
-            canvas.enabled = !canvas.enabled;
+            canvas.enabled = true;
         }
 
         // change the colour of timer text to black to activate timer if player exits tutorial

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ElectricalTutorial : MonoBehaviour {
+public class Scene_Transition : MonoBehaviour {
 
     public Button start;
     public string path;

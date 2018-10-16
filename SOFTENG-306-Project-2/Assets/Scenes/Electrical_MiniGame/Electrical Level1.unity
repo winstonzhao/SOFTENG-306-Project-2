@@ -3960,7 +3960,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 172027185}
-  - component: {fileID: 172027187}
   - component: {fileID: 172027186}
   m_Layer: 0
   m_Name: Back_Button_Object
@@ -3990,26 +3989,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 172027184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 2060946389}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
---- !u!114 &172027187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 172027184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 2060946389}
-  firstCanvas: {fileID: 864950297}
-  secondCanvas: {fileID: 746943844}
+  start: {fileID: 2060946389}
+  canvases:
+  - {fileID: 746943844}
+  - {fileID: 864950297}
+  - {fileID: 188272684}
+  - {fileID: 692348592}
 --- !u!4 &175024494 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -6273,12 +6261,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 269938674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 56810907}
-  firstCanvas: {fileID: 64623466}
-  secondCanvas: {fileID: 601026171}
+  start: {fileID: 56810907}
+  canvases:
+  - {fileID: 601026171}
+  - {fileID: 64623466}
 --- !u!4 &270489753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -9288,12 +9277,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 403547559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 137229062}
-  firstCanvas: {fileID: 637775089}
-  secondCanvas: {fileID: 601026171}
+  start: {fileID: 137229062}
+  canvases:
+  - {fileID: 637775089}
+  - {fileID: 601026171}
 --- !u!4 &404208024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -9878,12 +9868,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 436288451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1109016510}
-  firstCanvas: {fileID: 601026171}
-  secondCanvas: {fileID: 637775089}
+  start: {fileID: 1109016510}
+  canvases:
+  - {fileID: 601026171}
+  - {fileID: 637775089}
 --- !u!1 &437500414
 GameObject:
   m_ObjectHideFlags: 0
@@ -10579,12 +10570,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 466687651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 468928080}
-  firstCanvas: {fileID: 2042740937}
-  secondCanvas: {fileID: 746943844}
+  start: {fileID: 468928080}
+  canvases:
+  - {fileID: 2042740937}
+  - {fileID: 746943844}
 --- !u!4 &467255969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -11762,12 +11754,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 508504307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: db4dcedeaba51884fbe913482fa79d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1641190296}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
+  exitButton: {fileID: 1641190296}
+  canvases:
+  - {fileID: 692348592}
+  - {fileID: 188272684}
 --- !u!4 &508758039 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -18971,7 +18964,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 818830303}
-  - component: {fileID: 818830305}
   - component: {fileID: 818830304}
   m_Layer: 0
   m_Name: Rules_Tutorial_Object
@@ -19001,26 +18993,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 818830302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 126179281}
-  firstCanvas: {fileID: 864950297}
-  secondCanvas: {fileID: 746943844}
---- !u!114 &818830305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 818830302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 126179281}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
+  start: {fileID: 126179281}
+  canvases:
+  - {fileID: 692348592}
+  - {fileID: 188272684}
+  - {fileID: 864950297}
+  - {fileID: 746943844}
 --- !u!1 &824930838
 GameObject:
   m_ObjectHideFlags: 0
@@ -20796,12 +20777,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 909241192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1558221947}
-  firstCanvas: {fileID: 312020715}
-  secondCanvas: {fileID: 637775089}
+  start: {fileID: 1558221947}
+  canvases:
+  - {fileID: 637775089}
+  - {fileID: 312020715}
 --- !u!4 &910579410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -21329,12 +21311,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 927959748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 84501661}
-  firstCanvas: {fileID: 601026171}
-  secondCanvas: {fileID: 64623466}
+  start: {fileID: 84501661}
+  canvases:
+  - {fileID: 601026171}
+  - {fileID: 64623466}
 --- !u!1001 &928533629
 Prefab:
   m_ObjectHideFlags: 0
@@ -22740,7 +22723,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 971557949}
-  - component: {fileID: 971557951}
   - component: {fileID: 971557950}
   m_Layer: 0
   m_Name: Back_Button_Object
@@ -22770,26 +22752,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 971557948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 166375005}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
---- !u!114 &971557951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 971557948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 166375005}
-  firstCanvas: {fileID: 825276398}
-  secondCanvas: {fileID: 1583818703}
+  start: {fileID: 166375005}
+  canvases:
+  - {fileID: 1583818703}
+  - {fileID: 825276398}
+  - {fileID: 692348592}
+  - {fileID: 188272684}
 --- !u!4 &974069022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -24861,12 +24832,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1051954246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 525086225}
-  firstCanvas: {fileID: 1843988032}
-  secondCanvas: {fileID: 2135979806}
+  start: {fileID: 525086225}
+  canvases:
+  - {fileID: 1843988032}
+  - {fileID: 2135979806}
 --- !u!1 &1053060452
 GameObject:
   m_ObjectHideFlags: 0
@@ -24904,12 +24876,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1053060452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1894296762}
-  firstCanvas: {fileID: 2135979806}
-  secondCanvas: {fileID: 192711529}
+  start: {fileID: 1894296762}
+  canvases:
+  - {fileID: 2135979806}
+  - {fileID: 192711529}
 --- !u!1001 &1054015547
 Prefab:
   m_ObjectHideFlags: 0
@@ -28612,12 +28585,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211137688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 463633837}
-  firstCanvas: {fileID: 64623466}
-  secondCanvas: {fileID: 825276398}
+  start: {fileID: 463633837}
+  canvases:
+  - {fileID: 64623466}
+  - {fileID: 825276398}
 --- !u!4 &1215312774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -29071,13 +29045,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4dcedeaba51884fbe913482fa79d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exit: {fileID: 98446193}
-  backgroundCanvas: {fileID: 864950297}
-  screen1: {fileID: 746943844}
-  screen2: {fileID: 2042740937}
-  screen3: {fileID: 192711529}
-  screen4: {fileID: 2135979806}
-  screen5: {fileID: 1843988032}
+  exitButton: {fileID: 98446193}
+  canvases:
+  - {fileID: 864950297}
+  - {fileID: 746943844}
+  - {fileID: 2042740937}
+  - {fileID: 192711529}
+  - {fileID: 2135979806}
+  - {fileID: 1843988032}
 --- !u!4 &1246035116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -30105,8 +30080,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1017236155}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
+  canvases:
+  - {fileID: 692348592}
+  - {fileID: 188272684}
 --- !u!1001 &1275461853
 Prefab:
   m_ObjectHideFlags: 0
@@ -30903,12 +30879,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1296858088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: db4dcedeaba51884fbe913482fa79d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 2104731115}
-  firstCanvas: {fileID: 1843988032}
-  secondCanvas: {fileID: 864950297}
+  exitButton: {fileID: 2104731115}
+  canvases:
+  - {fileID: 1843988032}
+  - {fileID: 864950297}
 --- !u!1001 &1298115645
 Prefab:
   m_ObjectHideFlags: 0
@@ -31461,7 +31438,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1328941210
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1328941205}
@@ -32622,12 +32599,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422255111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 79167303}
-  firstCanvas: {fileID: 746943844}
-  secondCanvas: {fileID: 2042740937}
+  start: {fileID: 79167303}
+  canvases:
+  - {fileID: 746943844}
+  - {fileID: 2042740937}
 --- !u!4 &1422724814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4514894376783136, guid: 547661b1f2aaf4372b6a648d44e41635,
@@ -33707,7 +33685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 1159304956}
-  helpCanvas: {fileID: 540794289}
+  canvases:
+  - {fileID: 540794289}
 --- !u!114 &1479057477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34189,12 +34168,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494183533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 561001425}
-  firstCanvas: {fileID: 192711529}
-  secondCanvas: {fileID: 2042740937}
+  start: {fileID: 561001425}
+  canvases:
+  - {fileID: 192711529}
+  - {fileID: 2042740937}
 --- !u!1 &1498007151
 GameObject:
   m_ObjectHideFlags: 0
@@ -34232,12 +34212,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1498007151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1020621181}
-  firstCanvas: {fileID: 2135979806}
-  secondCanvas: {fileID: 1843988032}
+  start: {fileID: 1020621181}
+  canvases:
+  - {fileID: 2135979806}
+  - {fileID: 1843988032}
 --- !u!1 &1504506112
 GameObject:
   m_ObjectHideFlags: 0
@@ -36808,12 +36789,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1631247145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1493101209}
-  firstCanvas: {fileID: 192711529}
-  secondCanvas: {fileID: 2135979806}
+  start: {fileID: 1493101209}
+  canvases:
+  - {fileID: 192711529}
+  - {fileID: 2135979806}
 --- !u!1 &1632753324
 GameObject:
   m_ObjectHideFlags: 0
@@ -37882,8 +37864,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 749389248}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
+  canvases:
+  - {fileID: 692348592}
+  - {fileID: 188272684}
 --- !u!114 &1684194337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38469,7 +38452,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1697961534
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1697961528}
@@ -39963,13 +39946,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4dcedeaba51884fbe913482fa79d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exit: {fileID: 817269528}
-  backgroundCanvas: {fileID: 825276398}
-  screen1: {fileID: 1583818703}
-  screen2: {fileID: 312020715}
-  screen3: {fileID: 637775089}
-  screen4: {fileID: 601026171}
-  screen5: {fileID: 64623466}
+  exitButton: {fileID: 817269528}
+  canvases:
+  - {fileID: 825276398}
+  - {fileID: 1583818703}
+  - {fileID: 312020715}
+  - {fileID: 637775089}
+  - {fileID: 601026171}
+  - {fileID: 64623466}
 --- !u!4 &1790018455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,
@@ -40860,12 +40844,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1836038569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 824930839}
-  firstCanvas: {fileID: 312020715}
-  secondCanvas: {fileID: 1583818703}
+  start: {fileID: 824930839}
+  canvases:
+  - {fileID: 312020715}
+  - {fileID: 1583818703}
 --- !u!1001 &1838427194
 Prefab:
   m_ObjectHideFlags: 0
@@ -42380,7 +42365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 1016463967}
-  path: Engineering Leech
+  path: Electrical End
 --- !u!114 &1908617431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43411,12 +43396,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1973886663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 46308047}
-  firstCanvas: {fileID: 1583818703}
-  secondCanvas: {fileID: 312020715}
+  start: {fileID: 46308047}
+  canvases:
+  - {fileID: 1583818703}
+  - {fileID: 312020715}
 --- !u!1 &1975465830
 GameObject:
   m_ObjectHideFlags: 0
@@ -45967,12 +45953,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2092368850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 995525875}
-  firstCanvas: {fileID: 312020715}
-  secondCanvas: {fileID: 637775089}
+  start: {fileID: 995525875}
+  canvases:
+  - {fileID: 312020715}
+  - {fileID: 637775089}
 --- !u!1001 &2093959402
 Prefab:
   m_ObjectHideFlags: 0
@@ -46122,12 +46109,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2098672418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1851803182}
-  firstCanvas: {fileID: 2042740937}
-  secondCanvas: {fileID: 192711529}
+  start: {fileID: 1851803182}
+  canvases:
+  - {fileID: 2042740937}
+  - {fileID: 192711529}
 --- !u!1001 &2098679024
 Prefab:
   m_ObjectHideFlags: 0
@@ -46192,7 +46180,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2100305975}
-  - component: {fileID: 2100305977}
   - component: {fileID: 2100305976}
   m_Layer: 0
   m_Name: Logic_Tutorial_Object
@@ -46222,26 +46209,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2100305974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ce75d810171b84b9665fb0fd3dc9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1150191500}
-  firstCanvas: {fileID: 825276398}
-  secondCanvas: {fileID: 1583818703}
---- !u!114 &2100305977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2100305974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0786ea138013a047b0c1eb75a286e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 1150191500}
-  firstCanvas: {fileID: 692348592}
-  secondCanvas: {fileID: 188272684}
+  start: {fileID: 1150191500}
+  canvases:
+  - {fileID: 188272684}
+  - {fileID: 692348592}
+  - {fileID: 825276398}
+  - {fileID: 1583818703}
 --- !u!4 &2101095058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346914062934962, guid: 5ab801c02e0f64625983143c6cfaf0bf,

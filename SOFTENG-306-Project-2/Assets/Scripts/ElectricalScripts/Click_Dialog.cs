@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * 
+ */ 
 public class Click_Dialog : MonoBehaviour {
 
     public Button start;
-    public Canvas helpCanvas;
+    public Canvas[] canvases;
 
     void Start()
     {
@@ -16,6 +19,9 @@ public class Click_Dialog : MonoBehaviour {
 
     void TaskOnClick()
     {
-        helpCanvas.enabled = true;
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.enabled = !canvas.enabled;
+        }
     }
 }
