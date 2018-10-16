@@ -9,24 +9,16 @@ namespace Quests
     {
         private const string JsonFile = "quest-log.dat";
 
-        private QuestLog questLog;
-        public QuestLog QuestLog
-        {
-            get
-            {
-                if (questLog == null)
-                {
-                    questLog = Load();
-                }
-
-                return questLog;
-            }
-        }
-
         private readonly List<Quest> quests = new List<Quest>();
         public ReadOnlyCollection<Quest> Quests
         {
             get { return quests.AsReadOnly(); }
+        }
+
+        public Dictionary<string, bool> completed = new Dictionary<string, bool>();
+        public Dictionary<string, bool> Completed
+        {
+            get { return completed; }
         }
 
         public Quest Current
@@ -35,7 +27,7 @@ namespace Quests
             {
                 foreach (var quest in Quests)
                 {
-                    if (!QuestLog.IsFinished(quest))
+                    if (!IsFinished(quest))
                     {
                         return quest;
                     }
@@ -43,6 +35,11 @@ namespace Quests
 
                 return null;
             }
+        }
+
+        public bool HasWorkshop
+        {
+            get { return Current.Id.EndsWith("-workshop"); }
         }
 
         private readonly DebounceAction DebounceSave;
@@ -102,24 +99,36 @@ namespace Quests
             });
         }
 
+        public bool IsFinished(Quest quest)
+        {
+            return IsFinished(quest.Id);
+        }
+
+        public bool IsFinished(string questId)
+        {
+            return Completed.ContainsKey(questId) && Completed[questId];
+        }
+
+        public void MarkFinished(Quest quest)
+        {
+            MarkFinished(quest.Id);
+        }
+
+        public void MarkFinished(string questId)
+        {
+            Completed[questId] = true;
+
+            DebounceSave.Run();
+        }
+
         private void Awake()
         {
-            // Load the quest log upon wake
-            var x = QuestLog;
+            Load();
         }
 
-        private void Update()
+        private void Load()
         {
-            if (QuestLog.Dirty)
-            {
-                QuestLog.Dirty = false;
-                DebounceSave.Run();
-            }
-        }
-
-        private QuestLog Load()
-        {
-            return Toolbox.Instance.JsonFiles.Read<QuestLog>(JsonFile) ?? new QuestLog();
+            completed = Toolbox.Instance.JsonFiles.ReadDictionary<string, bool>(JsonFile) ?? completed;
         }
 
         /// <summary>
@@ -127,7 +136,7 @@ namespace Quests
         /// </summary>
         private void Save()
         {
-            Toolbox.Instance.JsonFiles.Write(JsonFile, questLog);
+            Toolbox.Instance.JsonFiles.WriteDictionary(JsonFile, Completed);
         }
     }
 }

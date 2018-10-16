@@ -28,6 +28,19 @@ namespace Utils
             return wrapper != null ? wrapper.Value : null;
         }
 
+        public void WriteDictionary<K, V>(string path, Dictionary<K, V> data)
+        {
+            var serializable = new SerializableDictionary<K, V>(data);
+            Write(path, serializable);
+        }
+
+        public Dictionary<K, V> ReadDictionary<K, V>(string path)
+        {
+            var serialized = Read(path, input => input);
+            var wrapper = JsonUtility.FromJson<SerializableDictionary<K, V>>(serialized);
+            return wrapper != null ? wrapper.Value : null;
+        }
+
         public void Write<T>(string path, T data, Converter<T, string> serializer = null)
         {
             var file = Path.Combine(PersistentDataPath, path);
