@@ -18,52 +18,99 @@ using UnityEngine.UI;
 
 public class CivilLevelController : MonoBehaviour {
 
+    /**
+     * Cars and goals
+     */
     public List<CivilCarAgent> CarAgents = new List<CivilCarAgent>();
     public List<GoalAgent> Goals = new List<GoalAgent>();
-    public Canvas Dialog;
-    public Canvas Tutorial;
-    public Canvas AlienInfo;
     
-    public int TimeLimit = 10;
-    public int Budget = 1000;
-    public int BudgetMaxScore = 50;
-    public int TimeMaxScore = 30;
-    public int CompletionBaseScore = 20;
-    public float IdealTimeLeft;
-    public float IdealBudgetLeft;
+    /**
+     * Canvases
+     */ 
+    public Canvas Dialog;  // contains dialogs showing win or lose messages
+    public Canvas Tutorial;  // contains tutorial slides
+    public Canvas AlienInfo;  // the pop up info beside the alien (the button for opening tutorial)
     
-    public int ThisLevel;
-    public string CheatLevelName;
-    public string UndoCheatLevelName;
-    
-    public bool ShowTutorial = false;
-    public bool ShowAlienInfo = false;
-    
+    /**
+     * Game and scoring values
+     */
+    public int TimeLimit = 10;  // max time allowed for cars to reach their goals
+    public int Budget = 1000;  // max budget allowed for building roads
+    public float IdealTimeLeft;  // the estimated time left for the ideal solution
+    public float IdealBudgetLeft;  // the estimated budget left for the ideal solution
+    public int BudgetMaxScore = 50;  // the scoring weight (out of 100) for the budget
+    public int TimeMaxScore = 30;  // the scoring weight (out of 100) for the time
+    public int CompletionBaseScore = 20; // the score to be given to the player for completing the level
 
+    /**
+     * Level identity and interactions
+     */
+    public int ThisLevel;  // this level number
+    public string CheatLevelName;  // the name for the cheating version of this level (fill if this level is not the cheating level)
+    public string UndoCheatLevelName;  // the name for the raw version of this level (fill if this level is the cheating level)
+    
+    /**
+     * Tutorial and pop up info showing settings
+     */
+    public bool ShowTutorial = false;  // set to true to make the tutorial showing automatically
+    public bool ShowAlienInfo = false;  // set to true to make the alien pop up info box showing automatically
+    
+    /**
+     * Player info
+     */
     private string PlayerName;
-    private TextMesh timerArea;
-    private bool timerNotStopped = true;
-    private TextMesh budgetArea;
-    private float currCountdownValueTenthSeconds;
-    private int maxBudget;
-    private int tutorialSlideNumber;
+    
+    /**
+     * Labels
+     */
+    private TextMesh timerArea;  // timer
+    private TextMesh budgetArea;  // budget
+    TextMeshProUGUI resultInfoArea;  // winning dialog main body
+    TextMeshProUGUI nameArea;  // winning dialog player name label
+    TextMeshProUGUI failInfoArea;  // losing dialog main body
+
+    /**
+     * For controlling tutorial slides
+     */
+    private int tutorialSlideNumber;  // current tutorial slide
     private const int TUTORIAL_SLIDE_COUNT = 9;
     
-    // game control buttons
+    /**
+     * Timer
+     */
+    private bool timerNotStopped = true;
+    private float currCountdownValueTenthSeconds;
+    
+    /**
+     * Tile factories
+     */
+    private GameObject[] tileFactories;
+    
+    /**
+     * Game control buttons
+     */
     private List<GameObject> gameControlButtons = new List<GameObject>();
-    private GameObject runButton;
-    private GameObject restartButton;
-    private GameObject exitButton;
-    private GameObject cheatButton;
 
     private void Awake()
     {
+        // get the player name
         PlayerName = CivilGameManager.instance.playerName;
-        maxBudget = Budget;
+        
+        // get the winning dialog message text meshes
+        resultInfoArea = GameObject.Find("ResultInfo").GetComponent<TextMeshProUGUI>();
+        nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
+        failInfoArea = GameObject.Find("FailInfo").GetComponent<TextMeshProUGUI>();
+        
+        // get the tile factories
+        tileFactories = GameObject.FindGameObjectsWithTag("TileFactory");
+        
+        // initialise the labels
+        // initialise time display
         timerArea = GameObject.Find("Timer").GetComponent<TextMesh>();
         string timerLabel = String.Format("{0:00}:00", (TimeLimit));
         timerArea.text = timerLabel;
 
+        // initialise budget display
         budgetArea = GameObject.Find("Budget").GetComponent<TextMesh>();
         budgetArea.text = "$" + Budget;
         
@@ -79,6 +126,9 @@ public class CivilLevelController : MonoBehaviour {
         }
     }
 
+    /**
+     * Call all cars to run to their goals, and start timer
+     */
     public void run()
     {
         foreach (GoalAgent goal in Goals)
@@ -91,11 +141,17 @@ public class CivilLevelController : MonoBehaviour {
                 }
             }
         }
+        // start the timer
         StartCoroutine(StartCountdown(TimeLimit));
+        // create a thread for detecting cars stopped or timer reached zero
         StartCoroutine(WaitCarsStop());
-    } // Level
+    }
 
-    IEnumerator WaitCarsStop() // level
+    /**
+     * Detect cars stopped or timer reached zero. In either case, test has all cars reached Goal. If all reached,
+     * display the winning dialog and send the high score, otherwise show the losing dialog. Then stop timer.
+     */
+    IEnumerator WaitCarsStop()
     {
         yield return new WaitUntil(() => currCountdownValueTenthSeconds <= 0 || !AreCarsMoving());
 
@@ -112,37 +168,56 @@ public class CivilLevelController : MonoBehaviour {
         }
         else // Lose
         {
+            // set the message to be displayed
             SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination within the time limit.");
             CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", false);
             CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", true);
+            
             // if there are cars not stopped yet, make them stop
             foreach (var carAgent in CarAgents)
             {
                 carAgent.StopMoving();
             }
         }
+        // stop the timer
         timerNotStopped = false;
+        // make the dialog canvas visible
         Dialog.enabled = !Dialog.enabled;
         // disable game control buttons
         ToggleGameControlButtons(false);
     }
 
+    /**
+     * Calculate the high score and send to CivilGameManager.
+     * Score = LT/ITL * TS + BT/IBL * BS + CS
+     * Where LT = time left
+     * ITL = ideal time left
+     * TS = time max score (portion out of 100)
+     * BL = budget left
+     * IBL = ideal budget left
+     * BS = budget max score (portion out of 100)
+     * CS = completion score
+     */
     private int AddHighScore(float timeLeft, int budget) // Level
     {
-        float timeLeftPortion = timeLeft / IdealTimeLeft;
-        float budgetLeftPortion = budget / (float) IdealBudgetLeft;
+        float timeLeftPortion = timeLeft / IdealTimeLeft;  // compare actual time left with the ideal value
+        float budgetLeftPortion = budget / (float) IdealBudgetLeft;  // compare actual budget left with the ideal value
 
-        float timeScore = timeLeftPortion * TimeMaxScore;
-        float budgetScore = budgetLeftPortion * BudgetMaxScore;
+        float timeScore = timeLeftPortion * TimeMaxScore;  // scale the time score
+        float budgetScore = budgetLeftPortion * BudgetMaxScore; // scale the budget score
 
         int highScore =(int) Math.Round(timeScore + budgetScore + CompletionBaseScore);
-        highScore = highScore > 100 ? 100 : highScore;
+        highScore = highScore > 100 ? 100 : highScore;  // don't allow the score to be over 100
         CivilGameManager.instance.AddScore(highScore, ThisLevel);
 
         return highScore;
     }
 
-    private bool AreCarsMoving() // Level
+    /**
+     * Test is there any car still moving.
+     * Return true if any car is still running.
+     */
+    private bool AreCarsMoving()
     {
      
         foreach (CivilCarAgent agent in CarAgents)
@@ -156,6 +231,9 @@ public class CivilLevelController : MonoBehaviour {
         return false;
     }
 
+    /**
+     * Test have all cars reached their corresponding goals.
+     */
     private bool AllCarsReachedGoal()
     {
         foreach (CivilCarAgent agent in CarAgents)
@@ -167,12 +245,13 @@ public class CivilLevelController : MonoBehaviour {
         }
 
         return true;
-    } // Level
+    }
 
+    /**
+     * Set the time, budget left, and score in the winning dialog.
+     */
     private void SetTimeAmountAndScore(int timeInSeconds, int amount, int score)
     {
-        TextMeshProUGUI resultInfoArea = GameObject.Find("ResultInfo").GetComponent<TextMeshProUGUI>();
-
         string text = resultInfoArea.text;
 
         text = text.Replace("<time>", timeInSeconds.ToString() + (timeInSeconds == 1 ? " second" : " seconds"));
@@ -180,47 +259,70 @@ public class CivilLevelController : MonoBehaviour {
         text = text.Replace("<score>", score.ToString());
 
         resultInfoArea.SetText(text);
-    }   // Level
+    }
 
+    /**
+     * Set the player name label on the winning dialog.
+     */
     private void SetPlayerName(string name)
     {
-        TextMeshProUGUI nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         string text = nameArea.text;
         text = text.Replace("<name>", name);
         nameArea.SetText(text);
-    }   // Level, TODO rename
+    }
 
-    private void SetFailInfo(string failInfo) // Level
+    /**
+     * Set the message body on the losing dialog
+     */
+    private void SetFailInfo(string failInfo)
     {
-        TextMeshProUGUI failInfoArea = GameObject.Find("FailInfo").GetComponent<TextMeshProUGUI>();
         failInfoArea.SetText(failInfo);
     }
 
+    /**
+     * Run the timer and update the timer label every 0.1s. The timeLimit which is the initial time for the
+     * timer should be in seconds.
+     * 
+     */
     IEnumerator StartCountdown(int timeLimit)
     {
+        // initialise counter
         float countdownValue = (TimeLimit - 1) * 10;
         currCountdownValueTenthSeconds = countdownValue;
+        // decrement counter if counter has not reached 0 and the timer has not been stopped
         while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
         {
+            // update timer label
             string timerLabel = String.Format("{0:00}:{1:00}", Math.Floor((currCountdownValueTenthSeconds) / 10), (currCountdownValueTenthSeconds % 10) * 10);
             timerArea.text = timerLabel;
+            
+            // wait for 0.1s and decrement counter
             yield return new WaitForSeconds(0.1f);
             currCountdownValueTenthSeconds--;
         }
-    }   // Level
+    }
 
+    /**
+     * Update the budget. New budget = old budget + item price. Item price can be either positive or negative.
+     */
     public void UpdateBudget(int itemPrice)
     {
         Budget += itemPrice;
         budgetArea.text = "$" + Budget;
+        
+        // update budget availability for the building blocks
         UpdateBudgetAvailability();
-    }   // Level
+    } 
 
+    /**
+     * Check budget availabilities for the building blocks. Disable any factory that has item price over the budget
+     * left.
+     */
     private void UpdateBudgetAvailability() // Level
     {
-        GameObject[] tileFactories = GameObject.FindGameObjectsWithTag("TileFactory");
         foreach (GameObject tileFactory in tileFactories)
         {
+            // check is budget enough for the factory to build the tile
             IsoDropZone isoDropZone = tileFactory.GetComponent<IsoDropZone>();
             if (!IsBudgetAvailable(isoDropZone.ItemPrice))
             {
@@ -233,16 +335,25 @@ public class CivilLevelController : MonoBehaviour {
         }
     }
 
-    public bool IsBudgetAvailable(int itemPrice)  // Level
+    /**
+     * Check is the budget enough for the given item price
+     */
+    private bool IsBudgetAvailable(int itemPrice)
     {
         return itemPrice <= Budget;
     }
 
+    /**
+     * Reload the current scene.
+     */
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }   // Level
+    }
 
+    /**
+     * Reset the cars to their original positions and reinitialise the timer.
+     */
     public void ResetTimerAndCars()
     {
         // reset cars
@@ -257,21 +368,33 @@ public class CivilLevelController : MonoBehaviour {
         timerArea.text = timerLabel;
     }
     
+    /**
+     * Load the Civil Level scene for the given level number.
+     */
     public void GoToLevel(int levelNumber)
     {
         SceneManager.LoadScene("Civil Level " + levelNumber);
     }
 
+    /**
+     * Load the cheating scene registered to this level controller
+     */
     public void Cheat()
     {
         SceneManager.LoadScene(CheatLevelName);
-    }   // Level
+    }
 
+    /**
+     * Load the raw scene register to this level controller
+     */
     public void UndoCheat()
     {
         SceneManager.LoadScene(UndoCheatLevelName);
-    } // Level
+    }
 
+    /**
+     * Close the winning or losing dialogs and re-enable the control buttons
+     */
     public void CloseDialog()
     {
         // set the canvas to be disabled, but make the panels inside it to be both available
@@ -283,11 +406,18 @@ public class CivilLevelController : MonoBehaviour {
     }   // Level, TODO rename
 
 
-    public void StartTutorial() // Super
+    /**
+     * Make tutorial canvas visible and show the first slide of the tutorial.
+     */
+    public void StartTutorial()
     {
         // disable game control buttons
         ToggleGameControlButtons(false);
+        
+        // enable tutorial canvas
         Tutorial.gameObject.SetActive(true);
+        
+        // show slide one
         tutorialSlideNumber = 1;
         for (int i = 1; i < TUTORIAL_SLIDE_COUNT + 1; i++)
         {
@@ -296,7 +426,9 @@ public class CivilLevelController : MonoBehaviour {
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
     }
 
-
+    /**
+     * Close tutorial and re-enable control buttons
+     */
     public void StopTutorial()
     {
         Tutorial.gameObject.SetActive(false);
@@ -306,13 +438,19 @@ public class CivilLevelController : MonoBehaviour {
         }
         // enable game control buttons
         ToggleGameControlButtons(true);
-    }   // Super
+    }
 
+    /**
+     * Display the alien pop up info.
+     */
     public void DisplayAlienInfo()
     {
         AlienInfo.enabled = true;
     }
 
+    /**
+     * Close the alien pop up info.
+     */
     public void CloseAlienInfo()
     {
         // set canvas disabled to trigger OnMouseExit method on the close button's cursor styler instead of set the gameobject disabled
@@ -321,21 +459,30 @@ public class CivilLevelController : MonoBehaviour {
         ShowAlienInfo = false;
     }
 
+    /**
+     * Go to next tutorial slide
+     */
     public void NextTutorialSlide()
     {
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
         tutorialSlideNumber++;
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
 
-    } // Super
+    }
 
+    /**
+     * Go to previous tutorial slide
+     */
     public void PreviousTutorialSlide()
     {
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, false);
         tutorialSlideNumber--;
         CivilGameManager.ToggleDialogDisplay(Tutorial, "Slide" + tutorialSlideNumber, true);
-    }   // Super
+    }
 
+    /**
+     * Enable or disable game control buttons.
+     */
     public void ToggleGameControlButtons(bool enable)
     {
         foreach (var button in gameControlButtons)
@@ -348,6 +495,10 @@ public class CivilLevelController : MonoBehaviour {
         }
     }
 
+    /**
+     * Call the CiVilGameManager to calculate and add the high score for this game play to the main game.
+     * And load the Engineering Leech scene.
+     */
     public void ExitCivilMiniGame()
     {
         CivilGameManager.instance.AddHighScore();
