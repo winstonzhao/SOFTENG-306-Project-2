@@ -26,14 +26,14 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         private Animator animator;
 
         [HideInInspector]
-        public volatile bool hasReachedGoal = false;
+        public volatile bool hasReachedGoal = false; // Cars have finished moving because they reached the goal
 
         [HideInInspector]
-        public volatile bool noPathFound = false;
+        public volatile bool noPathFound = false;  // Cars have "finished" moving because there is no path for them to travel
 
         public void Awake()
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();  // For animating moving agents
             hasReachedGoal = false;
             noPathFound = false;
         }

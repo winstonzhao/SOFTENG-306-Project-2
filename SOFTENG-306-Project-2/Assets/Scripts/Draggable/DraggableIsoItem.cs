@@ -8,41 +8,50 @@ using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine.EventSystems;
 
+/**
+ * Draggable iso blocks used in Civil Mini-game
+ */
 public class DraggableIsoItem : Draggable
 {
+    /**
+     * Direction blocks can be oriented in
+     */
     public enum Direction
     {
         NE, SE, SW, NW
     }
 
-    public string name;
-    public Direction direction;
+    public string name; // Name of the block
+    public Direction direction; // Direction the block is facing
+    /**
+     * Direction Sprites
+     */
     public Sprite NESprite;
     public Sprite SESprite;
     public Sprite SWSprite;
     public Sprite NWSprite;
-    public IsoDropZone dropZone;
-    public int Price;
-    public bool Rotatable = true;
-
-
-    private bool mouseInside = false;
-    private bool dragging = false;
-    private bool moving = false;
-    private IsoCollider currentHitCollider;
-
-    private static bool holdingItem = false;
-
-    private List<IsoDropZone> newDropZones = new List<IsoDropZone>();
-
-    private Vector3 target;
-
-    Vector3 prevMousePos;
     
-    // fields for detecting double clicking
-    private static float lastClickTime = 0;
-    private static float catchTime = 0.3f;
+    public IsoDropZone dropZone;  // Drop zone linked to initial location, for block factories
+    public int Price;  // Price of the block for budgeting
+    public bool Rotatable = true;  // If the block can be rotated
 
+    private bool mouseInside = false; // Mouse inside the block area
+    private bool dragging = false; // If the block is being dragged
+    private bool moving = false; // If the block is moving
+    private static bool holdingItem = false;  // For only dragging one block at a time
+    private IsoCollider currentHitCollider; // Block it is currently hitting
+    private List<IsoDropZone> newDropZones = new List<IsoDropZone>(); // Drop zones the block can be placed in
+
+    private Vector3 target; // Where the block is being moved to
+    Vector3 prevMousePos;  // Where the mouse was last
+    
+    // Fields for detecting double clicking
+    private static float lastClickTime = 0;
+    private static float catchTime = 0.3f; // If another click is registered within this time, it is a double click
+
+    /**
+     * Position of the block to return to
+     */
     public Vector3 homePos;
     public override Vector3 HomePos
     {
@@ -69,11 +78,17 @@ public class DraggableIsoItem : Draggable
         homePos = GetComponentInParent<Transform>().position;
     }
 
+    /**
+     * Set the drop zone this block belongs too, executor
+     */
     public void SetDropZone(IsoDropZone list)
     {
         this.dropZone = list;
     }
 
+    /**
+     * Set the drop zone this block belongs too, handler
+     */
     public override void SetDropZone(IDropZone list)
     {
         var isoDropZone = list as IsoDropZone;
@@ -112,39 +127,41 @@ public class DraggableIsoItem : Draggable
             }
             else
             {
-                if (currentHitCollider != null)
+                if (currentHitCollider != null) // The block is leaving the drop zone
                 {
                     OnIsoTriggerExitDZ(currentHitCollider);
                     currentHitCollider = null;
                 }
             }
             
+            // Move the block visually
             Vector3 localMousePos = Input.mousePosition;
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
-
             Vector3 diff = mousePosWorld - prevMousePos;
             GetComponent<IsoTransform>().transform.Translate(diff);
-
             if (dropZone != null)
             {
                 dropZone.OnItemDrag(this);
             }
-
             prevMousePos = mousePosWorld;
         }
 
 
-        if (moving)
+        if (moving)  // The block is moving to its new drop zone
         {
-            transform.position = Vector3.Lerp(transform.position, target, 0.1f);
+            transform.position = Vector3.Lerp(transform.position, target, 0.1f); // Transform the position with an animation
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
+                // Actually move the block there
                 GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
                 moving = false;
             }
         }
     }
 
+    /**
+     * Mouse on top of the block
+     */
     void OnMouseEnter()
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
@@ -153,6 +170,9 @@ public class DraggableIsoItem : Draggable
         }
     }
 
+    /**
+     * Mouse outside of the block
+     */
     void OnMouseLeave()
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
@@ -161,21 +181,25 @@ public class DraggableIsoItem : Draggable
         }
     }
 
+    /**
+     * Mouse click
+     */
     void OnMouseDown()
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            if (Time.time - lastClickTime < catchTime) // double click
+            if (Time.time - lastClickTime < catchTime) // Double click
             {
                 Rotate();
             }
-            else // single click
+            else // Single click
             {
-                if (!mouseInside || holdingItem) return;
+                if (!mouseInside || holdingItem) return; // Mouse not over a block or a block is already being held
                 dragging = true;
                 moving = false;
                 holdingItem = true;
-                GetComponent<SpriteRenderer>().sortingOrder = 1;
+                GetComponent<SpriteRenderer>().sortingOrder = 1;  // Put the block on top
+                // Drag the block under the mouse
                 Vector3 mousePos = Input.mousePosition;
                 Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
                 prevMousePos = mousePosWorld;
@@ -189,6 +213,9 @@ public class DraggableIsoItem : Draggable
         }
     }
 
+    /**
+     * Click finish
+     */
     void OnMouseUp()
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
@@ -196,7 +223,7 @@ public class DraggableIsoItem : Draggable
             dragging = false;
             holdingItem = false;
             if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name)
-            ) // dropped on a new available drop zone
+            ) // Dropped on a new available drop zone
             {
                 if (dropZone != null)
                 {
@@ -208,7 +235,7 @@ public class DraggableIsoItem : Draggable
                 newDropZones.Clear();
             }
             else if (newDropZones.Count > 0 && !newDropZones[0].droppableNames.Contains(this.name)
-            ) // dropped on a new unavailable drop zone
+            ) // Dropped on a new unavailable drop zone
             {
                 newDropZones[0].OnDragExit(this);
                 if (dropZone != null)
@@ -216,23 +243,26 @@ public class DraggableIsoItem : Draggable
                     dropZone.OnDragFinish(this);
                 }
             }
-            else // did not drop on any new drop zone
+            else // Did not drop on any new drop zone
             {
                 if (dropZone != null)
                 {
                     dropZone.OnDragFinish(this);
                 }
             }
-            MoveTo(homePos);
+            MoveTo(homePos);  // Move the block
         }
     }
 
+    /**
+     * Block has entered the drop zone
+     */
     void OnIsoTriggerEnterDZ(IsoCollider col)
          {
-             if (!dragging) return;
+             if (!dragging) return;  // No block being held
      
              var possibleDropZone = col.GetComponent<IsoDropZone>();
-             if (possibleDropZone == null) return;
+             if (possibleDropZone == null) return;  // No drop zone
      
              foreach (var dropZone in newDropZones)
              {
@@ -243,6 +273,9 @@ public class DraggableIsoItem : Draggable
              newDropZones[0].OnDragEnter(this);
          }
 
+    /**
+     * Block has exited the drop zone
+     */
     void OnIsoTriggerExitDZ(IsoCollider col)
     {
         if (!dragging) return;
@@ -251,7 +284,7 @@ public class DraggableIsoItem : Draggable
         if (possibleDropZone == null) return;
 
         var prevIndex = newDropZones.IndexOf(possibleDropZone);
-        if (prevIndex > -1)
+        if (prevIndex > -1) // Previous drop zone
         {
             newDropZones[prevIndex].OnDragExit(this);
             newDropZones.RemoveAt(prevIndex);
@@ -268,7 +301,9 @@ public class DraggableIsoItem : Draggable
 
     }
 
-
+    /**
+     * Move block to its new location
+     */
     public void MoveTo(Vector3 newPos)
     {
         if (dropZone == null) return;
@@ -278,6 +313,9 @@ public class DraggableIsoItem : Draggable
         GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
 
+    /**
+     * Set the direction the block is facing by changing to the corresponding sprite
+     */
     public void SetDirection(Direction dir)
     {
         this.direction = dir;
@@ -300,14 +338,20 @@ public class DraggableIsoItem : Draggable
         }
     }
 
+    /**
+     * Change the sprite for the block
+     */
     private void SetSprite(Sprite sprite)
     {
         GetComponentInParent<SpriteRenderer>().sprite = sprite;
     }
 
+    /**
+     * Rotate the block clockwise
+     */
     public void Rotate()
     {
-        if (Rotatable)
+        if (Rotatable) // Block can be rotated
         {
             switch (this.direction)
             {
