@@ -6,13 +6,12 @@ using TMPro;
 using UnityEngine.EventSystems;
 
 /*
- * Class to show the tutorial 
+ * Class to show the tutorial and set the timer to inactive
  */
 public class Show_Tutorial : MonoBehaviour {
 
     public Button button;
     public Canvas[] canvases;
-
     private TextMeshProUGUI timerArea;
 
     void Start()
@@ -27,7 +26,7 @@ public class Show_Tutorial : MonoBehaviour {
 
     void TaskOnClick()
     {
-        // set each canvas as invisible
+        // set each canvas as visible
         foreach (Canvas canvas in canvases)
         {
             canvas.enabled = !canvas.enabled;

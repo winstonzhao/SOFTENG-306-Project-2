@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-
+/*
+ * Class to hide the help dialog 
+ */
 public class HideHelp : MonoBehaviour {
 
     //Make sure to attach these Buttons in the Inspector
     public Button start;
     public Canvas helpDialog;
-
     private TextMeshProUGUI timerArea;
 
-    // Use this for initialization
     void Start()
     {
         start = start.GetComponent<Button>();
@@ -25,12 +25,8 @@ public class HideHelp : MonoBehaviour {
 
     void TaskOnClick()
     {
+        // set the help dialog to invisible
         helpDialog.enabled = false;
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 
 }
