@@ -125,7 +125,7 @@ namespace Quests
 
         private QuestLog Load()
         {
-            return Toolbox.Instance.JsonFiles.Read<QuestLog>(JsonFile);
+            return Toolbox.Instance.JsonFiles.Read<QuestLog>(JsonFile) ?? new QuestLog();
         }
 
         /// <summary>

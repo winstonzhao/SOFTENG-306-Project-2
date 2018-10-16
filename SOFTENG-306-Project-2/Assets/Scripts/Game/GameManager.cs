@@ -72,7 +72,7 @@ namespace Game
         /// </summary>
         private GameSettings LoadSettings()
         {
-            return Toolbox.Instance.JsonFiles.Read<GameSettings>("settings.dat");
+            return Toolbox.Instance.JsonFiles.Read<GameSettings>("settings.dat") ?? new GameSettings();
         }
 
         /// <summary>
