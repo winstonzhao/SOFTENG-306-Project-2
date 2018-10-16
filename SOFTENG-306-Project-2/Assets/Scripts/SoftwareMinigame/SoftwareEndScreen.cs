@@ -16,12 +16,14 @@ public class SoftwareEndScreen : MonoBehaviour
     private int instructionCount;
 
     private Transform slides;
-    
+
     // Use this for initialization
     void Start()
     {
         slides = transform.Find("ExitSlide");
         Open();
+
+        Toolbox.Instance.QuestManager.MarkFinished("software-workshop");
     }
 
     // Update is called once per frame
@@ -52,7 +54,7 @@ public class SoftwareEndScreen : MonoBehaviour
         var score = new Score()
         {
             CreatedAt = DateTime.Now,
-            Minigame =  Minigames.Software,
+            Minigame = Minigames.Software,
             Value = maxScore - instructionCount,
         };
 

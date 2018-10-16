@@ -140,6 +140,8 @@ public class CivilVehicleController : MonoBehaviour {
             SetTimeAndAmount((int) Math.Round(TimeLimit - currCountdownValueTenthSeconds / 10), Budget);
             ToggleDialogDisplay(Dialog, "BadPanel", false);
             ToggleDialogDisplay(Dialog, "GoodPanel", true);
+
+            Toolbox.Instance.QuestManager.MarkFinished("civil-workshop");
         }
         else // Lose
         {

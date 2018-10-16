@@ -7,16 +7,17 @@ using UnityEngine;
 
 public class ElectricalEnd : MonoBehaviour
 {
+    public void Finish()
+    {
+        var score = new Score
+        {
+            Minigame = Minigames.Electrical,
+            Value = 0,
+            CreatedAt = DateTime.Now
+        };
 
-	public void Finish()
-	{
-		var score = new Score()
-		{
-			Minigame = Minigames.Electrical,
-			Value = 0,
-			CreatedAt = DateTime.Now
-		};
-		Toolbox.Instance.Hiscores.Add(score);
-		Toolbox.Instance.GameManager.ChangeScene("Engineering Leech");
-	}
+        Toolbox.Instance.Hiscores.Add(score);
+        Toolbox.Instance.GameManager.ChangeScene("Engineering Leech");
+        Toolbox.Instance.QuestManager.MarkFinished("electrical-workshop");
+    }
 }

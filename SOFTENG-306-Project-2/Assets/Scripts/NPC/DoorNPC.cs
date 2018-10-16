@@ -25,7 +25,8 @@ public class DoorNPC : NPC
                     {
                         "Let's go!", new DialogFrame(me, "Let's go!")
                         {
-                            TransitionToScene = Level
+                            TransitionToScene = Level,
+                            OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("visit-leech"); }
                         }
                     },
                     {

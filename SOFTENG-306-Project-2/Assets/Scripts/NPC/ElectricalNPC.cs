@@ -10,48 +10,59 @@ public class ElectricalNPC : NPC
 
         const string npc = "Electrical Instructor";
 
-        var frame = new DialogFrame(me, "Hello, I'm " + me)
+        DialogFrame frame;
+
+        if (Toolbox.Instance.QuestManager.HasFinishedOrIsCurrent("electrical-workshop"))
         {
-            Next = new DialogFrame(npc, "Hi, I'm the " + npc + "!")
+            frame = new DialogFrame(me, "Hello, I'm " + me)
             {
-                Options = new Dictionary<string, DialogFrame>()
+                Next = new DialogFrame(npc, "Hi, I'm the " + npc + "!")
                 {
+                    Options = new Dictionary<string, DialogFrame>()
                     {
-                        "What is ELECTENG?", new DialogFrame(npc,
-                            "Electrical engineering is a professional engineering discipline that generally deals " +
-                            "with the study and application of electricity, electronics, and electromagnetism.")
                         {
-                            Next = new DialogFrame(npc,
-                                "Electrical engineers work in a very wide range of industries and the skills " +
-                                "required are likewise variable.")
+                            "What is ELECTENG?", new DialogFrame(npc,
+                                "Electrical engineering is a professional engineering discipline that generally deals " +
+                                "with the study and application of electricity, electronics, and electromagnetism.")
                             {
                                 Next = new DialogFrame(npc,
-                                    "These range from basic circuit theory to the management skills required " +
-                                    "of a project manager.")
+                                    "Electrical engineers work in a very wide range of industries and the skills " +
+                                    "required are likewise variable.")
                                 {
                                     Next = new DialogFrame(npc,
-                                        "The tools and equipment that an individual engineer may need are " +
-                                        "similarly variable, ranging from a simple voltmeter to a top end " +
-                                        "analyzer to sophisticated design and manufacturing software")
+                                        "These range from basic circuit theory to the management skills required " +
+                                        "of a project manager.")
                                     {
-                                        Next = new DialogFrame(me, "Wow! That's really cool!")
+                                        Next = new DialogFrame(npc,
+                                            "The tools and equipment that an individual engineer may need are " +
+                                            "similarly variable, ranging from a simple voltmeter to a top end " +
+                                            "analyzer to sophisticated design and manufacturing software")
+                                        {
+                                            Next = new DialogFrame(me, "Wow! That's really cool!")
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                    {
-                        "Play Electrical Game", new DialogFrame(npc, "Alright let's play!")
+                        },
                         {
-                            TransitionToScene = "Welcome Screen"
+                            "Play Electrical Game", new DialogFrame(npc, "Alright let's play!")
+                            {
+                                TransitionToScene = "Welcome Screen"
+                            }
+                        },
+                        {
+                            "Bye", new DialogFrame(me, "Bye!")
                         }
-                    },
-                    {
-                        "Bye", new DialogFrame(me, "Bye!")
                     }
                 }
-            }
-        };
+            };
+        }
+        else
+        {
+            frame = new DialogFrame(npc,
+                "Sorry it looks like you aren't enrolled for this workshop right now, check your timetable to see " +
+                "where you should be going.");
+        }
 
         var directions = new Dictionary<string, DialogPosition>
         {

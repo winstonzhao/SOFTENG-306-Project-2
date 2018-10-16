@@ -31,81 +31,40 @@ public class GreeterNPC : NPC
 
         if (IsGreeting)
         {
-            frame = new DialogFrame(npc, "Hey " + me + ", welcome to Enginuity Day!")
-            {
-                Next = new DialogFrame(npc,
-                    "It is wonderful that you could join us. My name is Naomi, let me show you around.")
-                {
-                    Next = new DialogFrame(npc,
-                        "This is the engineering lobby where you will find the Student Services stall, shall we take a look?")
-                    {
-                        Next = new DialogFrame(npc, "Use your arrow keys to follow me.")
-                        {
-                            // NPC moves back to the origin after talking to the player
-                            OnComplete = () => StartCoroutine(WalkBack())
-                        }
-                    }
-                }
-            };
+            frame = IntroductionDialogFrame(me, npc);
         }
         else if (IntroduceStudentServices)
         {
-            // This is what the dialog eventually jumps to, different options lead to this - which is why it's a variable
-            var timetable = new DialogFrame(npc, "It’s your timetable for the day!")
+            frame = IntroduceStudentServicesDialogFrame(me, npc);
+        }
+        else if (Toolbox.Instance.QuestManager.Current.Id == "visit-leech")
+        {
+            frame = new DialogFrame(npc, "You should go downstairs via the elevator to visit the workshops");
+        }
+        else if (Toolbox.Instance.QuestManager.Current.Id.EndsWith("-workshop"))
+        {
+            var workshop = Toolbox.Instance.QuestManager.Current.Title.ToLower();
+            frame = new DialogFrame(npc, "You should go downstairs via the elevator to do your " + workshop);
+        }
+        else if (Toolbox.Instance.QuestManager.Current.Id == "networking")
+        {
+            frame = new DialogFrame(npc,
+                "Well done, I see you have come to collect your prize.")
             {
                 Next = new DialogFrame(npc,
-                    "Here you will find the workshops you will be attending as well as the networking event in " +
-                    "the afternoon.")
+                    "Just remember, this is just an indicator of one path you could take after you leave high school.")
                 {
                     Next = new DialogFrame(npc,
-                        "I hope you find this useful. There is also a list of items you should complete before the " +
-                        "day is over.")
+                        "The decision should entirely be your own, but I hope you have gained some valuable insight " +
+                        "from our current engineering students.")
                     {
                         Next = new DialogFrame(npc,
-                            "Each time you complete a task it will be ticked off your list. Complete all tasks and " +
-                            "return back to this stall for a prize!")
+                            "All the specialisations are fantastic, and in first year engineering you will get the " +
+                            "chance to experience them all before you make your decision to specialise.")
                         {
-                            Next = new DialogFrame(me, "Thanks!")
-                            {
-                                Next = new DialogFrame(npc,
-                                    "No problem! Use the elevator to visit the workshops in the engineering leech")
-                                {
-                                    OnComplete = () =>
-                                    {
-                                        Toolbox.Instance.GameManager.Settings.HasBeenGreeted = true;
-                                        IntroduceStudentServices = false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
-            frame = new DialogFrame(npc,
-                "This is the Student Services stall, where students come to pick up their assignments and exam scripts.")
-            {
-                Next = new DialogFrame(npc, "I have an important file for you too!")
-                {
-                    Next = new DialogFrame(npc, "I wonder what it is…")
-                    {
-                        Options = new Dictionary<string, DialogFrame>
-                        {
-                            {
-                                "Okay", new DialogFrame(me, "What is it?")
-                                {
-                                    Next = timetable
-                                }
-                            },
-                            {
-                                "Oh no!", new DialogFrame(me, "I hope it's not an assignment")
-                                {
-                                    Next = new DialogFrame(npc, "No…")
-                                    {
-                                        Next = timetable
-                                    }
-                                }
-                            }
+                            Next = new DialogFrame(npc,
+                                "Once again, I hope you have enjoyed your Enginuity Day, and you will find your " +
+                                "prize in your backpack.")
                         }
                     }
                 }
@@ -113,10 +72,7 @@ public class GreeterNPC : NPC
         }
         else
         {
-            frame = new DialogFrame(npc, "…")
-            {
-                Next = new DialogFrame(me, "I think she's busy")
-            };
+            frame = new DialogFrame(npc, "");
         }
 
         var directions = new Dictionary<string, DialogPosition>
@@ -241,5 +197,91 @@ public class GreeterNPC : NPC
         MovementAnimator.SetBool("vIdle", true);
         MovementAnimator.SetBool("hIdle", true);
         MovementAnimator.SetBool("walking", false);
+    }
+
+    private DialogFrame IntroduceStudentServicesDialogFrame(string me, string npc)
+    {
+        // This is what the dialog eventually jumps to, different options lead to this - which is why it's a variable
+        var timetable = new DialogFrame(npc, "It’s your timetable for the day!")
+        {
+            Next = new DialogFrame(npc,
+                "Here you will find the workshops you will be attending as well as the networking event in " +
+                "the afternoon.")
+            {
+                Next = new DialogFrame(npc,
+                    "I hope you find this useful. There is also a list of items you should complete before the " +
+                    "day is over.")
+                {
+                    Next = new DialogFrame(npc,
+                        "Each time you complete a task it will be ticked off your list. Complete all tasks and " +
+                        "return back to this stall for a prize!")
+                    {
+                        Next = new DialogFrame(me, "Thanks!")
+                        {
+                            Next = new DialogFrame(npc,
+                                "No problem! Use the elevator to visit the workshops in the engineering leech")
+                            {
+                                OnComplete = () =>
+                                {
+                                    Toolbox.Instance.QuestManager.MarkFinished("get-timetable");
+                                    Toolbox.Instance.GameManager.Settings.HasBeenGreeted = true;
+                                    IntroduceStudentServices = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        return new DialogFrame(npc,
+            "This is the Student Services stall, where students come to pick up their assignments and exam scripts.")
+        {
+            Next = new DialogFrame(npc, "I have an important file for you too!")
+            {
+                Next = new DialogFrame(npc, "I wonder what it is…")
+                {
+                    Options = new Dictionary<string, DialogFrame>
+                    {
+                        {
+                            "Okay", new DialogFrame(me, "What is it?")
+                            {
+                                Next = timetable
+                            }
+                        },
+                        {
+                            "Oh no!", new DialogFrame(me, "I hope it's not an assignment")
+                            {
+                                Next = new DialogFrame(npc, "No…")
+                                {
+                                    Next = timetable
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        ;
+    }
+
+    private DialogFrame IntroductionDialogFrame(string me, string npc)
+    {
+        return new DialogFrame(npc, "Hey " + me + ", welcome to Enginuity Day!")
+        {
+            Next = new DialogFrame(npc,
+                "It is wonderful that you could join us. My name is Naomi, let me show you around.")
+            {
+                Next = new DialogFrame(npc,
+                    "This is the engineering lobby where you will find the Student Services stall, shall we take a look?")
+                {
+                    Next = new DialogFrame(npc, "Use your arrow keys to follow me.")
+                    {
+                        // NPC moves back to the origin after talking to the player
+                        OnComplete = () => StartCoroutine(WalkBack())
+                    }
+                }
+            }
+        };
     }
 }

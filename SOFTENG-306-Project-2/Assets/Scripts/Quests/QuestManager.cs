@@ -27,7 +27,7 @@ namespace Quests
             {
                 foreach (var quest in Quests)
                 {
-                    if (!IsFinished(quest))
+                    if (!HasFinished(quest.Id))
                     {
                         return quest;
                     }
@@ -35,11 +35,6 @@ namespace Quests
 
                 return null;
             }
-        }
-
-        public bool HasWorkshop
-        {
-            get { return Current.Id.EndsWith("-workshop"); }
         }
 
         private readonly DebounceAction DebounceSave;
@@ -71,25 +66,19 @@ namespace Quests
             {
                 Id = "civil-workshop",
                 Title = "Civil Workshop",
-                Description = "The civil instructor is waiting for me at the software workshop"
+                Description = "The civil instructor is waiting for me at the civil workshop"
             });
             quests.Add(new Quest
             {
                 Id = "electrical-workshop",
                 Title = "Electrical Workshop",
-                Description = "The electrical instructor is waiting for me at the software workshop"
+                Description = "The electrical instructor is waiting for me at the electrical workshop"
             });
             quests.Add(new Quest
             {
                 Id = "networking",
                 Title = "Networking Event",
-                Description = "Speak to undergraduate students and industry professionals!"
-            });
-            quests.Add(new Quest
-            {
-                Id = "naomi-final",
-                Title = "Speak to Naomi",
-                Description = "Naomi wants to speak to you one last time"
+                Description = "Speak to Naomi about this evening's networking event"
             });
             quests.Add(new Quest
             {
@@ -99,19 +88,14 @@ namespace Quests
             });
         }
 
-        public bool IsFinished(Quest quest)
+        public bool HasFinishedOrIsCurrent(string questId)
         {
-            return IsFinished(quest.Id);
+            return HasFinished(questId) || Current.Id == questId;
         }
 
-        public bool IsFinished(string questId)
+        public bool HasFinished(string questId)
         {
             return Completed.ContainsKey(questId) && Completed[questId];
-        }
-
-        public void MarkFinished(Quest quest)
-        {
-            MarkFinished(quest.Id);
         }
 
         public void MarkFinished(string questId)
