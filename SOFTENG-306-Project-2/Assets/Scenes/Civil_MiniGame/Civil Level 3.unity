@@ -681,17 +681,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 154720, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
     type: 2}
   m_PrefabInternal: {fileID: 40212647}
---- !u!114 &40212650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 40212649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &40212652 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11448280, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
@@ -4813,7 +4802,6 @@ GameObject:
   - component: {fileID: 220830358}
   - component: {fileID: 220830357}
   - component: {fileID: 220830356}
-  - component: {fileID: 220830355}
   - component: {fileID: 220830359}
   m_Layer: 0
   m_Name: CheatButton
@@ -4841,17 +4829,6 @@ RectTransform:
   m_AnchoredPosition: {x: -120, y: 60}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &220830355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 220830353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c90c7af81ec412646a44ccff8b8dd8a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &220830356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10996,7 +10973,6 @@ GameObject:
   - component: {fileID: 491003957}
   - component: {fileID: 491003956}
   - component: {fileID: 491003955}
-  - component: {fileID: 491003954}
   m_Layer: 2
   m_Name: FourWayIntersectionFactory
   m_TagString: TileFactory
@@ -11004,17 +10980,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &491003954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 491003953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1aa75a1ae681c84db88e0f03a0f1b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &491003955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11117,7 +11082,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &491003960
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 491003953}
@@ -12854,7 +12819,6 @@ GameObject:
   - component: {fileID: 596162479}
   - component: {fileID: 596162483}
   - component: {fileID: 596162478}
-  - component: {fileID: 596162484}
   m_Layer: 2
   m_Name: RoadFactory
   m_TagString: TileFactory
@@ -12926,7 +12890,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!4 &596162481
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 596162477}
@@ -12975,17 +12939,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &596162484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 596162477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1aa75a1ae681c84db88e0f03a0f1b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &604165603
 GameObject:
   m_ObjectHideFlags: 0
@@ -14336,17 +14289,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 154720, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
     type: 2}
   m_PrefabInternal: {fileID: 650927818}
---- !u!114 &650927821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 650927820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &650927824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18023,7 +17965,6 @@ GameObject:
   - component: {fileID: 839094747}
   - component: {fileID: 839094746}
   - component: {fileID: 839094745}
-  - component: {fileID: 839094744}
   m_Layer: 2
   m_Name: ThreeWayIntersectionFactory
   m_TagString: TileFactory
@@ -18031,17 +17972,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &839094744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 839094743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1aa75a1ae681c84db88e0f03a0f1b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &839094745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18918,17 +18848,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 154720, guid: 1c7c72e0ea9121a43b43a3021c4159d0,
     type: 2}
   m_PrefabInternal: {fileID: 891843045}
---- !u!114 &891843047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 891843046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &891843048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20643,7 +20562,6 @@ GameObject:
   - component: {fileID: 1009234861}
   - component: {fileID: 1009234855}
   - component: {fileID: 1009234856}
-  - component: {fileID: 1009234863}
   - component: {fileID: 1009234860}
   m_Layer: 0
   m_Name: blue_car
@@ -20754,7 +20672,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1009234859
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1009234854}
@@ -20801,17 +20719,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1009234863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1009234854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab04b9cd245907429eb6521d121b2ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1011517040
 Prefab:
   m_ObjectHideFlags: 0
@@ -27759,7 +27666,6 @@ GameObject:
   - component: {fileID: 1357098318}
   - component: {fileID: 1357098317}
   - component: {fileID: 1357098316}
-  - component: {fileID: 1357098315}
   m_Layer: 2
   m_Name: CornerFactory
   m_TagString: TileFactory
@@ -27767,17 +27673,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1357098315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1357098314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1aa75a1ae681c84db88e0f03a0f1b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1357098316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28290,7 +28185,6 @@ GameObject:
   - component: {fileID: 1376491896}
   - component: {fileID: 1376491895}
   - component: {fileID: 1376491894}
-  - component: {fileID: 1376491893}
   - component: {fileID: 1376491897}
   m_Layer: 0
   m_Name: RestartButton
@@ -28318,17 +28212,6 @@ RectTransform:
   m_AnchoredPosition: {x: -120, y: 180}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1376491893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1376491891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c90c7af81ec412646a44ccff8b8dd8a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1376491894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31635,7 +31518,6 @@ GameObject:
   - component: {fileID: 1495305216}
   - component: {fileID: 1495305218}
   - component: {fileID: 1495305217}
-  - component: {fileID: 1495305219}
   - component: {fileID: 1495305220}
   - component: {fileID: 1495305222}
   - component: {fileID: 1495305221}
@@ -31723,17 +31605,6 @@ MonoBehaviour:
   _position: {x: 8, y: 0, z: 2}
   _size: {x: 1, y: 0.4, z: 1}
   _parent: {fileID: 0}
---- !u!114 &1495305219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1495305215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1495305220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32218,7 +32089,6 @@ GameObject:
   - component: {fileID: 1511519233}
   - component: {fileID: 1511519232}
   - component: {fileID: 1511519231}
-  - component: {fileID: 1511519230}
   - component: {fileID: 1511519234}
   m_Layer: 0
   m_Name: ExitButton
@@ -32246,17 +32116,6 @@ RectTransform:
   m_AnchoredPosition: {x: -120, y: 120}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1511519230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1511519228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c90c7af81ec412646a44ccff8b8dd8a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1511519231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40570,17 +40429,6 @@ MonoBehaviour:
   _material: {fileID: 0}
   _size: {x: 0, y: 0, z: 0}
   _center: {x: 0, y: 0, z: 0}
---- !u!114 &1957706340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1957706336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03406d21ff2a4292b60baa61888889f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &1957706341
 PolygonCollider2D:
   m_ObjectHideFlags: 0
