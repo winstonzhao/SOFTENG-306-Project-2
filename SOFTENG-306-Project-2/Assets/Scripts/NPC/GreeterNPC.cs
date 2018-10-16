@@ -46,33 +46,20 @@ public class GreeterNPC : NPC
             var workshop = Toolbox.Instance.QuestManager.Current.Title.ToLower();
             frame = new DialogFrame(npc, "You should go downstairs via the elevator to do your " + workshop);
         }
-        else if (Toolbox.Instance.QuestManager.Current.Id == "networking")
-        {
-            frame = new DialogFrame(npc,
-                "Well done, I see you have come to collect your prize.")
-            {
-                Next = new DialogFrame(npc,
-                    "Just remember, this is just an indicator of one path you could take after you leave high school.")
-                {
-                    Next = new DialogFrame(npc,
-                        "The decision should entirely be your own, but I hope you have gained some valuable insight " +
-                        "from our current engineering students.")
-                    {
-                        Next = new DialogFrame(npc,
-                            "All the specialisations are fantastic, and in first year engineering you will get the " +
-                            "chance to experience them all before you make your decision to specialise.")
-                        {
-                            Next = new DialogFrame(npc,
-                                "Once again, I hope you have enjoyed your Enginuity Day, and you will find your " +
-                                "prize in your backpack.")
-                        }
-                    }
-                }
-            };
-        }
         else
         {
-            frame = new DialogFrame(npc, "");
+            switch (Toolbox.Instance.QuestManager.Current.Id)
+            {
+                case "post-workshops":
+                    frame = PostWorkshopDialogFrame(me, npc);
+                    break;
+                case "networking":
+                    frame = NetworkingDialogFrame(me, npc);
+                    break;
+                default:
+                    frame = new DialogFrame(npc, "I hope you had a great time at enginuity day!");
+                    break;
+            }
         }
 
         var directions = new Dictionary<string, DialogPosition>
@@ -282,6 +269,44 @@ public class GreeterNPC : NPC
                     }
                 }
             }
+        };
+    }
+
+    private DialogFrame PostWorkshopDialogFrame(string me, string npc)
+    {
+        return new DialogFrame(npc,
+            "Well done, I see you have come to collect your prize.")
+        {
+            Next = new DialogFrame(npc,
+                "Just remember, this is just an indicator of one path you could take after you leave high school.")
+            {
+                Next = new DialogFrame(npc,
+                    "The decision should entirely be your own, but I hope you have gained some valuable insight " +
+                    "from our current engineering students.")
+                {
+                    Next = new DialogFrame(npc,
+                        "All the specialisations are fantastic, and in first year engineering you will get the " +
+                        "chance to experience them all before you make your decision to specialise.")
+                    {
+                        Next = new DialogFrame(npc,
+                            "Once again, I hope you have enjoyed your Enginuity Day, and you will find your " +
+                            "prize in your backpack.")
+                        {
+                            OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("post-workshops"); }
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    private DialogFrame NetworkingDialogFrame(string me, string npc)
+    {
+        return new DialogFrame(npc,
+            "It's so nice to see other students and graduates back at university.")
+        {
+            Next = new DialogFrame(npc,
+                "This is a great chance for you to find out more about engineering in general.")
         };
     }
 }

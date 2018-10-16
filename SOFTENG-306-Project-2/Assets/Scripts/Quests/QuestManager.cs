@@ -76,15 +76,21 @@ namespace Quests
             });
             quests.Add(new Quest
             {
+                Id = "post-workshops",
+                Title = "Speak to Naomi",
+                Description = "Head to the engineering lobby to claim your prize"
+            });
+            quests.Add(new Quest
+            {
                 Id = "networking",
                 Title = "Networking Event",
-                Description = "Speak to Naomi about this evening's networking event"
+                Description = "Speak to undergraduates and industry professionals"
             });
             quests.Add(new Quest
             {
                 Id = "free-roam",
                 Title = "You're done!",
-                Description = "Feel free to visit the various stalls and chat with other students"
+                Description = "Feel free to revisit the stalls and chat with others"
             });
         }
 
