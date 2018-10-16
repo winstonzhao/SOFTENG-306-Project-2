@@ -21,15 +21,21 @@ namespace Quests
             get { return completed; }
         }
 
+        private Quest current;
         public Quest Current
         {
             get
             {
+                if (current != null)
+                {
+                    return current;
+                }
+
                 foreach (var quest in Quests)
                 {
                     if (!HasFinished(quest.Id))
                     {
-                        return quest;
+                        return current = quest;
                     }
                 }
 
@@ -76,6 +82,10 @@ namespace Quests
             });
             quests.Add(new Quest
             {
+                Id = "post-workshops-trigger"
+            });
+            quests.Add(new Quest
+            {
                 Id = "post-workshops",
                 Title = "Speak to Naomi",
                 Description = "Head to the engineering lobby to claim your prize"
@@ -107,6 +117,12 @@ namespace Quests
         public void MarkFinished(string questId)
         {
             Completed[questId] = true;
+
+            // Clear the memoized value if it's no longer the current quest 
+            if (current != null && current.Id == questId)
+            {
+                current = null;
+            }
 
             DebounceSave.Run();
         }
