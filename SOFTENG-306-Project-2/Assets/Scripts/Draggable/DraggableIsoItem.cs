@@ -86,10 +86,6 @@ public class DraggableIsoItem : Draggable
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        //Debug.Log("mouse at (iso): ");
-        //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition));
-
         // give a small gap before dragging, preventing that when user clicks on the DraggableIsoItem, the mouse is 
         // also firing at the IsoDropZone besides it, causing the block to be shifted to the drag zone beside
         if (dragging && Time.time - lastClickTime > 0.1f) 
@@ -99,7 +95,6 @@ public class DraggableIsoItem : Draggable
             IsoRaycastHit isoRaycastHit;
             if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
             {
-                
                 // if the ray cast hits something, check which tile is it hitting, trigger entering the drop zone 
                 // and exiting the previous drop zone
                 IsoCollider hitCollider = isoRaycastHit.Collider;
@@ -119,7 +114,6 @@ public class DraggableIsoItem : Draggable
             {
                 if (currentHitCollider != null)
                 {
-                    Debug.Log("block ray cast exit everything");
                     OnIsoTriggerExitDZ(currentHitCollider);
                     currentHitCollider = null;
                 }
@@ -129,9 +123,6 @@ public class DraggableIsoItem : Draggable
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
 
             Vector3 diff = mousePosWorld - prevMousePos;
-            //transform.Translate(diff);
-            //Debug.Log("mouse at (iso): ");
-            //Debug.Log(Ultimate_Isometric_Toolkit.Scripts.Utils.Isometric.ScreenToIso(Input.mousePosition).ToString());
             GetComponent<IsoTransform>().transform.Translate(diff);
 
             if (dropZone != null)
@@ -146,8 +137,6 @@ public class DraggableIsoItem : Draggable
         if (moving)
         {
             transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            //GetComponent<IsoTransform>().transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-            //GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
                 GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
@@ -160,7 +149,6 @@ public class DraggableIsoItem : Draggable
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            //Debug.Log("mouse enter");
             mouseInside = true;
         }
     }
@@ -169,7 +157,6 @@ public class DraggableIsoItem : Draggable
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            //Debug.Log("mouse leave");
             mouseInside = false;
         }
     }
@@ -180,13 +167,10 @@ public class DraggableIsoItem : Draggable
         {
             if (Time.time - lastClickTime < catchTime) // double click
             {
-                Debug.Log("DraggableIsoItem: double click");
                 Rotate();
             }
             else // single click
             {
-                //Debug.Log("Mouse down");
-                Debug.Log("DraggableIsoItem: single click");
                 if (!mouseInside || holdingItem) return;
                 dragging = true;
                 moving = false;
@@ -195,8 +179,6 @@ public class DraggableIsoItem : Draggable
                 Vector3 mousePos = Input.mousePosition;
                 Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
                 prevMousePos = mousePosWorld;
-
-                //Debug.Log("mouse clicked");
 
                 if (dropZone != null)
                 {
@@ -211,13 +193,11 @@ public class DraggableIsoItem : Draggable
     {
         if (!EventSystem.current.IsPointerOverGameObject()) // Block mouse clicks through a canvas
         {
-            Debug.Log("Mouse up");
             dragging = false;
             holdingItem = false;
             if (newDropZones.Count > 0 && newDropZones[0].droppableNames.Contains(this.name)
             ) // dropped on a new available drop zone
             {
-                Debug.Log("entered 1st if statement");
                 if (dropZone != null)
                 {
                     dropZone.OnItemRemove(this);
@@ -231,7 +211,6 @@ public class DraggableIsoItem : Draggable
             ) // dropped on a new unavailable drop zone
             {
                 newDropZones[0].OnDragExit(this);
-                Debug.Log("entered 2nd if statement");
                 if (dropZone != null)
                 {
                     dropZone.OnDragFinish(this);
@@ -239,22 +218,17 @@ public class DraggableIsoItem : Draggable
             }
             else // did not drop on any new drop zone
             {
-                Debug.Log("entered else statement");
-                Debug.Log(dropZone);
                 if (dropZone != null)
                 {
                     dropZone.OnDragFinish(this);
                 }
             }
-
-            Debug.Log(homePos);
             MoveTo(homePos);
         }
     }
 
     void OnIsoTriggerEnterDZ(IsoCollider col)
          {
-             Debug.Log("trigger enter");
              if (!dragging) return;
      
              var possibleDropZone = col.GetComponent<IsoDropZone>();
@@ -271,7 +245,6 @@ public class DraggableIsoItem : Draggable
 
     void OnIsoTriggerExitDZ(IsoCollider col)
     {
-        Debug.Log("trigger exit");
         if (!dragging) return;
 
         var possibleDropZone = col.GetComponent<IsoDropZone>();

@@ -45,28 +45,6 @@ public class IsoDropZone : MonoBehaviour, IDropZone
             child = Instantiate<GameObject>(prefab);
             child.GetComponent<DraggableIsoItem>().SetDropZone(this);
             child.GetComponent<DraggableIsoItem>().homePos = transform.position;
-            Debug.Log(child.GetComponent<DraggableIsoItem>().homePos);
-            if (child)
-            {
-                Debug.Log("new " + prefebName + " created");
-            }
-
-
-        }
-    }
-
-    void OnMouseEnter()
-    {
-        //Debug.Log("drop zone mouse entered");
-    }
-
-    void FixedUpdate()
-    {
-        //if (prefebName != null && !CivilLevelController.instance.IsBudgetAvailable(ItemPrice))
-        if (prefebName != null && !GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>().IsBudgetAvailable(ItemPrice))
-        {
-
-            //Debug.Log("Budget not available for " + prefebName);
         }
     }
 
@@ -84,8 +62,6 @@ public class IsoDropZone : MonoBehaviour, IDropZone
     {
         if(isEnabled) {
             GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-            //SetDropZoneActive(true);
-            Debug.Log("Dragged away");
         }
 
 
@@ -177,6 +153,5 @@ public class IsoDropZone : MonoBehaviour, IDropZone
             child.SetActive(true);
             GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
         }
-        Debug.Log(enable ? prefebName + " enabled" : prefebName + " disabled");
     }
 }

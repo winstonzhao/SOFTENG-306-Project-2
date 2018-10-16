@@ -32,7 +32,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         public void StopMoving()
         {
             // stop the movement
-            Debug.Log("CivilCarAgent " + gameObject.name + ": stopped moving");
             base.StopAllCoroutines();
         }
 
@@ -74,7 +73,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             float countdownValue = timeLimit;
             currCountdownValue = countdownValue;
             timerNotStopped = true;
-            Debug.Log("start timer: " + currCountdownValue);
             while (currCountdownValue >= 0 && timerNotStopped)
             {
                 yield return new WaitForSeconds(0.001f);
@@ -86,7 +84,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         IEnumerator WaitCountdown()
         {
             yield return new WaitUntil(() => currCountdownValue <= 0);
-            Debug.Log("timer ends");
             timerNotStopped = false;
             ResumeMoving();
         }

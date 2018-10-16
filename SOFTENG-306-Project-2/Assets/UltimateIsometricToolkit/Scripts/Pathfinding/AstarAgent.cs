@@ -67,7 +67,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                 StartCoroutine(MoveAlongPathInternal(path));
             }, () =>
             {
-                Debug.Log("No path found");
                 noPathFound = true;
             });
         }
@@ -100,8 +99,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                 yield return StepTo(GetComponent<IsoTransform>().Position,
                     pos + new Vector3(0, GetComponent<IsoTransform>().Size.y / 2, 0), Speed);
             }
-
-            Debug.Log("reached the goal");
             hasReachedGoal = true;
         }
 

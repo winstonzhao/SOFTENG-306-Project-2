@@ -115,7 +115,6 @@ public class DraggableItem : Draggable
 
     void OnMouseEnter()
     {
-        //Debug.Log("mouse enter");
         mouseInside = true;
     }
 

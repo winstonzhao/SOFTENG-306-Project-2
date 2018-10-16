@@ -101,7 +101,6 @@ public class CivilLevelController : MonoBehaviour {
 
         if (AllCarsReachedGoal()) // Win
         {
-            Debug.Log("Win!!!!!!");
             // add high score based on the time left (in seconds) and the budget left
             int score = AddHighScore(currCountdownValueTenthSeconds / 10.0f, Budget);
             
@@ -113,7 +112,6 @@ public class CivilLevelController : MonoBehaviour {
         }
         else // Lose
         {
-            Debug.Log("Lose:(");
             SetFailInfo("Make sure there are roads for all the cars to travel on to reach their destination within the time limit.");
             CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", false);
             CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", true);
@@ -132,14 +130,10 @@ public class CivilLevelController : MonoBehaviour {
     private int AddHighScore(float timeLeft, int budget) // Level
     {
         float timeLeftPortion = timeLeft / IdealTimeLeft;
-        Debug.Log("time left portion: " + timeLeftPortion);
         float budgetLeftPortion = budget / (float) IdealBudgetLeft;
-        Debug.Log("budget left portion: " + budgetLeftPortion);
 
         float timeScore = timeLeftPortion * TimeMaxScore;
-        Debug.Log("time score: " + timeScore);
         float budgetScore = budgetLeftPortion * BudgetMaxScore;
-        Debug.Log("budget score: " + budgetScore);
 
         int highScore =(int) Math.Round(timeScore + budgetScore + CompletionBaseScore);
         highScore = highScore > 100 ? 100 : highScore;
@@ -193,7 +187,6 @@ public class CivilLevelController : MonoBehaviour {
         TextMeshProUGUI nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         string text = nameArea.text;
         text = text.Replace("<name>", name);
-        Debug.Log(text);
         nameArea.SetText(text);
     }   // Level, TODO rename
 
@@ -205,12 +198,10 @@ public class CivilLevelController : MonoBehaviour {
 
     IEnumerator StartCountdown(int timeLimit)
     {
-        Debug.Log("CivilLevelController: Start Countdown");
         float countdownValue = (TimeLimit - 1) * 10;
         currCountdownValueTenthSeconds = countdownValue;
         while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
         {
-            //Debug.Log((currCountdownValueTenthSeconds) / 10);
             string timerLabel = String.Format("{0:00}:{1:00}", Math.Floor((currCountdownValueTenthSeconds) / 10), (currCountdownValueTenthSeconds % 10) * 10);
             timerArea.text = timerLabel;
             yield return new WaitForSeconds(0.1f);
@@ -222,7 +213,6 @@ public class CivilLevelController : MonoBehaviour {
     {
         Budget += itemPrice;
         budgetArea.text = "$" + Budget;
-        Debug.Log("updated budget to " + Budget);
         UpdateBudgetAvailability();
     }   // Level
 
@@ -255,8 +245,6 @@ public class CivilLevelController : MonoBehaviour {
 
     public void ResetTimerAndCars()
     {
-        Debug.Log("CivilLevelController: ResetTimerAndCars");
-        
         // reset cars
         foreach (var carAgent in CarAgents)
         {
@@ -271,19 +259,16 @@ public class CivilLevelController : MonoBehaviour {
     
     public void GoToLevel(int levelNumber)
     {
-        Debug.Log("go to level: "+ levelNumber);
         SceneManager.LoadScene("Civil Level " + levelNumber);
     }
 
     public void Cheat()
     {
-        Debug.Log("Cheat level " + CheatLevelName);
         SceneManager.LoadScene(CheatLevelName);
     }   // Level
 
     public void UndoCheat()
     {
-        Debug.Log("Undo cheat, level " + UndoCheatLevelName);
         SceneManager.LoadScene(UndoCheatLevelName);
     } // Level
 
@@ -353,13 +338,10 @@ public class CivilLevelController : MonoBehaviour {
 
     public void ToggleGameControlButtons(bool enable)
     {
-        Debug.Log("Toggle game control buttons");
         foreach (var button in gameControlButtons)
         {
-            Debug.Log("Toggle button");
             if (button != null)
             {
-                Debug.Log(button.name);
                 button.GetComponent<Button>().interactable = enable;
                 button.GetComponent<CursorStyler>().enabled = enable;
             }

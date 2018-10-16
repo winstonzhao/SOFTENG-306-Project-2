@@ -39,6 +39,9 @@ public class CivilGameManager : MonoBehaviour {
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
+
+        // set the player name
+        SetPlayerName(Toolbox.Instance.GameManager.Player.Username);
     }
 
     public void SetPlayerName(string playerName)
@@ -52,7 +55,6 @@ public class CivilGameManager : MonoBehaviour {
         {
             scores[level] = score;
         }
-        Debug.Log("CivilGameManager: Added Score " + score + " for level " + level);
     }
 
     public void AddHighScore()
@@ -67,7 +69,6 @@ public class CivilGameManager : MonoBehaviour {
 
             Toolbox.Instance.Hiscores.Add(score);
             scores.Clear();
-            Debug.Log("CivilGameManager: Added High Score " + highScore);
         }
     }
 
