@@ -30,9 +30,6 @@ namespace ElectricalScripts.Electrical_Scores
             {
                 levelsCompleted = level;
             }
-
-            // Debug to check the score is now added
-            Debug.Log("Score is now:" + levelScores[(level - 1), 1]);
         }
 
         /*

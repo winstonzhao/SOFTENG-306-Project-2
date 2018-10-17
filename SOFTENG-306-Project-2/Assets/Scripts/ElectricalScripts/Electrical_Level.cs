@@ -14,10 +14,8 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     public int levelNumber;
     public int TimeLimit = 10;
-    private int tutorialLevelNumber = 4;
     private int levelScore = 100;
 
-    private string PlayerName = "Anonymous";
     private TextMeshProUGUI timerArea;
     private bool timerNotStopped = true;
     private bool paused = false;
@@ -189,9 +187,9 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     /*
      * Adds the scores from skipped levels to the high score board
      */
-    public void skipLevels()
+    public void skipLevels(int levels)
     {
-        for (int i = 1; i <= tutorialLevelNumber; i++)
+        for (int i = 1; i <= levels; i++)
         {
             Toolbox.Instance.Electrical_Scores.addScore(i, levelScore);
         }
