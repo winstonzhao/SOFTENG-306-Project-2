@@ -158,7 +158,22 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 generatedObjects.Add(obj);
                 layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
-
+                break;
+            case 5:
+                // Insert into 4 element array but no order required - Jump (Loop), Mixture of previous levels
+                numElements = 4;
+                for (int x = 4; x < 8; x++)
+                {
+                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                }
+                obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 5);
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = 0;
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[2, 6] = Layout.INDEX;
+                objectMap[2, 6] = obj;
                 break;
             case 6:
                 // Sort 2 element from input - Swap, Mixture of previous levels
@@ -175,43 +190,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 generatedObjects.Add(obj);
                 layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
-                break;
-            case 5:
-                // Insert into 4 element array but no order required - Jump (Loop), Mixture of previous levels
-                numElements = 4;
-                for (int x = 4; x < 8; x++)
-                {
-                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
-                }
-                obj = Instantiate<GameObject>(prefab);
-                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<IndexElement>().Generate();
-                obj.GetComponent<IndexElement>().Value = 0;
-                obj.transform.parent = this.transform;
-                generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.INDEX;
-                objectMap[2, 1] = obj;
-                break;
-            case 7:
-                // Sorting 4 element array - Mixture of above
-                numElements = 4;
-                for (int x = 4; x < 8; x++)
-                {
-                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
-                }
-                obj = Instantiate<GameObject>(prefab);
-                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 0;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
-                obj.transform.parent = this.transform;
-                generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
-                objectMap[2, 1] = obj;
-                break;
-            case 8:
-                // Grouping into 2 arrays - Holding instruction/Compare if even/odd
                 break;
         }
         NextInputElement();
@@ -301,6 +279,16 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 renderer.sprite = sprite;
                 return true;
+            case 5:
+                for (int x = 4; x < 8; x++)
+                {
+                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                }
+                renderer.sprite = sprite;
+                return true;
             case 6:
                 for (int x = 5; x < 6; x++)
                 {
@@ -321,38 +309,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     }   
                 }
                 renderer.sprite = sprite;
-                return true;
-            case 5:
-                for (int x = 4; x < 8; x++)
-                {
-                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
-                    {
-                        return false;
-                    }
-                }
-                renderer.sprite = sprite;
-                return true;
-            case 7:
-                for (int x = 4; x < 7; x++)
-                {
-                    GameObject a = objectMap[x, 6];
-                    GameObject b = objectMap[x + 1, 6];
-                    
-                    if (a == null || layoutMap[x, 6] != Layout.ELEMENT)
-                    {
-                        return false;
-                    }
-                    if (b == null || layoutMap[x + 1, 6] != Layout.ELEMENT)
-                    {
-                        return false;
-                    }
-                    if (a.GetComponent<ArrayElement>().Value > b.GetComponent<ArrayElement>().Value)
-                    {
-                        return false;
-                    }   
-                }
-                return true;
-            case 8:
                 StartCoroutine(EndScreen());
                 return true;
         }
