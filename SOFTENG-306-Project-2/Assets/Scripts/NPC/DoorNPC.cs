@@ -20,7 +20,7 @@ public class DoorNPC : NPC
         }
         else
         {
-            frame = new DialogFrame(me, "This is going to take me to Engineering Leech.")
+            frame = new DialogFrame(me, "This is going to take me to " + Level + ".")
             {
                 Options = new Dictionary<string, DialogFrame>
                 {
