@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 21282912}
   - component: {fileID: 114728565026389080}
   m_Layer: 0
-  m_Name: test_item
+  m_Name: item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,6 +42,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0176bd5bc42e4e64da89e5a9a1694249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeX: 0
+  freezeY: 0
+  freezeZ: 0
   ShowBounds: 0
   _position: {x: 0, y: 0, z: 0}
   _size: {x: 1, y: 1, z: 1}
