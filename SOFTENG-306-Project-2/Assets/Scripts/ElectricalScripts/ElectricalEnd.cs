@@ -3,13 +3,17 @@ using Game;
 using Game.Hiscores;
 using UnityEngine;
 
+/*
+ * A script to send the player's highscore to the highscore board in the Menu
+ * of the game after the player exits the minigame
+ */
 public class ElectricalEnd : MonoBehaviour
 {
     private int gameScore;
 
 	public void Finish()
 	{
-        // get the score for the plaer
+        // get the score for the player
         gameScore = Toolbox.Instance.Electrical_Scores.getScore();
 
         // create the score object

@@ -3,6 +3,10 @@ using UnityEngine;
 using TMPro;
 using System;
 
+/*
+ * A controller for the electrical minigame, includes logic for the draggable
+ * objects and the dropzones, timer, and highscore features
+ */ 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Electrical_Level : MonoBehaviour, IDropZone

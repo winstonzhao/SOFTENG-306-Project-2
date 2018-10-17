@@ -19,7 +19,6 @@ public class HideHelp : MonoBehaviour {
     {
         start = start.GetComponent<Button>();
         start.onClick.AddListener(TaskOnClick);
-
         timerArea = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
     }
 
