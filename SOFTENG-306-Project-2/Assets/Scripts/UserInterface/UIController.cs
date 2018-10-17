@@ -8,7 +8,8 @@ public class UIController : MonoBehaviour
     private GameObject backpackButton;
     private GameObject achievementsButton;
     private GameObject closeButton;
-    private GameObject backpackTabPrefab;
+    private GameObject timetableTabPrefab;
+    private GameObject diplomaTabPrefab;
     private GameObject achievementsTabPrefab;
     private GameObject backpackTab;
     private GameObject achievementsTab;
@@ -23,12 +24,12 @@ public class UIController : MonoBehaviour
         backpackButton = transform.Find("Backpack Button").gameObject;
         achievementsButton = transform.Find("Achievements Button").gameObject;
         closeButton = transform.Find("Close Button").gameObject;
-        backpackTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/BackpackTab");
+        timetableTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/BackpackTab");
+        diplomaTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Diploma");
         achievementsTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/AchievementsTab");
         rowPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Achievement Text + Checkbox");
         correctSprite = Resources.Load<Sprite>("ui/red_boxCheckmark");
         incorrectSprite = Resources.Load<Sprite>("ui/grey_boxCheckmark");
-        backpackTab = Instantiate(backpackTabPrefab, transform);
 
         // Click outside the interface to exit
         var overlay = transform.Find("Overlay");
@@ -36,11 +37,11 @@ public class UIController : MonoBehaviour
         closeButton.GetComponent<Button>().onClick.AddListener(Close);
 
         // Setup tab buttons to switch to the appropriate tab
-        backpackButton.GetComponent<Button>().onClick.AddListener(SwitchToTimetable);
+        backpackButton.GetComponent<Button>().onClick.AddListener(SwitchToBackpack);
         achievementsButton.GetComponent<Button>().onClick.AddListener(SwitchToAchievements);
 
-        // Open timetable by default
-        SwitchToTimetable();
+        // Open backpack tab by default
+        SwitchToBackpack();
     }
 
     private void Update()
@@ -54,7 +55,7 @@ public class UIController : MonoBehaviour
         {
             if (backpackTab == null)
             {
-                SwitchToTimetable();
+                SwitchToBackpack();
             }
             else
             {
@@ -68,12 +69,33 @@ public class UIController : MonoBehaviour
         Toolbox.Instance.UIManager.ToggleUI();
     }
 
+    private void SwitchToBackpack()
+    {
+        if (Toolbox.Instance.QuestManager.Current.Id == "free-roam")
+        {
+            SwitchToDiploma();
+        }
+        else
+        {
+            SwitchToTimetable();
+        }
+    }
+
+    private void SwitchToDiploma()
+    {
+        Destroy(achievementsTab);
+        if (!backpackTab)
+        {
+            backpackTab = Instantiate(diplomaTabPrefab, transform);
+        }
+    }
+
     private void SwitchToTimetable()
     {
         Destroy(achievementsTab);
         if (!backpackTab)
         {
-            backpackTab = Instantiate(backpackTabPrefab, transform);
+            backpackTab = Instantiate(timetableTabPrefab, transform);
         }
 
         backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
