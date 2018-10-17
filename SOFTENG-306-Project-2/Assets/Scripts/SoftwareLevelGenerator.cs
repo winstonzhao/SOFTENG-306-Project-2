@@ -19,6 +19,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public volatile int inputX;
     public volatile int inputZ;
     public Vector3 input;
+    private bool finishedInputs;
 
     // Prefabs and Sprites used for different states of the scene
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/item";
@@ -29,9 +30,13 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
     private static string LEVEL_PREFIX = "scenes/Software Level ";
 
+    // Used for storing all generated object for checking answer.
     private List<GameObject> generatedObjects = new List<GameObject>();
+    
+    // Used for storing position of array for MoveToIndex
     private Dictionary<string, Vector3> arrayMap;
-
+    
+    // Used to run all the instructions
     private InstructionExecutor instructionExecutor;
 
     // Enum used to map out the layout of the scene
@@ -49,6 +54,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         GeneratedLevel(currentLevel);
     }
 
+    // Resetting the level
     public void Restart() {
         GeneratedLevel(currentLevel);
         GameObject input = this.transform.Find("Input").Find("Input").gameObject;
@@ -62,6 +68,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Used to initialised different levels
     public void GeneratedLevel(int level)
     {
+        finishedInputs = false;
         // Destroy any outdated objects
         foreach (var go in generatedObjects)
         {
@@ -130,7 +137,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 objectMap[6, 5] = obj;
                 break;
             case 4:
-                // Out of order insertion into empty index - MoveTo (by index), Initialise variable
+                // Out of order insertion into empty index - MoveTo (by index)
                 numElements = 1;
                 var indexNum = RandomGenerator.GetNext(4) + 4;
                 for (int x = 4; x < 8; x++)
@@ -215,6 +222,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
             numElements--;
         } else {
             // No elements left
+            finishedInputs = true;
             layoutMap[inputX, inputZ] = Layout.EMPTY;
             GameObject obj = this.transform.Find("Input").Find("Input").gameObject;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
@@ -227,7 +235,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public bool CheckAnswer()
     {
         // There are still elements left
-        if (numElements != 0)
+        if (!finishedInputs)
         {
             return false;
         }

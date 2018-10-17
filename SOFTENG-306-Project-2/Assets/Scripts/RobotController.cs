@@ -120,7 +120,7 @@ public class RobotController : MonoBehaviour
             bool moveX = true;
             bool moveZ = true;
 
-            // Traverse through z first by default
+            // Check z then x by default
             Debug.Log("Trying z then x");
             for (int i = 0; i < Mathf.Abs(z); i++)
             {
@@ -154,7 +154,7 @@ public class RobotController : MonoBehaviour
                 }
             }
 
-            // Check if collision exist if z direction, if it does the reset the path and try path x then z
+            // Check if collision exist in z then x path, if it does the reset the path and try path x then z
             if (!moveZ || !moveX)
             {
                 moveZ = true;
