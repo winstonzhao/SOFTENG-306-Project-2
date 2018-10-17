@@ -40101,6 +40101,7 @@ GameObject:
   - component: {fileID: 1662256018}
   - component: {fileID: 1662256017}
   - component: {fileID: 1662256016}
+  - component: {fileID: 1662256020}
   m_Layer: 5
   m_Name: Okay_AND
   m_TagString: EndOfLevel
@@ -40202,6 +40203,18 @@ RectTransform:
   m_AnchoredPosition: {x: -11, y: -16}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1662256020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1662256015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1663183887
 Prefab:
   m_ObjectHideFlags: 0
@@ -41653,8 +41666,6 @@ MonoBehaviour:
   endOfLevelCanvas: {fileID: 617797648}
   levelNumber: 8
   TimeLimit: 30
-  TimeMaxScore: 30
-  CompletionBaseScore: 20
 --- !u!61 &1697961530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -43583,6 +43594,7 @@ GameObject:
   - component: {fileID: 1788666335}
   - component: {fileID: 1788666334}
   - component: {fileID: 1788666333}
+  - component: {fileID: 1788666337}
   m_Layer: 5
   m_Name: Okay_OR
   m_TagString: EndOfLevel
@@ -43684,6 +43696,18 @@ RectTransform:
   m_AnchoredPosition: {x: -11, y: -16}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1788666337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1788666332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &1789326579
 GameObject:
   m_ObjectHideFlags: 0

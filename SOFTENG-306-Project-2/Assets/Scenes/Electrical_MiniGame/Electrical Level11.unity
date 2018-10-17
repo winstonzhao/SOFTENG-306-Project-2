@@ -13957,6 +13957,7 @@ GameObject:
   - component: {fileID: 510808905}
   - component: {fileID: 510808904}
   - component: {fileID: 510808906}
+  - component: {fileID: 510808907}
   m_Layer: 5
   m_Name: Okay_AND
   m_TagString: EndOfLevel
@@ -14058,6 +14059,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &510808907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 510808902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &512844591
 Prefab:
   m_ObjectHideFlags: 0
@@ -43441,6 +43454,7 @@ GameObject:
   - component: {fileID: 1498008919}
   - component: {fileID: 1498008918}
   - component: {fileID: 1498008917}
+  - component: {fileID: 1498008920}
   m_Layer: 5
   m_Name: Okay_XOR
   m_TagString: EndOfLevel
@@ -43542,6 +43556,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1498008915}
   m_CullTransparentMesh: 0
+--- !u!114 &1498008920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1498008915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &1499693377
 Prefab:
   m_ObjectHideFlags: 0
@@ -54320,6 +54346,7 @@ GameObject:
   - component: {fileID: 1897621848}
   - component: {fileID: 1897621847}
   - component: {fileID: 1897621846}
+  - component: {fileID: 1897621849}
   m_Layer: 5
   m_Name: Okay_NOT
   m_TagString: EndOfLevel
@@ -54421,6 +54448,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1897621844}
   m_CullTransparentMesh: 0
+--- !u!114 &1897621849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1897621844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &1899082975
 GameObject:
   m_ObjectHideFlags: 0
