@@ -176,10 +176,10 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         int timeRemain = Mathf.RoundToInt(currCountdownValueTenthSeconds / 10);
 
         // if time remaining is less than 50% of time limit
-        if (timeRemain < TimeLimit / 2)
+        if (timeRemain < TimeLimit - 5)
         {
             // reduce the player score
-            levelScore = 99 - (TimeLimit / 2 - timeRemain);
+            levelScore = 100 - (TimeLimit - timeRemain);
         }
         // set the level score in the end level dialog
         SetLevelScoreText(levelScore);
