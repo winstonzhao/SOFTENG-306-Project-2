@@ -20,6 +20,11 @@ namespace Instructions
 
         public override bool Editable { get; set; }
 
+        public override string InstructionName
+        {
+            get { return "Compare"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

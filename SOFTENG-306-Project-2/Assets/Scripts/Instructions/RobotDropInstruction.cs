@@ -10,6 +10,11 @@ namespace Instructions
         private Directions moveDirection = Directions.Up;
         private RobotController robot;
 
+        public override string InstructionName
+        {
+            get { return "Drop"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

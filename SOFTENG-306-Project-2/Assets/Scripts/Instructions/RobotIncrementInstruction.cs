@@ -13,6 +13,11 @@ namespace Instructions
 
         public SoftwareLevelGenerator SoftwareLevelGenerator;
 
+        public override string InstructionName
+        {
+            get { return "Increment"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

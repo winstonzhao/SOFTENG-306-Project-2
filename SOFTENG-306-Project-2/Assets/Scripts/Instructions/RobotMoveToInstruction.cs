@@ -26,6 +26,11 @@ namespace Instructions
 
         private GameObject tile;
 
+        public override string InstructionName
+        {
+            get { return "MoveTo"; }
+        }
+
         public RobotMoveToInstruction()
         {
             component2 = new InstructionComponent("POS")

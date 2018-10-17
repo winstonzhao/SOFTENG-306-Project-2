@@ -9,6 +9,11 @@ namespace Instructions
         private InstructionExecutor instructionExecutor;
         private string label = "END JUMP";
 
+        public override string InstructionName
+        {
+            get { return "JumpTarget"; }
+        }
+
         public override bool Editable { get; set; }
 
         public string Label

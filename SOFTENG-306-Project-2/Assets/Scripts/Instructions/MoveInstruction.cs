@@ -33,6 +33,11 @@ namespace Instructions
 
         private bool trackMouse;
 
+        public override string InstructionName
+        {
+            get { return "Move"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

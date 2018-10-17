@@ -11,6 +11,11 @@ namespace Instructions
 
         private RobotController robot;
 
+        public override string InstructionName
+        {
+            get { return "Move"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

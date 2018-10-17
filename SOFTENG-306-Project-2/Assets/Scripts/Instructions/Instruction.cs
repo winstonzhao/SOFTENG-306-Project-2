@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Instructions
 {
@@ -26,8 +27,12 @@ namespace Instructions
         }
     }
 
-    public abstract class Instruction : MonoBehaviour
+    public abstract class Instruction : MonoBehaviour, IPointerClickHandler
     {
+        private static string HELP_PREFIX = "software_minigame/Prefabs/help_";
+
+        public abstract string InstructionName { get; }
+
         // List of components to be rendered as part of this instruction
         public abstract ReadOnlyCollection<InstructionComponent> InstructionComponents { get; }
 
@@ -44,6 +49,26 @@ namespace Instructions
         public virtual float MinTiming
         {
             get { return 0.4f; }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Right) return;
+
+            var helpObj = GameObject.Find("help_" + InstructionName);
+
+            if (helpObj == null)
+            {
+                GameObject prefab = Resources.Load<GameObject>(HELP_PREFIX + InstructionName);
+                if (prefab == null) return;
+
+                helpObj = Instantiate<GameObject>(prefab);
+                helpObj.name = "help_" + InstructionName;
+                helpObj.transform.SetParent(GameObject.Find("InstructionCanvas").transform, false);
+            }
+
+            helpObj.SetActive(true);
+
         }
     }
 }

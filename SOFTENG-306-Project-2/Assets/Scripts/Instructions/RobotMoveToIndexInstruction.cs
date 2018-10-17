@@ -22,6 +22,11 @@ namespace Instructions
         private Vector3 targetPos;
         private Directions moveDirection;
 
+        public override string InstructionName
+        {
+            get { return "MoveToIndex"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

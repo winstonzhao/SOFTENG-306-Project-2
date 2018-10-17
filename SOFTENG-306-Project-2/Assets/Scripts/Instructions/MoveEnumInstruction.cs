@@ -29,6 +29,11 @@ namespace Instructions
         private float t;
         private MonoBehaviour target;
 
+        public override string InstructionName
+        {
+            get { return "MoveEnum"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get

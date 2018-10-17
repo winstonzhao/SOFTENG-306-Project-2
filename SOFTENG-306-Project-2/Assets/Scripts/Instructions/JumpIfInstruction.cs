@@ -15,6 +15,11 @@ namespace Instructions
         private Directions compareDirection;
         private RobotController.Compare comparison;
 
+        public override string InstructionName
+        {
+            get { return "JumpIf"; }
+        }
+
         public override bool Editable { get; set; }
 
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
