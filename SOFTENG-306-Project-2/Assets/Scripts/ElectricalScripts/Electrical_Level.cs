@@ -20,10 +20,11 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private bool timerNotStopped = true;
     private bool paused = false;
     private bool expected = false;
-    private bool secondDropZoneComplete = false;
+    private bool otherDropZonesComplete = false;
     private bool levelCompleteCalled = false;
     private float currCountdownValueTenthSeconds;
     private float pausedValue;
+    private GameObject[] dropZones;
 
     /*
      * Start called at beginning of level, initialises the rigidbodies in the
@@ -41,6 +42,17 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         StartCoroutine(StartCountdown(TimeLimit));
 
         SetPlayerName(Toolbox.Instance.GameManager.Player.Username);
+
+        // check that another dropZone exists
+        if (GameObject.FindWithTag("DropZone2") == null)
+        {
+            // if the second dropzone doesn't exist set to true
+            otherDropZonesComplete = true;
+        }
+        else
+        {
+            dropZones = GameObject.FindGameObjectsWithTag("DropZone2");
+        }
     }
 
     /*
@@ -48,20 +60,29 @@ public class Electrical_Level : MonoBehaviour, IDropZone
      */
     void Update()
     {
-        // check that a second drop zone exists
-        if (GameObject.FindWithTag("DropZone2") == null)
+        // if dropzones are currently incomplete iterate through to check
+        if (!otherDropZonesComplete)
         {
-            // if the second dropzone doesn't exist set to true
-            secondDropZoneComplete = true;
-        }
-        else
-        {
-            // check the status of the second dropzone
-            secondDropZoneComplete = GameObject.FindWithTag("DropZone2").GetComponent<Second_DropZone>().GetExpected();
+            // set completed to true
+            bool completedDropZones = true;
+            foreach (GameObject dropZone in dropZones)
+            {
+                // if a drop zone returns false set completed to false
+                if (!dropZone.GetComponent<Second_DropZone>().GetExpected())
+                {
+                    completedDropZones = false;
+                }
+            }
+
+            // if no dropzone is incomplete, set true
+            if (completedDropZones)
+            {
+                otherDropZonesComplete = true;
+            }
         }
 
         // if the the circuit is in the correct state
-        if (expected && secondDropZoneComplete)
+        if (expected && otherDropZonesComplete)
         {
             // if level complete has not been called
             if (!levelCompleteCalled)
@@ -131,7 +152,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         {
             if (currentItem == gate)
             {
-                if (secondDropZoneComplete)
+                if (otherDropZonesComplete)
                 {
                     levelCompleteCalled = true;
                     completeLevel();
