@@ -26,14 +26,14 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         private Animator animator;
 
         [HideInInspector]
-        public volatile bool hasReachedGoal = false;
+        public volatile bool hasReachedGoal = false; // Cars have finished moving because they reached the goal
 
         [HideInInspector]
-        public volatile bool noPathFound = false;
+        public volatile bool noPathFound = false;  // Cars have "finished" moving because there is no path for them to travel
 
-        void Awake()
+        public void Awake()
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();  // For animating moving agents
             hasReachedGoal = false;
             noPathFound = false;
         }
@@ -67,7 +67,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                 StartCoroutine(MoveAlongPathInternal(path));
             }, () =>
             {
-                Debug.Log("No path found");
                 noPathFound = true;
             });
         }
@@ -79,10 +78,11 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             var maxTimePassed = Vector3.Distance(from, to) / speed;
             var transition = to - from;
 
-            animator.SetBool("NE", transition.x == 1);
-            animator.SetBool("NW", transition.z == 1);
-            animator.SetBool("SE", transition.z == -1);
-            animator.SetBool("SW", transition.x == -1);
+            // For checking the direction the agent is travelling in, notify the animator
+            animator.SetBool("NE", (int)Math.Round(transition.x) == 1);
+            animator.SetBool("NW", (int)Math.Round(transition.z) == 1);
+            animator.SetBool("SE", (int)Math.Round(transition.z) == -1);
+            animator.SetBool("SW", (int)Math.Round(transition.x) == -1);
 
             while (timePassed + Time.deltaTime < maxTimePassed)
             {
@@ -99,8 +99,6 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                 yield return StepTo(GetComponent<IsoTransform>().Position,
                     pos + new Vector3(0, GetComponent<IsoTransform>().Size.y / 2, 0), Speed);
             }
-
-            Debug.Log("reached the goal");
             hasReachedGoal = true;
         }
 

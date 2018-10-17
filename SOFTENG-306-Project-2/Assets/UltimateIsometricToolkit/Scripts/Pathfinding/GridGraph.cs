@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Boo.Lang;
+using Civil_Mini_Game;
+using UltimateIsometricToolkit.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
@@ -37,10 +41,12 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
 
         public float MaxScanHeight = 20;
         public bool ShowGraph = false;
-        private Dictionary<Vector2, List<Gap>> _gridGraph = new Dictionary<Vector2, List<Gap>>();
-        public List<IsoTransform> Ignorables = new List<IsoTransform>();
-        public List<string> TraversableTiles = new List<string>();
+        private Dictionary<Vector2, System.Collections.Generic.List<Gap>> _gridGraph = new Dictionary<Vector2, System.Collections.Generic.List<Gap>>();
+        public System.Collections.Generic.List<IsoTransform> Ignorables = new System.Collections.Generic.List<IsoTransform>();
+        public System.Collections.Generic.List<string> TraversableTiles = new System.Collections.Generic.List<string>();
         public bool UseTraversableTile = false;
+        public bool CheckRotationOfTiles = false;
+        public RotationUtil RotationUtilInstance;
 
         #region Unity Callbacks 
 
@@ -85,14 +91,14 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public List<Gap> NodesInBounds(Vector3 min, Vector3 max)
+        public System.Collections.Generic.List<Gap> NodesInBounds(Vector3 min, Vector3 max)
         {
             if (_gridGraph == null)
                 return null;
             min = new Vector3(Mathf.Floor(min.x), min.y, Mathf.Floor(min.z));
             max = new Vector3(Mathf.Floor(max.x), max.y, Mathf.Floor(max.z));
-            var gridPositions = new List<Vector2>();
-            List<Gap> gaps = new List<Gap>();
+            var gridPositions = new System.Collections.Generic.List<Vector2>();
+            System.Collections.Generic.List<Gap> gaps = new System.Collections.Generic.List<Gap>();
             var size = max - min;
             for (var i = 0; i < Mathf.Abs(size.x); i++)
             for (var j = 0; j < Mathf.Abs(size.z); j++)
@@ -119,9 +125,35 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         {
             if (UseTraversableTile)
             {
-                _gridGraph = UpdateGraphInternal(FindObjectsOfType<IsoTransform>().Where(isoT =>
-                    isoT.GetComponent<DraggableIsoItem>() != null &&
-                    TraversableTiles.Contains(isoT.GetComponent<DraggableIsoItem>().name)));
+                IEnumerable<IsoTransform> traversableTiles = FindObjectsOfType<IsoTransform>().Where(isoT =>
+                     isoT.GetComponent<DraggableIsoItem>() != null &&
+                    TraversableTiles.Contains(isoT.GetComponent<DraggableIsoItem>().name));
+                if (CheckRotationOfTiles)
+                {
+                    // To keep track of tiles that need to be removed from the grid graph
+                    System.Collections.Generic.List<IsoTransform> tilesToRemove = new System.Collections.Generic.List<IsoTransform>();
+                    
+                    // Create a dict of traversable tiles with their iso positions as keys
+                    var locs = new Dictionary<Vector3, IsoTransform>();
+                    foreach (IsoTransform tile in traversableTiles)
+                    {
+                        locs.Add(tile.Position, tile);
+                    }
+
+                    foreach (IsoTransform tile in traversableTiles)
+                    {
+                        // Get the tiles adjacent to this tile on the x axis and store their corresponding direction
+                        var adjacentTiles = RotationUtilInstance.GetAdjacentTiles(tile, locs);
+                        
+                        // Mark invalid tiles
+                        tilesToRemove.AddRange(RotationUtilInstance.GetInvalidTiles(tile, adjacentTiles));
+                    }
+                    
+                    // Remove all the files that need to be removed
+                    traversableTiles = traversableTiles.Except(tilesToRemove).ToList();
+                }
+
+                _gridGraph = UpdateGraphInternal(traversableTiles);
             }
             else
             {
@@ -130,11 +162,11 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             }
         }
 
-        private Dictionary<Vector2, List<Gap>> UpdateGraphInternal(IEnumerable<IsoTransform> worldObjects,
+        private Dictionary<Vector2, System.Collections.Generic.List<Gap>> UpdateGraphInternal(IEnumerable<IsoTransform> worldObjects,
             float minAgentHeight = 0.5f)
         {
             var raster = Rasterize(worldObjects);
-            var grid = new Dictionary<Vector2, List<Gap>>();
+            var grid = new Dictionary<Vector2, System.Collections.Generic.List<Gap>>();
 
             //calculate nodes
             foreach (var gridPos in raster.Keys)
@@ -152,7 +184,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                     //direct adjacent cells
                     for (var i = 0; i < 4; i++)
                     {
-                        List<Gap> otherGaps;
+                        System.Collections.Generic.List<Gap> otherGaps;
                         if (!grid.TryGetValue(adjacentCells[i], out otherGaps))
                             continue;
                         foreach (var otherGap in otherGaps)
@@ -172,7 +204,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
                         //skip if 2 direct adjacent nodes not found
                         if (!directAdjacentArcFound[i % 4] || !directAdjacentArcFound[(i - 3) % 4])
                             continue;
-                        List<Gap> otherNodes;
+                        System.Collections.Generic.List<Gap> otherNodes;
                         if (!grid.TryGetValue(adjacentCells[i], out otherNodes))
                             continue;
                         foreach (var otherNode in otherNodes)
@@ -197,24 +229,24 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
         /// </summary>
         /// <param name="worldObjects"></param>
         /// <returns></returns>
-        private static Dictionary<Vector2, List<IsoTransform>> Rasterize(IEnumerable<IsoTransform> worldObjects)
+        private static Dictionary<Vector2, System.Collections.Generic.List<IsoTransform>> Rasterize(IEnumerable<IsoTransform> worldObjects)
         {
-            var grid = new Dictionary<Vector2, List<IsoTransform>>();
+            var grid = new Dictionary<Vector2, System.Collections.Generic.List<IsoTransform>>();
 
             foreach (var worldObj in worldObjects)
             {
                 var gridPos = NodePosToGridPos(worldObj.Position);
                 if (!grid.ContainsKey(gridPos))
-                    grid.Add(gridPos, new List<IsoTransform>());
+                    grid.Add(gridPos, new System.Collections.Generic.List<IsoTransform>());
                 grid[gridPos].Add(worldObj);
             }
 
             return grid;
         }
 
-        private List<Gap> CalculateGaps(Vector2 gridPos, List<IsoTransform> worldObjects, float minGapThreshold = 0.1f)
+        private System.Collections.Generic.List<Gap> CalculateGaps(Vector2 gridPos, System.Collections.Generic.List<IsoTransform> worldObjects, float minGapThreshold = 0.1f)
         {
-            var gapList = new List<Gap>();
+            var gapList = new System.Collections.Generic.List<Gap>();
             worldObjects.Sort((a, b) => a == b ? 0 : a.Min.y > b.Min.y ? 1 : -1);
             for (int i = 0; i < worldObjects.Count; i++)
             {

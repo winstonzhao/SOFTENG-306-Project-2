@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212527566034876734}
   - component: {fileID: 60148422858811474}
   - component: {fileID: 114387176330801290}
-  - component: {fileID: 114216334509094010}
+  - component: {fileID: 114610107079644862}
   m_Layer: 0
   m_Name: civil_road_tile
   m_TagString: BuildingBlock
@@ -53,7 +53,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -76,22 +76,6 @@ PolygonCollider2D:
       - {x: 0.65999997, y: -0.175}
       - {x: 0.65999997, y: 0.225}
       - {x: 0.24, y: 0.49499997}
---- !u!114 &114216334509094010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1163544479429800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isoTransform: {fileID: 0}
-  _isTrigger: 0
-  _material: {fileID: 0}
-  _size: {x: 0, y: 0, z: 0}
-  _center: {x: 0, y: 0, z: 0}
 --- !u!114 &114387176330801290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +94,21 @@ MonoBehaviour:
   SWSprite: {fileID: 21300000, guid: b31f680cc40c20842ad4964a15eb6181, type: 3}
   NWSprite: {fileID: 21300000, guid: ac8a3d18c839fd44dbbc47e65d710f1b, type: 3}
   dropZone: {fileID: 0}
+  Price: 100
+  Rotatable: 1
   homePos: {x: 0, y: 0, z: 0}
+--- !u!114 &114610107079644862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163544479429800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1b7e394a4fc5e4baad304fe3ad11b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!114 &114958083693229736
 MonoBehaviour:
   m_ObjectHideFlags: 1

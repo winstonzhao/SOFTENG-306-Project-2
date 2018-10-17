@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.UI;
 
 namespace Game.Hiscores.UserInterface
@@ -78,8 +75,6 @@ namespace Game.Hiscores.UserInterface
                 var rectParent = transform.parent.GetComponent<RectTransform>();
                 rectParent.sizeDelta = new Vector2(rectParent.sizeDelta.x, 300);
             }
-
-
         }
     }
 }

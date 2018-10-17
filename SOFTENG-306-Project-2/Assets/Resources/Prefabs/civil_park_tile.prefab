@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114958083693229736}
   - component: {fileID: 212527566034876734}
   - component: {fileID: 114387176330801290}
-  - component: {fileID: 114756306665989360}
   m_Layer: 0
   m_Name: civil_park_tile
   m_TagString: BuildingBlock
@@ -61,23 +60,9 @@ MonoBehaviour:
   SWSprite: {fileID: 21300000, guid: 24e0412f0699c2e45a41348176107af3, type: 3}
   NWSprite: {fileID: 21300000, guid: 6dce9974ea6d7ff4c9fc189dcb87f814, type: 3}
   dropZone: {fileID: 0}
+  Price: 0
+  Rotatable: 1
   homePos: {x: 0, y: 0, z: 0}
---- !u!114 &114756306665989360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1163544479429800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35292b5349934ef41907118f03f722ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isoTransform: {fileID: 0}
-  _isTrigger: 0
-  _material: {fileID: 0}
-  _size: {x: 0, y: 0, z: 0}
-  _center: {x: 0, y: 0, z: 0}
 --- !u!114 &114958083693229736
 MonoBehaviour:
   m_ObjectHideFlags: 1
