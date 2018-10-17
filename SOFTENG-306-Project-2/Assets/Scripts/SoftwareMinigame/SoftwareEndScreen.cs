@@ -19,8 +19,6 @@ public class SoftwareEndScreen : MonoBehaviour
     void Start()
     {
         Open();
-
-        Toolbox.Instance.QuestManager.MarkFinished("software-workshop");
     }
 
     /// <summary>
