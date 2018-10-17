@@ -79,28 +79,34 @@ public class Second_DropZone : MonoBehaviour, IDropZone
      */
     public void OnDrop(Draggable item)
     {
-        currentItem = item;
-        currentItem.HomePos = transform.position;
-
-        // check for each logic gate
-        foreach (Draggable gate in expectedGates)
+        if (currentItem == null)
         {
-            // check if a logic gate is expected in dropzone
-            if (currentItem == gate)
-            {
-                expected = true;
-            }
-        }
+            currentItem = item;
+            currentItem.HomePos = transform.position;
 
-        // if logic gate is expected, turn the corresponding circuit pieces yellow
-        if (expected)
+            // check for each logic gate
+            foreach (Draggable gate in expectedGates)
+            {
+                // check if a logic gate is expected in dropzone
+                if (currentItem == gate)
+                {
+                    expected = true;
+                }
+            }
+
+            // if logic gate is expected, turn the corresponding circuit pieces yellow
+            if (expected)
+            {
+                GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
+
+                foreach (GameObject circ in circuitPieces)
+                {
+                    circ.GetComponent<SpriteRenderer>().color = Color.yellow;
+                }
+            }
+        } else
         {
-            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
 
-            foreach (GameObject circ in circuitPieces)
-            {
-                circ.GetComponent<SpriteRenderer>().color = Color.yellow;
-            }
         }
 
     }
