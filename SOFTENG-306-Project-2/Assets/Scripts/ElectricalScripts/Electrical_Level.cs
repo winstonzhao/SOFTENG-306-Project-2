@@ -41,6 +41,8 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         }
         //timerArea.color = Color.black;
         StartCoroutine(StartCountdown(TimeLimit));
+
+        SetPlayerName(Toolbox.Instance.GameManager.Player.Username);
     }
 
     // Update is called once per frame
@@ -210,25 +212,6 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         timerArea.SetText(timerLabel);
     }
 
-
-    //private void AddHighScore(float timeLeft, int budget)
-    //{
-    //    float timeLeftPortion = timeLeft / (float)(TimeLimit * 10);
-    //    Debug.Log(timeLeftPortion);
-
-    //    float timeScore = timeLeftPortion * TimeMaxScore;
-    //    Debug.Log(timeScore);
-
-    //    Score score = new Score();
-    //    score.Minigame = Minigames.Civil;
-    //    score.Value = timeScore + CompletionBaseScore;
-    //    score.CreatedAt = DateTime.Now;
-    //    Debug.Log(DateTime.Now);
-
-    //    Debug.Log(score);
-    //    Toolbox.Instance.Hiscores.Add(score);
-    //}
-
     private void SetTimeAndAmount(int timeInSeconds, int amount)
     {
         TextMeshProUGUI resultInfoArea = GameObject.Find("ResultInfo").GetComponent<TextMeshProUGUI>();
@@ -246,8 +229,9 @@ public class Electrical_Level : MonoBehaviour, IDropZone
      */ 
     private void SetPlayerName(string name)
     {
+        string[] firstName = name.Split(null);
         TextMeshProUGUI nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
-        nameArea.SetText(name);
+        nameArea.SetText(firstName[0]+"!");
     }
 
     /*
