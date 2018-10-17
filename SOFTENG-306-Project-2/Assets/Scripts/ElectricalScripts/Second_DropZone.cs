@@ -45,13 +45,16 @@ public class Second_DropZone : MonoBehaviour, IDropZone
 
     public void OnDragExit(Draggable item)
     {
-        expected = false;
-
-        GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
-
-        foreach (GameObject circ in circuitPieces)
+        if (currentItem == null)
         {
-            circ.GetComponent<SpriteRenderer>().color = Color.gray;
+            expected = false;
+
+            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
+
+            foreach (GameObject circ in circuitPieces)
+            {
+                circ.GetComponent<SpriteRenderer>().color = Color.gray;
+            }
         }
 
     }
@@ -70,7 +73,7 @@ public class Second_DropZone : MonoBehaviour, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-
+        currentItem = null;
     }
 
     /*
@@ -115,6 +118,7 @@ public class Second_DropZone : MonoBehaviour, IDropZone
      */
     public void OnItemRemove(Draggable item)
     {
+        Debug.Log("SET TO NULL");
         currentItem = null;
         expected = false;
     }

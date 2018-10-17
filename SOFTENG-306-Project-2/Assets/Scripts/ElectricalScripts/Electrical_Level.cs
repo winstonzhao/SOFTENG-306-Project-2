@@ -53,6 +53,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         {
             // if the second dropzone doesn't exist set to true
             otherDropZones = false;
+            otherDropZonesComplete = true;
         }
         else
         {
@@ -136,8 +137,10 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     public void OnDragExit(Draggable item)
     {
-        expected = false;
-        currentItem = null;
+        if (currentItem == null)
+        {
+            expected = false;
+        }
 
     }
 
@@ -151,7 +154,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-
+        currentItem = null;
     }
 
     public void OnDrop(Draggable item)
