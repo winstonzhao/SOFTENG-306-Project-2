@@ -11,7 +11,7 @@ namespace Achievements
     {
         private const string JsonFile = "achievement-log.dat";
 
-        private List<Achievement> List = new List<Achievement>();
+        private readonly List<Achievement> List = new List<Achievement>();
         public ReadOnlyCollection<Achievement> All
         {
             get { return List.AsReadOnly(); }
@@ -31,7 +31,7 @@ namespace Achievements
             List.Add(new Achievement
             {
                 Id = "timetable",
-                Title= "Pick Up Your Timetable!",
+                Title = "Pick Up Your Timetable!",
                 Description = "You need to know where to be, don't want to miss anything related to this great day!"
             });
 
@@ -108,7 +108,7 @@ namespace Achievements
 
         public bool IsCompleted(string achievementId)
         {
-            return Completed[achievementId];
+            return Completed.ContainsKey(achievementId) && Completed[achievementId];
         }
 
         private AchievementsManager Load()

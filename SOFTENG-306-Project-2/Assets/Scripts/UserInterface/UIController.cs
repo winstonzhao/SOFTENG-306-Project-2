@@ -11,8 +11,9 @@ public class UIController : MonoBehaviour
     private GameObject achievementsTabPrefab;
     private GameObject backpackTab;
     private GameObject achievementsTab;
-    private GameObject achievementPrefab;
+    private GameObject rowPrefab;
     private Sprite correctSprite;
+    private Sprite incorrectSprite;
 
     enum Tab
     {
@@ -28,54 +29,78 @@ public class UIController : MonoBehaviour
         achievementsButton = transform.Find("Achievements Button").gameObject;
         backpackTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/BackpackTab");
         achievementsTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/AchievementsTab");
-        achievementPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Achievement Text + Checkbox");
+        rowPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Achievement Text + Checkbox");
         correctSprite = Resources.Load<Sprite>("ui/red_boxCheckmark");
+        incorrectSprite = Resources.Load<Sprite>("ui/grey_boxCheckmark");
         backpackTab = Instantiate(backpackTabPrefab, transform);
 
         // Click outside the interface to exit
         var overlay = transform.Find("Overlay");
         overlay.GetComponent<Button>().onClick.AddListener(() => { Toolbox.Instance.UIManager.ToggleUI(); });
 
-        backpackButton.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            Destroy(achievementsTab);
-            if (!backpackTab)
-            {
-                backpackTab = Instantiate(backpackTabPrefab, transform);
-            }
+        // Setup tab buttons to switch to the appropriate tab
+        backpackButton.GetComponent<Button>().onClick.AddListener(SwitchToTimetable);
+        achievementsButton.GetComponent<Button>().onClick.AddListener(SwitchToAchievements);
 
-            backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
-            achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
-        });
-
-        achievementsButton.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            Destroy(backpackTab);
-            if (!achievementsTab)
-            {
-                achievementsTab = Instantiate(achievementsTabPrefab, transform);
-            }
-
-            backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
-            achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
-            var achievements = Toolbox.Instance.AchievementsManager.All;
-            var scale = transform.localScale.y;
-            int i = 0;
-            foreach (var achievement in achievements)
-            {
-                var achievementObject = Instantiate(achievementPrefab, achievementsTab.transform).gameObject;
-                Vector3 initialPosition = achievementObject.GetComponent<RectTransform>().position;
-                initialPosition.y -= i * 30 * scale;
-                achievementObject.GetComponent<RectTransform>().position = initialPosition;
-                achievementObject.transform.Find("Text").gameObject.GetComponent<Text>().text = achievement.Title;
-                achievementObject.GetComponent<Image>().sprite = correctSprite;
-                i++;
-            }
-        });
+        // Open timetable by default
+        SwitchToTimetable();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SwitchToTimetable()
     {
+        Destroy(achievementsTab);
+        if (!backpackTab)
+        {
+            backpackTab = Instantiate(backpackTabPrefab, transform);
+        }
+
+        backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
+        achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
+        var manager = Toolbox.Instance.QuestManager;
+        var quests = Toolbox.Instance.QuestManager.Quests;
+        var scale = transform.localScale.y;
+        int i = 0;
+        foreach (var quest in quests)
+        {
+            if (string.IsNullOrEmpty(quest.Title))
+            {
+                continue;
+            }
+
+            var row = Instantiate(rowPrefab, backpackTab.transform).gameObject;
+            Vector3 initialPosition = row.GetComponent<RectTransform>().position;
+            initialPosition.y -= i * 30 * scale;
+            row.GetComponent<RectTransform>().position = initialPosition;
+            row.transform.Find("Text").gameObject.GetComponent<Text>().text = quest.Title;
+            row.GetComponent<Image>().sprite = manager.HasFinished(quest.Id) ? correctSprite : incorrectSprite;
+            i++;
+        }
+    }
+
+    private void SwitchToAchievements()
+    {
+        Destroy(backpackTab);
+        if (!achievementsTab)
+        {
+            achievementsTab = Instantiate(achievementsTabPrefab, transform);
+        }
+
+        backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
+        achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
+        var manager = Toolbox.Instance.AchievementsManager;
+        var achievements = manager.All;
+        var scale = transform.localScale.y;
+        int i = 0;
+        foreach (var achievement in achievements)
+        {
+            var row = Instantiate(rowPrefab, achievementsTab.transform).gameObject;
+            Vector3 initialPosition = row.GetComponent<RectTransform>().position;
+            initialPosition.y -= i * 30 * scale;
+            row.GetComponent<RectTransform>().position = initialPosition;
+            row.transform.Find("Text").gameObject.GetComponent<Text>().text = achievement.Title;
+            row.GetComponent<Image>().sprite =
+                manager.IsCompleted(achievement.Id) ? correctSprite : incorrectSprite;
+            i++;
+        }
     }
 }
