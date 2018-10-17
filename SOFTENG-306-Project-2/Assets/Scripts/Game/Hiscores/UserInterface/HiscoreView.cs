@@ -74,7 +74,7 @@ namespace Game.Hiscores.UserInterface
             {
                 var view = Instantiate(TextPrefab);
                 view.transform.SetParent(transform);
-                view.transform.localPosition = new Vector3(0, 0, 0);
+                view.transform.localPosition = new Vector3(0, 25, 0);
                 var rectParent = transform.parent.GetComponent<RectTransform>();
                 rectParent.sizeDelta = new Vector2(rectParent.sizeDelta.x, 300);
             }

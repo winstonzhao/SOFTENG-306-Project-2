@@ -56,4 +56,9 @@ public class Toolbox : Singleton<Toolbox>
     {
         get { return Notifications.Instance; }
     }
+
+    public UIManager UIManager
+    {
+        get { return UIManager.Instance; }
+    }
 }
