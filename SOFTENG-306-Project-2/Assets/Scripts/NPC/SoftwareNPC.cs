@@ -17,12 +17,12 @@ public class SoftwareNPC : InstructorNPC
     {
         return new DialogFrame(me, "Hello, I'm " + me)
         {
-            Next = new DialogFrame(Name, "Hi, I'm " + Name + "!")
+            Next = new DialogFrame(Name, "Hi, I'm " + Name + " the software instructor!")
             {
                 Options = new Dictionary<string, DialogFrame>
                 {
                     {
-                        "What is SOFTENG?", new DialogFrame(Name,
+                        "What is Software?", new DialogFrame(Name,
                             "A Bachelor of Engineering (Honours) in Software Engineering focuses on giving you " +
                             "the skills to engineer large, complex and fault-tolerant systems that function " +
                             "reliably, are effectively developed, and can be maintained efficiently.")
@@ -45,7 +45,7 @@ public class SoftwareNPC : InstructorNPC
                         }
                     },
                     {
-                        "Play Software Game", new DialogFrame(Name, "Alright let's play!")
+                        "Workshop", new DialogFrame(Name, "Alright let's do the workshop!")
                         {
                             TransitionToScene = "SoftwareMinigameWithInstructions"
                         }

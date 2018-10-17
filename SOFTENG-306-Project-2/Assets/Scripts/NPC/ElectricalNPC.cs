@@ -17,12 +17,12 @@ public class ElectricalNPC : InstructorNPC
     {
         return new DialogFrame(me, "Hello, I'm " + me)
         {
-            Next = new DialogFrame(Name, "Hi, I'm " + Name + "!")
+            Next = new DialogFrame(Name, "Hi, I'm " + Name + " the electrical instructor!")
             {
                 Options = new Dictionary<string, DialogFrame>()
                 {
                     {
-                        "What is ELECTENG?", new DialogFrame(Name,
+                        "What is Electrical?", new DialogFrame(Name,
                             "Electrical engineering is a professional engineering discipline that generally deals " +
                             "with the study and application of electricity, electronics, and electromagnetism.")
                         {
@@ -46,7 +46,7 @@ public class ElectricalNPC : InstructorNPC
                         }
                     },
                     {
-                        "Play Electrical Game", new DialogFrame(Name, "Alright let's play!")
+                        "Workshop", new DialogFrame(Name, "Alright let's do the workshop!")
                         {
                             TransitionToScene = "Welcome Screen"
                         }

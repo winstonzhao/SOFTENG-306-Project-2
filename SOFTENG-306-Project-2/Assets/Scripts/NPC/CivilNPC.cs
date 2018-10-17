@@ -17,7 +17,7 @@ public class CivilNPC : InstructorNPC
     {
         return new DialogFrame(me, "Hello, I'm " + me)
         {
-            Next = new DialogFrame(Name, "Hi, I'm " + Name + "!")
+            Next = new DialogFrame(Name, "Hi, I'm " + Name + ", the civil instructor!")
             {
                 Options = new Dictionary<string, DialogFrame>
                 {
@@ -45,7 +45,7 @@ public class CivilNPC : InstructorNPC
                         }
                     },
                     {
-                        "Play Civil Game", new DialogFrame(me, "Alright let's play!")
+                        "Workshop", new DialogFrame(me, "Alright let's do the workshop!")
                         {
                             TransitionToScene = "Civil Level 1"
                         }
