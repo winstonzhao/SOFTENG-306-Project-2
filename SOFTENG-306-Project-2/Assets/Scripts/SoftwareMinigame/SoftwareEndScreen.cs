@@ -125,6 +125,15 @@ public class SoftwareEndScreen : MonoBehaviour
     }
 
     /// <summary>
+    /// Skips to the next level
+    /// </summary>
+    public void SkipLevel()
+    {
+        int level = GameObject.Find("GameManager").GetComponent<SoftwareLevelGenerator>().currentLevel;
+        SceneManager.LoadScene(LEVEL_PREFIX + (level + 1));
+    }
+
+    /// <summary>
     /// Links the minigame back to the lobby and saves the highscore
     /// </summary>
     public void EndLevel()
