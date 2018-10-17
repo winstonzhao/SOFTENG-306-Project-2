@@ -80,6 +80,14 @@ public class CivilGameManager : MonoBehaviour
             _scores.Clear(); // Reset the scores for the mini-game
         }
     }
+    
+    /**
+     * Calculate the high score for the current civil mini game
+     */
+    public int CalculateHighScore()
+    {
+        return _scores.Count > 0 ? (int) _scores.Values.Average() : 0;
+    }
 
     /**
      * Toggle display based off a canvas that a panel is on, the name of the panel group and whether display is being

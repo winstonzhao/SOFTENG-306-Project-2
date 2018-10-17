@@ -501,6 +501,39 @@ public class CivilLevelController : MonoBehaviour
             }
         }
     }
+    
+    /**
+     * Show exit canvas
+     */
+    public void ShowExitCanvas()
+    {
+        TextMeshProUGUI exitInfoArea = GameObject.Find("ExitInfo").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI exitPlayerNameInfoArea = GameObject.Find("ExitPlayerName").GetComponent<TextMeshProUGUI>();
+        
+        // set the player name on the exit canvas
+        var text = exitPlayerNameInfoArea.text;
+        text = text.Replace("<name>", _playerName);
+        exitPlayerNameInfoArea.SetText(text);
+        
+        // set the sore on the exit canvas
+        text = exitInfoArea.text;
+        text = text.Replace("<score>", CivilGameManager.Instance.CalculateHighScore().ToString());
+        exitInfoArea.SetText(text);
+        
+        // show the canvas and disable control buttons
+        GameObject.Find("ExitCanvas").GetComponent<Canvas>().enabled = true;
+        ToggleGameControlButtons(false);
+    }
+    
+    /**
+     * Close exit canvas
+     */
+    public void CloseExitCanvas()
+    {
+        // close the canvas and re-enable control buttons
+        GameObject.Find("ExitCanvas").GetComponent<Canvas>().enabled = false;
+        ToggleGameControlButtons(true);
+    }
 
     /**
      * Call the CiVilGameManager to calculate and add the high score for this game play to the main game.
