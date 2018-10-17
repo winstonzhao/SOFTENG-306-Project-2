@@ -25,7 +25,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private float pausedValue;
     private bool paused = false;
     private bool expected = false;
-    private bool circuitComplete = false;
+    private bool secondDropZoneComplete = false;
     private bool levelCompleteCalled = false;
     private int tutorialLevelNumber = 4;
     private int levelScore = 100;
@@ -46,16 +46,19 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     // Update is called once per frame
     void Update()
     {
+        // check that a second drop zone exists
         if (GameObject.FindWithTag("DropZone2") == null)
         {
-            circuitComplete = true;
+            // if the second dropzone doesn't exist set to true
+            secondDropZoneComplete = true;
         }
         else
         {
-            circuitComplete = GameObject.FindWithTag("DropZone2").GetComponent<Second_DropZone>().GetExpected();
+            // check the status of the second dropzone
+            secondDropZoneComplete = GameObject.FindWithTag("DropZone2").GetComponent<Second_DropZone>().GetExpected();
         }
 
-        if (expected && circuitComplete)
+        if (expected && secondDropZoneComplete)
         {
             if (!levelCompleteCalled)
             {
@@ -89,12 +92,12 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     public void OnDragEnter(Draggable item)
     {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
+       // GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
     }
 
     public void OnDragExit(Draggable item)
     {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+     //   GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
     }
 
     public void OnDragFinish(Draggable item)
@@ -123,7 +126,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             }
         }
 
-        if (expected && circuitComplete)
+        if (expected && secondDropZoneComplete)
         {
             levelCompleteCalled = true;
             completeLevel();
@@ -131,9 +134,12 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     }
 
+    /*
+     * Method that is called when the ciruit is completed correctly
+     */ 
     private void completeLevel()
     {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+        //GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
         GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
 
         GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit");
