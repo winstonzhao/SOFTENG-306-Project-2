@@ -50,8 +50,8 @@ public class RobotController : MonoBehaviour
     }
 
     // Sprites used to represent different state of the object
-    private static string NO_ELEMENT = "software_minigame/Sprites/robot1";
-    private static string HAS_ELEMENT = "software_minigame/Sprites/robot2";
+    private static string NO_ELEMENT = "software_minigame/Sprites/robot";
+    private static string HAS_ELEMENT = "software_minigame/Sprites/holding";
 
     // Initialization
     void Start()
@@ -230,8 +230,7 @@ public class RobotController : MonoBehaviour
     {
         if (!hasElement || carrying == null)
         {
-            // Initialise required var
-            var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
+            
 
             // Check the direction of operation and set relevant flag
             CheckDirection(direction);
@@ -242,6 +241,8 @@ public class RobotController : MonoBehaviour
                 carrying = generator.GetObject(X + dx, Z + dz);
                 generator.SetMapLayout(X + dx, Z + dz, Command.PICKUP, null);
                 hasElement = true;
+                // Initialise required var
+                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().value);
                 this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
@@ -280,9 +281,6 @@ public class RobotController : MonoBehaviour
     {
         if (hasElement || carrying != null)
         {
-            // Initialise required var
-            var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
-
             // Check the direction of operation and set relevant flag
             CheckDirection(direction);
             
@@ -290,6 +288,7 @@ public class RobotController : MonoBehaviour
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
             {
                 carrying = generator.SetMapLayout(X + dx, Z + dz, Command.SWAP, carrying);
+                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().value);
                 this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
