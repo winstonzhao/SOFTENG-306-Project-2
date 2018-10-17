@@ -62,6 +62,11 @@ public class DraggableIsoItem : Draggable
      * Position of the block to return to
      */
     public Vector3 homePos;
+    
+    /**
+     * Reference to the civil level controller for disabling game control button when item moving
+     */
+    private CivilLevelController _civilLevelController;
 
     public override Vector3 HomePos
     {
@@ -88,6 +93,7 @@ public class DraggableIsoItem : Draggable
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        _civilLevelController = GameObject.Find("CivilLevelController").GetComponent<CivilLevelController>();
     }
 
     /**
@@ -165,12 +171,14 @@ public class DraggableIsoItem : Draggable
 
         if (_moving) // The block is moving to its new drop zone
         {
+            _civilLevelController.ToggleGameControlButtons(false);
             transform.position =
                 Vector3.Lerp(transform.position, _target, 0.1f); // Transform the position with an animation
             if (Vector3.Distance(transform.position, _target) < 0.01f)
             {
                 // Actually move the block there
                 GetComponent<IsoTransform>().Position = dropZone.GetComponent<IsoTransform>().Position;
+                _civilLevelController.ToggleGameControlButtons(true);
                 _moving = false;
             }
         }
