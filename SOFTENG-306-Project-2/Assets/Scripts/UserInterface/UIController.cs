@@ -79,6 +79,9 @@ public class UIController : MonoBehaviour
         {
             SwitchToTimetable();
         }
+
+        backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
+        achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
     }
 
     private void SwitchToDiploma()
@@ -98,8 +101,6 @@ public class UIController : MonoBehaviour
             backpackTab = Instantiate(timetableTabPrefab, transform);
         }
 
-        backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
-        achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
         var manager = Toolbox.Instance.QuestManager;
         var quests = Toolbox.Instance.QuestManager.Quests;
         var scale = transform.localScale.y;
@@ -131,6 +132,7 @@ public class UIController : MonoBehaviour
 
         backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
         achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
+
         var manager = Toolbox.Instance.AchievementsManager;
         var achievements = manager.All;
         var scale = transform.localScale.y;
