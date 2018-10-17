@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114411097989372048}
   - component: {fileID: 114340637937647562}
   - component: {fileID: 114228824126030596}
+  - component: {fileID: 114970046716337210}
   m_Layer: 5
   m_Name: JumpTargetUI
   m_TagString: Untagged
@@ -184,6 +185,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114970046716337210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1817423433055108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1b7e394a4fc5e4baad304fe3ad11b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!222 &222428931459530862
 CanvasRenderer:
   m_ObjectHideFlags: 1

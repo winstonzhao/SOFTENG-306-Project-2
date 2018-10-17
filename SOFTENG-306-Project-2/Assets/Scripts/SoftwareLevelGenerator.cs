@@ -3,6 +3,7 @@ using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
 using Instructions;
+using UnityEngine.SceneManagement;
 
 public class SoftwareLevelGenerator : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
     private static string INCORRECT_OUTPUT = "software_minigame/Sprites/lock1";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
+    private static string LEVEL_PREFIX = "scenes/Software Level ";
 
     private List<GameObject> generatedObjects = new List<GameObject>();
     private Dictionary<string, Vector3> arrayMap;
@@ -430,5 +432,10 @@ public class SoftwareLevelGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         endScreen.GetComponent<SoftwareEndScreen>().Open();
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(LEVEL_PREFIX + (currentLevel + 1));
     }
 }

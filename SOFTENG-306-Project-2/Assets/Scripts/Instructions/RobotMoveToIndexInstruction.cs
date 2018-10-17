@@ -116,6 +116,7 @@ namespace Instructions
             targetPos = softwareLevelGenerator.IndexLocation("a" + arrayElement.Value);
             var didMove = robot.MoveTo(Vector3.zero, "a" + arrayElement.Value);
             if (!didMove) throw new InstructionException("Could not move to " + arrayElement.Value);
+            arrayElement.Value++;
         }
 
     }
