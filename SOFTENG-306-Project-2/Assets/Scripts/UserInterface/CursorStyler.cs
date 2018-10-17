@@ -11,14 +11,14 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
 	public bool enabled = true;
 	
-	private CursorHandler handler;
+	private CursorHandler _handler;
 
 	/**
 	 * Set the default cursor handler
 	 */
 	void Awake()
 	{
-		handler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CursorHandler>();
+		_handler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CursorHandler>();
 	}
 
 	
@@ -29,7 +29,7 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	{
 		if (enabled)
 		{
-			handler.CursorEnter();
+			_handler.CursorEnter();
 		}
 	}
 
@@ -40,7 +40,7 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	{
 		if (enabled)
 		{
-			handler.CursorClear();
+			_handler.CursorClear();
 		}
 	}
 
@@ -56,7 +56,7 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	{
 		if (!EventSystem.current.IsPointerOverGameObject() && enabled) // Block mouse clicks through a canvas
 		{
-			handler.CursorEnter();
+			_handler.CursorEnter();
 		}
 	}
 
@@ -64,20 +64,20 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	{
 		if (!EventSystem.current.IsPointerOverGameObject() && enabled)
 		{
-			handler.CursorClear();
+			_handler.CursorClear();
 		}
 	}
 
 	private void OnMouseUp()
 	{
-		handler.CursorClear();
+		_handler.CursorClear();
 	}
 
 	private void OnMouseDrag()
 	{
 		if (!EventSystem.current.IsPointerOverGameObject() && enabled)
 		{
-			handler.CursorDrag();
+			_handler.CursorDrag();
 		}
 	}
 

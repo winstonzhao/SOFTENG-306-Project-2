@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UltimateIsometricToolkit.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
@@ -13,12 +11,12 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
     [RequireComponent(typeof(IsoTransform)), AddComponentMenu("UIT/Pathfinding/A* Agent")]
     public class CivilCarAgent : AstarAgent
     {
-        private Vector3 goal;  // Location of the goal the car is trying to reach
-        private Vector3 originalPosition;  // Starting position of the car
-        private float currCountdownValue;  // For countdown timer
-        private bool timerNotStopped;  // If the timer is still running
-        private bool notPassable = false;  // If a car should act as a wall to other cars not allowing them past
-        private bool checkForBlockingCars = true;  // If the cars should be checking for wall cars in front of them
+        private Vector3 goal; // Location of the goal the car is trying to reach
+        private Vector3 originalPosition; // Starting position of the car
+        private float currCountdownValue; // For countdown timer
+        private bool timerNotStopped; // If the timer is still running
+        private bool notPassable = false; // If a car should act as a wall to other cars not allowing them past
+        private bool checkForBlockingCars = true; // If the cars should be checking for wall cars in front of them
 
 
         public void Awake()
@@ -27,7 +25,7 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             base.Awake();
         }
 
-        
+
         /**
          * Stop the cars moving to the goals
          */
@@ -109,16 +107,14 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
          */
         void OnIsoTriggerEnter(IsoCollider isoCollider)
         {
-
-                CivilCarAgent collidedCar = isoCollider.GetComponentInParent<CivilCarAgent>();
-                if (collidedCar != null)  // If the car has collided with another car
+            CivilCarAgent collidedCar = isoCollider.GetComponentInParent<CivilCarAgent>();
+            if (collidedCar != null) // If the car has collided with another car
+            {
+                if (collidedCar.notPassable) // And the car is a wall
                 {
-                    if (collidedCar.notPassable)  // And the car is a wall
-                    {
-                        StopMoving();
-                    }
+                    StopMoving();
                 }
-
+            }
         }
 
         /**
@@ -133,5 +129,4 @@ namespace Ultimate_Isometric_Toolkit.Scripts.Pathfinding
             notPassable = false;
         }
     }
-
 }

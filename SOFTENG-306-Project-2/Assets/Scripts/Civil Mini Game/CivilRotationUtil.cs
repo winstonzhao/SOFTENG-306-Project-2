@@ -72,12 +72,12 @@ namespace Civil_Mini_Game
             Dictionary<DraggableIsoItem.Direction, IsoTransform> adjacentTiles)
         {
             List<IsoTransform> tilesToRemove = new List<IsoTransform>();
-            
+
             // get information of the current tile we are looking at
             var draggableTile = tile.GetComponentInParent<DraggableIsoItem>();
-            var thisTileName = draggableTile.name;  // name of the tile (road, bridge, etc.)
-            var thisDir = draggableTile.direction;  // direction of the tile
-            
+            var thisTileName = draggableTile.name; // name of the tile (road, bridge, etc.)
+            var thisDir = draggableTile.direction; // direction of the tile
+
             // check validness of the adjacent tiles one by one
             IsoTransform adjTile;
             DraggableIsoItem draggableAdjTile;
@@ -85,135 +85,133 @@ namespace Civil_Mini_Game
             DraggableIsoItem.Direction adjTileDirection;
             // only check road and bridge tiles, the path will already break if the road or bridge adjacent 
             // to the other blocks is invalid
-            if (thisTileName == "road" || thisTileName == "bridge")
+            if (thisTileName != "road" && thisTileName != "bridge") return tilesToRemove;
+            if (thisDir == NE || thisDir == SW) // for road or bridge tiles heading in NE or SW direction
             {
-                if (thisDir == NE || thisDir == SW) // for road or bridge tiles heading in NE or SW direction
+                var noAdjAtNE = false;
+                var noAdjAtSW = false;
+                if (adjacentTiles.TryGetValue(NE, out adjTile)) // get the adjacent tile at NE
                 {
-                    bool noAdjAtNE = false;
-                    bool noAdjAtSW = false;
-                    if (adjacentTiles.TryGetValue(NE, out adjTile)) // get the adjacent tile at NE
+                    draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
+                    adjTileName = draggableAdjTile.name;
+                    adjTileDirection = draggableAdjTile.direction;
+                    switch (adjTileName)
                     {
-                        draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
-                        adjTileName = draggableAdjTile.name;
-                        adjTileDirection = draggableAdjTile.direction;
-                        switch (adjTileName)
-                        {
-                            case "road":
-                            case "bridge":
-                                // the road or bridge at the NE should be directing NE or SW
-                                if (adjTileDirection != NE && adjTileDirection != SW) tilesToRemove.Add(tile);
-                                break;
-                            case "corner":
-                                // the corner at NE should be direction NE or SE
-                                if (adjTileDirection != NE && adjTileDirection != SE) tilesToRemove.Add(tile);
-                                break;
-                            case "three_way_intersection":
-                                // the three way intersection at NE should not face NW
-                                if (adjTileDirection == NW) tilesToRemove.Add(tile);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        noAdjAtNE = true;
-                    }
-
-                    if (adjacentTiles.TryGetValue(SW, out adjTile)) // get the adjacent tile at SW
-                    {
-                        draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
-                        adjTileName = draggableAdjTile.name;
-                        adjTileDirection = draggableAdjTile.direction;
-                        switch (adjTileName)
-                        {
-                            case "road":
-                            case "bridge":
-                                // the road or bridge at the SW should be directing NE or SW
-                                if (adjTileDirection != NE && adjTileDirection != SW) tilesToRemove.Add(tile);
-                                break;
-                            case "corner":
-                                // the corner at SW should be direction SW or NE
-                                if (adjTileDirection != SW && adjTileDirection != NW) tilesToRemove.Add(tile);
-                                break;
-                            case "three_way_intersection":
-                                // the three way intersection at SW should not face SE
-                                if (adjTileDirection == SE) tilesToRemove.Add(tile);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        noAdjAtSW = true;
-                    }
-
-                    if (noAdjAtNE && noAdjAtSW)
-                    {
-                        // if the road or bridge does not have adjacent tile on both ends, it is certainly not traversable
-                        tilesToRemove.Add(tile);
+                        case "road":
+                        case "bridge":
+                            // the road or bridge at the NE should be directing NE or SW
+                            if (adjTileDirection != NE && adjTileDirection != SW) tilesToRemove.Add(tile);
+                            break;
+                        case "corner":
+                            // the corner at NE should be direction NE or SE
+                            if (adjTileDirection != NE && adjTileDirection != SE) tilesToRemove.Add(tile);
+                            break;
+                        case "three_way_intersection":
+                            // the three way intersection at NE should not face NW
+                            if (adjTileDirection == NW) tilesToRemove.Add(tile);
+                            break;
                     }
                 }
-                else if (thisDir == SE || thisDir == NW) // for road or bridge tiles heading in SE or NW direction
+                else
                 {
-                    bool noAdjAtSE = false;
-                    bool noAdjAtNW = false;
-                    if (adjacentTiles.TryGetValue(SE, out adjTile)) // get the adjacent tile at SE
-                    {
-                        draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
-                        adjTileName = draggableAdjTile.name;
-                        adjTileDirection = draggableAdjTile.direction;
-                        switch (adjTileName)
-                        {
-                            case "road":
-                            case "bridge":
-                                // the road or bridge at the SE should be directing SE or NW
-                                if (adjTileDirection != SE && adjTileDirection != NW) tilesToRemove.Add(tile);
-                                break;
-                            case "corner":
-                                // the corner at SE should be direction SE or SW
-                                if (adjTileDirection != SE && adjTileDirection != SW) tilesToRemove.Add(tile);
-                                break;
-                            case "three_way_intersection":
-                                // the three way intersection at SE should not face NE
-                                if (adjTileDirection == NE) tilesToRemove.Add(tile);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        noAdjAtSE = true;
-                    }
+                    noAdjAtNE = true;
+                }
 
-                    if (adjacentTiles.TryGetValue(NW, out adjTile)) // get the adjacent tile at NW
+                if (adjacentTiles.TryGetValue(SW, out adjTile)) // get the adjacent tile at SW
+                {
+                    draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
+                    adjTileName = draggableAdjTile.name;
+                    adjTileDirection = draggableAdjTile.direction;
+                    switch (adjTileName)
                     {
-                        draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
-                        adjTileName = draggableAdjTile.name;
-                        adjTileDirection = draggableAdjTile.direction;
-                        switch (adjTileName)
-                        {
-                            case "road":
-                            case "bridge":
-                                // the road or bridge at the NW should be directing SE or NW
-                                if (adjTileDirection != SE && adjTileDirection != NW) tilesToRemove.Add(tile);
-                                break;
-                            case "corner":
-                                // the corner at NW should be direction NE or NW
-                                if (adjTileDirection != NE && adjTileDirection != NW) tilesToRemove.Add(tile);
-                                break;
-                            case "three_way_intersection":
-                                // the three way intersection at NW should not face SW
-                                if (adjTileDirection == SW) tilesToRemove.Add(tile);
-                                break;
-                        }
+                        case "road":
+                        case "bridge":
+                            // the road or bridge at the SW should be directing NE or SW
+                            if (adjTileDirection != NE && adjTileDirection != SW) tilesToRemove.Add(tile);
+                            break;
+                        case "corner":
+                            // the corner at SW should be direction SW or NE
+                            if (adjTileDirection != SW && adjTileDirection != NW) tilesToRemove.Add(tile);
+                            break;
+                        case "three_way_intersection":
+                            // the three way intersection at SW should not face SE
+                            if (adjTileDirection == SE) tilesToRemove.Add(tile);
+                            break;
                     }
-                    else
+                }
+                else
+                {
+                    noAdjAtSW = true;
+                }
+
+                if (noAdjAtNE && noAdjAtSW)
+                {
+                    // if the road or bridge does not have adjacent tile on both ends, it is certainly not traversable
+                    tilesToRemove.Add(tile);
+                }
+            }
+            else if (thisDir == SE || thisDir == NW) // for road or bridge tiles heading in SE or NW direction
+            {
+                var noAdjAtSE = false;
+                var noAdjAtNW = false;
+                if (adjacentTiles.TryGetValue(SE, out adjTile)) // get the adjacent tile at SE
+                {
+                    draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
+                    adjTileName = draggableAdjTile.name;
+                    adjTileDirection = draggableAdjTile.direction;
+                    switch (adjTileName)
                     {
-                        noAdjAtNW = true;
+                        case "road":
+                        case "bridge":
+                            // the road or bridge at the SE should be directing SE or NW
+                            if (adjTileDirection != SE && adjTileDirection != NW) tilesToRemove.Add(tile);
+                            break;
+                        case "corner":
+                            // the corner at SE should be direction SE or SW
+                            if (adjTileDirection != SE && adjTileDirection != SW) tilesToRemove.Add(tile);
+                            break;
+                        case "three_way_intersection":
+                            // the three way intersection at SE should not face NE
+                            if (adjTileDirection == NE) tilesToRemove.Add(tile);
+                            break;
                     }
-                    
-                    if (noAdjAtSE && noAdjAtNW)
+                }
+                else
+                {
+                    noAdjAtSE = true;
+                }
+
+                if (adjacentTiles.TryGetValue(NW, out adjTile)) // get the adjacent tile at NW
+                {
+                    draggableAdjTile = adjTile.GetComponentInParent<DraggableIsoItem>();
+                    adjTileName = draggableAdjTile.name;
+                    adjTileDirection = draggableAdjTile.direction;
+                    switch (adjTileName)
                     {
-                        // if the road or bridge does not have adjacent tile on both ends, it is certainly not traversable
-                        tilesToRemove.Add(tile);
+                        case "road":
+                        case "bridge":
+                            // the road or bridge at the NW should be directing SE or NW
+                            if (adjTileDirection != SE && adjTileDirection != NW) tilesToRemove.Add(tile);
+                            break;
+                        case "corner":
+                            // the corner at NW should be direction NE or NW
+                            if (adjTileDirection != NE && adjTileDirection != NW) tilesToRemove.Add(tile);
+                            break;
+                        case "three_way_intersection":
+                            // the three way intersection at NW should not face SW
+                            if (adjTileDirection == SW) tilesToRemove.Add(tile);
+                            break;
                     }
+                }
+                else
+                {
+                    noAdjAtNW = true;
+                }
+
+                if (noAdjAtSE && noAdjAtNW)
+                {
+                    // if the road or bridge does not have adjacent tile on both ends, it is certainly not traversable
+                    tilesToRemove.Add(tile);
                 }
             }
 

@@ -1,39 +1,36 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game;
 using Game.Hiscores;
-using Ultimate_Isometric_Toolkit.Scripts.physics;
-using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 /**
  * This class is a singleton class for managing the civil mini game across multiple levels.
  * This class also includes a few util methods that can be used independently by any level.
  */
-public class CivilGameManager : MonoBehaviour {
-
+public class CivilGameManager : MonoBehaviour
+{
     // Singleton CivilGameManager instance
-    public static CivilGameManager instance;
-    
+    public static CivilGameManager Instance;
+
     // Player name, default is "Anonymous"
-    public string playerName  = "Anonymous";
+    [FormerlySerializedAs("playerName")] public string PlayerName = "Anonymous";
 
     // Managing scores, key is Level Number and Value is Score
-    private Dictionary<int, int> scores = new Dictionary<int, int>();
-    
+    private readonly Dictionary<int, int> _scores = new Dictionary<int, int>();
+
     private void Awake()
     {
         // Check if instance already exists
-        if (instance == null)
+        if (Instance == null)
 
             // If not, set instance to this
-            instance = this;
+            Instance = this;
 
         // If instance already exists and it's not this:
-        else if (instance != this)
+        else if (Instance != this)
 
             // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
@@ -50,7 +47,7 @@ public class CivilGameManager : MonoBehaviour {
      */
     public void SetPlayerName(string playerName)
     {
-        instance.playerName = playerName;
+        Instance.PlayerName = playerName;
     }
 
     /**
@@ -59,9 +56,9 @@ public class CivilGameManager : MonoBehaviour {
     public void AddScore(int score, int level)
     {
         // If this is a new score for the level, or its greater than their previous attempt
-        if (!scores.ContainsKey(level) || score > scores[level])
+        if (!_scores.ContainsKey(level) || score > _scores[level])
         {
-            scores[level] = score;  // Add the new score
+            _scores[level] = score; // Add the new score
         }
     }
 
@@ -70,17 +67,17 @@ public class CivilGameManager : MonoBehaviour {
      */
     public void AddHighScore()
     {
-        if (scores.Count > 0) // If they have achieved atleast 1 score
+        if (_scores.Count > 0) // If they have achieved atleast 1 score
         {
             // Add a new high score for the mini-game as an average of their level scores.
             Score score = new Score();
             score.Minigame = Minigames.Civil;
-            int highScore = (int) scores.Values.Average();
+            int highScore = (int) _scores.Values.Average();
             score.Value = highScore;
             score.CreatedAt = DateTime.Now; // Current Time
 
             Toolbox.Instance.Hiscores.Add(score); // Add the score
-            scores.Clear(); // Reset the scores for the mini-game
+            _scores.Clear(); // Reset the scores for the mini-game
         }
     }
 
@@ -100,16 +97,17 @@ public class CivilGameManager : MonoBehaviour {
     /**
      * Find an object in a parent object including parent and inactive objects
      */
-    static GameObject FindObject(GameObject parent, string name)
+    private static GameObject FindObject(GameObject parent, string name)
     {
-        Transform[] trs = parent.GetComponentsInChildren<Transform>(true); // All objects
+        var trs = parent.GetComponentsInChildren<Transform>(true); // All objects
         foreach (Transform t in trs)
         {
-            if (t.name == name)  // The object we are looking for
+            if (t.name == name) // The object we are looking for
             {
                 return t.gameObject;
             }
         }
+
         return null;
     }
 }
