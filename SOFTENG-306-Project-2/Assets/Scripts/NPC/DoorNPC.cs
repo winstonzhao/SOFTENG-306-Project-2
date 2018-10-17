@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameDialog;
+using Quests;
+using UnityEngine.SceneManagement;
 
 public class DoorNPC : NPC
 {
@@ -25,8 +27,7 @@ public class DoorNPC : NPC
                     {
                         "Let's go!", new DialogFrame(me, "Let's go!")
                         {
-                            TransitionToScene = Level,
-                            OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("visit-leech"); }
+                            TransitionToScene = Level
                         }
                     },
                     {
@@ -42,5 +43,19 @@ public class DoorNPC : NPC
         };
 
         return new Dialog(frame, directions);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+
+        // If the door is located at engineering leech, show the notification
+        // This code is here because the notification canvas is per scene
+        // And we want the notification to show when the user gets to leech 
+        var activeScene = SceneManager.GetActiveScene();
+        if (activeScene.name == "Engineering Leech")
+        {
+            QuestManager.Instance.MarkCurrentFinished("visit-leech");
+        }
     }
 }

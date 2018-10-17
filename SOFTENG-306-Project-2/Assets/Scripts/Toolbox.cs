@@ -51,4 +51,9 @@ public class Toolbox : Singleton<Toolbox>
     {
         get { return AchievementsManager.Instance; }
     }
+
+    public Notifications Notifications
+    {
+        get { return Notifications.Instance; }
+    }
 }

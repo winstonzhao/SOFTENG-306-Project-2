@@ -34,7 +34,7 @@ public class SpeechBubble : MonoBehaviour
 
     private Text Text;
 
-    private void Start()
+    private void Awake()
     {
         if (Follow == null)
         {

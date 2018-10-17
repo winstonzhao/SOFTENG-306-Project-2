@@ -54,31 +54,36 @@ namespace Quests
             {
                 Id = "get-timetable",
                 Title = "Speak to Naomi",
-                Description = "Naomi has asked me to speak to her next to the student services stall"
+                Description = "Naomi has asked me to speak to her next to the student services stall",
+                NotificationText = "Open your backpack to view your timetable"
             });
             quests.Add(new Quest
             {
                 Id = "visit-leech",
                 Title = "Visit Engineering Leech",
-                Description = "I should go to the engineering leech to speak to the instructors"
+                Description = "I should go to the engineering leech to speak to the instructors",
+                NotificationText = "You made it to Engineering Leech!"
             });
             quests.Add(new Quest
             {
                 Id = "software-workshop",
                 Title = "Software Workshop",
-                Description = "The software instructor is waiting for me at the software workshop"
+                Description = "The software instructor is waiting for me at the software workshop",
+                NotificationText = "You finished the Software workshop!"
             });
             quests.Add(new Quest
             {
                 Id = "electrical-workshop",
                 Title = "Electrical Workshop",
-                Description = "The electrical instructor is waiting for me at the electrical workshop"
+                Description = "The electrical instructor is waiting for me at the electrical workshop",
+                NotificationText = "You finished the Electrical workshop!"
             });
             quests.Add(new Quest
             {
                 Id = "civil-workshop",
                 Title = "Civil Workshop",
-                Description = "The civil instructor is waiting for me at the civil workshop"
+                Description = "The civil instructor is waiting for me at the civil workshop",
+                NotificationText = "You finished the Civil workshop!"
             });
             quests.Add(new Quest
             {
@@ -88,13 +93,15 @@ namespace Quests
             {
                 Id = "networking",
                 Title = "Networking Event",
-                Description = "Speak to undergraduates and industry professionals"
+                Description = "Speak to undergraduates and industry professionals",
+                NotificationText = "Speak to Naomi for a prize, or keep talking to other students"
             });
             quests.Add(new Quest
             {
                 Id = "collect-prize",
                 Title = "Speak to Naomi",
-                Description = "Head to the engineering lobby to claim your prize"
+                Description = "Head to the engineering lobby to claim your prize",
+                NotificationText = "Check your backpack for your prize!"
             });
             quests.Add(new Quest
             {
@@ -128,6 +135,25 @@ namespace Quests
 
         public void MarkFinished(string questId)
         {
+            // Do nothing if already marked as finished
+            if (Completed.ContainsKey(questId) && Completed[questId])
+            {
+                return;
+            }
+
+            foreach (var quest in Quests)
+            {
+                if (quest.Id == questId)
+                {
+                    if (string.IsNullOrEmpty(quest.Title))
+                    {
+                        break;
+                    }
+
+                    Toolbox.Instance.Notifications.Show(quest.NotificationText);
+                }
+            }
+
             Completed[questId] = true;
 
             // Clear the memoized value if it's no longer the current quest 

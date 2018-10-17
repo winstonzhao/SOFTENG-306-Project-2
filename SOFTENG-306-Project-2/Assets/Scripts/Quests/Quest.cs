@@ -3,31 +3,14 @@ using UnityEngine;
 
 namespace Quests
 {
-    [Serializable]
     public class Quest
     {
-        [SerializeField]
-        private string id;
-        public string Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public string Id;
 
-        [SerializeField]
-        private string title;
-        public string Title
-        {
-            get { return title; }
-            set { title = value; }
-        }
+        public string Title;
 
-        [SerializeField]
-        private string description;
-        public string Description
-        {
-            get { return description; }
-            set { description = value; }
-        }
+        public string Description;
+
+        public string NotificationText;
     }
 }

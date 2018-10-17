@@ -57,7 +57,7 @@ public class GreeterNPC : NPC
                     frame = CollectPrizeDialogFrame(me, npc);
                     break;
                 default:
-                    frame = new DialogFrame(npc, "I hope you had a great time at enginuity day!");
+                    frame = new DialogFrame(npc, "I hope you had a great time at Enginuity Day!");
                     break;
             }
         }
@@ -308,7 +308,7 @@ public class GreeterNPC : NPC
                             Next = new DialogFrame(npc,
                                 "You can find your prize in your backpack.")
                             {
-                                OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("post-workshops"); }
+                                OnComplete = () => { Toolbox.Instance.QuestManager.MarkFinished("collect-prize"); }
                             }
                         }
                     }
