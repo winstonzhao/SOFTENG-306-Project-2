@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using WebSocketSharp;
 
 namespace Game.Hiscores.UserInterface
@@ -20,6 +21,12 @@ namespace Game.Hiscores.UserInterface
         }
 
         public event EventHandler OnMinigameChange;
+
+        private void Start()
+        {
+            var backButton = transform.Find("Back Button").GetComponent<Button>();
+            backButton.onClick.AddListener(() => { Toolbox.Instance.GameManager.ChangeScene("Menu"); });
+        }
 
         public void Open()
         {
