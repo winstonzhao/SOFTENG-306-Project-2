@@ -131,6 +131,8 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     public void OnDragExit(Draggable item)
     {
+        expected = false;
+        currentItem = null;
 
     }
 
