@@ -2,14 +2,16 @@
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
+using System.Linq;
 using Instructions;
+using UnityEngine.SceneManagement;
+using Utils;
 
 public class SoftwareLevelGenerator : MonoBehaviour
 {
     // Fields used to represent the current level and game
     public int currentLevel;
     public int numElements;
-    public GameObject endScreen;
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
 
@@ -17,6 +19,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public volatile int inputX;
     public volatile int inputZ;
     public Vector3 input;
+    private bool finishedInputs;
 
     // Prefabs and Sprites used for different states of the scene
     private static string ELEMENT_PREFAB = "software_minigame/Prefabs/item";
@@ -26,17 +29,23 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private static string INCORRECT_OUTPUT = "software_minigame/Sprites/lock1";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
 
+    // Used for storing all generated object for checking answer.
     private List<GameObject> generatedObjects = new List<GameObject>();
+    
+    // Used for storing position of array for MoveToIndex
     private Dictionary<string, Vector3> arrayMap;
-
+    
+    // Used to run all the instructions
     private InstructionExecutor instructionExecutor;
+    public SoftwareEndScreen endCanvas;
 
     // Enum used to map out the layout of the scene
     public enum Layout
     {
         EMPTY = 0,
         ELEMENT = 1,
-        PADDING = -1
+        PADDING = -1,
+        INDEX = 2
     }
 
     // Initialisation
@@ -45,6 +54,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
         GeneratedLevel(currentLevel);
     }
 
+    // Resetting the level
     public void Restart() {
         GeneratedLevel(currentLevel);
         GameObject input = this.transform.Find("Input").Find("Input").gameObject;
@@ -58,6 +68,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Used to initialised different levels
     public void GeneratedLevel(int level)
     {
+        finishedInputs = false;
         // Destroy any outdated objects
         foreach (var go in generatedObjects)
         {
@@ -126,11 +137,12 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 objectMap[6, 5] = obj;
                 break;
             case 4:
-                // Out of order insertion into empty index - MoveTo (by index), Initialise variable
+                // Out of order insertion into empty index - MoveTo (by index)
                 numElements = 1;
+                var indexNum = RandomGenerator.GetNext(4) + 4;
                 for (int x = 4; x < 8; x++)
                 {
-                    if (x != 5)
+                    if (x != indexNum)
                     {
                         obj = Instantiate<GameObject>(prefab);
                         obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, 5);
@@ -147,32 +159,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 1;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "1");
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = indexNum - 4;
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
-                objectMap[2, 1] = obj;
-
-                break;
-            case 6:
-                // Sort 2 element from input - Swap, Mixture of previous levels
-                numElements = 2;
-                for (int x = 5; x < 7; x++)
-                {
-                    arrayMap.Add("a" + (x - 5), new Vector3(x - 1, 1, 4));
-                }
-                obj = Instantiate<GameObject>(prefab);
-                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 0;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
-                obj.transform.parent = this.transform;
-                generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
+                layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
                 break;
             case 5:
@@ -183,36 +174,29 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
                 }
                 obj = Instantiate<GameObject>(prefab);
-                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 0;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 5);
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = 0;
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
-                objectMap[2, 1] = obj;
+                layoutMap[2, 6] = Layout.INDEX;
+                objectMap[2, 6] = obj;
                 break;
-            case 7:
-                // Sorting 4 element array - Mixture of above
-                numElements = 4;
-                for (int x = 4; x < 8; x++)
+            case 6:
+                // Sort 2 element from input - Swap, Mixture of previous levels
+                numElements = 2;
+                for (int x = 5; x < 7; x++)
                 {
-                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                    arrayMap.Add("a" + (x - 5), new Vector3(x - 1, 1, 4));
                 }
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 0;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = 0;
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
+                layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
-                break;
-            case 8:
-                // Grouping into 2 arrays - Holding instruction/Compare if even/odd
                 break;
         }
         NextInputElement();
@@ -238,6 +222,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
             numElements--;
         } else {
             // No elements left
+            finishedInputs = true;
             layoutMap[inputX, inputZ] = Layout.EMPTY;
             GameObject obj = this.transform.Find("Input").Find("Input").gameObject;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
@@ -250,7 +235,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public bool CheckAnswer()
     {
         // There are still elements left
-        if (numElements != 0)
+        if (!finishedInputs)
         {
             return false;
         }
@@ -302,6 +287,16 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 renderer.sprite = sprite;
                 return true;
+            case 5:
+                for (int x = 4; x < 8; x++)
+                {
+                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                }
+                renderer.sprite = sprite;
+                return true;
             case 6:
                 for (int x = 5; x < 6; x++)
                 {
@@ -322,39 +317,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     }   
                 }
                 renderer.sprite = sprite;
-                return true;
-            case 5:
-                for (int x = 4; x < 8; x++)
-                {
-                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
-                    {
-                        return false;
-                    }
-                }
-                renderer.sprite = sprite;
-                return true;
-            case 7:
-                for (int x = 4; x < 7; x++)
-                {
-                    GameObject a = objectMap[x, 6];
-                    GameObject b = objectMap[x + 1, 6];
-                    
-                    if (a == null || layoutMap[x, 6] != Layout.ELEMENT)
-                    {
-                        return false;
-                    }
-                    if (b == null || layoutMap[x + 1, 6] != Layout.ELEMENT)
-                    {
-                        return false;
-                    }
-                    if (a.GetComponent<ArrayElement>().Value > b.GetComponent<ArrayElement>().Value)
-                    {
-                        return false;
-                    }   
-                }
-                return true;
-            case 8:
-                StartCoroutine(EndScreen());
                 return true;
         }
         return false;
@@ -388,8 +350,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
 
             if (finished)
             {
+                Debug.Log("Finished");
                 instructionExecutor = FindObjectOfType<InstructionExecutor>();
                 instructionExecutor.Stop();
+                endCanvas = Resources.FindObjectsOfTypeAll<SoftwareEndScreen>()[0];
+                StartCoroutine(EndScreen());
             }
         } 
         else if (command == RobotController.Command.SWAP)
@@ -429,6 +394,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private IEnumerator EndScreen()
     {
         yield return new WaitForSeconds(0.5f);
-        endScreen.GetComponent<SoftwareEndScreen>().Open();
+        endCanvas.Open();
     }
+
 }

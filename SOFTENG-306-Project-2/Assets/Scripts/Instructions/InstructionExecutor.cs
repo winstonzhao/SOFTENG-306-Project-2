@@ -36,6 +36,8 @@ namespace Instructions
         private bool playing = false;
         private bool reset = true;
 
+
+        // Sets up some text to be used in case of an error
         private void SetupErrorText()
         {
             var go = new GameObject("Error text");
@@ -46,6 +48,7 @@ namespace Instructions
             rectTransform.anchorMin = new Vector2(0.5f, 0);
             rectTransform.anchorMax = new Vector2(0.5f, 0);
 
+            // Resize component to size of text automatically
             var sizeFitter = go.AddComponent<ContentSizeFitter>();
             sizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
             sizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -95,11 +98,18 @@ namespace Instructions
             return null;
         }
 
+        /// <summary>
+        /// Goes to the given instruction and will continue execution from there
+        /// </summary>
         public void JumpToInstruction(Instruction instruction)
         {
             instructionIndex = instructions.FindIndex(i => i.Instruction == instruction);
         }
 
+        /// <summary>
+        /// Starts execution from the beginning
+        /// If it has not been reset, will reset first
+        /// </summary>
         public void Play()
         {
             if (playing) return;
@@ -111,10 +121,13 @@ namespace Instructions
                 LevelGenerator.GeneratedLevel(LevelGenerator.currentLevel);
                 reset = true;
                 playButton.GetComponent<Image>().sprite = GetSpriteByName(PLAY_REGULAR);
+
+                // Change all instructions back to default
                 foreach (var instruction in instructions) instruction.Renderer.ResetStyle();
                 return;
             }
 
+            // Grey out stop button
             stopButton.GetComponent<Image>().color = new Color(1, 1, 1);
 
             reset = false;
@@ -122,6 +135,7 @@ namespace Instructions
             StatusText.text = "Playing";
             foreach (var instruction in instructions) instruction.Instruction.Editable = false;
 
+            // Load all instructions from draggable list
             instructionIndex = 0;
             instructions = draggableList.ListItems.Reverse().Select(l => new InstructionObj
             {
@@ -133,6 +147,9 @@ namespace Instructions
             ExecuteNextInstruction();
         }
 
+        /// <summary>
+        /// Will queue the next instruction in the list to be executed
+        /// </summary>
         public void ExecuteNextInstruction()
         {
             executeNext = true;
@@ -142,16 +159,14 @@ namespace Instructions
         {
             if (currentInstruction != null)
             {
+                // Reset current instruction
                 currentInstruction.Renderer.BackgroundColor = currentInstruction.Renderer.DefaultBackgroundColor;
             }
 
+            // Reached end of instructions
             if (instructionIndex > instructions.Count - 1)
             {
-                if (currentInstruction != null)
-                {
-                    currentInstruction.Renderer.BackgroundColor = currentInstruction.Renderer.DefaultBackgroundColor;
-                    currentInstruction = null;
-                }
+                currentInstruction = null;
                 Stop();
                 return;
             }
@@ -174,6 +189,9 @@ namespace Instructions
             executeNext = false;
         }
 
+        /// <summary>
+        /// Stops the execution at the end of the current instruction
+        /// </summary>
         public void Stop()
         {
             if (!playing) return;
@@ -193,6 +211,10 @@ namespace Instructions
             foreach (var instruction in instructions) instruction.Instruction.Editable = true;
         }
 
+        /// <summary>
+        /// To be called when an instruction has failed
+        /// Will show some error text to the user with the given message
+        /// </summary>
         public void FailExecution(string message)
         {
             if (currentInstruction != null)
@@ -212,6 +234,7 @@ namespace Instructions
 
         private IEnumerator AnimateErrorText()
         {
+            // Move up
             while (ErrorText.rectTransform.anchoredPosition.y < ErrorText.rectTransform.sizeDelta.y/2 + 10)
             {
                 ErrorText.rectTransform.anchoredPosition +=
@@ -221,6 +244,7 @@ namespace Instructions
 
             yield return new WaitForSeconds(1.0f);
 
+            // Move down
             while (ErrorText.rectTransform.anchoredPosition.y > - ErrorText.rectTransform.sizeDelta.y/2)
             {
                 ErrorText.rectTransform.anchoredPosition +=
@@ -231,8 +255,10 @@ namespace Instructions
 
         private void Update()
         {
+            // Update the current instruction
             if (currentInstruction != null && !executeNext) currentInstruction.Instruction.UpdateInstruction();
 
+            // Keep updating until it has finished or the min time has finished
             if (currentInstruction != null && Time.time - executionStart < currentInstruction.Instruction.MinTiming)
             {
                 return;

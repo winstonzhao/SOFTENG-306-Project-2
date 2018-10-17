@@ -10,6 +10,11 @@ namespace Instructions
         private Directions moveDirection = Directions.Up;
         private RobotController robot;
 
+        public override string InstructionName
+        {
+            get { return "Drop"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
@@ -53,6 +58,7 @@ namespace Instructions
             robot = target;
             var didMove = false;
 
+            // Try to drop
             didMove = robot.DropItem(moveDirection);
 
             if (!didMove) throw new InstructionException("Could not drop in given direction");

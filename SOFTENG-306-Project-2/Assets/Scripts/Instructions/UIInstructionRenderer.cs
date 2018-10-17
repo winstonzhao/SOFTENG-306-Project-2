@@ -152,7 +152,7 @@ namespace Instructions
 
         private void DestroyChildren()
         {
-            while (transform.childCount != 0)
+            for (int i = 0; i < 100; i++)
                 foreach (Transform child in transform)
                 {
                     #if UNITY_EDITOR

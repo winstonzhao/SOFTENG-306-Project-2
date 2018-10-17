@@ -10,6 +10,11 @@ namespace Instructions
         private JumpTargetInstruction jumpTarget;
         private InstructionManager instructionManager;
 
+        public override string InstructionName
+        {
+            get { return "Jump"; }
+        }
+
         public override bool Editable { get; set; }
 
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
@@ -76,6 +81,7 @@ namespace Instructions
 
         public override void UpdateInstruction()
         {
+            // Jump to new position
             instructionExecutor.JumpToInstruction(jumpTarget);
             instructionExecutor.ExecuteNextInstruction();
         }

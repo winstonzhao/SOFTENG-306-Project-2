@@ -208,6 +208,7 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left || moving) return;
         if (!mouseInside) return;
         dragging = true;
         moving = false;
@@ -225,6 +226,7 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left || moving) return;
         dragging = false;
         if (newDropZones.Count > 0 && newDropZones[0] != dropZone)
         {

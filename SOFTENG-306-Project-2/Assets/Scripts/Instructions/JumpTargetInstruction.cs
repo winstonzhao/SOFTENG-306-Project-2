@@ -9,6 +9,11 @@ namespace Instructions
         private InstructionExecutor instructionExecutor;
         private string label = "END JUMP";
 
+        public override string InstructionName
+        {
+            get { return "JumpTarget"; }
+        }
+
         public override bool Editable { get; set; }
 
         public string Label
@@ -41,6 +46,7 @@ namespace Instructions
 
         public override void UpdateInstruction()
         {
+            // Don't do anything, only a placeholder to jump to
             instructionExecutor.ExecuteNextInstruction();
         }
     }

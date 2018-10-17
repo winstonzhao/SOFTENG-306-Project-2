@@ -11,6 +11,11 @@ namespace Instructions
 
         private RobotController robot;
 
+        public override string InstructionName
+        {
+            get { return "Swap"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
@@ -54,6 +59,7 @@ namespace Instructions
             robot = target;
             var didMove = false;
 
+            // Try to swap
             didMove = robot.SwapItem(moveDirection);
 
             if (!didMove) throw new InstructionException("Could not swap");

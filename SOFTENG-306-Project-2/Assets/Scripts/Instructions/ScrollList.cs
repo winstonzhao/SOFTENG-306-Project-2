@@ -17,6 +17,7 @@ public class ScrollList : MonoBehaviour
             new Vector2(GetComponent<RectTransform>().sizeDelta.x * GetComponent<RectTransform>().lossyScale.x,
                 scrollList.MinSize.y);
         scrollList.Layout();
+
         scrollbar.onValueChanged.AddListener(value =>
         {
             // Scroll the content child on scrollbar change

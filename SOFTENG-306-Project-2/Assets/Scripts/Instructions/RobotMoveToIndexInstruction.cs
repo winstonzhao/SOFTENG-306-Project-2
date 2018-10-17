@@ -22,6 +22,11 @@ namespace Instructions
         private Vector3 targetPos;
         private Directions moveDirection;
 
+        public override string InstructionName
+        {
+            get { return "MoveToIndex"; }
+        }
+
         public override ReadOnlyCollection<InstructionComponent> InstructionComponents
         {
             get
@@ -99,6 +104,7 @@ namespace Instructions
                     break;
             }
 
+            // Find object at the given direction
             var obj = softwareLevelGenerator.GetObject(currentX, currentZ);
             if (obj == null)
             {
@@ -106,16 +112,20 @@ namespace Instructions
                 return;
             }
 
-            var arrayElement = obj.GetComponent<ArrayElement>();
+            var arrayElement = obj.GetComponent<IndexElement>();
             if (arrayElement == null)
             {
                 throw new InstructionException("Could not find object " + moveDirection.ToString());
                 return;
             }
 
+            // Jump to the index of the object adjacent
             targetPos = softwareLevelGenerator.IndexLocation("a" + arrayElement.Value);
             var didMove = robot.MoveTo(Vector3.zero, "a" + arrayElement.Value);
             if (!didMove) throw new InstructionException("Could not move to " + arrayElement.Value);
+
+            // Increment index element
+            arrayElement.Value++;
         }
 
     }
