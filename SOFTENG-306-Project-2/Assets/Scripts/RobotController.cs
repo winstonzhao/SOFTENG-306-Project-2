@@ -40,7 +40,7 @@ public class RobotController : MonoBehaviour
         DROP,
         SWAP
     }
-    
+
     // Possible compare instructions for the Robot
     public enum Compare
     {
@@ -61,9 +61,9 @@ public class RobotController : MonoBehaviour
 
         startPos = isoTransform.Position;
         // Initialise offset coordinates
-        X = (int)(isoTransform.Position.x + 1);
+        X = (int) (isoTransform.Position.x + 1);
         Y = 1;
-        Z = (int)(isoTransform.Position.z + 1);
+        Z = (int) (isoTransform.Position.z + 1);
     }
 
     // Used to reset the position of the robot to start
@@ -77,9 +77,9 @@ public class RobotController : MonoBehaviour
         renderer.sprite = sprite;
 
         isoTransform.Position = startPos;
-        X = (int)(isoTransform.Position.x + 1);
+        X = (int) (isoTransform.Position.x + 1);
         Y = 1;
-        Z = (int)(isoTransform.Position.z + 1);
+        Z = (int) (isoTransform.Position.z + 1);
 
         generator.Restart();
     }
@@ -100,11 +100,11 @@ public class RobotController : MonoBehaviour
                 return false;
             }
         }
-        
+
         // Calculate the required distance to translate for x and z
         var currentPos = isoTransform.Position;
-        int x = (int)(dest.x - currentPos.x);
-        int z = (int)(dest.z - currentPos.z);
+        int x = (int) (dest.x - currentPos.x);
+        int z = (int) (dest.z - currentPos.z);
 
         // This is for storing ths sequence of paths to traverse through
         Vector3[] path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
@@ -134,17 +134,6 @@ public class RobotController : MonoBehaviour
             }
         }
 
-        // Check if collision exist if z direction, if it does the reset the path and try path x then z
-        if (!moveZ)
-        {
-            path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
-            path[0] = currentPos;
-            count = 1;
-            // temp variables are used as a ghost for collision detection
-            tempX = X;
-            tempZ = Z;
-        }
-
         // Traverse through x
         for (int i = 0; i < Mathf.Abs(x); i++)
         {
@@ -162,12 +151,37 @@ public class RobotController : MonoBehaviour
             }
         }
 
-        // This is when there was a collision in the path z then x, and no collision was detected in x path,
-        // therefore, is not checking path x then z
-        if (!moveZ && moveX)
+        // Check if collision exist if z direction, if it does the reset the path and try path x then z
+        if (!moveZ || !moveX)
         {
             moveZ = true;
+            moveX = true;
+
             Debug.Log("No z then x path, trying x then z");
+            path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
+            path[0] = currentPos;
+            count = 1;
+            // temp variables are used as a ghost for collision detection
+            tempX = X;
+            tempZ = Z;
+
+            // Traverse through x
+            for (int i = 0; i < Mathf.Abs(x); i++)
+            {
+                tempX = x < 0 ? --tempX : ++tempX;
+
+                // Check for collision and add to path
+                if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
+                {
+                    path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                    count++;
+                }
+                else
+                {
+                    moveX = false;
+                }
+            }
+
             for (int i = 0; i < Mathf.Abs(z); i++)
             {
                 tempZ = z < 0 ? --tempZ : ++tempZ;
@@ -183,16 +197,16 @@ public class RobotController : MonoBehaviour
                 }
             }
         }
-        
+
         // If no collision then run it as a co-routine
         if (moveX && moveZ)
         {
             StartCoroutine(Shift(path));
             return true;
         }
-        
+
         Debug.Log("COLLIDE");
-        return false;  
+        return false;
     }
 
     // Moving 1 step in specified direction, return true if the command is valid
@@ -230,8 +244,6 @@ public class RobotController : MonoBehaviour
     {
         if (!hasElement || carrying == null)
         {
-            
-
             // Check the direction of operation and set relevant flag
             CheckDirection(direction);
 
@@ -242,7 +254,7 @@ public class RobotController : MonoBehaviour
                 generator.SetMapLayout(X + dx, Z + dz, Command.PICKUP, null);
                 hasElement = true;
                 // Initialise required var
-                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().value);
+                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().Value);
                 this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
@@ -272,7 +284,7 @@ public class RobotController : MonoBehaviour
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -283,12 +295,12 @@ public class RobotController : MonoBehaviour
         {
             // Check the direction of operation and set relevant flag
             CheckDirection(direction);
-            
+
             // Check if an element exists in the specified direction
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
             {
                 carrying = generator.SetMapLayout(X + dx, Z + dz, Command.SWAP, carrying);
-                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().value);
+                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().Value);
                 this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
@@ -298,7 +310,7 @@ public class RobotController : MonoBehaviour
     }
 
     // This is used for both the compare operation as well as the jump if operation
-    // If it is compare operation, the item param will be set to true, and the compare is done between the item which the 
+    // If it is compare operation, the item param will be set to true, and the compare is done between the item which the
     // robot is currently holding and the item in the direction specified.
     // Otherwise, for jump compare, the item param is set to false and the comparison is done between the variable and
     // the input param
@@ -307,7 +319,7 @@ public class RobotController : MonoBehaviour
         // Set to compare for jump by default
         int compareWith = input;
         int value = variable;
-        
+
         // If item flag is set then it is used by the compare instruction and override the comparing values with
         // appropriate values.
         if (item)
@@ -322,17 +334,17 @@ public class RobotController : MonoBehaviour
                 {
                     return false;
                 }
-                
+
                 // Override flags for to the compare instruction
-                compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().value;
-                value = carrying.GetComponent<ArrayElement>().value;
+                compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().Value;
+                value = carrying.GetComponent<ArrayElement>().Value;
             }
             else
             {
                 return false;
             }
         }
-        
+
         // Check for specified type of comparison
         switch (option)
         {
@@ -341,21 +353,24 @@ public class RobotController : MonoBehaviour
                 {
                     return true;
                 }
+
                 break;
             case Compare.LESS_THAN:
-                if (value < compareWith)
-                {
-                    return true;
-                }
-                break;
-            case Compare.GREATER_THAN:
                 if (value > compareWith)
                 {
                     return true;
                 }
+
+                break;
+            case Compare.GREATER_THAN:
+                if (value < compareWith)
+                {
+                    return true;
+                }
+
                 break;
         }
-        
+
         return false;
     }
 
@@ -405,12 +420,13 @@ public class RobotController : MonoBehaviour
                     pos = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z));
                     break;
                 }
+
                 yield return null;
             }
         }
 
         // Update the offset coordinates
-        X = (int)isoTransform.Position.x + 1;
-        Z = (int)isoTransform.Position.z + 1;
+        X = (int) isoTransform.Position.x + 1;
+        Z = (int) isoTransform.Position.z + 1;
     }
 }

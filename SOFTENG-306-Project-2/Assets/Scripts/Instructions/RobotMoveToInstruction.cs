@@ -93,6 +93,7 @@ namespace Instructions
                             {
                                 OnComponentClicked = onClicked
                             };
+                        targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
                         instructionRenderer.Render();
                     }
                 }
@@ -129,8 +130,7 @@ namespace Instructions
 
             if (selectedObj == null) throw new InstructionException("No Move target selected");
 
-            targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
-            var didMove = robot.MoveTo(targetPos, "");
+            var didMove = robot.MoveTo(targetPos, null);
             if (!didMove) throw new InstructionException("Could not move to selected target");
         }
 
@@ -144,10 +144,8 @@ namespace Instructions
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("enter1");
             if (selectedObj == null) return;
 
-            Debug.Log("enter");
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/RobotGhost");
 
             tile = Instantiate(prefab);

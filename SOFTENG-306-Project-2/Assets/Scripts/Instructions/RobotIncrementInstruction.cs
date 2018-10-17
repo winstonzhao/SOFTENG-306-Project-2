@@ -19,7 +19,7 @@ namespace Instructions
             {
                 return new List<InstructionComponent>
                 {
-                    new InstructionComponent("Pickup"),
+                    new InstructionComponent("Increment"),
                     new DropdownInstructionComponent("up")
                     {
                         OnComponentClicked = onClicked
@@ -92,7 +92,7 @@ namespace Instructions
                 return;
             }
 
-            arrayElement.value++;
+            arrayElement.Value++;
 
         }
     }

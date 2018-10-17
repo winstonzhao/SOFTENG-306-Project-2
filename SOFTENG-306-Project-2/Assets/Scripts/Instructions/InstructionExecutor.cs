@@ -52,7 +52,7 @@ namespace Instructions
 
             ErrorText = go.AddComponent<Text>();
             ErrorText.fontSize = 40;
-            ErrorText.color = new Color(226f / 255, 67f / 255, 67f / 255);
+            ErrorText.color = new Color(1, 1, 1);
             ErrorText.font = Font.CreateDynamicFontFromOSFont("Arial", 40);
 
             rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y / 2);

@@ -4,13 +4,30 @@ using System.Security.Cryptography;
 using Random = System.Random;
 
 public class ArrayElement : MonoBehaviour {
-    public int value;
+	private SpriteRenderer spriteRenderer;
+	private static string ITEM = "software_minigame/Sprites/item";
+
+	private int value;
+	public int Value
+	{
+		get { return value; }
+		set
+		{
+			this.value = value;
+			if (spriteRenderer != null) spriteRenderer.sprite = Resources.Load<Sprite>(ITEM + value);
+		}
+	}
+
+	private void Start()
+	{
+		spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
 	// Use this for initialization
 	public void Generate () {
-		value = NextInt(1, 10);
+		Value = NextInt(1, 10);
     }
-	
+
 	private static int NextInt(int min, int max)
 	{
 		RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();

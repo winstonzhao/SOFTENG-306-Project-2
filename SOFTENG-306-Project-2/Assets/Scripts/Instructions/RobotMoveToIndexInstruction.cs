@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
@@ -65,7 +66,8 @@ namespace Instructions
             }
             else
             {
-                if (robot.GetComponent<IsoTransform>().Position == targetPos)
+                if (Math.Abs(robot.GetComponent<IsoTransform>().Position.x - targetPos.x) < .01f
+                    && Math.Abs(robot.GetComponent<IsoTransform>().Position.y - targetPos.y) < .01f)
                 {
                     executeNext = true;
                 }
@@ -111,9 +113,9 @@ namespace Instructions
                 return;
             }
 
-            targetPos = softwareLevelGenerator.IndexLocation("a" + arrayElement.value);
-            var didMove = robot.MoveTo(Vector3.zero, "a" + arrayElement.value);
-            if (!didMove) throw new InstructionException("Could not move to " + arrayElement.value);
+            targetPos = softwareLevelGenerator.IndexLocation("a" + arrayElement.Value);
+            var didMove = robot.MoveTo(Vector3.zero, "a" + arrayElement.Value);
+            if (!didMove) throw new InstructionException("Could not move to " + arrayElement.Value);
         }
 
     }
