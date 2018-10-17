@@ -258,7 +258,7 @@ namespace GameDialog
             var gameFrameTransform = GameFrame.GetComponent<RectTransform>();
             position = gameFrameTransform.position;
             position[0] = 100 * scale;
-            position[1] = 75 * scale;
+            position[1] = 90 * scale;
             position[2] = 0;
             gameFrameTransform.position = position;
         }
@@ -278,9 +278,15 @@ namespace GameDialog
             var gameFrameTransform = GameFrame.GetComponent<RectTransform>();
             position = gameFrameTransform.position;
             position[0] = 50 * scale;
-            position[1] = 75 * scale;
+            position[1] = 90 * scale;
             position[2] = 0;
             gameFrameTransform.position = position;
+        }
+
+        private void Start()
+        {
+            // Place dialog higher than UI
+            GetComponent<Canvas>().sortingOrder = 600;
         }
 
         private void Update()
