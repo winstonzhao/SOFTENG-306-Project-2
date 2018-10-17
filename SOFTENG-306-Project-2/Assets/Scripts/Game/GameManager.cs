@@ -32,6 +32,8 @@ namespace Game
 
         private readonly DebounceAction DebounceSaveSettings;
 
+        private float LastSavedAt;
+
         public GameManager()
         {
             var every = TimeSpan.FromSeconds(1);
@@ -49,9 +51,12 @@ namespace Game
 
         public void Update()
         {
-            if (Settings.IsDirty)
+            LastSavedAt += Time.deltaTime;
+
+            // Periodically save every 2.5 seconds - player object changes without triggering the save
+            if (LastSavedAt > 2.5f)
             {
-                Settings.IsDirty = false;
+                LastSavedAt = 0f;
                 DebounceSaveSettings.Run();
             }
         }

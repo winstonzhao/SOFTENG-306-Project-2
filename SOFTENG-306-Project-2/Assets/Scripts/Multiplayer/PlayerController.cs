@@ -1,4 +1,5 @@
 using System;
+using UltimateIsometricToolkit.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,12 +34,31 @@ namespace Multiplayer
 
         private void Awake()
         {
+            Transform = GetComponent<IsoTransform>();
+
             if (Self)
             {
                 Player = Toolbox.Instance.GameManager.Player;
-            }
 
-            Transform = GetComponent<IsoTransform>();
+                var activeScene = SceneManager.GetActiveScene();
+
+                // Restore the player position from the previous session
+                if (activeScene.name == Player.Scene)
+                {
+                    Transform.Position = new Vector3(Player.X, Player.Y, Player.Z);
+
+                    // Update the ghost reference too - the player takes the position from the ghost so we need this
+                    var ghostReference = GetComponent<GhostReference>();
+                    if (ghostReference != null && ghostReference.GhostObject != null)
+                    {
+                        var ghost = ghostReference.GhostObject;
+                        if (ghost != null)
+                        {
+                            ghost.transform.position = Transform.Position;
+                        }
+                    }
+                }
+            }
 
             MovementAnimator = GetComponent<Animator>();
 
