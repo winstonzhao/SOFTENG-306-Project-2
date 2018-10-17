@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 1004510117}
   - component: {fileID: 1004510116}
   - component: {fileID: 1004510115}
+  - component: {fileID: 1004510118}
   m_Layer: 5
   m_Name: Begin_Button
   m_TagString: Untagged
@@ -417,6 +418,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1004510113}
   m_CullTransparentMesh: 0
+--- !u!114 &1004510118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004510113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &1183588390
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +535,7 @@ GameObject:
   - component: {fileID: 1577169194}
   - component: {fileID: 1577169196}
   - component: {fileID: 1577169195}
+  - component: {fileID: 1577169198}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -580,8 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3ebd2ce0e1494f981c7e099ae335ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1802210496714480, guid: f0045fdec0bf14c369fd82bfc06312bc,
-    type: 2}
 --- !u!81 &1577169196
 AudioListener:
   m_ObjectHideFlags: 0
@@ -602,6 +614,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1577169198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1577169193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4097bf19dd84c2690fef13ed4796f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseDefaultTexture: {fileID: 2800000, guid: c3fb681d0099d4b7cbdbfdbc911230c4, type: 3}
+  mouseOverTexture: {fileID: 2800000, guid: b6c905af623ae4a6da0cbab986b76ca4, type: 3}
+  mouseDragTexture: {fileID: 2800000, guid: 6ef4591b7fa1745f1a4e10002b0bb049, type: 3}
+  cursorMode: 0
+  hotSpotDefault: {x: 0, y: 0}
+  hotSpotOver: {x: 12, y: 0}
+  hotSpotDrag: {x: 12, y: 0}
 --- !u!1 &1767820486
 GameObject:
   m_ObjectHideFlags: 0

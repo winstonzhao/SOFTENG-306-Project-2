@@ -5587,6 +5587,7 @@ GameObject:
   - component: {fileID: 280956381}
   - component: {fileID: 280956380}
   - component: {fileID: 280956379}
+  - component: {fileID: 280956383}
   m_Layer: 5
   m_Name: Okay
   m_TagString: EndOfLevel
@@ -5688,6 +5689,18 @@ RectTransform:
   m_AnchoredPosition: {x: -11, y: -16}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &280956383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 280956378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1001 &284907454
 Prefab:
   m_ObjectHideFlags: 0
@@ -36355,8 +36368,6 @@ MonoBehaviour:
   endOfLevelCanvas: {fileID: 1568409157}
   levelNumber: 4
   TimeLimit: 30
-  TimeMaxScore: 30
-  CompletionBaseScore: 20
 --- !u!61 &1697961530
 BoxCollider2D:
   m_ObjectHideFlags: 0

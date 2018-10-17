@@ -15207,6 +15207,7 @@ GameObject:
   - component: {fileID: 664398680}
   - component: {fileID: 664398679}
   - component: {fileID: 664398678}
+  - component: {fileID: 664398682}
   m_Layer: 5
   m_Name: Okay
   m_TagString: EndOfLevel
@@ -15308,6 +15309,18 @@ RectTransform:
   m_AnchoredPosition: {x: -11, y: -16}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &664398682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664398677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!1 &665154816
 GameObject:
   m_ObjectHideFlags: 0
@@ -15809,11 +15822,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -27985,11 +27998,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -38698,8 +38711,6 @@ MonoBehaviour:
   endOfLevelCanvas: {fileID: 617797648}
   levelNumber: 2
   TimeLimit: 30
-  TimeMaxScore: 30
-  CompletionBaseScore: 20
 --- !u!61 &1697961530
 BoxCollider2D:
   m_ObjectHideFlags: 0
