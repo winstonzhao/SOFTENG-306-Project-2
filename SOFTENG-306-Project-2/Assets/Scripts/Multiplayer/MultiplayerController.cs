@@ -81,8 +81,10 @@ namespace Multiplayer
             WebSocket.SendAsync(payload, completed);
         }
 
-        private void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             TimeDrift = TimeSpan.Zero;
 
             PlayerPrefab = Resources.Load<GameObject>("Prefabs/Multiplayer");
@@ -100,8 +102,10 @@ namespace Multiplayer
             }
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
+
             if (WebSocket != null)
             {
                 WebSocket.Close();
@@ -331,7 +335,7 @@ namespace Multiplayer
                     var username = pc.Player.Username;
                     if (!players.ContainsKey(username))
                     {
-                        DestroyImmediate(child.gameObject);
+                        Destroy(child.gameObject);
                     }
                 }
             }

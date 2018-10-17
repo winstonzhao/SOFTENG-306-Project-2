@@ -79,12 +79,12 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     ///   even after stopping playing the Application. Really bad!
     /// So, this was made to be sure we're not creating that buggy ghost object.
     /// </summary>
-    public void OnDestroy()
+    public virtual void OnDestroy()
     {
         _applicationIsQuitting = true;
     }
 
-    void Awake()
+    public virtual void Awake()
     {
         _applicationIsQuitting = false;
     }
