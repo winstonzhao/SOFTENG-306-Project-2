@@ -25,6 +25,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     private bool paused = false;
     private bool expected = false;
     private bool otherDropZonesComplete = false;
+    private bool otherDropZones = true;
     private bool levelCompleteCalled = false;
     private float currCountdownValueTenthSeconds;
     private float pausedValue;
@@ -51,7 +52,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         if (GameObject.FindWithTag("DropZone2") == null)
         {
             // if the second dropzone doesn't exist set to true
-            otherDropZonesComplete = true;
+            otherDropZones = false;
         }
         else
         {
@@ -65,7 +66,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     void Update()
     {
         // if dropzones are currently incomplete iterate through to check
-        if (!otherDropZonesComplete)
+        if (otherDropZones)
         {
             // set completed to true
             bool completedDropZones = true;
@@ -82,12 +83,16 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             if (completedDropZones)
             {
                 otherDropZonesComplete = true;
+            } else
+            {
+                otherDropZonesComplete = false;
             }
         }
 
         // if the the circuit is in the correct state
         if (expected && otherDropZonesComplete)
         {
+            Debug.Log("IF THE CIRCUIT IS HEJ");
             // if level complete has not been called
             if (!levelCompleteCalled)
             {
@@ -166,6 +171,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
                 else
                 {
                     expected = true;
+                    Debug.Log("TRUE hereheheh");
                 }
             }
         }

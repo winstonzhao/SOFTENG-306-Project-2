@@ -45,7 +45,15 @@ public class Second_DropZone : MonoBehaviour, IDropZone
 
     public void OnDragExit(Draggable item)
     {
-       
+        expected = false;
+
+        GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
+
+        foreach (GameObject circ in circuitPieces)
+        {
+            circ.GetComponent<SpriteRenderer>().color = Color.gray;
+        }
+
     }
 
     /*
@@ -108,6 +116,7 @@ public class Second_DropZone : MonoBehaviour, IDropZone
     public void OnItemRemove(Draggable item)
     {
         currentItem = null;
+        expected = false;
     }
 
     public bool CanDrop(Draggable item)
