@@ -6,7 +6,6 @@ using Utils;
 
 namespace Achievements
 {
-    [Serializable]
     public class AchievementsManager : Singleton<AchievementsManager>
     {
         private const string JsonFile = "achievement-log.dat";
@@ -17,8 +16,7 @@ namespace Achievements
             get { return List.AsReadOnly(); }
         }
 
-        [SerializeField]
-        private Dictionary<string, bool> Completed;
+        private Dictionary<string, bool> Completed = new Dictionary<string, bool>();
 
         private readonly DebounceAction DebounceSave;
 
@@ -85,8 +83,7 @@ namespace Achievements
             });
 
             // Load state after adding achievements
-            var achievements = Load();
-            Completed = achievements != null ? achievements.Completed : new Dictionary<string, bool>();
+            Load();
         }
 
         public void MarkCompleted(Achievement achievement, bool completed = true)
@@ -111,9 +108,9 @@ namespace Achievements
             return Completed.ContainsKey(achievementId) && Completed[achievementId];
         }
 
-        private AchievementsManager Load()
+        private void Load()
         {
-            return Toolbox.Instance.JsonFiles.Read<AchievementsManager>(JsonFile);
+            Completed = Toolbox.Instance.JsonFiles.ReadDictionary<string, bool>(JsonFile) ?? Completed;
         }
 
         /// <summary>
@@ -121,7 +118,7 @@ namespace Achievements
         /// </summary>
         private void Save()
         {
-            Toolbox.Instance.JsonFiles.Write(JsonFile, this);
+            Toolbox.Instance.JsonFiles.WriteDictionary(JsonFile, Completed);
         }
     }
 }
