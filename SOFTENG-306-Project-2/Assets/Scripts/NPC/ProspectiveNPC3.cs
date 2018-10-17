@@ -36,6 +36,7 @@ public class ProspectiveNPC3 : NPC
             { npc, DialogPosition.Right }
         };
 
-        return new Dialog(frame, directions);
+        var achievementsManager = Toolbox.Instance.AchievementsManager;
+        return new Dialog(frame, directions, () => { achievementsManager.MarkCompleted("talk-to-student"); });
     }
 }

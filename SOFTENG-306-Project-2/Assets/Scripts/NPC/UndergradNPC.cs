@@ -102,8 +102,11 @@ public class UndergradNPC : NPC
             { me, DialogPosition.Left }, { npc, DialogPosition.Right }
         };
 
-        var questManager = Toolbox.Instance.QuestManager;
-        return new Dialog(frame, directions, () => { questManager.MarkCurrentFinished("networking"); });
+        return new Dialog(frame, directions, () =>
+        {
+            Toolbox.Instance.QuestManager.MarkCurrentFinished("networking");
+            Toolbox.Instance.AchievementsManager.MarkCompleted("speak-undergrad");
+        });
     }
 
     public override void Update()

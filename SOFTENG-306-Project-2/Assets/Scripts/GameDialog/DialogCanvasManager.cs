@@ -153,7 +153,11 @@ namespace GameDialog
 
                 var button = GameFrame.transform.Find("Button " + buttonNo).GetComponent<Button>();
                 button.transform.Find("Text").GetComponent<Text>().text = buttonNo + ". " + text;
-                button.onClick.AddListener(() => { ShowFrame(nextFrame); });
+                button.onClick.AddListener(() =>
+                {
+                    OnCompleteFrame();
+                    ShowFrame(nextFrame);
+                });
 
                 buttons[buttonNo - 1] = button;
                 buttonNo++;

@@ -54,7 +54,8 @@ public class ElectricalNPC : InstructorNPC
                     {
                         "Bye", new DialogFrame(me, "Bye!")
                     }
-                }
+                },
+                OnComplete = () => { Toolbox.Instance.AchievementsManager.MarkCompleted("find-lecturer"); }
             }
         };
     }

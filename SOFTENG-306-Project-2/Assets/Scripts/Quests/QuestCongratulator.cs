@@ -19,10 +19,17 @@ namespace Quests
         {
             const string trigger = "post-workshops-trigger";
 
-            if (QuestManager.Current.Id == trigger)
+            switch (QuestManager.Current.Id)
             {
-                QuestManager.MarkFinished(trigger);
-                ShowWorkshopCongratulatoryDialog();
+                case "software-workshop":
+                    Toolbox.Instance.AchievementsManager.MarkCompleted("complete-workshop");
+                    break;
+                case trigger:
+                    // Auto complete the quest
+                    Toolbox.Instance.AchievementsManager.MarkCompleted("complete-all-workshops");
+                    QuestManager.MarkFinished(trigger);
+                    ShowWorkshopCongratulatoryDialog();
+                    break;
             }
         }
 

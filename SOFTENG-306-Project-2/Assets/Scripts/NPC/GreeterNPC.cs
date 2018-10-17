@@ -224,6 +224,7 @@ public class GreeterNPC : NPC
                                 OnComplete = () =>
                                 {
                                     Toolbox.Instance.QuestManager.MarkFinished("get-timetable");
+                                    Toolbox.Instance.AchievementsManager.MarkCompleted("timetable");
                                     Toolbox.Instance.GameManager.Settings.HasBeenGreeted = true;
                                     IntroduceStudentServices = false;
                                 }
