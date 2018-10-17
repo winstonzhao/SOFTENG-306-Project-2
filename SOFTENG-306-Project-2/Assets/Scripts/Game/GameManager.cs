@@ -63,7 +63,7 @@ namespace Game
 
         public void ChangeScene(string levelName)
         {
-            Initiate.Fade(levelName, Color.black, 1.0f);
+            Initiate.Fade(levelName, Color.white, 3f);
         }
 
         public void QuitGame()
