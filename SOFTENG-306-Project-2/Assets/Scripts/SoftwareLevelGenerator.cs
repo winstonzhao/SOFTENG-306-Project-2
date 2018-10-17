@@ -431,7 +431,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
             Toolbox.Instance.QuestManager.MarkCurrentFinished("software-workshop");
         }
 
-        if (currentLevel == 7)
+        if (currentLevel == 6)
         {
             Toolbox.Instance.AchievementsManager.MarkCompleted("master-workshop");
             Toolbox.Instance.AchievementsManager.MarkCompleted("software-master-workshop");
