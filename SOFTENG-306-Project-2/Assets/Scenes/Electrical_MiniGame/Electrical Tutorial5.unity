@@ -200,7 +200,7 @@ RectTransform:
   m_Children:
   - {fileID: 1564285740}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 33928897}
   - component: {fileID: 33928896}
   m_Layer: 5
-  m_Name: Alien Image
+  m_Name: Canvas_Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,8 +242,11 @@ RectTransform:
   - {fileID: 355820942}
   - {fileID: 2091058698}
   - {fileID: 1064343255}
+  - {fileID: 204563490}
+  - {fileID: 206178374}
+  - {fileID: 742814818}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -318,7 +321,7 @@ GameObject:
   - component: {fileID: 199569440}
   - component: {fileID: 199569439}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Back_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -393,7 +396,7 @@ GameObject:
   - component: {fileID: 204563489}
   - component: {fileID: 204563488}
   m_Layer: 0
-  m_Name: Xor gate
+  m_Name: XOR_Gate_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,7 +408,7 @@ Halo:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 204563487}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Color:
     serializedVersion: 2
     rgba: 4286611584
@@ -462,12 +465,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 204563487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.49, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -151.20201, y: -2.622, z: -3933}
+  m_LocalScale: {x: 43.7, y: 43.7, z: 43.7}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 33928895}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206178372
 GameObject:
@@ -479,7 +482,7 @@ GameObject:
   - component: {fileID: 206178374}
   - component: {fileID: 206178373}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Next_Button_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,12 +507,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 206178372}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.37952176, y: -1.5176083, z: 281.80664}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 17.896101, y: -68.94148, z: 8381.95}
+  m_LocalScale: {x: 43.7, y: 43.7, z: 43.7}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 33928895}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355820938
 GameObject:
@@ -523,7 +526,7 @@ GameObject:
   - component: {fileID: 355820940}
   - component: {fileID: 355820939}
   m_Layer: 5
-  m_Name: Back Button
+  m_Name: Back_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -633,7 +636,7 @@ GameObject:
   - component: {fileID: 742814818}
   - component: {fileID: 742814817}
   m_Layer: 0
-  m_Name: Back Game Obj
+  m_Name: Back_Button_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -658,12 +661,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 742814816}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11342895, y: -1.3561704, z: 300.3308}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.6458452, y: -61.886646, z: 9191.457}
+  m_LocalScale: {x: 43.7, y: 43.7, z: 43.7}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 33928895}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &787929180
 GameObject:
@@ -725,7 +728,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1064343254
 GameObject:
@@ -738,7 +741,7 @@ GameObject:
   - component: {fileID: 1064343257}
   - component: {fileID: 1064343256}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Current_Dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -814,7 +817,7 @@ GameObject:
   - component: {fileID: 1237919319}
   - component: {fileID: 1237919318}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Alien_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -844,7 +847,7 @@ Halo:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1237919316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Color:
     serializedVersion: 2
     rgba: 4289002173
@@ -894,7 +897,7 @@ GameObject:
   - component: {fileID: 1417365336}
   - component: {fileID: 1417365335}
   m_Layer: 5
-  m_Name: Current Connector Text
+  m_Name: Title_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1130,7 +1133,7 @@ GameObject:
   - component: {fileID: 1784444580}
   - component: {fileID: 1784444579}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Next_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1241,7 +1244,7 @@ GameObject:
   - component: {fileID: 1965484308}
   - component: {fileID: 1965484307}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Next_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1316,7 +1319,7 @@ GameObject:
   - component: {fileID: 1972175965}
   - component: {fileID: 1972175964}
   m_Layer: 5
-  m_Name: Explanation Text
+  m_Name: Explanation_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1391,7 +1394,7 @@ GameObject:
   - component: {fileID: 2091058700}
   - component: {fileID: 2091058699}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Progression_Dots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1412,8 +1415,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68, y: -123}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 56.5, y: -122}
+  m_SizeDelta: {x: 137, y: 28.002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2091058699
 MonoBehaviour:

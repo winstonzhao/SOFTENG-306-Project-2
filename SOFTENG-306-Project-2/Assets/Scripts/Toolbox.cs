@@ -1,4 +1,5 @@
 using Achievements;
+using ElectricalScripts.Electrical_Scores;
 using Game;
 using Game.Hiscores;
 using Multiplayer;
@@ -60,5 +61,10 @@ public class Toolbox : Singleton<Toolbox>
     public UIManager UIManager
     {
         get { return UIManager.Instance; }
+    }
+
+    public Electrical_Scores Electrical_Scores
+    {
+        get { return Electrical_Scores.Instance; }
     }
 }

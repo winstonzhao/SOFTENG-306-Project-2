@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 516168321}
   - component: {fileID: 516168320}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Back_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 573299213}
   - component: {fileID: 573299212}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Next_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 750030950}
   - component: {fileID: 750030949}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Back_Button_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,12 +491,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 750030948}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11342895, y: -1.3561704, z: 300.3308}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.6458452, y: -61.886646, z: 9191.457}
+  m_LocalScale: {x: 43.7, y: 43.7, z: 43.7}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1569165967}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &776410641
 GameObject:
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 776410644}
   - component: {fileID: 776410643}
   m_Layer: 5
-  m_Name: Back Button
+  m_Name: Back_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +528,7 @@ RectTransform:
   m_Children:
   - {fileID: 516168319}
   m_Father: {fileID: 1569165967}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 798511662}
   - component: {fileID: 798511661}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Next_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 824017138}
   - component: {fileID: 824017137}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Alien_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,7 +714,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1569165967}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -727,7 +727,7 @@ Halo:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 824017135}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Color:
     serializedVersion: 2
     rgba: 4289002173
@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 849039162}
   - component: {fileID: 849039161}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Next_Button_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,12 +801,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 849039160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6610756, y: -2.708879, z: 90}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 205.00002, y: -121.000015, z: 0}
+  m_LocalScale: {x: 43.7, y: 43.7, z: 43.7}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1569165967}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &849871815
 GameObject:
@@ -888,7 +888,7 @@ GameObject:
   - component: {fileID: 1357857718}
   - component: {fileID: 1357857717}
   m_Layer: 5
-  m_Name: Current Connector Text
+  m_Name: Title_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -905,7 +905,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1569165967}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -963,7 +963,7 @@ GameObject:
   - component: {fileID: 1367418651}
   - component: {fileID: 1367418650}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Current_Dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1038,7 +1038,7 @@ GameObject:
   - component: {fileID: 1403086172}
   - component: {fileID: 1403086171}
   m_Layer: 5
-  m_Name: Explanation Text
+  m_Name: Explanation_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1055,7 +1055,7 @@ RectTransform:
   m_LocalScale: {x: 0.999856, y: 0.999856, z: 0.999856}
   m_Children: []
   m_Father: {fileID: 1569165967}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1206,7 +1206,7 @@ GameObject:
   - component: {fileID: 1569165965}
   - component: {fileID: 1569165964}
   m_Layer: 5
-  m_Name: Alien Image
+  m_Name: Canvas_Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1280,12 +1280,14 @@ RectTransform:
   m_LocalScale: {x: 0.022883296, y: 0.022883296, z: 0.022883296}
   m_Children:
   - {fileID: 573299211}
+  - {fileID: 776410642}
   - {fileID: 824017136}
   - {fileID: 1357857716}
   - {fileID: 1403086170}
-  - {fileID: 776410642}
   - {fileID: 2050074645}
   - {fileID: 1367418649}
+  - {fileID: 849039162}
+  - {fileID: 750030950}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1305,7 +1307,7 @@ GameObject:
   - component: {fileID: 2050074647}
   - component: {fileID: 2050074646}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Progression_Dots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

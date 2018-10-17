@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 573299212}
   - component: {fileID: 573299215}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Exit_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 798511662}
   - component: {fileID: 798511661}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Exit_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 824017138}
   - component: {fileID: 824017137}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Alien_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 849039162}
   - component: {fileID: 849039161}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Exit_Button_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 1357857718}
   - component: {fileID: 1357857717}
   m_Layer: 5
-  m_Name: Title
+  m_Name: Title_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 1403086172}
   - component: {fileID: 1403086171}
   m_Layer: 5
-  m_Name: Explanation Text
+  m_Name: Explanation_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,8 +778,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11, y: -16}
-  m_SizeDelta: {x: 450, y: 200}
+  m_AnchoredPosition: {x: 11, y: -6}
+  m_SizeDelta: {x: 450, y: 185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1403086171
 MonoBehaviour:
@@ -813,11 +813,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "You  just  learnt  about  four  of  the  common  logic  gates  that  are
-    \ used  to  control  the  flow  of  electricity  in  circuits. \n\nCheck  back
-    \ next  week  for  some  new  levels,  with  more  complex  problems  to  solve
-    \ and  the  introduction  of  the  XOR  Gate!\n\nElectrical  engineering  is  all
-    \ about  problem  solving,  and  it  all  starts  with  logic."
+  m_Text: "There  are  four  common  logic  gates  that  are  used  in  the  game
+    \ to  control  the  flow  of  electricity  in  circuits. \n\nCheck  back  next
+    \ week  for  some  new  levels,  with  more  complex  problems  to  solve !\n\nElectrical
+    \ engineering  is  all  about  problem  solving,  and  it  all  starts  with  logic."
 --- !u!222 &1403086172
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -926,7 +925,7 @@ GameObject:
   - component: {fileID: 1569165965}
   - component: {fileID: 1569165964}
   m_Layer: 5
-  m_Name: Alien Image
+  m_Name: Canvas_Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
