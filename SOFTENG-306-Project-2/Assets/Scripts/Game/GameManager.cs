@@ -44,8 +44,7 @@ namespace Game
         {
             if (Player == null)
             {
-                var userId = Mathf.RoundToInt(Random.value * 100000);
-                Player = new Player { Username = "Luna Lovegood " + userId };
+                Player = new Player { Username = null };
             }
         }
 

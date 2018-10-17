@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+public class MainMenuController : MonoBehaviour
 {
-    void Start()
+    private void Start()
     {
         var play = transform.Find("Play").GetComponent<Button>();
         var hiscores = transform.Find("Highscores").GetComponent<Button>();
         var quit = transform.Find("Leave Game").GetComponent<Button>();
 
-        var scene = Toolbox.Instance.GameManager.Player.Scene ?? "Engineering Lobby";
+        var player = Toolbox.Instance.GameManager.Player;
+        var scene = string.IsNullOrEmpty(player.Username) ? "Name Selection" : player.Scene ?? "Engineering Lobby";
 
         // Setup buttons
         play.onClick.AddListener(() => { Toolbox.Instance.GameManager.ChangeScene(scene); });
