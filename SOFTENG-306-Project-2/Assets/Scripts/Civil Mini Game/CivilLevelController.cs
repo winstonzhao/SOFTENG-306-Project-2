@@ -34,10 +34,10 @@ public class CivilLevelController : MonoBehaviour {
     /**
      * Game and scoring values
      */
-    public int TimeLimit = 10;  // max time allowed for cars to reach their goals
+    public float TimeLimit = 10f;  // max time allowed for cars to reach their goals
     public int Budget = 1000;  // max budget allowed for building roads
     public float IdealTimeLeft;  // the estimated time left for the ideal solution
-    public float IdealBudgetLeft;  // the estimated budget left for the ideal solution
+    public int IdealBudgetLeft;  // the estimated budget left for the ideal solution
     public int BudgetMaxScore = 50;  // the scoring weight (out of 100) for the budget
     public int TimeMaxScore = 30;  // the scoring weight (out of 100) for the time
     public int CompletionBaseScore = 20; // the score to be given to the player for completing the level
@@ -200,8 +200,8 @@ public class CivilLevelController : MonoBehaviour {
      */
     private int AddHighScore(float timeLeft, int budget) // Level
     {
-        float timeLeftPortion = timeLeft / IdealTimeLeft;  // compare actual time left with the ideal value
-        float budgetLeftPortion = budget / (float) IdealBudgetLeft;  // compare actual budget left with the ideal value
+        float timeLeftPortion = IdealTimeLeft == 0 ? 1 : timeLeft / IdealTimeLeft;  // compare actual time left with the ideal value
+        float budgetLeftPortion = IdealBudgetLeft == 0 ? 1 : budget / (float) IdealBudgetLeft;  // compare actual budget left with the ideal value
 
         float timeScore = timeLeftPortion * TimeMaxScore;  // scale the time score
         float budgetScore = budgetLeftPortion * BudgetMaxScore; // scale the budget score
@@ -284,7 +284,7 @@ public class CivilLevelController : MonoBehaviour {
      * timer should be in seconds.
      * 
      */
-    IEnumerator StartCountdown(int timeLimit)
+    IEnumerator StartCountdown(float timeLimit)
     {
         // initialise counter
         float countdownValue = (TimeLimit - 1) * 10;
