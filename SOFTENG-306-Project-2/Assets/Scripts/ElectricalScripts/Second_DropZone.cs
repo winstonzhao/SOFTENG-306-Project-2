@@ -10,6 +10,7 @@ public class Second_DropZone : MonoBehaviour, IDropZone
     private Draggable currentItem;
     public Draggable[] expectedGates;
     public bool expected { get; private set; }
+    public string circuitTag;
 
 
     public void Start()
@@ -29,16 +30,14 @@ public class Second_DropZone : MonoBehaviour, IDropZone
         return expected;
     }
 
-
-
     public void OnDragEnter(Draggable item)
     {
-        //GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
+        
     }
 
     public void OnDragExit(Draggable item)
     {
-       // GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
+       
     }
 
     public void OnDragFinish(Draggable item)
@@ -56,7 +55,6 @@ public class Second_DropZone : MonoBehaviour, IDropZone
 
     public void OnDrop(Draggable item)
     {
-        Debug.LogWarning("in here");
         currentItem = item;
         currentItem.HomePos = transform.position;
 
@@ -70,11 +68,7 @@ public class Second_DropZone : MonoBehaviour, IDropZone
 
         if (expected)
         {
-            Debug.LogWarning("Got into the expected!!");
-            //GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f);
-            //GameObject.FindWithTag("Light").GetComponent<SpriteRenderer>().sprite = newSprite;
-
-            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag("Circuit_2");
+            GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
 
             foreach (GameObject circ in circuitPieces)
             {

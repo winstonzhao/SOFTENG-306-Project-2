@@ -28551,7 +28551,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1056026921
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1056026920}
@@ -28575,6 +28575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expectedGates:
   - {fileID: 1164152830}
+  circuitTag: Circuit_2
 --- !u!61 &1056026923
 BoxCollider2D:
   m_ObjectHideFlags: 0
