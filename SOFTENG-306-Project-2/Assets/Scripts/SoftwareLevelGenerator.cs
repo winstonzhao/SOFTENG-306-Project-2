@@ -4,6 +4,7 @@ using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
 using Instructions;
 using UnityEngine.SceneManagement;
+using Utils;
 
 public class SoftwareLevelGenerator : MonoBehaviour
 {
@@ -38,7 +39,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
     {
         EMPTY = 0,
         ELEMENT = 1,
-        PADDING = -1
+        PADDING = -1,
+        INDEX = 2
     }
 
     // Initialisation
@@ -130,9 +132,10 @@ public class SoftwareLevelGenerator : MonoBehaviour
             case 4:
                 // Out of order insertion into empty index - MoveTo (by index), Initialise variable
                 numElements = 1;
+                var indexNum = RandomGenerator.GetNext(4) + 4;
                 for (int x = 4; x < 8; x++)
                 {
-                    if (x != 5)
+                    if (x != indexNum)
                     {
                         obj = Instantiate<GameObject>(prefab);
                         obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, 5);
@@ -149,13 +152,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 1;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "1");
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = indexNum - 4;
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
+                layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
 
                 break;
@@ -168,13 +169,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 0;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = 0;
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
+                layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
                 break;
             case 5:
@@ -186,13 +185,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 }
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
-                obj.AddComponent<ArrayElement>().Generate();
-                obj.GetComponent<ArrayElement>().Value = 0;
-                renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.AddComponent<IndexElement>().Generate();
+                obj.GetComponent<IndexElement>().Value = 0;
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
-                layoutMap[2, 1] = Layout.ELEMENT;
+                layoutMap[2, 1] = Layout.INDEX;
                 objectMap[2, 1] = obj;
                 break;
             case 7:

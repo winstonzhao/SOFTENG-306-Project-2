@@ -106,7 +106,7 @@ namespace Instructions
                 return;
             }
 
-            var arrayElement = obj.GetComponent<ArrayElement>();
+            var arrayElement = obj.GetComponent<IndexElement>();
             if (arrayElement == null)
             {
                 throw new InstructionException("Could not find object " + moveDirection.ToString());
