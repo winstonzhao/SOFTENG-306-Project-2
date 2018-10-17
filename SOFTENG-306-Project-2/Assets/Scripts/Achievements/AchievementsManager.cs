@@ -95,6 +95,18 @@ namespace Achievements
         {
             Completed[achievementId] = completed;
 
+            // Special case for when user has completed/mastered all 3 workshops
+            if (achievementId.EndsWith("-workshop") && !achievementId.StartsWith("master-"))
+            {
+                // Give the man his skill cape if he's finished every workshop
+                if (IsCompleted("software-master-workshop")
+                    && IsCompleted("civil-master-workshop")
+                    && IsCompleted("electrical-master-workshop"))
+                {
+                    MarkCompleted("master-workshop");
+                }
+            }
+
             DebounceSave.Run();
         }
 

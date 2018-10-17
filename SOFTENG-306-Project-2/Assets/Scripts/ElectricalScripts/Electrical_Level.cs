@@ -234,6 +234,17 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         // set the level score in the end level dialog
         SetLevelScoreText(levelScore);
         Toolbox.Instance.Electrical_Scores.addScore(levelNumber, levelScore);
+
+        if (levelNumber >= 4)
+        {
+            Toolbox.Instance.QuestManager.MarkCurrentFinished("electrical-workshop");
+        }
+
+        if (levelNumber == 12)
+        {
+            Toolbox.Instance.AchievementsManager.MarkCompleted("master-workshop");
+            Toolbox.Instance.AchievementsManager.MarkCompleted("electrical-master-workshop");
+        }
     }
 
     /*

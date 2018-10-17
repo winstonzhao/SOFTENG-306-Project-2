@@ -15,7 +15,7 @@ namespace Quests
             get { return quests.AsReadOnly(); }
         }
 
-        public Dictionary<string, bool> completed = new Dictionary<string, bool>();
+        private Dictionary<string, bool> completed = new Dictionary<string, bool>();
         public Dictionary<string, bool> Completed
         {
             get { return completed; }

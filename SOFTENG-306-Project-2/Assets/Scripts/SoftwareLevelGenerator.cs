@@ -393,6 +393,17 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Show end screen
     private IEnumerator EndScreen()
     {
+        if (currentLevel >= 3)
+        {
+            Toolbox.Instance.QuestManager.MarkCurrentFinished("software-workshop");
+        }
+
+        if (currentLevel == 7)
+        {
+            Toolbox.Instance.AchievementsManager.MarkCompleted("master-workshop");
+            Toolbox.Instance.AchievementsManager.MarkCompleted("software-master-workshop");
+        }
+
         yield return new WaitForSeconds(0.5f);
         endCanvas.Open();
     }
