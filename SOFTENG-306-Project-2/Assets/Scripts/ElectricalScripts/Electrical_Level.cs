@@ -12,15 +12,11 @@ public class Electrical_Level : MonoBehaviour, IDropZone
     public Draggable[] expectedGates;
     public Canvas endOfLevelCanvas;
     public int levelNumber;
-
     public int TimeLimit = 10;
-    public int TimeMaxScore = 30;
-    public int CompletionBaseScore = 20;
 
     private string PlayerName = "Anonymous";
     private TextMeshProUGUI timerArea;
     private bool timerNotStopped = true;
-
     private float currCountdownValueTenthSeconds;
     private float pausedValue;
     private bool paused = false;
