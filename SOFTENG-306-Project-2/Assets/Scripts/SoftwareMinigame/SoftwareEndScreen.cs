@@ -75,7 +75,7 @@ public class SoftwareEndScreen : MonoBehaviour
                 expected = 4;
                 break;
             case 3:
-                expected = 6;
+                expected = 7;
                 break;
             case 4:
                 expected = 5;
