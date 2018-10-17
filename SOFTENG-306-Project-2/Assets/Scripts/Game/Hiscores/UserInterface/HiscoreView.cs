@@ -57,6 +57,10 @@ namespace Game.Hiscores.UserInterface
                 offsetMax.x = 0;
                 rt.offsetMax = offsetMax;
 
+                var offsetMin = rt.offsetMin;
+                offsetMin.x = 0;
+                rt.offsetMin = offsetMin;
+
                 y += rt.sizeDelta.y;
 
                 yield return null;

@@ -19,8 +19,6 @@ public class SoftwareEndScreen : MonoBehaviour
     void Start()
     {
         Open();
-
-        Toolbox.Instance.QuestManager.MarkFinished("software-workshop");
     }
 
     /// <summary>
@@ -132,7 +130,16 @@ public class SoftwareEndScreen : MonoBehaviour
     public void SkipLevel()
     {
         int level = GameObject.Find("GameManager").GetComponent<SoftwareLevelGenerator>().currentLevel;
-        SceneManager.LoadScene(LEVEL_PREFIX + (level + 1));
+        if (level < 6)
+        {
+            SceneManager.LoadScene(LEVEL_PREFIX + (level + 1));
+            return;
+        }
+        else
+        {
+            Toolbox.Instance.QuestManager.MarkCurrentFinished("software-workshop");
+            SoftwareSingleton.Instance.FinishGame();
+        }
     }
 
     /// <summary>

@@ -42,9 +42,11 @@ _Edit the above paths to match your own enviroment
  Find more info [here](https://gist.github.com/Ikalou/197c414d62f45a1193fd)
  
  ## Playing
-1. Checkout the “PROTOTYPE” branch from github
-1. Open the game by and start running the game through Unity navigating to the ‘Menu’ scene and then pressing the play button located in the the Unity interface.
-1. Once you’ve successfully reached the Menu screen, press the button marked with the ‘Play’ text to progress.
+1. Checkout the “FINAL” branch from github
+1. Open the game by and start running the game through Unity navigating to the ‘Menu’ scene (`Assets\Scenes\Menu.scene`)
+1. Press the run scene button located in the the Unity interface.
+1. Before pressing "Play" in the menu, make sure your screen aspect ratio is set to one of our supported ratios (16:9, 16:10, or 4:3)
+1. Once your aspect ratio is correct, press "Play" to begin!
 
 ## Gameplay
 ### Lobby

@@ -20,8 +20,8 @@ namespace UserInterface
 
         private void Start()
         {
-            var name = transform.Find("Username").GetComponent<Text>();
-            Recommendation = transform.Find("Recommendation").GetComponent<Text>();
+            var name = transform.DeepFind("Username").GetComponent<Text>();
+            Recommendation = transform.DeepFind("Recommendation").GetComponent<Text>();
 
             name.text = Toolbox.Instance.GameManager.Player.Username;
 

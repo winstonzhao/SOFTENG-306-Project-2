@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 public class UIController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class UIController : MonoBehaviour
         closeButton = transform.Find("Close Button").gameObject;
         timetableTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/BackpackTab");
         diplomaTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Diploma");
-        achievementsTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/AchievementsTab");
+        achievementsTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/BackpackTab");
         rowPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Achievement Text + Checkbox");
         correctSprite = Resources.Load<Sprite>("ui/red_boxCheckmark");
         incorrectSprite = Resources.Load<Sprite>("ui/grey_boxCheckmark");
@@ -101,6 +102,8 @@ public class UIController : MonoBehaviour
             backpackTab = Instantiate(timetableTabPrefab, transform);
         }
 
+        var content = backpackTab.transform.DeepFind("Content");
+
         var manager = Toolbox.Instance.QuestManager;
         var quests = Toolbox.Instance.QuestManager.Quests;
         var scale = transform.localScale.y;
@@ -112,7 +115,7 @@ public class UIController : MonoBehaviour
                 continue;
             }
 
-            var row = Instantiate(rowPrefab, backpackTab.transform).gameObject;
+            var row = Instantiate(rowPrefab, content.transform).gameObject;
             Vector3 initialPosition = row.GetComponent<RectTransform>().position;
             initialPosition.y -= i * 30 * scale;
             row.GetComponent<RectTransform>().position = initialPosition;
@@ -130,6 +133,8 @@ public class UIController : MonoBehaviour
             achievementsTab = Instantiate(achievementsTabPrefab, transform);
         }
 
+        var content = achievementsTab.transform.DeepFind("Content");
+
         backpackButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.white;
         achievementsButton.transform.Find("Text").gameObject.GetComponent<Text>().color = Color.yellow;
 
@@ -139,7 +144,7 @@ public class UIController : MonoBehaviour
         int i = 0;
         foreach (var achievement in achievements)
         {
-            var row = Instantiate(rowPrefab, achievementsTab.transform).gameObject;
+            var row = Instantiate(rowPrefab, content.transform).gameObject;
             Vector3 initialPosition = row.GetComponent<RectTransform>().position;
             initialPosition.y -= i * 30 * scale;
             row.GetComponent<RectTransform>().position = initialPosition;

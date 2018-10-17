@@ -4,6 +4,7 @@ using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
 using System.Linq;
 using Instructions;
+using SoftwareMinigame;
 using UnityEngine.SceneManagement;
 using Utils;
 
@@ -235,11 +236,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public bool CheckAnswer()
     {
         // There are still elements left
-        if (!finishedInputs)
+        if (numElements != 0)
         {
             return false;
         }
-        
+
         GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
         SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
         Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
@@ -322,6 +323,22 @@ public class SoftwareLevelGenerator : MonoBehaviour
         return false;
     }
 
+    private bool CompletedCorrectly(int level)
+    {
+        if (level != 3 && level != 4) return true;
+        var instructionList = FindObjectOfType<InstructionExecutor>().GetComponent<DraggableScrollList>();
+        var items = instructionList.listItems;
+
+        foreach (var item in items)
+        {
+            if (level == 3 && item.GetComponent<JumpIfInstruction>() != null) return true;
+            if (level == 4 && item.GetComponent<RobotMoveToIndexInstruction>() != null) return true;
+        }
+
+        return false;
+
+    }
+
     // Used for updating the layout of the scene when a command is valid
     public GameObject SetMapLayout(int x, int z, RobotController.Command command, GameObject obj)
     {
@@ -354,7 +371,16 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 instructionExecutor = FindObjectOfType<InstructionExecutor>();
                 instructionExecutor.Stop();
                 endCanvas = Resources.FindObjectsOfTypeAll<SoftwareEndScreen>()[0];
-                StartCoroutine(EndScreen());
+                var finishedCorrectly = CompletedCorrectly(currentLevel);
+
+                if (finishedCorrectly)
+                {
+                    StartCoroutine(EndScreen());
+                }
+                else
+                {
+                    StartCoroutine(NotFinished());
+                }
             }
         } 
         else if (command == RobotController.Command.SWAP)
@@ -390,6 +416,13 @@ public class SoftwareLevelGenerator : MonoBehaviour
         return arrayMap.TryGetValue(index, out pos) ? pos : Vector3.zero;
     }
 
+    private IEnumerator NotFinished()
+    {
+        yield return new WaitForSeconds(0.5f);
+        var canvas = Resources.FindObjectsOfTypeAll<SoftwareNotFinished>()[0];
+        canvas.Open();
+    }
+
     // Show end screen
     private IEnumerator EndScreen()
     {
@@ -398,7 +431,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
             Toolbox.Instance.QuestManager.MarkCurrentFinished("software-workshop");
         }
 
-        if (currentLevel == 7)
+        if (currentLevel == 6)
         {
             Toolbox.Instance.AchievementsManager.MarkCompleted("master-workshop");
             Toolbox.Instance.AchievementsManager.MarkCompleted("software-master-workshop");
