@@ -46,8 +46,15 @@ namespace ElectricalScripts.Electrical_Scores
                 totalScore += levelScores[i, 1];
             }
 
-            // return the score divided by the number of levels completed
-            return (totalScore / levelsCompleted);
+            if (totalScore == 0)
+            {
+                return totalScore;
+            } else
+            {
+                // return the score divided by the number of levels completed
+                return (totalScore / levelsCompleted);
+            }
+            
         }
         
         /*
