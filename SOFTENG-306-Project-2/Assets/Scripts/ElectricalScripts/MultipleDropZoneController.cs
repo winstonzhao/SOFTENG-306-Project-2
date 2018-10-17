@@ -7,7 +7,7 @@ using UnityEngine;
  */
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Second_DropZone : MonoBehaviour, IDropZone
+public class MultipleDropZoneController : MonoBehaviour, IDropZone
 {
 
     private Draggable currentItem;
@@ -43,14 +43,19 @@ public class Second_DropZone : MonoBehaviour, IDropZone
         
     }
 
+    /*
+     * When the item is dragged out of the dropzone reset the changed components
+     */ 
     public void OnDragExit(Draggable item)
     {
+        // if there is not draggable item
         if (currentItem == null)
         {
+            // set expected to false as the expected component is not in the dropzone
             expected = false;
 
+            //set the circuit pieces back to grey
             GameObject[] circuitPieces = GameObject.FindGameObjectsWithTag(circuitTag);
-
             foreach (GameObject circ in circuitPieces)
             {
                 circ.GetComponent<SpriteRenderer>().color = Color.gray;
@@ -71,6 +76,9 @@ public class Second_DropZone : MonoBehaviour, IDropZone
         }
     }
 
+    /*
+     * When the player starts to drag the item set the current item in the drop zone to null
+     */ 
     public void OnDragStart(Draggable item)
     {
         currentItem = null;
@@ -118,7 +126,6 @@ public class Second_DropZone : MonoBehaviour, IDropZone
      */
     public void OnItemRemove(Draggable item)
     {
-        Debug.Log("SET TO NULL");
         currentItem = null;
         expected = false;
     }

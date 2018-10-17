@@ -43,7 +43,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }
-        //timerArea.color = Color.black;
+ 
         StartCoroutine(StartCountdown(TimeLimit));
 
         SetPlayerName(Toolbox.Instance.GameManager.Player.Username);
@@ -57,6 +57,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         }
         else
         {
+            // Find dropzones with the tag DropZone2
             dropZones = GameObject.FindGameObjectsWithTag("DropZone2");
         }
     }
@@ -74,7 +75,7 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             foreach (GameObject dropZone in dropZones)
             {
                 // if a drop zone returns false set completed to false
-                if (!dropZone.GetComponent<Second_DropZone>().GetExpected())
+                if (!dropZone.GetComponent<MultipleDropZoneController>().GetExpected())
                 {
                     completedDropZones = false;
                 }
@@ -93,7 +94,6 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         // if the the circuit is in the correct state
         if (expected && otherDropZonesComplete)
         {
-            Debug.Log("IF THE CIRCUIT IS HEJ");
             // if level complete has not been called
             if (!levelCompleteCalled)
             {
@@ -135,8 +135,12 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     }
 
+    /*
+    * When the item is dragged out of the dropzone reset the changed components
+    */
     public void OnDragExit(Draggable item)
     {
+        // If there is no item in the dropzone set expected to false
         if (currentItem == null)
         {
             expected = false;
@@ -144,6 +148,10 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     }
 
+    /*
+    * When player finishes dragging an object, check if it is touching any
+    * collider objects
+    */
     public void OnDragFinish(Draggable item)
     {
         if (!item.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
@@ -152,11 +160,18 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         }
     }
 
+    /*
+    * When the player starts to drag the item set the current item in the drop zone to null
+    */
     public void OnDragStart(Draggable item)
     {
         currentItem = null;
     }
 
+    /*
+    * When player lets a logic gate go, check if the logic gate 
+    * is within a dropzone area
+    */
     public void OnDrop(Draggable item)
     {
         currentItem = item;
@@ -168,13 +183,14 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             {
                 if (otherDropZonesComplete)
                 {
+                    // if the other dropzones are correct, finish the level
                     levelCompleteCalled = true;
                     completeLevel();
                 }
                 else
                 {
+                    // set expected to be true if other dropzones are not correct
                     expected = true;
-                    Debug.Log("TRUE hereheheh");
                 }
             }
         }
@@ -231,6 +247,9 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         }
     }
 
+    /*
+     * Wait for two seconds and then show the end of level screen
+     */ 
     private IEnumerator endOfLevel(System.Action<bool> callback)
     {
         yield return new WaitForSeconds(2);
@@ -242,16 +261,23 @@ public class Electrical_Level : MonoBehaviour, IDropZone
 
     }
 
+    /*
+     * When the item is removed from the dropzone set current item to null
+     */ 
     public void OnItemRemove(Draggable item)
     {
         currentItem = null;
     }
+
 
     public bool CanDrop(Draggable item)
     {
         return true;
     }
 
+    /*
+     * Initialise the timer
+     */ 
     private void Awake()
     {
         // find the timer area and set the label to the countdown
@@ -303,7 +329,6 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         currCountdownValueTenthSeconds = countdownValue;
         while (currCountdownValueTenthSeconds >= 0 && timerNotStopped)
         {
-            //Debug.Log((currCountdownValueTenthSeconds) / 10);
             string timerLabel = String.Format("{0:00}:{1:00}", Math.Floor((currCountdownValueTenthSeconds) / 10), (currCountdownValueTenthSeconds % 10) * 10);
             timerArea.SetText(timerLabel);
             yield return new WaitForSeconds(0.1f);
