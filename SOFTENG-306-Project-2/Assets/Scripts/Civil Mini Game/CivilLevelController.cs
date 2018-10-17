@@ -163,7 +163,11 @@ public class CivilLevelController : MonoBehaviour
             CivilGameManager.ToggleDialogDisplay(Dialog, "BadPanel", false);
             CivilGameManager.ToggleDialogDisplay(Dialog, "GoodPanel", true);
 
-            Toolbox.Instance.QuestManager.MarkCurrentFinished("civil-workshop");
+            // Mark workshop as completed after level 4
+            if (ThisLevel >= 4)
+            {
+                Toolbox.Instance.QuestManager.MarkCurrentFinished("civil-workshop");
+            }
         }
         else // Lose
         {
