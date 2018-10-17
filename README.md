@@ -44,8 +44,8 @@ _Edit the above paths to match your own enviroment
  ## Playing
 1. Checkout the “FINAL” branch from github
 1. Open the game by and start running the game through Unity navigating to the ‘Menu’ scene (`Assets\Scenes\Menu.scene`)
-1. Press the play button located in the the Unity interface.
-1. Before pressing "Play" in the menu, make sure your screen aspect ratio is set to one of the supported ones (16:9, 16:10, or 4:3)
+1. Press the run scene button located in the the Unity interface.
+1. Before pressing "Play" in the menu, make sure your screen aspect ratio is set to one of our supported ratios (16:9, 16:10, or 4:3)
 1. Once your aspect ratio is correct, press "Play" to begin!
 
 ## Gameplay
