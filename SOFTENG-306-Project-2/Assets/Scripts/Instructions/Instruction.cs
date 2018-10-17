@@ -51,14 +51,19 @@ namespace Instructions
             get { return 0.4f; }
         }
 
+        /// <summary>
+        /// Handle right click to open help
+        /// </summary>
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Right) return;
 
+            // Don't load if it already exists
             var helpObj = GameObject.Find("help_" + InstructionName);
 
             if (helpObj == null)
             {
+                // Load the correct help prefab for the instruction
                 GameObject prefab = Resources.Load<GameObject>(HELP_PREFIX + InstructionName);
                 if (prefab == null) return;
 

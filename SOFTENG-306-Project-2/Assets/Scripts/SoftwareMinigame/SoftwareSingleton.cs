@@ -10,6 +10,10 @@ namespace SoftwareMinigame
 
         public int LevelsPassed { get; set; }
 
+        /// <summary>
+        /// To be called when exiting the game
+        /// Handles saving of scores
+        /// </summary>
         public void FinishGame()
         {
             if (LevelsPassed > 0)

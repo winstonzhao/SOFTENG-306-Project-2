@@ -80,6 +80,7 @@ public class HelpPane : MonoBehaviour
             return;
         }
 
+        // Hide next button on last slide, prev button on first, and number indicator if there is only 1 slide
         PrevButton.gameObject.SetActive(slideIndex != 0);
         NextButton.gameObject.SetActive(slideIndex < slides.childCount - 1);
         NumberIndicator.gameObject.SetActive(slides.childCount > 1);

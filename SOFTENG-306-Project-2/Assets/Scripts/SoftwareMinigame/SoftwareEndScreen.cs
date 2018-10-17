@@ -24,6 +24,9 @@ public class SoftwareEndScreen : MonoBehaviour
         Open();
     }
 
+    /// <summary>
+    /// Opens the end screen, hiding the instruction canvas
+    /// </summary>
     public void Open()
     {
         if (ScoreText == null) ScoreText = transform.GetChild(1).GetComponent<Text>();
@@ -84,14 +87,14 @@ public class SoftwareEndScreen : MonoBehaviour
                 expected = 6;
                 break;
             case 6:
-                expected = 10;
+                expected = 12;
                 break;
         }
 
         // For extra instruction used, -10 for score
         for (int i = 0; i < instructionCount; i++)
         {
-            if (i > expected)
+            if (i >= expected)
             {
                 score -= 10;
             }

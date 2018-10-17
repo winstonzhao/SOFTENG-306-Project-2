@@ -82,6 +82,7 @@ namespace Instructions
         public void Update()
         {
 
+            // Handle mouse movement
             if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
             {
                 trackMouse = false;
@@ -89,10 +90,15 @@ namespace Instructions
                 var isoRay = Isometric.MouseToIsoRay();
 
                 //do an isometric raycast on left mouse click
-                if (Input.GetMouseButtonDown(0)) {
+                if (Input.GetMouseButtonDown(0))
+                {
                     IsoRaycastHit isoRaycastHit;
-                    if (IsoPhysics.Raycast(isoRay, out isoRaycastHit)) {
+
+                    if (IsoPhysics.Raycast(isoRay, out isoRaycastHit))
+                    {
                         selectedObj = isoRaycastHit.IsoTransform;
+
+                        // Update instruction text
                         component2 =
                             new InstructionComponent("X: " + selectedObj.Position.x + " Z: " + selectedObj.Position.z)
                             {
@@ -120,6 +126,7 @@ namespace Instructions
             }
             else
             {
+                // Check robot is has reached it's destination
                 if (robot.GetComponent<IsoTransform>().Position == targetPos)
                 {
                     executeNext = true;
@@ -151,6 +158,7 @@ namespace Instructions
         {
             if (selectedObj == null) return;
 
+            // Show a ghost object where the robot will move to on executing this instruction
             var prefab = Resources.Load<GameObject>("Prefabs/Instructions/RobotGhost");
 
             tile = Instantiate(prefab);

@@ -81,6 +81,7 @@ namespace Instructions
 
         public override void UpdateInstruction()
         {
+            // Jump to new position
             instructionExecutor.JumpToInstruction(jumpTarget);
             instructionExecutor.ExecuteNextInstruction();
         }

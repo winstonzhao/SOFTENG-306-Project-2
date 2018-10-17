@@ -59,6 +59,7 @@ namespace Instructions
             robot = target;
             var didMove = false;
 
+            // Try to swap
             didMove = robot.SwapItem(moveDirection);
 
             if (!didMove) throw new InstructionException("Could not swap");

@@ -114,9 +114,11 @@ namespace Instructions
         {
             if (robot.CompareItem(compareDirection, comparison, true, -1, -1))
             {
+                // Comparison was successful
                 instructionExecutor.JumpToInstruction(trueTarget);
             }
 
+            // Comparison failed
             instructionExecutor.ExecuteNextInstruction();
         }
     }

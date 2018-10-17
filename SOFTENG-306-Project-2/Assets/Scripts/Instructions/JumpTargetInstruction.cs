@@ -46,6 +46,7 @@ namespace Instructions
 
         public override void UpdateInstruction()
         {
+            // Don't do anything, only a placeholder to jump to
             instructionExecutor.ExecuteNextInstruction();
         }
     }
