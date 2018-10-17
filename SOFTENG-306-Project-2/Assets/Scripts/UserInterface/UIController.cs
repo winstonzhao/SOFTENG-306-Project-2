@@ -32,6 +32,10 @@ public class UIController : MonoBehaviour
         correctSprite = Resources.Load<Sprite>("ui/red_boxCheckmark");
         backpackTab = Instantiate(backpackTabPrefab, transform);
 
+        // Click outside the interface to exit
+        var overlay = transform.Find("Overlay");
+        overlay.GetComponent<Button>().onClick.AddListener(() => { Toolbox.Instance.UIManager.ToggleUI(); });
+
         backpackButton.GetComponent<Button>().onClick.AddListener(() =>
         {
             Destroy(achievementsTab);
