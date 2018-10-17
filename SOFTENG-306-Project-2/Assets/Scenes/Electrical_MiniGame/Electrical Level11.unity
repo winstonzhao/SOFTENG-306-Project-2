@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 15236695}
   - component: {fileID: 15236694}
   m_Layer: 5
-  m_Name: Help_Gate_OR
+  m_Name: Help_Gate_XOR
   m_TagString: EndOfLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15597,7 +15597,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &567698262
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 567698261}
@@ -15631,7 +15631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5de5e6ac68182748b7e6d0e7f491694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpCanvas: {fileID: 1364484445}
+  helpCanvas: {fileID: 1941132432}
 --- !u!114 &567698265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26202,7 +26202,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &939014523
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 939014522}
@@ -26939,8 +26939,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 51}
-  m_SizeDelta: {x: 280, y: 100}
+  m_AnchoredPosition: {x: 3, y: 53}
+  m_SizeDelta: {x: 280, y: 81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &961245420
 MonoBehaviour:
@@ -26974,7 +26974,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'This  gate  requires  at least one  light  input  to  produce  a  light  output. '
+  m_Text: This  gate  requires  two  different  inputs  to  create  a  light  output.
 --- !u!222 &961245421
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37829,8 +37829,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1970468465}
   canvases:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1390938349}
+  - {fileID: 1988541723}
 --- !u!114 &1331545367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37924,7 +37924,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: This  is  an  and  gate!  it  needs  two  light  inputs  to make  a  light  output!
+  m_Text: This  is  an  and  gate!  it  needs  two  light  inputs  to make  a   light  output!
 --- !u!222 &1335052055
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43442,7 +43442,7 @@ GameObject:
   - component: {fileID: 1498008918}
   - component: {fileID: 1498008917}
   m_Layer: 5
-  m_Name: Okay_OR
+  m_Name: Okay_XOR
   m_TagString: EndOfLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54519,7 +54519,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1899354346
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1899354345}
