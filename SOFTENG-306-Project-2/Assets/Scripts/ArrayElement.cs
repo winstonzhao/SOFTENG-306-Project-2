@@ -1,26 +1,41 @@
 ﻿using UnityEngine;
+using System;
+using System.Security.Cryptography;
+using Random = System.Random;
 
 public class ArrayElement : MonoBehaviour {
-    public int value = 0;
+	private SpriteRenderer spriteRenderer;
+	private static string ITEM = "software_minigame/Sprites/item";
+
+	private int value;
+	public int Value
+	{
+		get { return value; }
+		set
+		{
+			this.value = value;
+			if (spriteRenderer != null) spriteRenderer.sprite = Resources.Load<Sprite>(ITEM + value);
+		}
+	}
+
+	private void Start()
+	{
+		spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
 	// Use this for initialization
-	void Start () {
-        int level = this.GetComponentInParent<SoftwareLevelGenerator>().currentLevel;
-
-        switch (level)
-        {
-            case 1:
-                value = 6 - this.GetComponentInParent<SoftwareLevelGenerator>().numElements;
-                break;
-            default:
-                System.Random random = new System.Random();
-                value = random.Next(1, 10);
-                break;
-        }
+	public void Generate () {
+		Value = NextInt(1, 10);
     }
 
-    // Update is called once per frame
-    void Update () {
-		
+	private static int NextInt(int min, int max)
+	{
+		RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+		byte[] buffer = new byte[4];
+
+		rng.GetBytes(buffer);
+		int result = BitConverter.ToInt32(buffer, 0);
+
+		return new Random(result).Next(min, max);
 	}
 }

@@ -1,6 +1,7 @@
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ClickEventEmitter : EventEmitter, IPointerClickHandler
+public class ClickEventEmitter : EventEmitter, IPointerDownHandler
 {
     public EventHandlerDelegate EventHandler;
 
@@ -12,7 +13,7 @@ public class ClickEventEmitter : EventEmitter, IPointerClickHandler
         set { enabled = value; }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (Enabled)
         {

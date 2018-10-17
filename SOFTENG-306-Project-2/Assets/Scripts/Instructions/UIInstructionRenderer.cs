@@ -22,7 +22,9 @@ namespace Instructions
 
         public float spacing = 2;
 
-        private bool shouldUpdate = false;
+        private bool shouldUpdate = true;
+
+        private static int minWidth = 270;
 
         public override bool IsEnabled
         {
@@ -71,12 +73,15 @@ namespace Instructions
             text.text = component.Text;
             text.color = TextColor;
 
-            var collider = go.GetComponent<BoxCollider2D>();
-            collider.size = new Vector2(text.preferredWidth, text.preferredHeight);
-            collider.enabled = component.OnComponentClicked != null;
-            var eventHandler = go.GetComponent<ClickEventEmitter>();
-            eventHandler.EventHandler += () => component.OnComponentClicked(null);
-            eventHandler.Enabled = component.OnComponentClicked != null;
+            if (component.OnComponentClicked != null)
+            {
+                var collider = go.AddComponent<BoxCollider2D>();
+                collider.size = new Vector2(text.preferredWidth, text.preferredHeight);
+                collider.enabled = component.OnComponentClicked != null;
+                var eventHandler = go.AddComponent<ClickEventEmitter>();
+                eventHandler.EventHandler += () => component.OnComponentClicked(null);
+                eventHandler.Enabled = component.OnComponentClicked != null;
+            }
 
             return text;
         }
@@ -113,6 +118,7 @@ namespace Instructions
                     var text = children[i].RectTransform.GetComponent<Text>();
                     text.text = components[i].Text;
                     children[i].Size = new Vector2(text.preferredWidth, text.preferredHeight);
+                    text.color = TextColor;
                 }
             }
 
@@ -120,6 +126,8 @@ namespace Instructions
             float height = 0;
             var width = children.Sum(c => c.Size.x);
             width += spacing * components.Count - spacing;
+
+            width = Mathf.Max(width, minWidth);
 
             // Layout children left to right
             float start = 0;
@@ -137,8 +145,7 @@ namespace Instructions
             height = height + padding.y * 2;
             boxCollider.size = new Vector2(width, height);
             rectTransform.sizeDelta = new Vector2(width, height);
-            GetComponent<Draggable>().Size = new Vector2(width, height) *
-                                             GetComponentInParent<Canvas>().GetComponent<RectTransform>().lossyScale.x;
+            GetComponent<Draggable>().Size = new Vector2(width, height);
 
             shouldUpdate = false;
         }
@@ -163,7 +170,7 @@ namespace Instructions
             var components = instruction.InstructionComponents;
             if (children.Count != components.Count)
             {
-                // More ccomponents than before -> start again from scratch
+                // More components than before -> start again from scratch
                 DestroyChildren();
 
                 // Create one child for each InstrucitonComponent
@@ -204,6 +211,12 @@ namespace Instructions
 
             image.color = BackgroundColor;
             images.ForEach(i => i.color = BackgroundColor);
+        }
+
+        public override void ResetStyle()
+        {
+            BackgroundColor = DefaultBackgroundColor;
+            Render();
         }
 
         private class ChildComp

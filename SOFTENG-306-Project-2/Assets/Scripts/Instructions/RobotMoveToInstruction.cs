@@ -4,10 +4,11 @@ using Ultimate_Isometric_Toolkit.Scripts.Core;
 using Ultimate_Isometric_Toolkit.Scripts.physics;
 using Ultimate_Isometric_Toolkit.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Instructions
 {
-    public class RobotMoveToInstruction : Instruction
+    public class RobotMoveToInstruction : Instruction, IPointerExitHandler, IPointerEnterHandler
     {
         private InstructionComponent component2;
         private InstructionExecutor instructionExecutor;
@@ -22,6 +23,8 @@ namespace Instructions
 
         private bool executeNext = false;
         private Vector3 targetPos;
+
+        private GameObject tile;
 
         public RobotMoveToInstruction()
         {
@@ -51,26 +54,32 @@ namespace Instructions
             instructionRenderer = GetComponent<InstructionRenderer>();
         }
 
+        private void OnDestroy()
+        {
+            if (tile != null) Destroy(tile);
+        }
+
         private void onClicked(object obj)
         {
-            if (!Editable || trackMouse) return;
-            trackMouse = true;
+            if (!Editable) return;
+            trackMouse = !trackMouse;
             mouseDebounce = true;
+            if (trackMouse)
+            {
+                instructionRenderer.BackgroundColor = InstructionRenderer.SelectedBackgroundColor;
+            }
+            else
+            {
+                instructionRenderer.BackgroundColor = instructionRenderer.DefaultBackgroundColor;
+            }
         }
 
         public void Update()
         {
-            if (trackMouse)
-                if (instructionRenderer != null)
-                {
-                    instructionRenderer.BackgroundColor = new Color(0, 0, 1);
-                    instructionRenderer.Render();
-                }
 
             if (Input.GetMouseButtonDown(0) && !mouseDebounce && trackMouse)
             {
                 trackMouse = false;
-                Debug.Log("Check raycast");
 
                 var isoRay = Isometric.MouseToIsoRay();
 
@@ -84,33 +93,15 @@ namespace Instructions
                             {
                                 OnComponentClicked = onClicked
                             };
+                        targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
                         instructionRenderer.Render();
                     }
                 }
 
-//                var isoRay = Isometric.MouseToIsoRay();
-//
-//                var hit = false;
-//                foreach (var raycastHit in IsoPhysics.RaycastAll(isoRay))
-//                {
-//                    Debug.Log("we clicked on " + raycastHit.Collider.name + " at " + raycastHit.Point);
-//                    if (raycastHit.IsoTransform.name.ToLower().StartsWith("floor tile"))
-//                    {
-//                        hit = true;
-//                        selectedObj = raycastHit.IsoTransform;
-//                        component2 =
-//                            new InstructionComponent("X: " + selectedObj.Position.x + " Z: " + selectedObj.Position.z)
-//                            {
-//                                OnComponentClicked = onClicked
-//                            };
-//                        instructionRenderer.Render();
-//                        break;
-//                    }
-//                }
-
-                // if (!hit) selectedObj = null;
-
-                if (instructionRenderer != null) instructionRenderer.BackgroundColor = new Color(1, 1, 1);
+                if (instructionRenderer != null)
+                {
+                    instructionRenderer.BackgroundColor = instructionRenderer.DefaultBackgroundColor;
+                }
             }
 
             mouseDebounce = false;
@@ -137,11 +128,30 @@ namespace Instructions
             robot = target;
             executeNext = false;
 
-            if (selectedObj == null) throw new InstructionException();
+            if (selectedObj == null) throw new InstructionException("No Move target selected");
 
-            targetPos = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
-            var didMove = robot.MoveTo(targetPos);
-            if (!didMove) throw new InstructionException();
+            var didMove = robot.MoveTo(targetPos, null);
+            if (!didMove) throw new InstructionException("Could not move to selected target");
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (tile == null) return;
+
+            Destroy(tile);
+            tile = null;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (selectedObj == null) return;
+
+            var prefab = Resources.Load<GameObject>("Prefabs/Instructions/RobotGhost");
+
+            tile = Instantiate(prefab);
+            tile.GetComponent<IsoTransform>().Position = new Vector3(selectedObj.Position.x, 1, selectedObj.Position.z);
+            tile.transform.localScale = new Vector3(.8f, .8f, 1);
+
         }
     }
 }

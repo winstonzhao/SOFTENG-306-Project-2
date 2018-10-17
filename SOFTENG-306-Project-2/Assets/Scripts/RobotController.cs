@@ -1,4 +1,5 @@
 using System.Collections;
+using Instructions;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UltimateIsometricToolkit.physics;
 using UnityEngine;
@@ -15,6 +16,10 @@ public class RobotController : MonoBehaviour
     public int Y;
     public int Z;
 
+    // temp variables used for directions
+    private int dx;
+    private int dz;
+
     private Vector3 startPos;
 
     // Default speed for transforming the robot
@@ -28,25 +33,25 @@ public class RobotController : MonoBehaviour
     private float timePassed;
     private float maxTimePassed;
 
+    // Which command the robot is executing which changes the layout of the map
     public enum Command
     {
-        MOVE,
         PICKUP,
-        DROP
+        DROP,
+        SWAP
+    }
+
+    // Possible compare instructions for the Robot
+    public enum Compare
+    {
+        LESS_THAN = 0,
+        GREATER_THAN = 2,
+        EQUAL_TO = 1
     }
 
     // Sprites used to represent different state of the object
-    private static string NO_ELEMENT = "software_minigame/Sprites/robot1";
-    private static string HAS_ELEMENT = "software_minigame/Sprites/robot2";
-
-    // Enum to represent the direction for executing the particular action
-    public enum Direction
-    {
-        TopRight = 0,
-        BottomRight = 3,
-        BottomLeft = 1,
-        TopLeft = 2,
-    }
+    private static string NO_ELEMENT = "software_minigame/Sprites/robot";
+    private static string HAS_ELEMENT = "software_minigame/Sprites/holding";
 
     // Initialization
     void Start()
@@ -56,11 +61,12 @@ public class RobotController : MonoBehaviour
 
         startPos = isoTransform.Position;
         // Initialise offset coordinates
-        X = (int)(isoTransform.Position.x + 1);
+        X = (int) (isoTransform.Position.x + 1);
         Y = 1;
-        Z = (int)(isoTransform.Position.z + 1);
+        Z = (int) (isoTransform.Position.z + 1);
     }
 
+    // Used to reset the position of the robot to start
     public void ResetPos()
     {
         hasElement = false;
@@ -71,25 +77,34 @@ public class RobotController : MonoBehaviour
         renderer.sprite = sprite;
 
         isoTransform.Position = startPos;
-        X = (int)(isoTransform.Position.x + 1);
+        X = (int) (isoTransform.Position.x + 1);
         Y = 1;
-        Z = (int)(isoTransform.Position.z + 1);
+        Z = (int) (isoTransform.Position.z + 1);
 
         generator.Restart();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Move to the specified coordinate or index of the an array in the scene
+    // If it is coordinate, it will use the destination vector3
+    // If destination is Vector3.zero, it will use the array concatenate with index as identifier for accessing the array
+    // e.g "a" + 0 will access index 0 of array a
+    public bool MoveTo(Vector3 destination, string index)
     {
-    }
+        // Check if is index or coordinate access
+        var dest = destination;
+        if (destination == Vector3.zero)
+        {
+            dest = generator.IndexLocation(index);
+            if (dest == Vector3.zero)
+            {
+                return false;
+            }
+        }
 
-    // Move to the specified coordinate in the scene.
-    public bool MoveTo(Vector3 destination)
-    {
         // Calculate the required distance to translate for x and z
         var currentPos = isoTransform.Position;
-        int x = (int)(destination.x - currentPos.x);
-        int z = (int)(destination.z - currentPos.z);
+        int x = (int) (dest.x - currentPos.x);
+        int z = (int) (dest.z - currentPos.z);
 
         // This is for storing ths sequence of paths to traverse through
         Vector3[] path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
@@ -99,72 +114,112 @@ public class RobotController : MonoBehaviour
         // temp variables are used as a ghost for collision detection
         int tempX = X;
         int tempZ = Z;
+        bool moveX = true;
+        bool moveZ = true;
 
-        // Traverse through x first by default
+        // Traverse through z first by default
+        Debug.Log("Trying z then x");
+        for (int i = 0; i < Mathf.Abs(z); i++)
+        {
+            tempZ = z < 0 ? --tempZ : ++tempZ;
+
+            if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
+            {
+                path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                count++;
+            }
+            else
+            {
+                moveZ = false;
+            }
+        }
+
+        // Traverse through x
         for (int i = 0; i < Mathf.Abs(x); i++)
         {
             tempX = x < 0 ? --tempX : ++tempX;
 
             // Check for collision and add to path
-            if ((generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY))
+            if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
             {
                 path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
                 count++;
             }
             else
             {
-                return false;
+                moveX = false;
             }
         }
 
-        // Traverse through z with pivot
-        for (int i = 0; i < Mathf.Abs(z); i++)
+        // Check if collision exist if z direction, if it does the reset the path and try path x then z
+        if (!moveZ || !moveX)
         {
-            tempZ = z < 0 ? --tempZ : ++tempZ;
+            moveZ = true;
+            moveX = true;
 
-            if ((generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY))
+            Debug.Log("No z then x path, trying x then z");
+            path = new Vector3[Mathf.Abs(x) + Mathf.Abs(z) + 1];
+            path[0] = currentPos;
+            count = 1;
+            // temp variables are used as a ghost for collision detection
+            tempX = X;
+            tempZ = Z;
+
+            // Traverse through x
+            for (int i = 0; i < Mathf.Abs(x); i++)
             {
-                path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
-                count++;
+                tempX = x < 0 ? --tempX : ++tempX;
+
+                // Check for collision and add to path
+                if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
+                {
+                    path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                    count++;
+                }
+                else
+                {
+                    moveX = false;
+                }
             }
-            else
+
+            for (int i = 0; i < Mathf.Abs(z); i++)
             {
-                return false;
+                tempZ = z < 0 ? --tempZ : ++tempZ;
+
+                if (generator.GetMapLayout(tempX, tempZ) == SoftwareLevelGenerator.Layout.EMPTY)
+                {
+                    path[count] = new Vector3(tempX - 1, Y, tempZ - 1);
+                    count++;
+                }
+                else
+                {
+                    moveZ = false;
+                }
             }
         }
 
-        // If no collision then run it as a coroutine
-        StartCoroutine(Shift(path));
-        return true;
+        // If no collision then run it as a co-routine
+        if (moveX && moveZ)
+        {
+            StartCoroutine(Shift(path));
+            return true;
+        }
+
+        Debug.Log("COLLIDE");
+        return false;
     }
 
     // Moving 1 step in specified direction, return true if the command is valid
-    public bool Move(Direction direction)
+    public bool Move(Directions direction)
     {
         // Initialise position and destination vector
         var currentPos = this.GetComponent<IsoTransform>().Position;
         var destPos = Vector3.zero;
-        int dx = 0;
-        int dz = 0;
         Vector3[] path = new Vector3[2];
         path[0] = currentPos;
 
         // Check the direction of operation and set relevant flag
-        switch (direction)
-        {
-            case Direction.BottomLeft:
-                dx = -1;
-                break;
-            case Direction.TopLeft:
-                dz = 1;
-                break;
-            case Direction.TopRight:
-                dx = 1;
-                break;
-            case Direction.BottomRight:
-                dz = -1;
-                break;
-        }
+        CheckDirection(direction);
 
         // Check if the tile is empty to allow movement and avoid collisions
         if (generator.GetMapLayout(X + dx, Z + dz) != SoftwareLevelGenerator.Layout.EMPTY)
@@ -172,45 +227,25 @@ public class RobotController : MonoBehaviour
             Debug.Log("COLLIDE");
             return false;
         }
-        else
-        {
-            // The operation is valid
-            X += dx;
-            Z += dz;
 
-            destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
-            path[1] = destPos;
-            StartCoroutine(Shift(path));
-            return true;
-        }
+        // The operation is valid
+        X += dx;
+        Z += dz;
+
+        destPos = new Vector3(currentPos.x + dx, Y, currentPos.z + dz);
+        path[1] = destPos;
+        StartCoroutine(Shift(path));
+
+        return true;
     }
 
     // Pickup the item in the specified direction
-    public bool PickUpItem(Direction direction)
+    public bool PickUpItem(Directions direction)
     {
-        if (!hasElement || (carrying == null))
+        if (!hasElement || carrying == null)
         {
-            // Initialise required flags
-            var sprite = Resources.Load<Sprite>(HAS_ELEMENT);
-            int dx = 0;
-            int dz = 0;
-
             // Check the direction of operation and set relevant flag
-            switch (direction)
-            {
-                case Direction.TopRight:
-                    dx = 1;
-                    break;
-                case Direction.BottomRight:
-                    dz = -1;
-                    break;
-                case Direction.BottomLeft:
-                    dx = -1;
-                    break;
-                case Direction.TopLeft:
-                    dz = 1;
-                    break;
-            }
+            CheckDirection(direction);
 
             // Check if the target position has an object to pickup
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
@@ -218,6 +253,8 @@ public class RobotController : MonoBehaviour
                 carrying = generator.GetObject(X + dx, Z + dz);
                 generator.SetMapLayout(X + dx, Z + dz, Command.PICKUP, null);
                 hasElement = true;
+                // Initialise required var
+                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().Value);
                 this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
@@ -227,31 +264,15 @@ public class RobotController : MonoBehaviour
     }
 
     // Drop the item to specified direction
-    public bool DropItem(Direction direction)
+    public bool DropItem(Directions direction)
     {
-        if (hasElement || (carrying != null))
+        if (hasElement || carrying != null)
         {
-            // Initialise required flags
-            int dx = 0;
-            int dz = 0;
+            // Initialise required var
             var sprite = Resources.Load<Sprite>(NO_ELEMENT);
 
             // Check the direction of operation and set relevant flag
-            switch (direction)
-            {
-                case Direction.TopRight:
-                    dx = 1;
-                    break;
-                case Direction.BottomRight:
-                    dz = -1;
-                    break;
-                case Direction.BottomLeft:
-                    dx = -1;
-                    break;
-                case Direction.TopLeft:
-                    dz = 1;
-                    break;
-            }
+            CheckDirection(direction);
 
             // Check if the target position is empty for dropping the object
             if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.EMPTY)
@@ -259,13 +280,122 @@ public class RobotController : MonoBehaviour
                 generator.SetMapLayout(X + dx, Z + dz, Command.DROP, carrying);
                 carrying = null;
                 hasElement = false;
-                SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
-                renderer.sprite = sprite;
+                this.GetComponent<SpriteRenderer>().sprite = sprite;
                 return true;
             }
         }
 
         return false;
+    }
+
+    // Used to swap the item which the robot is holding with the item in the specified direction
+    public bool SwapItem(Directions direction)
+    {
+        if (hasElement || carrying != null)
+        {
+            // Check the direction of operation and set relevant flag
+            CheckDirection(direction);
+
+            // Check if an element exists in the specified direction
+            if (generator.GetMapLayout(X + dx, Z + dz) == SoftwareLevelGenerator.Layout.ELEMENT)
+            {
+                carrying = generator.SetMapLayout(X + dx, Z + dz, Command.SWAP, carrying);
+                var sprite = Resources.Load<Sprite>(HAS_ELEMENT + carrying.GetComponent<ArrayElement>().Value);
+                this.GetComponent<SpriteRenderer>().sprite = sprite;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // This is used for both the compare operation as well as the jump if operation
+    // If it is compare operation, the item param will be set to true, and the compare is done between the item which the
+    // robot is currently holding and the item in the direction specified.
+    // Otherwise, for jump compare, the item param is set to false and the comparison is done between the variable and
+    // the input param
+    public bool CompareItem(Directions direction, Compare option, bool item, int variable, int input)
+    {
+        // Set to compare for jump by default
+        int compareWith = input;
+        int value = variable;
+
+        // If item flag is set then it is used by the compare instruction and override the comparing values with
+        // appropriate values.
+        if (item)
+        {
+            if (hasElement || carrying != null)
+            {
+                // Check the direction of operation and set relevant flag
+                CheckDirection(direction);
+
+                // Check if the item exist
+                if (generator.GetMapLayout(X + dx, Z + dz) != SoftwareLevelGenerator.Layout.ELEMENT)
+                {
+                    return false;
+                }
+
+                // Override flags for to the compare instruction
+                compareWith = generator.GetObject(X + dx, Z + dz).GetComponent<ArrayElement>().Value;
+                value = carrying.GetComponent<ArrayElement>().Value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // Check for specified type of comparison
+        switch (option)
+        {
+            case Compare.EQUAL_TO:
+                if (value == compareWith)
+                {
+                    return true;
+                }
+
+                break;
+            case Compare.LESS_THAN:
+                if (value > compareWith)
+                {
+                    return true;
+                }
+
+                break;
+            case Compare.GREATER_THAN:
+                if (value < compareWith)
+                {
+                    return true;
+                }
+
+                break;
+        }
+
+        return false;
+    }
+
+    // Used for checking direction for commands
+    private void CheckDirection(Directions direction)
+    {
+        // Reset old direction
+        dx = 0;
+        dz = 0;
+        // Checking the direction which the command specifies and set relevant flags
+        switch (direction)
+        {
+            case Directions.Up:
+                dx = 1;
+                break;
+            case Directions.Right:
+                dz = -1;
+                break;
+            case Directions.Down:
+                dx = -1;
+                break;
+            case Directions.Left:
+                dz = 1;
+                break;
+        }
     }
 
     // Animation for moving the robot
@@ -283,25 +413,20 @@ public class RobotController : MonoBehaviour
                 timePassed += Time.deltaTime;
                 isoTransform.Position = Vector3.Lerp(path[i], path[i + 1], timePassed / maxTimePassed);
 
-                // If time has passed then round cooridinates to nearest node.
+                // If time has passed then round coordinates to nearest node.
                 if (timePassed >= maxTimePassed)
                 {
                     var pos = isoTransform.Position;
                     pos = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z));
                     break;
                 }
+
                 yield return null;
             }
         }
 
-        // Update the offset coodinates
-        X = (int)isoTransform.Position.x + 1;
-        Z = (int)isoTransform.Position.z + 1;
+        // Update the offset coordinates
+        X = (int) isoTransform.Position.x + 1;
+        Z = (int) isoTransform.Position.z + 1;
     }
-
-    // Used for debugging
-    //public void debug()
-    //{
-    //    generator.PrintMap();
-    //}
 }

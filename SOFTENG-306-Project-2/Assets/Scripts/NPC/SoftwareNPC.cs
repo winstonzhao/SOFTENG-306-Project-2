@@ -47,7 +47,7 @@ public class SoftwareNPC : InstructorNPC
                     {
                         "Workshop", new DialogFrame(Name, "Alright let's do the workshop!")
                         {
-                            TransitionToScene = "SoftwareMinigameWithInstructions"
+                            TransitionToScene = "Software Level 1"
                         }
                     },
                     {

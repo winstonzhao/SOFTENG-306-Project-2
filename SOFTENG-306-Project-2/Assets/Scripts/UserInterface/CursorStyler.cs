@@ -7,78 +7,82 @@ using UnityEngine.EventSystems;
 /**
  * Hook class for cursor handlers, attach this to every component that you wish the cursor change on
  */
-public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
 {
-	public bool enabled = true;
-	
-	private CursorHandler _handler;
+    public bool enabled = true;
 
-	/**
-	 * Set the default cursor handler
-	 */
-	void Awake()
-	{
-		_handler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CursorHandler>();
-	}
+    private CursorHandler _handler;
 
-	
-	/**
-	 * Mouse enter for GUI elements
-	 */
-	public void OnPointerEnter(PointerEventData pointerEventData)
-	{
-		if (enabled)
-		{
-			_handler.CursorEnter();
-		}
-	}
+    /**
+     * Set the default cursor handler
+     */
+    void Awake()
+    {
+        _handler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CursorHandler>();
+    }
 
-	/**
-	 * Mouse exit for GUI elements
-	 */
-	public void OnPointerExit(PointerEventData pointerEventData)
-	{
-		if (enabled)
-		{
-			_handler.CursorClear();
-		}
-	}
+    /**
+     * Mouse enter for GUI elements
+     */
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        if (enabled)
+        {
+            _handler.CursorEnter();
+        }
+    }
 
-	
-	/**
-	 * =========================================
-	 * For GameObjects
-	 * =========================================
-	 */
-	
-	
-	void OnMouseEnter()
-	{
-		if (!EventSystem.current.IsPointerOverGameObject() && enabled) // Block mouse clicks through a canvas
-		{
-			_handler.CursorEnter();
-		}
-	}
+    /**
+     * Mouse exit for GUI elements
+     */
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        if (enabled)
+        {
+            _handler.CursorClear();
+        }
+    }
 
-	private void OnMouseExit()
-	{
-		if (!EventSystem.current.IsPointerOverGameObject() && enabled)
-		{
-			_handler.CursorClear();
-		}
-	}
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (enabled)
+        {
+            _handler.CursorDrag();
+        }
+    }
 
-	private void OnMouseUp()
-	{
-		_handler.CursorClear();
-	}
+    /**
+     * =========================================
+     * For GameObjects
+     * =========================================
+     */
 
-	private void OnMouseDrag()
-	{
-		if (!EventSystem.current.IsPointerOverGameObject() && enabled)
-		{
-			_handler.CursorDrag();
-		}
-	}
+    void OnMouseEnter()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && enabled) // Block mouse clicks through a canvas
+        {
+            _handler.CursorEnter();
+        }
+    }
 
+    private void OnMouseExit()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && enabled)
+        {
+            _handler.CursorClear();
+        }
+    }
+
+    private void OnMouseUp()
+    {
+        _handler.CursorClear();
+    }
+
+    private void OnMouseDrag()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && enabled)
+        {
+            _handler.CursorDrag();
+        }
+    }
 }

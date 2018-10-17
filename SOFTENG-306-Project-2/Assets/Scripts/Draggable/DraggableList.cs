@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel;
@@ -10,63 +11,12 @@ using UnityEditor;
 [RequireComponent(typeof(BoxCollider2D))]
 public class DraggableList : GenericDraggableList, IDropZone
 {
-
-    public List<Draggable> listItems = new List<Draggable>();
-
-    public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
-
-    [SerializeField]
-    private bool copyOnDrag = true;
-
-    [SerializeField]
-    private bool rearrangeable = true;
-
     private float itemHeight = 0f;
-
-    private List<System.Type> allowedItems = new List<System.Type>();
-    public List<System.Type> AllowedItems
-    {
-        get
-        {
-            return allowedItems;
-        }
-        set
-        {
-            allowedItems = value;
-        }
-    }
-
-    public bool Rearrangeable
-    {
-        get
-        {
-            return rearrangeable;
-        }
-        set
-        {
-            rearrangeable = value;
-        }
-    }
-
-    public bool CopyOnDrag
-    {
-        get
-        {
-            return copyOnDrag;
-        }
-        set
-        {
-            copyOnDrag = value;
-        }
-    }
-
-    public float layoutSpacing = 2;
 
     public Vector2 MinSize = new Vector2(1, 1);
 
     private BoxCollider2D boxCollider;
 
-    // Use this for initialization
     void Start()
     {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -78,9 +28,9 @@ public class DraggableList : GenericDraggableList, IDropZone
 
         foreach (var draggable in listItems)
         {
-            draggable.transform.position = draggable.HomePos;
             draggable.SetDropZone(this);
         }
+        layout();
     }
 
     // Update is called once per frame
@@ -89,6 +39,9 @@ public class DraggableList : GenericDraggableList, IDropZone
 
     }
 
+    /// <summary>
+    /// Moves all the items in the list to their appropriate locations
+    /// </summary>
     void layout()
     {
         float i = itemHeight/2;
@@ -102,14 +55,15 @@ public class DraggableList : GenericDraggableList, IDropZone
                 continue;
             }
 
-            if (itemHeight == 0)
+            // Calculate the item height from the first item
+            if (Math.Abs(itemHeight) < 0.01f)
             {
                 itemHeight = draggable.Size.y;
                 i = itemHeight / 2;
             }
 
             // Offset by .1f in the z so the child objects will handle mouse clicks before the list
-            draggable.HomePos = new Vector3(transform.position.x, transform.position.y + i, transform.position.z - .1f);
+            draggable.HomePos = new Vector3(transform.localPosition.x, transform.localPosition.y + i, transform.position.z - .1f);
 
             maxWidth = Mathf.Max(draggable.Size.x, maxWidth);
             i += draggable.Size.y + layoutSpacing;
@@ -117,39 +71,25 @@ public class DraggableList : GenericDraggableList, IDropZone
         }
 
         var width = Mathf.Max(MinSize.x, maxWidth);
-        var height = Mathf.Max(MinSize.y, i - itemHeight/2 - layoutSpacing);
-        var colliderSize = new Vector2(width, height) * 1/transform.parent.lossyScale.x;
+        var height = Mathf.Max(MinSize.y, i - itemHeight / 2 - layoutSpacing);
+        var colliderSize = new Vector2(width, height);
 
+        // Move collider to fit entire list
         boxCollider.size = colliderSize;
         boxCollider.offset = new Vector2(0, colliderSize.y / 2);
     }
 
     public void UpdateObject(Draggable item)
     {
-        if (!Rearrangeable) return;
+        if (!rearrangeable) return;
 
-        int i = listItems.IndexOf(item);
-        int indexDiff = 0;
+        // Move to correct position
+        int targetIndex = FindIndex(item);
+        targetIndex = Math.Min(targetIndex, listItems.Count - 1);
 
-        if (i > 0 && item.transform.position.y < listItems[i - 1].transform.position.y)
-        {
-            indexDiff = -1;
-        }
-        else if (i < listItems.Count - 1 && item.transform.position.y > listItems[i + 1].transform.position.y)
-        {
-            indexDiff = 1;
-        }
-
-        if (indexDiff != 0)
-        {
-            listItems[i] = listItems[i + indexDiff];
-            listItems[i + indexDiff] = item;
-
-            var oldHome = item.HomePos;
-            var newHome = listItems[i].HomePos;
-            item.HomePos = newHome;
-            listItems[i].HomePos = oldHome;
-        }
+        listItems.Remove(item);
+        listItems.Insert(targetIndex, item);
+        layout();
 
     }
 
@@ -157,6 +97,7 @@ public class DraggableList : GenericDraggableList, IDropZone
     {
         if (!rearrangeable)
         {
+            // Cannot have items added
             Destroy(item.gameObject);
             return false;
         }
@@ -215,14 +156,16 @@ public class DraggableList : GenericDraggableList, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-        if (CopyOnDrag)
+        if (copyOnDrag)
         {
+            // Create a clone to stay in the list and allow the old item to be dragged away
             var itemClone = Instantiate(item, item.transform.parent);
-//            itemClone.transform.SetParent(item.transform.parent, false);
             item.transform.SetAsLastSibling();
             itemClone.transform.SetAsLastSibling();
+
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
+
             layout();
             itemClone.GetComponent<Draggable>().SetDropZone(this);
         }

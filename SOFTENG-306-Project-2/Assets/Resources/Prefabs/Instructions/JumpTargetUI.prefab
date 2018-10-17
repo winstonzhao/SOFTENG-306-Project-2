@@ -40,9 +40,9 @@ GameObject:
   - component: {fileID: 222547131128387282}
   - component: {fileID: 114411139187700070}
   - component: {fileID: 61490501600716106}
-  - component: {fileID: 114950405485464112}
   - component: {fileID: 114411097989372048}
   - component: {fileID: 114340637937647562}
+  - component: {fileID: 114228824126030596}
   m_Layer: 5
   m_Name: JumpTargetUI
   m_TagString: Untagged
@@ -88,6 +88,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &114228824126030596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1817423433055108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab2d9d7049a4d7c9af1d7c30289d967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114340637937647562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b1ed474a6c239468f8713f46a0df5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 10
   instruction: {fileID: 0}
   padding: {x: 20, y: 10}
+  spacing: 10
 --- !u!114 &114411139187700070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,7 +176,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300026, guid: 243c14c6f715e81449462541493037d2, type: 3}
+  m_Sprite: {fileID: 21300024, guid: 142f9dc18d5f7d940a9616f0c8965a4f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -173,17 +184,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114950405485464112
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1817423433055108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a0563fa537ab442ad981b53090b0b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &222428931459530862
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -34,6 +34,17 @@ public class ScrollList : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // Handle scrolling
+        var d = Input.GetAxis("Mouse ScrollWheel");
+        if (d > 0)
+        {
+            scrollbar.value += 0.1f;
+        }
+        else if (d < 0)
+        {
+            scrollbar.value -= 0.1f;
+        }
+
         var height = GetComponentInChildren<DraggableScrollList>().GetComponent<RectTransform>().sizeDelta.y;
         scrollbar.size = scrollList.maxHeight / height;
 

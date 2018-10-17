@@ -2,6 +2,7 @@
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
+using Instructions;
 
 public class SoftwareLevelGenerator : MonoBehaviour
 {
@@ -18,13 +19,17 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public Vector3 input;
 
     // Prefabs and Sprites used for different states of the scene
-    private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
+    private static string ELEMENT_PREFAB = "software_minigame/Prefabs/item";
+    private static string ITEM = "software_minigame/Sprites/item";
     private static string MORE_INPUTS = "software_minigame/Sprites/key1";
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
     private static string INCORRECT_OUTPUT = "software_minigame/Sprites/lock1";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
 
     private List<GameObject> generatedObjects = new List<GameObject>();
+    private Dictionary<string, Vector3> arrayMap;
+
+    private InstructionExecutor instructionExecutor;
 
     // Enum used to map out the layout of the scene
     public enum Layout
@@ -37,11 +42,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Initialisation
     void Start()
     {
-        GeneratedLevel(1);
+        GeneratedLevel(currentLevel);
     }
 
     public void Restart() {
-        GeneratedLevel(1);
+        GeneratedLevel(currentLevel);
         GameObject input = this.transform.Find("Input").Find("Input").gameObject;
         Sprite i = Resources.Load<Sprite>(MORE_INPUTS);
         input.GetComponent<SpriteRenderer>().sprite = i;
@@ -50,45 +55,167 @@ public class SoftwareLevelGenerator : MonoBehaviour
         output.GetComponent<SpriteRenderer>().sprite = o;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    // Used to initialised diferent levels
+    // Used to initialised different levels
     public void GeneratedLevel(int level)
     {
+        // Destroy any outdated objects
         foreach (var go in generatedObjects)
         {
             Destroy(go);
         }
-
+        generatedObjects.Clear();
         currentLevel = level;
+        
+        // Regenerate floor layout
+        layoutMap = new[,]
+        {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
+            {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
+        };
+        
+        // Default input location
+        inputX = 1;
+        inputZ = 7;
+        input = new Vector3(inputX - 1, 1, inputZ - 2);
+        
+        // Empty object map
+        objectMap = new GameObject[11, 9];
+        
+        // Used for creating custom input elements
+        GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
+        GameObject obj;
+        SpriteRenderer renderer;
+        int value;
+        
+        // Dictionary used to map index and location of arrays
+        arrayMap = new Dictionary<string, Vector3>();
+
         // Switch statement for setting up different levels
         switch (currentLevel)
         {
             case 1:
+                // Pick and Drop without movement into array of size 1 - PickUp and Drop
+                inputX = 6;
+                inputZ = 5;
                 numElements = 1;
-                layoutMap = new Layout[11, 9]
-                {   {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.EMPTY, Layout.PADDING},
-                    {Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING, Layout.PADDING},
-                };
-                inputX = 1;
-                inputZ = 7;
-                input = new Vector3(inputX - 1, 1, inputZ - 2);
-                objectMap = new GameObject[11, 9];
-                NextInputElement();
+                break;
+            case 2:
+                // Insert single element from input to array of size 1 - MoveTo (by coordinate)
+                numElements = 1;
+                break;
+            case 3:
+                // Select the larger element to put in an array of size 1 - Compare
+                numElements = 1;
+                obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(5, 0.8f, 4);
+                obj.AddComponent<ArrayElement>().Generate();
+                value = obj.GetComponent<ArrayElement>().Value;
+                renderer = obj.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(ITEM + value);
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[6, 5] = Layout.ELEMENT;
+                objectMap[6, 5] = obj;
+                break;
+            case 4:
+                // Out of order insertion into empty index - MoveTo (by index), Initialise variable
+                numElements = 1;
+                for (int x = 4; x < 8; x++)
+                {
+                    if (x != 5)
+                    {
+                        obj = Instantiate<GameObject>(prefab);
+                        obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, 5);
+                        obj.AddComponent<ArrayElement>().Generate();
+                        value = obj.GetComponent<ArrayElement>().Value;
+                        renderer = obj.GetComponent<SpriteRenderer>();
+                        renderer.sprite = Resources.Load<Sprite>(ITEM + value);
+                        obj.transform.parent = this.transform;
+                        generatedObjects.Add(obj);
+                        layoutMap[x, 6] = Layout.ELEMENT;
+                        objectMap[x, 6] = obj;
+                    }
+                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                }
+                obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
+                obj.AddComponent<ArrayElement>().Generate();
+                obj.GetComponent<ArrayElement>().Value = 1;
+                renderer = obj.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(ITEM + "1");
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[2, 1] = Layout.ELEMENT;
+                objectMap[2, 1] = obj;
+
+                break;
+            case 6:
+                // Sort 2 element from input - Swap, Mixture of previous levels
+                numElements = 2;
+                for (int x = 5; x < 7; x++)
+                {
+                    arrayMap.Add("a" + (x - 5), new Vector3(x - 1, 1, 4));
+                }
+                obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
+                obj.AddComponent<ArrayElement>().Generate();
+                obj.GetComponent<ArrayElement>().Value = 0;
+                renderer = obj.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[2, 1] = Layout.ELEMENT;
+                objectMap[2, 1] = obj;
+                break;
+            case 5:
+                // Insert into 4 element array but no order required - Jump (Loop), Mixture of previous levels
+                numElements = 4;
+                for (int x = 4; x < 8; x++)
+                {
+                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                }
+                obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
+                obj.AddComponent<ArrayElement>().Generate();
+                obj.GetComponent<ArrayElement>().Value = 0;
+                renderer = obj.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[2, 1] = Layout.ELEMENT;
+                objectMap[2, 1] = obj;
+                break;
+            case 7:
+                // Sorting 4 element array - Mixture of above
+                numElements = 4;
+                for (int x = 4; x < 8; x++)
+                {
+                    arrayMap.Add("a" + (x - 4), new Vector3(x - 1, 1, 4));
+                }
+                obj = Instantiate<GameObject>(prefab);
+                obj.GetComponent<IsoTransform>().Position = new Vector3(1, 0.8f, 0);
+                obj.AddComponent<ArrayElement>().Generate();
+                obj.GetComponent<ArrayElement>().Value = 0;
+                renderer = obj.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(ITEM + "0");
+                obj.transform.parent = this.transform;
+                generatedObjects.Add(obj);
+                layoutMap[2, 1] = Layout.ELEMENT;
+                objectMap[2, 1] = obj;
+                break;
+            case 8:
+                // Grouping into 2 arrays - Holding instruction/Compare if even/odd
                 break;
         }
+        NextInputElement();
     }
 
     // Used for displaying the next element if the current element has been moved else where
@@ -99,7 +226,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
             GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
             GameObject obj = Instantiate<GameObject>(prefab);
             obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
-            obj.AddComponent<ArrayElement>();
+            obj.AddComponent<ArrayElement>().Generate();
+            int value = obj.GetComponent<ArrayElement>().Value;
+            print("hi" + value);
+            SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+            renderer.sprite = Resources.Load<Sprite>(ITEM + value);
             obj.transform.parent = this.transform;
             generatedObjects.Add(obj);
             layoutMap[inputX, inputZ] = Layout.ELEMENT;
@@ -118,44 +249,119 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Used to check if the answer is correct
     public bool CheckAnswer()
     {
-        // There are stil elements left
+        // There are still elements left
         if (numElements != 0)
         {
             return false;
         }
+        
+        GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
+        SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+        Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
 
+        // Checking correctness of output for current level
         switch (currentLevel)
         {
             case 1:
-                int max = 0;
-                for (int x = 5; x < 6; x++)
+                if (objectMap[5, 6] != null && layoutMap[5, 6] == Layout.ELEMENT)
                 {
-                    if (objectMap[x, 6] != null)
+                    renderer.sprite = sprite;
+                    return true;
+                }
+                return false;
+            case 2:
+                if (objectMap[5, 6] != null && layoutMap[5, 6] == Layout.ELEMENT)
+                {
+                    renderer.sprite = sprite;
+                    return true;
+                }
+                return false;
+            case 3:
+                if (objectMap[5, 6] != null)
+                {
+                    int value = objectMap[5, 6].GetComponent<ArrayElement>().Value;
+                    foreach (GameObject o in generatedObjects)
                     {
-                        int value = objectMap[x, 6].GetComponent<ArrayElement>().value;
-                        if (!(layoutMap[x, 6] == Layout.ELEMENT))
+                        if (o.GetComponent<ArrayElement>().Value > value)
                         {
                             return false;
                         }
                     }
-                    else
+                    
+                    renderer.sprite = sprite;
+                    return true;
+                }
+                return false;
+            case 4:
+                for (int x = 4; x < 8; x++)
+                {
+                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
                     {
                         return false;
                     }
                 }
-                GameObject obj = this.transform.Find("Output").Find("Output").gameObject;
-                SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-                Sprite sprite = Resources.Load<Sprite>(CORRECT_OUTPUT);
                 renderer.sprite = sprite;
+                return true;
+            case 6:
+                for (int x = 5; x < 6; x++)
+                {
+                    GameObject a = objectMap[x, 6];
+                    GameObject b = objectMap[x + 1, 6];
+                    
+                    if (a == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (b == null || layoutMap[x + 1, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (a.GetComponent<ArrayElement>().Value > b.GetComponent<ArrayElement>().Value)
+                    {
+                        return false;
+                    }   
+                }
+                renderer.sprite = sprite;
+                return true;
+            case 5:
+                for (int x = 4; x < 8; x++)
+                {
+                    if (objectMap[x, 6] == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                }
+                renderer.sprite = sprite;
+                return true;
+            case 7:
+                for (int x = 4; x < 7; x++)
+                {
+                    GameObject a = objectMap[x, 6];
+                    GameObject b = objectMap[x + 1, 6];
+                    
+                    if (a == null || layoutMap[x, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (b == null || layoutMap[x + 1, 6] != Layout.ELEMENT)
+                    {
+                        return false;
+                    }
+                    if (a.GetComponent<ArrayElement>().Value > b.GetComponent<ArrayElement>().Value)
+                    {
+                        return false;
+                    }   
+                }
+                return true;
+            case 8:
                 StartCoroutine(EndScreen());
                 return true;
         }
-
         return false;
     }
 
     // Used for updating the layout of the scene when a command is valid
-    public void SetMapLayout(int x, int z, RobotController.Command command, GameObject obj)
+    public GameObject SetMapLayout(int x, int z, RobotController.Command command, GameObject obj)
     {
         if (command == RobotController.Command.PICKUP)
         {
@@ -168,16 +374,36 @@ public class SoftwareLevelGenerator : MonoBehaviour
         {
             Debug.Log("Drop x: " + x + " z: " + z);
             var oldPos = obj.GetComponent<IsoTransform>().Position;
-            objectMap[(int)oldPos.x, (int)oldPos.z] = null;
+            objectMap[(int) oldPos.x, (int) oldPos.z] = null;
             layoutMap[x, z] = Layout.ELEMENT;
             obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, z - 1);
             objectMap[x, z] = obj;
             objectMap[x, z].SetActive(true);
-            if (((x != inputX) || (z != inputZ)) && (objectMap[inputX, inputZ] == null)) {
+            if (((x != inputX) || (z != inputZ)) && objectMap[inputX, inputZ] == null)
+            {
                 NextInputElement();
             }
-            CheckAnswer();
+
+            var finished = CheckAnswer();
+
+            if (finished)
+            {
+                instructionExecutor = FindObjectOfType<InstructionExecutor>();
+                instructionExecutor.Stop();
+            }
+        } 
+        else if (command == RobotController.Command.SWAP)
+        {
+            Debug.Log("Swap x: " + x + " z: " + z);
+            GameObject temp = objectMap[x, z];
+            temp.SetActive(false);
+            objectMap[x, z] = obj;
+            obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, z - 1);
+            obj.SetActive(true);
+            return temp;
         }
+
+        return null;
     }
 
     // Getter for checking if a specific index is empty or not
@@ -192,23 +418,17 @@ public class SoftwareLevelGenerator : MonoBehaviour
         return objectMap[x, z];
     }
 
-    IEnumerator EndScreen()
+    // Used to find the location for specified index and array combination
+    public Vector3 IndexLocation(string index)
     {
-        yield return new WaitForSeconds(1.0f);
-        endScreen.GetComponent<SoftwareEndScreen>().Open();
+        Vector3 pos;
+        return arrayMap.TryGetValue(index, out pos) ? pos : Vector3.zero;
     }
 
-    // Used for debugging and printing the layout of the scene
-    //public void PrintMap()
-    //{
-    //    for (int i = 0; i < 11; i++)
-    //    {
-    //        string map = "";
-    //        for (int j = 0; j < 9; j++)
-    //        {
-    //            map = map + layoutMap[i, j] + ": ";
-    //        }
-    //        Debug.Log(map);
-    //    }
-    //}
+    // Show end screen
+    private IEnumerator EndScreen()
+    {
+        yield return new WaitForSeconds(0.5f);
+        endScreen.GetComponent<SoftwareEndScreen>().Open();
+    }
 }

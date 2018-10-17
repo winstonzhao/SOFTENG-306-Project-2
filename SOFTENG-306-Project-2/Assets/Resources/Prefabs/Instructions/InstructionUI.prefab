@@ -72,10 +72,9 @@ GameObject:
   - component: {fileID: 224537875161724858}
   - component: {fileID: 222986818205918234}
   - component: {fileID: 114807892847564358}
-  - component: {fileID: 114262144823597248}
   - component: {fileID: 114079589471524624}
-  - component: {fileID: 114667642624793818}
   - component: {fileID: 61553595414615412}
+  - component: {fileID: 114098868724006690}
   m_Layer: 5
   m_Name: InstructionUI
   m_TagString: Untagged
@@ -333,9 +332,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b1ed474a6c239468f8713f46a0df5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 10
-  instruction: {fileID: 114667642624793818}
+  instruction: {fileID: 0}
   padding: {x: 20, y: 10}
+  spacing: 10
+--- !u!114 &114098868724006690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249327502550600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab2d9d7049a4d7c9af1d7c30289d967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114104727920476778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -489,17 +499,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
---- !u!114 &114262144823597248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1249327502550600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a0563fa537ab442ad981b53090b0b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114347763909271344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -674,19 +673,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114667642624793818
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1249327502550600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24588fe65392943438ff9daa9390953a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  robot: {fileID: 0}
-  seconds: 1
 --- !u!114 &114697165860209332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -811,7 +797,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300026, guid: 243c14c6f715e81449462541493037d2, type: 3}
+  m_Sprite: {fileID: 21300024, guid: 142f9dc18d5f7d940a9616f0c8965a4f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -8,6 +8,7 @@ namespace Instructions
     {
         private InstructionExecutor instructionExecutor;
         private JumpTargetInstruction jumpTarget;
+        private InstructionManager instructionManager;
 
         public override bool Editable { get; set; }
 
@@ -22,6 +23,14 @@ namespace Instructions
             }
         }
 
+        private void OnDestroy()
+        {
+            if (instructionManager != null)
+            {
+                instructionManager.RemoveColor(GetInstanceID() + "Jump");
+            }
+        }
+
         private void Start()
         {
             // Load the End Jump component
@@ -33,14 +42,31 @@ namespace Instructions
             jumpTarget = gameObj.GetComponent<JumpTargetInstruction>();
             jumpTarget.transform.position = transform.position;
 
-            var targetDraggable = gameObj.GetComponent<DraggableItem>();
 
+            instructionManager = FindObjectOfType<InstructionManager>();
+            if (instructionManager == null)
+            {
+                var go = new GameObject();
+                instructionManager = go.AddComponent<InstructionManager>();
+            }
+
+            var targetDraggable = gameObj.GetComponent<DraggableUIItem>();
+
+            var instructionRenderer = GetComponent<InstructionRenderer>();
             var targetRenderer = targetDraggable.GetComponent<InstructionRenderer>();
             targetRenderer.IsEnabled = false;
 
-            var draggableItem = GetComponent<DraggableItem>();
+            // Set colors to match
+            var color = instructionManager.GenerateColor(GetInstanceID() + "Jump");
+            targetRenderer.DefaultBackgroundColor = color;
+            instructionRenderer.DefaultBackgroundColor = color;
+
+            var draggableItem = GetComponent<DraggableUIItem>();
             draggableItem.AddConnectedItem(targetDraggable);
+            targetDraggable.AddConnectedItem(draggableItem);
+
             draggableItem.OnDropZoneChanged += d => targetRenderer.IsEnabled = d != null;
+
         }
 
         public override void Execute(RobotController target, InstructionExecutor executor)

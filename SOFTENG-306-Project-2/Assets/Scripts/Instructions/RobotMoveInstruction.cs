@@ -53,9 +53,9 @@ namespace Instructions
             instructionExecutor = executor;
             robot = target;
             var didMove = false;
-            didMove = robot.Move((RobotController.Direction)moveDirection);
+            didMove = robot.Move(moveDirection);
 
-            if (!didMove) throw new InstructionException();
+            if (!didMove) throw new InstructionException("Could not move " + moveDirection.ToString());
         }
     }
 }
