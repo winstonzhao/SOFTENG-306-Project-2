@@ -18,7 +18,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
     public Vector3 input;
 
     // Prefabs and Sprites used for different states of the scene
-    private static string ELEMENT_PREFAB = "software_minigame/Prefabs/test_item";
+    private static string ELEMENT_PREFAB = "software_minigame/Prefabs/item";
+    private static string ITEM = "software_minigame/Sprites/item";
     private static string MORE_INPUTS = "software_minigame/Sprites/key1";
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
     private static string INCORRECT_OUTPUT = "software_minigame/Sprites/lock1";
@@ -88,6 +89,8 @@ public class SoftwareLevelGenerator : MonoBehaviour
         // Used for creating custom input elements
         GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
         GameObject obj;
+        SpriteRenderer renderer;
+        int value;
         
         // Dictionary used to map index and location of arrays
         arrayMap = new Dictionary<string, Vector3>();
@@ -110,7 +113,10 @@ public class SoftwareLevelGenerator : MonoBehaviour
                 numElements = 1;
                 obj = Instantiate<GameObject>(prefab);
                 obj.GetComponent<IsoTransform>().Position = new Vector3(5, 0.8f, 4);
-                obj.AddComponent<ArrayElement>();
+                obj.AddComponent<ArrayElement>().Generate();
+                value = obj.GetComponent<ArrayElement>().value;
+                renderer = obj.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(ITEM + value);
                 obj.transform.parent = this.transform;
                 generatedObjects.Add(obj);
                 layoutMap[6, 5] = Layout.ELEMENT;
@@ -125,7 +131,10 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     {
                         obj = Instantiate<GameObject>(prefab);
                         obj.GetComponent<IsoTransform>().Position = new Vector3(x - 1, 0.8f, 5);
-                        obj.AddComponent<ArrayElement>();
+                        obj.AddComponent<ArrayElement>().Generate();
+                        value = obj.GetComponent<ArrayElement>().value;
+                        renderer = obj.GetComponent<SpriteRenderer>();
+                        renderer.sprite = Resources.Load<Sprite>(ITEM + value);
                         obj.transform.parent = this.transform;
                         generatedObjects.Add(obj);
                         layoutMap[x, 6] = Layout.ELEMENT;
@@ -165,7 +174,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
             GameObject prefab = Resources.Load<GameObject>(ELEMENT_PREFAB);
             GameObject obj = Instantiate<GameObject>(prefab);
             obj.GetComponent<IsoTransform>().Position = new Vector3(inputX - 1, 0.8f, inputZ - 1);
-            obj.AddComponent<ArrayElement>();
+            obj.AddComponent<ArrayElement>().Generate();
+            int value = obj.GetComponent<ArrayElement>().value;
+            print("hi" + value);
+            SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+            renderer.sprite = Resources.Load<Sprite>(ITEM + value);
             obj.transform.parent = this.transform;
             generatedObjects.Add(obj);
             layoutMap[inputX, inputZ] = Layout.ELEMENT;

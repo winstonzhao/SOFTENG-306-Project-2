@@ -7,15 +7,8 @@ public class ArrayElement : MonoBehaviour {
     public int value;
 
 	// Use this for initialization
-	void Start () {
-        int level = this.GetComponentInParent<SoftwareLevelGenerator>().currentLevel;
-
-        switch (level)
-        {
-            default:
-	            value = NextInt(1, 10);
-                break;
-        }
+	public void Generate () {
+		value = NextInt(1, 10);
     }
 	
 	private static int NextInt(int min, int max)
