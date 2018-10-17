@@ -24,6 +24,8 @@ namespace Instructions
 
         private bool shouldUpdate = true;
 
+        private static int minWidth = 270;
+
         public override bool IsEnabled
         {
             get { return image.enabled; }
@@ -125,7 +127,7 @@ namespace Instructions
             var width = children.Sum(c => c.Size.x);
             width += spacing * components.Count - spacing;
 
-            width = Mathf.Max(width, 315);
+            width = Mathf.Max(width, minWidth);
 
             // Layout children left to right
             float start = 0;

@@ -11,63 +11,12 @@ using UnityEditor;
 [RequireComponent(typeof(BoxCollider2D))]
 public class DraggableList : GenericDraggableList, IDropZone
 {
-
-    public List<Draggable> listItems = new List<Draggable>();
-
-    public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
-
-    [SerializeField]
-    private bool copyOnDrag = true;
-
-    [SerializeField]
-    private bool rearrangeable = true;
-
     private float itemHeight = 0f;
-
-    private List<System.Type> allowedItems = new List<System.Type>();
-    public List<System.Type> AllowedItems
-    {
-        get
-        {
-            return allowedItems;
-        }
-        set
-        {
-            allowedItems = value;
-        }
-    }
-
-    public bool Rearrangeable
-    {
-        get
-        {
-            return rearrangeable;
-        }
-        set
-        {
-            rearrangeable = value;
-        }
-    }
-
-    public bool CopyOnDrag
-    {
-        get
-        {
-            return copyOnDrag;
-        }
-        set
-        {
-            copyOnDrag = value;
-        }
-    }
-
-    public float layoutSpacing = 2;
 
     public Vector2 MinSize = new Vector2(1, 1);
 
     private BoxCollider2D boxCollider;
 
-    // Use this for initialization
     void Start()
     {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -79,7 +28,6 @@ public class DraggableList : GenericDraggableList, IDropZone
 
         foreach (var draggable in listItems)
         {
-//            draggable.transform.position = draggable.HomePos;
             draggable.SetDropZone(this);
         }
         layout();
@@ -91,6 +39,9 @@ public class DraggableList : GenericDraggableList, IDropZone
 
     }
 
+    /// <summary>
+    /// Moves all the items in the list to their appropriate locations
+    /// </summary>
     void layout()
     {
         float i = itemHeight/2;
@@ -104,6 +55,7 @@ public class DraggableList : GenericDraggableList, IDropZone
                 continue;
             }
 
+            // Calculate the item height from the first item
             if (Math.Abs(itemHeight) < 0.01f)
             {
                 itemHeight = draggable.Size.y;
@@ -118,38 +70,20 @@ public class DraggableList : GenericDraggableList, IDropZone
             itemHeight = draggable.Size.y;
         }
 
-//        var scale = transform.lossyScale.x;
-
         var width = Mathf.Max(MinSize.x, maxWidth);
         var height = Mathf.Max(MinSize.y, i - itemHeight / 2 - layoutSpacing);
         var colliderSize = new Vector2(width, height);
 
+        // Move collider to fit entire list
         boxCollider.size = colliderSize;
         boxCollider.offset = new Vector2(0, colliderSize.y / 2);
-
-//        rectTransform.sizeDelta = colliderSize;
-//        rectTransform.anchoredPosition = new Vector2(0, 0);
     }
-
-    private int FindIndex(Draggable item)
-    {
-        var maxIndex = -1;
-        for (int i = 0; i < listItems.Count; i++)
-        {
-            if (listItems[i].transform.position.y < item.transform.position.y)
-            {
-                maxIndex = i;
-            }
-        }
-
-        return maxIndex + 1;
-    }
-
 
     public void UpdateObject(Draggable item)
     {
-        if (!Rearrangeable) return;
+        if (!rearrangeable) return;
 
+        // Move to correct position
         int targetIndex = FindIndex(item);
         targetIndex = Math.Min(targetIndex, listItems.Count - 1);
 
@@ -163,6 +97,7 @@ public class DraggableList : GenericDraggableList, IDropZone
     {
         if (!rearrangeable)
         {
+            // Cannot have items added
             Destroy(item.gameObject);
             return false;
         }
@@ -221,14 +156,16 @@ public class DraggableList : GenericDraggableList, IDropZone
 
     public void OnDragStart(Draggable item)
     {
-        if (CopyOnDrag)
+        if (copyOnDrag)
         {
+            // Create a clone to stay in the list and allow the old item to be dragged away
             var itemClone = Instantiate(item, item.transform.parent);
-//            itemClone.transform.SetParent(item.transform.parent, false);
             item.transform.SetAsLastSibling();
             itemClone.transform.SetAsLastSibling();
+
             listItems.Insert(listItems.IndexOf(item), itemClone);
             listItems.Remove(item);
+
             layout();
             itemClone.GetComponent<Draggable>().SetDropZone(this);
         }

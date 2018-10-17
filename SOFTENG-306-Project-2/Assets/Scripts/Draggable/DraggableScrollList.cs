@@ -11,15 +11,8 @@ using UnityEngine.UI;
 // [RequireComponent(typeof(BoxCollider2D))]
 public class DraggableScrollList : GenericDraggableList, IDropZone
 {
-
-    public List<Draggable> listItems = new List<Draggable>();
     public Canvas parentCanvas;
     public Scrollbar Scrollbar;
-
-    public override IEnumerable<Draggable> ListItems { get { return listItems.AsReadOnly(); } }
-
-    public bool copyOnDrag = true;
-    public bool rearrangeable = true;
 
     public float maxHeight = 100;
 
@@ -27,27 +20,11 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
 
     private float itemHeight = 0.0f;
 
-    private List<System.Type> allowedItems = new List<System.Type>();
-    public List<System.Type> AllowedItems
-    {
-        get
-        {
-            return allowedItems;
-        }
-        set
-        {
-            allowedItems = value;
-        }
-    }
-
-    public float layoutSpacing = 2;
-
     public Vector2 MinSize = new Vector2(1, 1);
 
     private BoxCollider2D boxCollider;
     private RectTransform rectTransform;
 
-    // Use this for initialization
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -66,17 +43,15 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         prevPos = rectTransform.localPosition;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    /// <summary>
+    /// Moves all the items in the list to their appropriate locations
+    /// </summary>
     public void Layout()
     {
         if (boxCollider == null) return;
 
         float i = itemHeight/2;
-        float maxWidth = 325;
+        float maxWidth = 280;
 
         foreach (var draggable in listItems)
         {
@@ -86,6 +61,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
                 continue;
             }
 
+            // Calculate the item height from the first item
             if (Math.Abs(itemHeight) < 0.01f)
             {
                 itemHeight = draggable.Size.y;
@@ -105,13 +81,17 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         height = Mathf.Max(maxHeight, height);
         var colliderSize = new Vector2(width, height) * 1;
 
+        // Update collider size to fit
         boxCollider.size = colliderSize;
         boxCollider.offset = new Vector2(0, colliderSize.y / 2);
 
+        // Update size to fit
         rectTransform.sizeDelta = colliderSize;
         rectTransform.anchoredPosition = new Vector2(0, 0);
 
-        if (width > MinSize.x) transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(colliderSize.x, transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta.y);
+        // Update parent size to fit
+        if (width > MinSize.x) transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta =
+            new Vector2(colliderSize.x, transform.parent.parent.parent.GetComponent<RectTransform>().sizeDelta.y);
     }
 
     // Checks if this scroll list should still be the parent of the item
@@ -133,6 +113,8 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
     public override void Highlight(Draggable item)
     {
         var index = listItems.FindIndex(i => i == item);
+
+        // Scroll to item that wants to be highlighted
         Scrollbar.value = (float)index / listItems.Count;
     }
 
@@ -142,6 +124,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
 
         UpdateParent(item);
 
+        // Scroll up when dragged to the top
         var scrollbarHeight = maxHeight * transform.lossyScale.y;
         if (item.transform.position.y > Scrollbar.transform.position.y + scrollbarHeight/2)
         {
@@ -152,6 +135,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
             Scrollbar.value -= 0.1f;
         }
 
+        // Move object to the correct position
         int targetIndex = FindIndex(item);
         targetIndex = Math.Min(targetIndex, listItems.Count - 1);
 
@@ -168,6 +152,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
             Destroy(item.gameObject);
             return false;
         }
+
         item.GetComponent<RectTransform>().SetParent(transform.parent);
         listItems.Insert(index, item);
         Layout();
@@ -193,20 +178,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         Layout();
     }
 
-    private int FindIndex(Draggable item)
-    {
-        var maxIndex = -1;
-        for (int i = 0; i < listItems.Count; i++)
-        {
-            if (listItems[i].transform.position.y < item.transform.position.y)
-            {
-                maxIndex = i;
-            }
-        }
-
-        return maxIndex + 1;
-    }
-
+    // Finds the index the given item should be in the list based on it's y position
     public int IndexOf(Draggable item)
     {
         return listItems.IndexOf(item);
@@ -217,6 +189,8 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         if (listItems.Contains(item)) return;
 
         RemoveDummies();
+
+        // Add dummy where item would be added
         AddDummyToList(FindIndex(item));
     }
 
@@ -262,6 +236,7 @@ public class DraggableScrollList : GenericDraggableList, IDropZone
         }
         else
         {
+            // Check if the drag was finished inside the object
             if (item.transform.parent != transform.parent)
             {
                 OnItemRemove(item);

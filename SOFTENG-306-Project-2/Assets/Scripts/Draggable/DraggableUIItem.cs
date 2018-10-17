@@ -81,6 +81,7 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Handle dragging
         if (dragging)
         {
             Vector3 localMousePos = Input.mousePosition;
@@ -115,7 +116,6 @@ public class DraggableUIItem : Draggable, IPointerEnterHandler, IPointerExitHand
         if (moving)
         {
             // Move back to home position
-
             var tdiff = t;
             t += Time.deltaTime / seconds;
             if (t >= 1)

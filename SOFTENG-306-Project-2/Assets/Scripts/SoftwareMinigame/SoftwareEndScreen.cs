@@ -15,25 +15,21 @@ public class SoftwareEndScreen : MonoBehaviour
     private static int maxScore = 100;
     private int instructionCount;
 
-    private Transform slides;
-    
     // Use this for initialization
     void Start()
     {
-        slides = transform.Find("ExitSlide");
         Open();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void Open()
     {
         instructionCount = scrollList.listItems.Count;
         gameObject.SetActive(true);
+
+        // Hide instruction elements
         InstructionCanvas.gameObject.SetActive(false);
+
+        // Personalise feedback
         ExitText.text = defaultEndText + "\n\nYou used " + instructionCount + " instructions " +
                         "and scored " + (maxScore - instructionCount) +
                         "!\n\n(Use less instructions to score more)";
@@ -46,7 +42,9 @@ public class SoftwareEndScreen : MonoBehaviour
         ExitText.text = defaultEndText;
     }
 
-    // Used this method to link back to lobby
+    /// <summary>
+    /// Links the minigame back to the lobby and saves the highscore
+    /// </summary>
     public void EndMiniGame()
     {
         var score = new Score()
