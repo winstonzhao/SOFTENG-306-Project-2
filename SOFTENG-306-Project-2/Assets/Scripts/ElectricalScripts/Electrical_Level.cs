@@ -158,6 +158,16 @@ public class Electrical_Level : MonoBehaviour, IDropZone
             }
         }));
 
+        // get time remaining
+        int timeRemain = Mathf.RoundToInt(currCountdownValueTenthSeconds / 10);
+
+        // if time remaining is less than 50% of time limit
+        if (timeRemain < TimeLimit/2) {
+            // reduce the player score
+            levelScore = 99 - (TimeLimit/2 - timeRemain);
+        }
+        // set the level score in the end level dialog
+        SetLevelScoreText(levelScore);
         Toolbox.Instance.Electrical_Scores.addScore(levelNumber, levelScore);
     }
 
@@ -231,10 +241,22 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         resultInfoArea.SetText(text);
     }
 
+    /*
+     * Set the player name in end level dialog
+     */ 
     private void SetPlayerName(string name)
     {
         TextMeshProUGUI nameArea = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         nameArea.SetText(name);
+    }
+
+    /*
+     * Set the level score for the end of level dialog
+     */
+    private void SetLevelScoreText(int score)
+    {
+        TextMeshProUGUI nameArea = GameObject.Find("Score_Text").GetComponent<TextMeshProUGUI>();
+        nameArea.SetText(score + "");
     }
 
     public IEnumerator StartCountdown(int timeLimit)
