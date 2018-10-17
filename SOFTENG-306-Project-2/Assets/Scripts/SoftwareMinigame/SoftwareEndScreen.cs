@@ -9,12 +9,10 @@ public class SoftwareEndScreen : MonoBehaviour
     public Canvas InstructionCanvas;
     public DraggableScrollList scrollList;
     public Text ExitText;
-
     private string defaultEndText = "Well Done!\n\nYou have now completed the Software Minigame!";
 
     private static int maxScore = 100;
     private int instructionCount;
-
     // Use this for initialization
     void Start()
     {
@@ -47,11 +45,57 @@ public class SoftwareEndScreen : MonoBehaviour
     /// </summary>
     public void EndMiniGame()
     {
+       // Get the current level of the game
+        int level = GameObject.Find("GameManager").GetComponent<SoftwareLevelGenerator>().currentLevel;
+        int expected = 0;
+        int s = maxScore;
+
+        // Set expected number of instruction used
+        switch (level)
+        {
+            case 1:
+                expected = 2;
+                break;
+            case 2:
+                expected = 4;
+                break;
+            case 3:
+                expected = 6;
+                break;
+            case 4:
+                expected = 5;
+                break;
+            case 5:
+                expected = 6;
+                break;
+            case 6:
+                expected = 10;
+                break;
+        }
+        
+        // For extra instruction used, -10 for score
+        for (int i = 0; i < instructionCount; i++)
+        {
+            if (i > expected)
+            {
+                s -= 10;
+            }
+        }
+
+        // Set to 0 if score gets to negative
+        if (s < 0)
+        {
+            s = 0;
+        }
+
+        Debug.Log("Score is: " + s);
+        
+        // Add score to the list of scores for software game
         var score = new Score()
         {
             CreatedAt = DateTime.Now,
             Minigame =  Minigames.Software,
-            Value = maxScore - instructionCount,
+            Value = s
         };
 
         Toolbox.Instance.Hiscores.Add(score);
