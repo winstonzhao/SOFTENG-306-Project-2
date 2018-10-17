@@ -64,6 +64,11 @@ namespace Game.Hiscores
             lock (this)
             {
                 All.AddRange(values);
+                // Add to each section
+                foreach (var score in values)
+                {
+                    Get(score.Minigame).Add(score);
+                }
             }
         }
 

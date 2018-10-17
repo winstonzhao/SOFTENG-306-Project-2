@@ -7,12 +7,12 @@ namespace Game.Hiscores.UserInterface
     public class HiscoreView : MonoBehaviour
     {
         private GameObject ScorePrefab;
-        private GameObject TextPrefab;
+        private GameObject NoScoresTextPrefab;
 
         private void Start()
         {
             ScorePrefab = Resources.Load<GameObject>("Prefabs/Hiscores/Score");
-            TextPrefab = Resources.Load<GameObject>("Prefabs/Hiscores/NoScoresText");
+            NoScoresTextPrefab = Resources.Load<GameObject>("Prefabs/Hiscores/NoScoresText");
 
             var controller = FindObjectOfType<HiscoreController>();
 
@@ -27,7 +27,7 @@ namespace Game.Hiscores.UserInterface
             {
                 foreach (Transform child in transform)
                 {
-                    DestroyImmediate(child.gameObject);
+                    Destroy(child.gameObject);
                 }
 
                 yield return null;
@@ -35,12 +35,7 @@ namespace Game.Hiscores.UserInterface
 
             var scores = Toolbox.Instance.Hiscores.Get(minigame);
 
-            var y = 0.0f;
-
-            var newSize = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, scores.Count * 200);
-
-            transform.GetComponent<RectTransform>().sizeDelta = newSize;
-            transform.parent.GetComponent<RectTransform>().sizeDelta = newSize;
+            var y = 32.0f;
 
             foreach (var score in scores)
             {
@@ -67,9 +62,15 @@ namespace Game.Hiscores.UserInterface
                 yield return null;
             }
 
+            var rectTransform = transform.GetComponent<RectTransform>();
+            var sizeDelta = rectTransform.sizeDelta;
+            sizeDelta.y = y;
+            rectTransform.sizeDelta = sizeDelta;
+            transform.parent.GetComponent<RectTransform>().sizeDelta = sizeDelta;
+
             if (scores.Count == 0)
             {
-                var view = Instantiate(TextPrefab);
+                var view = Instantiate(NoScoresTextPrefab);
                 view.transform.SetParent(transform);
                 view.transform.localPosition = new Vector3(0, 25, 0);
                 var rectParent = transform.parent.GetComponent<RectTransform>();
