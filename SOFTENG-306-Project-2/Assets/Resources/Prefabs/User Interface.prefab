@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222727478791966236}
   - component: {fileID: 114994009782403472}
   - component: {fileID: 114000432568797980}
+  - component: {fileID: 114703493475269890}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -129,6 +130,7 @@ GameObject:
   - component: {fileID: 114613900591750600}
   - component: {fileID: 114630992064721788}
   - component: {fileID: 114609376854194584}
+  - component: {fileID: 114793766896218712}
   m_Layer: 5
   m_Name: Backpack Button On Game
   m_TagString: Untagged
@@ -445,6 +447,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114703493475269890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1071732404947218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!114 &114792527878204146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -456,6 +470,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4962e83b9654efe817fc845e0770a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114793766896218712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1791114803842330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e593e20c02a480b86941e4334bcc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
 --- !u!114 &114835432402219884
 MonoBehaviour:
   m_ObjectHideFlags: 1

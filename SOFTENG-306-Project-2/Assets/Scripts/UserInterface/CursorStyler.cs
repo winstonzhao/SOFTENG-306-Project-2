@@ -16,9 +16,15 @@ public class CursorStyler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     /**
      * Set the default cursor handler
      */
-    void Awake()
+    private void Awake()
     {
-        _handler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CursorHandler>();
+        _handler = FindObjectOfType<CursorHandler>();
+    }
+
+    private void OnDestroy()
+    {
+        // Reset the cursor afterwards
+        _handler.CursorClear();
     }
 
     /**
