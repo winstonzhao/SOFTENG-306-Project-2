@@ -13668,7 +13668,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'This  gate  requires  at least one  light  input  to  produce  a  light  output. '
+  m_Text: This  is  an  and  gate!  it  needs  two  light  inputs  to make  a  light  output!
 --- !u!222 &485021432
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25280,11 +25280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fec9e3f5d44517a824b545d29a770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block1: {fileID: 0}
-  block2: {fileID: 0}
-  left: {fileID: 0}
-  right: {fileID: 0}
-  tile: {fileID: 0}
 --- !u!61 &933904164
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26909,7 +26904,7 @@ Prefab:
         type: 3}
     - target: {fileID: 1452977232087960, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
       propertyPath: m_TagString
-      value: Circuit_2
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114323943975087238, guid: 96662b7a1a37846c9bde5ad55dede327, type: 2}
@@ -28661,6 +28656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expectedGates:
   - {fileID: 933904163}
+  - {fileID: 1328941206}
   circuitTag: Circuit_2
 --- !u!61 &1056026923
 BoxCollider2D:
@@ -31255,11 +31251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fec9e3f5d44517a824b545d29a770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block1: {fileID: 0}
-  block2: {fileID: 0}
-  left: {fileID: 0}
-  right: {fileID: 0}
-  tile: {fileID: 0}
 --- !u!61 &1164152831
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31443,7 +31434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1171956977}
   m_Layer: 0
-  m_Name: OR Gate
+  m_Name: AND Gate2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34902,7 +34893,7 @@ GameObject:
   - component: {fileID: 1328941211}
   - component: {fileID: 1328941212}
   m_Layer: 0
-  m_Name: Gate_OR
+  m_Name: Gate_AND2
   m_TagString: Block2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34919,11 +34910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fec9e3f5d44517a824b545d29a770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block1: {fileID: 0}
-  block2: {fileID: 0}
-  left: {fileID: 0}
-  right: {fileID: 0}
-  tile: {fileID: 0}
 --- !u!61 &1328941207
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34984,7 +34970,7 @@ SpriteRenderer:
   m_SortingLayerID: -1881382569
   m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3c9756b1990ba0b4a81845e85ffb0bd0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0ed194ebeacaf0458e3c3674687642b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -35015,7 +35001,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1328941210
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1328941205}
@@ -42014,7 +42000,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 11
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -45195,7 +45181,7 @@ GameObject:
   - component: {fileID: 1711452041}
   - component: {fileID: 1711452040}
   m_Layer: 0
-  m_Name: Label_OR
+  m_Name: Label_AND2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45208,7 +45194,7 @@ TextMesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1711452039}
-  m_Text: OR GATE
+  m_Text: AND GATE
   m_OffsetZ: 0
   m_CharacterSize: 0.5
   m_LineSpacing: 1
@@ -45277,7 +45263,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
 --- !u!4 &1711452043
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1711452039}
@@ -49557,7 +49543,7 @@ GameObject:
   - component: {fileID: 1901306282}
   - component: {fileID: 1901306281}
   m_Layer: 5
-  m_Name: Help_Gate_OR
+  m_Name: Help_Gate_AND2
   m_TagString: EndOfLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
