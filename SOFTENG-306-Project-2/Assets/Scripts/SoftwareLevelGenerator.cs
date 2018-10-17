@@ -2,6 +2,7 @@
 using UnityEngine;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using System.Collections;
+using System.Linq;
 using Instructions;
 using UnityEngine.SceneManagement;
 using Utils;
@@ -11,7 +12,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
     // Fields used to represent the current level and game
     public int currentLevel;
     public int numElements;
-    public GameObject endScreen;
     private Layout[,] layoutMap;
     private GameObject[,] objectMap;
 
@@ -28,7 +28,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private static string FINISH_INPUTS = "software_minigame/Sprites/key2";
     private static string INCORRECT_OUTPUT = "software_minigame/Sprites/lock1";
     private static string CORRECT_OUTPUT = "software_minigame/Sprites/lock2";
-    private static string LEVEL_PREFIX = "scenes/Software Level ";
 
     // Used for storing all generated object for checking answer.
     private List<GameObject> generatedObjects = new List<GameObject>();
@@ -38,6 +37,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     
     // Used to run all the instructions
     private InstructionExecutor instructionExecutor;
+    public SoftwareEndScreen endCanvas;
 
     // Enum used to map out the layout of the scene
     public enum Layout
@@ -317,7 +317,6 @@ public class SoftwareLevelGenerator : MonoBehaviour
                     }   
                 }
                 renderer.sprite = sprite;
-                StartCoroutine(EndScreen());
                 return true;
         }
         return false;
@@ -351,8 +350,11 @@ public class SoftwareLevelGenerator : MonoBehaviour
 
             if (finished)
             {
+                Debug.Log("Finished");
                 instructionExecutor = FindObjectOfType<InstructionExecutor>();
                 instructionExecutor.Stop();
+                endCanvas = Resources.FindObjectsOfTypeAll<SoftwareEndScreen>()[0];
+                StartCoroutine(EndScreen());
             }
         } 
         else if (command == RobotController.Command.SWAP)
@@ -392,11 +394,7 @@ public class SoftwareLevelGenerator : MonoBehaviour
     private IEnumerator EndScreen()
     {
         yield return new WaitForSeconds(0.5f);
-        endScreen.GetComponent<SoftwareEndScreen>().Open();
+        endCanvas.Open();
     }
 
-    public void LoadNextLevel()
-    {
-        SceneManager.LoadScene(LEVEL_PREFIX + (currentLevel + 1));
-    }
 }
