@@ -19,15 +19,10 @@ public class DraggableItemReturn : Draggable
     private float moveSeconds = 5;
     private float moveTimer = 0;
 
-    public GameObject block1;
-    public GameObject block2;
-    public GameObject left;
-    public GameObject right;
-    public GameObject tile;
-
     Vector3 prevMousePos;
-
     private Vector3 homePos;
+
+    // get and set the home position
     public override Vector3 HomePos
     {
         get
@@ -44,19 +39,13 @@ public class DraggableItemReturn : Draggable
         }
     }
 
+    // get and set the size
     public override Vector2 Size { get; set; }
 
     // Use this for initialization
     void Start()
     {
         startPosition = transform.position;
-
-
-        block1 = GameObject.Find("Block1");
-        block2 = GameObject.Find("Block2");
-        left = GameObject.Find("LeftTile");
-        right = GameObject.Find("RightTile");
-        tile = GameObject.Find("Tile");
     }
 
     public override void SetDropZone(IDropZone list)
@@ -64,29 +53,34 @@ public class DraggableItemReturn : Draggable
         this.dropZone = list;
     }
 
-    // Update is called once per frame
+    /*
+     * Update method called once per frame
+     */
     void FixedUpdate()
     {
+        // if the player is dragging the logic gate, log the movement of the player
         if (dragging)
         {
+            // get mouse position
             Vector3 localMousePos = Input.mousePosition;
             Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(localMousePos.x, localMousePos.y, Camera.main.nearClipPlane));
-
             Vector3 diff = mousePosWorld - prevMousePos;
             transform.Translate(diff);
 
+            // if the dropzone exits, log the draggable item as dragging
             if (dropZone != null)
             {
                 dropZone.OnItemDrag(this);
             }
-
             prevMousePos = mousePosWorld;
         }
 
+        // if the player is moving their mouse
         if (moving)
         {
+            // transform the item position
             transform.position = Vector3.Lerp(transform.position, target, 0.1f);
-
+            // if the distance moved is very small, log the player as stopped moving
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
                 moving = false;
@@ -104,11 +98,16 @@ public class DraggableItemReturn : Draggable
         mouseInside = false;
     }
 
+    /*
+     * When the player holds their mouse down, tracks the movement of the gate
+     */
     void OnMouseDown()
     {
+        // track how long the items has been moving
         moveTimer += Time.deltaTime;
-
         if (!mouseInside) return;
+
+        // uodate the player mouse position as they move
         dragging = true;
         moving = false;
         Vector3 mousePos = Input.mousePosition;
@@ -125,10 +124,12 @@ public class DraggableItemReturn : Draggable
     {
         dragging = false;
 
+        // if the item is in a dropzone, drop the item into it
         if (inDropZone)
         {
             MoveTo(homePos);
         }
+        // otherwise, move the item back to its original position linearly
         else
         {
             endPosition = transform.position;
@@ -136,7 +137,6 @@ public class DraggableItemReturn : Draggable
             transform.position = Vector3.Lerp(startPosition, endPosition, ratio);
             moveTimer = 0;
         }
-
 
         if (newDropZones.Count > 0)
         {
@@ -156,9 +156,13 @@ public class DraggableItemReturn : Draggable
                 dropZone.OnDragFinish(this);
             }
         }
+        // move the player back to home position
         MoveTo(homePos);
     }
 
+    /*
+     * Controller for the 2D collider enter event
+     */
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!dragging) return;
@@ -175,6 +179,9 @@ public class DraggableItemReturn : Draggable
         newDropZones[0].OnDragEnter(this);
     }
 
+    /*
+     * Controller for the 2D collider exit event
+     */
     void OnTriggerExit2D(Collider2D col)
     {
         if (!dragging) return;
@@ -199,7 +206,6 @@ public class DraggableItemReturn : Draggable
         }
 
     }
-
 
     void MoveTo(Vector3 newPos)
     {
