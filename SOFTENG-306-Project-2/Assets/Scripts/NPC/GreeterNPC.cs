@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using GameDialog;
+using Multiplayer;
 using Ultimate_Isometric_Toolkit.Scripts.Core;
 using UnityEngine;
 
@@ -97,6 +98,15 @@ public class GreeterNPC : NPC
         MovementAnimator.SetFloat("hSpeed", 0f);
     }
 
+    private IEnumerator SetPlayerDirection()
+    {
+        var playerAnimator = GameObject.Find("Player").GetComponent<Animator>();
+        // Trigger transition to south east for one frame
+        playerAnimator.SetFloat("hSpeed", 1.0f);
+        yield return null;
+        playerAnimator.SetFloat("hSpeed", 0f);
+    }
+
     private IEnumerator Greet()
     {
         var toolbox = Toolbox.Instance;
@@ -124,6 +134,9 @@ public class GreeterNPC : NPC
         Origin = from;
 
         yield return StartCoroutine(MoveNextTo(to, 1f));
+
+        // Get the player to face the correct direction
+        yield return StartCoroutine(SetPlayerDirection());
 
         ShowDialog();
     }
