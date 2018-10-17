@@ -11,16 +11,19 @@ namespace UserInterface
     {
         private readonly Dictionary<Minigames, string> MinigameMap = new Dictionary<Minigames, string>
         {
-            { Minigames.Software, "Software Engineering" },
-            { Minigames.Civil, "Civil Engineering" },
-            { Minigames.Electrical, "Electrical Engineering" }
+            { Minigames.Software, "Software  Engineering" },
+            { Minigames.Civil, "Civil  Engineering" },
+            { Minigames.Electrical, "Electrical  Engineering" }
         };
 
         private Text Recommendation;
 
         private void Start()
         {
+            var name = transform.Find("Username").GetComponent<Text>();
             Recommendation = transform.Find("Recommendation").GetComponent<Text>();
+
+            name.text = Toolbox.Instance.GameManager.Player.Username;
 
             StartCoroutine(BigBrainArtificialIntelligence());
         }
