@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     private GameObject backpackButton;
     private GameObject achievementsButton;
+    private GameObject closeButton;
     private GameObject backpackTabPrefab;
     private GameObject achievementsTabPrefab;
     private GameObject backpackTab;
@@ -15,18 +16,13 @@ public class UIController : MonoBehaviour
     private Sprite correctSprite;
     private Sprite incorrectSprite;
 
-    enum Tab
-    {
-        BACKPACK,
-        ACHIEVEMENTS
-    }
-
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         GetComponent<Canvas>().sortingOrder = 500;
         backpackButton = transform.Find("Backpack Button").gameObject;
         achievementsButton = transform.Find("Achievements Button").gameObject;
+        closeButton = transform.Find("Close Button").gameObject;
         backpackTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/BackpackTab");
         achievementsTabPrefab = Resources.Load<GameObject>("Prefabs/User Interface/AchievementsTab");
         rowPrefab = Resources.Load<GameObject>("Prefabs/User Interface/Achievement Text + Checkbox");
@@ -36,7 +32,8 @@ public class UIController : MonoBehaviour
 
         // Click outside the interface to exit
         var overlay = transform.Find("Overlay");
-        overlay.GetComponent<Button>().onClick.AddListener(() => { Toolbox.Instance.UIManager.ToggleUI(); });
+        overlay.GetComponent<Button>().onClick.AddListener(Close);
+        closeButton.GetComponent<Button>().onClick.AddListener(Close);
 
         // Setup tab buttons to switch to the appropriate tab
         backpackButton.GetComponent<Button>().onClick.AddListener(SwitchToTimetable);
@@ -44,6 +41,31 @@ public class UIController : MonoBehaviour
 
         // Open timetable by default
         SwitchToTimetable();
+    }
+
+    private void Update()
+    {
+        // Todo - should probably do keyboard shortcuts in a centralized location so we can essentially prevent even propagation
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Close();
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (backpackTab == null)
+            {
+                SwitchToTimetable();
+            }
+            else
+            {
+                SwitchToAchievements();
+            }
+        }
+    }
+
+    private void Close()
+    {
+        Toolbox.Instance.UIManager.ToggleUI();
     }
 
     private void SwitchToTimetable()
