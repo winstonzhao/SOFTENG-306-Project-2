@@ -48,6 +48,8 @@ _Edit the above paths to match your own enviroment
 1. Make sure your screen aspect ratio is set to one of our supported ratios (16:9, 16:10, or 4:3)
 1. Once your aspect ratio is correct, press "Play" to begin!
 
+If you want to clear all saved data (and start from the beginning), refer to [Resetting Local History](https://github.com/winstonzhao/SOFTENG-306-Project-2/wiki/Resetting-Local-History)
+
 ## Gameplay
 ### Lobby
 1. Now you’ve reached the lobby, you can wondering and around talk the NPCs by pressing spacebar when within sufficient distance and then pressing the spacebar again to progress through the dialogue.
