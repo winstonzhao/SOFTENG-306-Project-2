@@ -11,8 +11,8 @@ namespace ElectricalScripts.Electrical_Scores
     {
         public int levelsCompleted { get; private set; }
         public int totalScore { get; private set; }
-        private int[,] levelScores = new int[,] { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } };
-        private int totalLevels = 6;
+        private int[,] levelScores = new int[,] { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 }, { 8, 0 }, { 9, 0 }, { 10, 0 }, { 11, 0 }, { 12, 0 } };
+        private int totalLevels = 12;
 
         /*
          * Method called by the Electrical_Level Script to add to the players high score

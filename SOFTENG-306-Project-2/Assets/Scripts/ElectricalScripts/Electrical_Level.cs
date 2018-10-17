@@ -124,14 +124,16 @@ public class Electrical_Level : MonoBehaviour, IDropZone
         {
             if (currentItem == gate)
             {
-                expected = true;
+                if (secondDropZoneComplete)
+                {
+                    levelCompleteCalled = true;
+                    completeLevel();
+                }
+                else
+                {
+                    expected = true;
+                }
             }
-        }
-
-        if (expected && secondDropZoneComplete)
-        {
-            levelCompleteCalled = true;
-            completeLevel();
         }
 
     }
