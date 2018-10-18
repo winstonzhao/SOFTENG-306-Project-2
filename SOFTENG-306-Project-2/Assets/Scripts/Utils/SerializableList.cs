@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Utils
 {
+    /// <summary>
+    /// Wrapper to save lists - <see cref="JsonUtility"/> does not support raw lists.
+    /// </summary>
+    /// <typeparam name="T">type of values in the list</typeparam>
     [Serializable]
     public class SerializableList<T>
     {

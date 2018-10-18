@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace Multiplayer
 {
+    /// <summary>
+    /// A player object - used to represent our player and other players.
+    ///
+    /// Stores position data & the current scene the user is in.
+    /// </summary>
     [Serializable]
     public class Player
     {

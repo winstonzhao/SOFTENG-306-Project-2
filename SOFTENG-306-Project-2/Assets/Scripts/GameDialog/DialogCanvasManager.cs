@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace GameDialog
 {
+    /// <summary>
+    /// Manages displaying dialogs on a canvas
+    /// </summary>
     public class DialogCanvasManager : MonoBehaviour
     {
         public bool Showing;
@@ -19,6 +22,12 @@ namespace GameDialog
         private bool IsFrameSkippable;
         private Button[] Buttons = new Button[0];
 
+        /// <summary>
+        /// Show the given dialog on the screen
+        /// </summary>
+        /// <param name="dialog">the dialog to show</param>
+        /// <param name="lhs">the left hand side sprite</param>
+        /// <param name="rhs">the right hand side sprite</param>
         public void ShowDialog(Dialog dialog, Sprite lhs, Sprite rhs)
         {
             Toolbox.Instance.FocusManager.Dialog = dialog;
@@ -35,8 +44,8 @@ namespace GameDialog
         /// <summary>
         /// Renders the current game frame e.g. animate the text coming in
         /// </summary>
-        /// <param name="frame"> </param>
-        /// <returns></returns>
+        /// <param name="frame">the frame to render</param>
+        /// <returns>Co-routine to run</returns>
         private IEnumerator RenderFrame(DialogFrame frame)
         {
             IsTypingText = true;
@@ -91,6 +100,10 @@ namespace GameDialog
             Showing = false;
         }
 
+        /// <summary>
+        /// Shows the given <paramref name="frame"/>
+        /// </summary>
+        /// <param name="frame">the frame to show</param>
         private void ShowFrame(DialogFrame frame)
         {
             // Setup user interface
@@ -103,6 +116,9 @@ namespace GameDialog
             StartCoroutine("RenderFrame", frame);
         }
 
+        /// <summary>
+        /// Create and display a new dialog frame game object
+        /// </summary>
         private void SetupGameFrame()
         {
             if (Avatar != null)
@@ -173,6 +189,10 @@ namespace GameDialog
             }
         }
 
+        /// <summary>
+        /// Try to "skip" the frame - jumps to the end or goes to the next frame depending on how much text
+        /// has been shown
+        /// </summary>
         private void SkipFrame()
         {
             if (CurrentDialogFrame.TransitionFrame || !IsFrameSkippable)
@@ -209,6 +229,9 @@ namespace GameDialog
             ShowFrame(CurrentDialogFrame.Next);
         }
 
+        /// <summary>
+        /// Invoke the callback for the current frame
+        /// </summary>
         private void OnCompleteFrame()
         {
             if (CurrentDialogFrame.OnComplete != null)
@@ -217,6 +240,9 @@ namespace GameDialog
             }
         }
 
+        /// <summary>
+        /// Destroy the current dialog frame game object
+        /// </summary>
         private void DestroyGameFrame()
         {
             Destroy(GameFrame);
@@ -232,6 +258,10 @@ namespace GameDialog
             GameFrameDialogueText = null;
         }
 
+        /// <summary>
+        /// Sets up the avatar for the current dialog frame
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">if the position was not specified for the speaker</exception>
         private void SetupAvatar()
         {
             switch (CurrentDialog.Directions[CurrentDialogFrame.Name])
@@ -247,11 +277,15 @@ namespace GameDialog
             }
         }
 
+        /// <summary>
+        /// <see cref="SetupAvatar"/>
+        /// </summary>
         private void SetupLhsAvatar()
         {
             float scale = GetComponent<RectTransform>().localScale.x;
             Avatar.sprite = LhsSprite;
 
+            // Position the avatar
             var avatarTransform = Avatar.GetComponent<RectTransform>();
             var position = avatarTransform.position;
             position[0] = 100 * scale;
@@ -259,6 +293,7 @@ namespace GameDialog
             position[2] = 0;
             avatarTransform.position = position;
 
+            // Position the dialog box
             var gameFrameTransform = GameFrame.GetComponent<RectTransform>();
             position = gameFrameTransform.position;
             position[0] = 100 * scale;
@@ -267,11 +302,15 @@ namespace GameDialog
             gameFrameTransform.position = position;
         }
 
+        /// <summary>
+        /// <see cref="SetupAvatar"/>
+        /// </summary>
         private void SetupRhsAvatar()
         {
             float scale = GetComponent<RectTransform>().localScale.x;
             Avatar.sprite = RhsSprite;
 
+            // Position the avatar
             var avatarTransform = Avatar.GetComponent<RectTransform>();
             var position = avatarTransform.position;
             position[0] = 700 * scale;
@@ -279,6 +318,7 @@ namespace GameDialog
             position[2] = 0;
             avatarTransform.position = position;
 
+            // Position the dialog box
             var gameFrameTransform = GameFrame.GetComponent<RectTransform>();
             position = gameFrameTransform.position;
             position[0] = 50 * scale;

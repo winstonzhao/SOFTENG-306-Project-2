@@ -5,6 +5,9 @@ using WebSocketSharp;
 
 namespace Game.Hiscores.UserInterface
 {
+    /// <summary>
+    /// Controller for hiscores, manages tab changes & back button presses
+    /// </summary>
     public class HiscoreController : MonoBehaviour
     {
         private Minigames minigame;

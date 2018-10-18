@@ -6,16 +6,28 @@ using Utils;
 
 namespace Achievements
 {
+    /// <summary>
+    /// Manages the achievements the user has gotten & which achievements are available
+    /// </summary>
     public class AchievementsManager : Singleton<AchievementsManager>
     {
+        /// <summary>
+        /// The file to which the data is persisted to
+        /// </summary>
         private const string JsonFile = "achievement-log.dat";
 
         private readonly List<Achievement> List = new List<Achievement>();
+        /// <summary>
+        /// Read only version of all of the available achievements
+        /// </summary>
         public ReadOnlyCollection<Achievement> All
         {
             get { return List.AsReadOnly(); }
         }
 
+        /// <summary>
+        /// Whether an achievement (checked by id) has been completed by the user
+        /// </summary>
         private Dictionary<string, bool> Completed = new Dictionary<string, bool>();
 
         private readonly DebounceAction DebounceSave;
@@ -58,7 +70,8 @@ namespace Achievements
             {
                 Id = "find-lecturer",
                 Title = "Find a lecturer!",
-                Description = "I really want to know more about engineering, someone who teaches it would be the way to go!"
+                Description =
+                    "I really want to know more about engineering, someone who teaches it would be the way to go!"
             });
 
             List.Add(new Achievement
@@ -86,11 +99,21 @@ namespace Achievements
             Load();
         }
 
+        /// <summary>
+        /// <see cref="MarkCompleted(string,bool)"/>
+        /// </summary>
+        /// <param name="achievement">achievement to complete</param>
+        /// <param name="completed">whether it should be completed</param>
         public void MarkCompleted(Achievement achievement, bool completed = true)
         {
             MarkCompleted(achievement.Id, completed);
         }
 
+        /// <summary>
+        /// Marks an achievement as completed or not
+        /// </summary>
+        /// <param name="achievementId">achievement to complete</param>
+        /// <param name="completed">whether it should be completed</param>
         public void MarkCompleted(string achievementId, bool completed = true)
         {
             Completed[achievementId] = completed;
@@ -110,11 +133,21 @@ namespace Achievements
             DebounceSave.Run();
         }
 
+        /// <summary>
+        /// <see cref="IsCompleted(string)"/>
+        /// </summary>
+        /// <param name="achievement">the achievement to check</param>
+        /// <returns>whether the user has completed the <paramref name="achievement"/></returns>
         public bool IsCompleted(Achievement achievement)
         {
             return IsCompleted(achievement.Id);
         }
 
+        /// <summary>
+        /// Check whether an achievement has been completed
+        /// </summary>
+        /// <param name="achievement">the achievement to check</param>
+        /// <returns>whether the user has completed the <paramref name="achievement"/></returns>
         public bool IsCompleted(string achievementId)
         {
             return Completed.ContainsKey(achievementId) && Completed[achievementId];

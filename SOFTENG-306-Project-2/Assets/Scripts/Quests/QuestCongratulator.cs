@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Quests
 {
+    /// <summary>
+    /// Detects when the user has finished the workshops to handle achievemenets & dialog after the user has
+    /// finished all workshops i.e. tell them to come upstairs to the networking event
+    /// </summary>
     public class QuestCongratulator : MonoBehaviour
     {
         public Sprite NpcSprite;
@@ -33,6 +37,9 @@ namespace Quests
             }
         }
 
+        /// <summary>
+        /// Show dialog to tell the user to come upstairs for the networking event
+        /// </summary>
         private void ShowWorkshopCongratulatoryDialog()
         {
             var me = Toolbox.Instance.GameManager.Player.Username;

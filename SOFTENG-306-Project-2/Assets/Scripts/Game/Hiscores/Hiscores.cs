@@ -5,8 +5,16 @@ using Utils;
 
 namespace Game.Hiscores
 {
+    /// <summary>
+    /// Stores the scores for the user
+    /// </summary>
     public class Hiscores : Singleton<Hiscores>
     {
+        /// <summary>
+        /// Stores all of the scores, regardless of the minigame.
+        ///
+        /// This is used for serialization
+        /// </summary>
         private readonly List<Score> All = new List<Score>();
 
         private readonly List<Score> Software = new List<Score>();
@@ -15,6 +23,9 @@ namespace Game.Hiscores
 
         private readonly List<Score> Electrical = new List<Score>();
 
+        /// <summary>
+        /// Debounce the save to avoid writing to disk too frequently
+        /// </summary>
         private readonly DebounceAction DebounceSave;
 
         public Hiscores()
@@ -23,6 +34,10 @@ namespace Game.Hiscores
             DebounceSave = new DebounceAction(every, Save);
         }
 
+        /// <summary>
+        /// Add the given <paramref name="score"/>
+        /// </summary>
+        /// <param name="score">the score to add</param>
         public void Add(Score score)
         {
             var list = Get(score.Minigame);
@@ -37,6 +52,12 @@ namespace Game.Hiscores
             DebounceSave.Run();
         }
 
+        /// <summary>
+        /// Get all the scores for the given <paramref name="minigame"/>
+        /// </summary>
+        /// <param name="minigame">the minigame to get all the scores for</param>
+        /// <returns>the list of scores for that minigame</returns>
+        /// <exception cref="ArgumentOutOfRangeException">if the minigame does not support scores</exception>
         public List<Score> Get(Minigames minigame)
         {
             switch (minigame)

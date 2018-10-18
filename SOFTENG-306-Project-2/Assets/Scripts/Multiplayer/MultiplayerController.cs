@@ -7,6 +7,9 @@ using WebSocketSharp;
 
 namespace Multiplayer
 {
+    /// <summary>
+    /// Controller used to handle the multiplayer connection & displaying players on the current scene.
+    /// </summary>
     public class MultiplayerController : Singleton<MultiplayerController>
     {
         public string Host = "wss://ododo.herokuapp.com";
@@ -168,6 +171,11 @@ namespace Multiplayer
             }
         }
 
+        /// <summary>
+        /// Handle periodic response by server about the current game state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="evt"></param>
         private void OnGameSync(object sender, MessageEventArgs evt)
         {
             const string prefix = "sync\n";
@@ -187,6 +195,11 @@ namespace Multiplayer
             }
         }
 
+        /// <summary>
+        /// Handle response by server to our get message request
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="evt"></param>
         private void OnChatMessages(object sender, MessageEventArgs evt)
         {
             const string prefix = "get-messages\n";
@@ -212,6 +225,10 @@ namespace Multiplayer
             Debug.LogError(evt.Exception.StackTrace);
         }
 
+        /// <summary>
+        /// Parse the players out of the server response & request for new messages if behind
+        /// </summary>
+        /// <param name="sync">the sync sent by the server</param>
         private void Sync(GameSync sync)
         {
             var players = new Dictionary<string, Player>();
@@ -242,6 +259,9 @@ namespace Multiplayer
             TimeDrift = DateTime.Now - DateTime.Parse(time);
         }
 
+        /// <summary>
+        /// Periodically send user data to the server - period determined by <see cref="SyncPeriod"/>
+        /// </summary>
         private void Update()
         {
             var activeScene = SceneManager.GetActiveScene();
@@ -282,6 +302,9 @@ namespace Multiplayer
             }
         }
 
+        /// <summary>
+        /// Update the players shown on the screen & adds/removes players if they've been (dis)connected etc
+        /// </summary>
         private void UpdatePlayers()
         {
             if (!IsPlayersDirty)

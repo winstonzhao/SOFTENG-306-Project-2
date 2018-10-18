@@ -5,6 +5,9 @@ using Utils;
 
 namespace Quests
 {
+    /// <summary>
+    /// Quest manager - stores the available quests & whether the user has completed them
+    /// </summary>
     public class QuestManager : Singleton<QuestManager>
     {
         private const string JsonFile = "quest-log.dat";
@@ -22,6 +25,9 @@ namespace Quests
         }
 
         private Quest current;
+        /// <summary>
+        /// Get the current quest the user has yet to complete
+        /// </summary>
         public Quest Current
         {
             get
@@ -111,11 +117,21 @@ namespace Quests
             });
         }
 
+        /// <summary>
+        /// Ask whether a quest has been finished or if it is the current quest
+        /// </summary>
+        /// <param name="questId">the quest to check</param>
+        /// <returns>whether it has been finished or if it is the current quest</returns>
         public bool HasFinishedOrIsCurrent(string questId)
         {
             return HasFinished(questId) || Current.Id == questId;
         }
 
+        /// <summary>
+        /// Ask whether a quest has been finished
+        /// </summary>
+        /// <param name="questId">the quest to check</param>
+        /// <returns>whether it has been finished</returns>
         public bool HasFinished(string questId)
         {
             return Completed.ContainsKey(questId) && Completed[questId];
@@ -133,6 +149,10 @@ namespace Quests
             }
         }
 
+        /// <summary>
+        /// Mark the quest as finished
+        /// </summary>
+        /// <param name="questId">the quest to mark as completed</param>
         public void MarkFinished(string questId)
         {
             // Do nothing if already marked as finished

@@ -7,6 +7,10 @@ using Random = UnityEngine.Random;
 
 namespace Multiplayer
 {
+    /// <summary>
+    /// Handles a given player - if it's us then update the player object with our game object position,
+    /// otherwise set the game object position to the player object data. 
+    /// </summary>
     public class PlayerController : MonoBehaviour
     {
         [NonSerialized]

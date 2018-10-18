@@ -6,6 +6,11 @@ using WebSocketSharp;
 
 namespace Multiplayer
 {
+    /// <summary>
+    /// Script to handle the chat for the input field.
+    ///
+    /// Handles things like chat to enter & sending the message to the chat controller - which sends it to the server.
+    /// </summary>
     public class ChatInputField : MonoBehaviour
     {
         private ChatController ChatController;
@@ -34,8 +39,10 @@ namespace Multiplayer
         {
             var isFocused = InputField.isFocused;
 
+            // Press enter to chat - or send message if already focused
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                // If WasFocused - send the message
                 if (WasFocused)
                 {
                     // Note: pressing enter relinquishes focus; this is why we check WasFocused
@@ -55,6 +62,7 @@ namespace Multiplayer
                 }
                 else
                 {
+                    // Press enter to chat
                     if (Toolbox.Instance.FocusManager.Focus == null)
                     {
                         InputField.Select();

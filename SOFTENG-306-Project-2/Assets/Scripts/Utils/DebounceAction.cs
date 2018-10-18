@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Utils
 {
+    /// <summary>
+    /// An action that is can only run once every <see cref="Delay"/> time period
+    /// </summary>
     public class DebounceAction : Action
     {
         private TimeSpan Delay;

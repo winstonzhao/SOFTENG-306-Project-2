@@ -7,6 +7,11 @@ using Utils;
 
 namespace Game.Hiscores.UserInterface
 {
+    /// <summary>
+    /// Component to programatically add all of our games to the hiscore view
+    ///
+    /// This uses the <see cref="Minigames"/> enum to figure out what our minigames are. 
+    /// </summary>
     public class HiscoreTabs : MonoBehaviour
     {
         private HiscoreController HiscoreController;
@@ -21,9 +26,13 @@ namespace Game.Hiscores.UserInterface
         {
             HiscoreController = FindObjectOfType<HiscoreController>();
 
-            StartCoroutine("Layout");
+            StartCoroutine(Layout());
         }
 
+        /// <summary>
+        /// Programatically add all of the tabs
+        /// </summary>
+        /// <returns>Co-routine to run</returns>
         private IEnumerator Layout()
         {
             var prefab = Resources.Load<GameObject>("Prefabs/Hiscores/Tab");
@@ -71,6 +80,12 @@ namespace Game.Hiscores.UserInterface
             }
         }
 
+        /// <summary>
+        /// Converts an enum to its string equivalent e.g. Minigames.Civil -> "Civil" 
+        /// </summary>
+        /// <param name="minigame">the minigame to get a string representation of</param>
+        /// <returns>the text representation of that <paramref name="minigame"/></returns>
+        /// <exception cref="ArgumentOutOfRangeException">if the minigame cannot be mapped to a string</exception>
         private string ToText(Minigames minigame)
         {
             switch (minigame)
@@ -86,6 +101,10 @@ namespace Game.Hiscores.UserInterface
             }
         }
 
+        /// <summary>
+        /// Requests the view to switch tab to the provided <paramref name="minigame"/>
+        /// </summary>
+        /// <param name="minigame">the minigame to show hiscores for</param>
         private void ChooseTab(Minigames minigame)
         {
             HiscoreController.Minigame = minigame;

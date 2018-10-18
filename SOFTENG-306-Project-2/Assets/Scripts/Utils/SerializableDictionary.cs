@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace Utils
 {
+    /// <summary>
+    /// Wrapper to save dictionaries - <see cref="JsonUtility"/> does not support dictionaries.
+    ///
+    /// Converts the dictionary into a list of key/values.
+    /// </summary>
+    /// <typeparam name="K">type of keys in the dictionary</typeparam>
+    /// <typeparam name="V">type of values in the dictionary</typeparam>
     [Serializable]
     public class SerializableDictionary<K, V>
     {

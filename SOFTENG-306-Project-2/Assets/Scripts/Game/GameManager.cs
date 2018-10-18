@@ -8,6 +8,9 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
+    /// <summary>
+    /// Manages the game, handles settings, current player etc
+    /// </summary>
     public class GameManager : Singleton<GameManager>
     {
         private GameSettings settings;
@@ -24,14 +27,23 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// The player object that represents our in-game player
+        /// </summary>
         public Player Player
         {
             get { return Settings.Player; }
             set { Settings.Player = value; }
         }
 
+        /// <summary>
+        /// Debounce the save to avoid writing to disk too frequently
+        /// </summary>
         private readonly DebounceAction DebounceSaveSettings;
 
+        /// <summary>
+        /// Used to periodically save - determines when we last saved i.e. figure out when our next save should be
+        /// </summary>
         private float LastSavedAt;
 
         public GameManager()
@@ -42,6 +54,8 @@ namespace Game
 
         private void Awake()
         {
+            // If we don't have a stored player object then create one with no username
+            // The user will pick this username granted they go through the main menu
             if (Player == null)
             {
                 Player = new Player { Username = null };
